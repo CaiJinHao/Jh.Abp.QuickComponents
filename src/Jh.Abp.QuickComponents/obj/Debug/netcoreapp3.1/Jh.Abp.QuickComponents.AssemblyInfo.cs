@@ -13,6 +13,8 @@ using System.Reflection;
 
 [assembly: System.Reflection.AssemblyCompanyAttribute("Jh.Abp.QuickComponents")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyCopyrightAttribute("金浩")]
+[assembly: System.Reflection.AssemblyDescriptionAttribute("Abp webapi项目需要使用的基础组件。Swagger、MIniProfiler、IdentityServer.")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Jh.Abp.QuickComponents")]

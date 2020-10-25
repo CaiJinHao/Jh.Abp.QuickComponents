@@ -2,10 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Description>Abp webapi项目需要使用的基础组件。Swagger、MIniProfiler、IdentityServer.</Description>
+    <Copyright>金浩</Copyright>
+    <PackageIcon>nugeticon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/CaiJinHao/AbpFramework</RepositoryUrl>
+    <PackageTags>Abp</PackageTags>
+    <PackageReleaseNotes>Abp webapi项目需要使用的基础组件。Swagger、MIniProfiler、IdentityServer.</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Jh\Abp\Swagger\index.html" />
+    <None Include="..\..\document\images\nugeticon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
