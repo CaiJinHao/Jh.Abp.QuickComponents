@@ -2,9 +2,9 @@ D:\KimHo\AbpFramework\src\Jh.Abp.QuickComponents\bin\Release\netcoreapp3.1\Jh\Ab
 D:\KimHo\AbpFramework\src\Jh.Abp.QuickComponents\bin\Release\netcoreapp3.1\Jh.Abp.QuickComponents.deps.json
 D:\KimHo\AbpFramework\src\Jh.Abp.QuickComponents\bin\Release\netcoreapp3.1\Jh.Abp.QuickComponents.dll
 D:\KimHo\AbpFramework\src\Jh.Abp.QuickComponents\bin\Release\netcoreapp3.1\Jh.Abp.QuickComponents.pdb
-D:\KimHo\AbpFramework\src\Jh.Abp.QuickComponents\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.csprojAssemblyReference.cache
 D:\KimHo\AbpFramework\src\Jh.Abp.QuickComponents\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.AssemblyInfoInputs.cache
 D:\KimHo\AbpFramework\src\Jh.Abp.QuickComponents\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.AssemblyInfo.cs
 D:\KimHo\AbpFramework\src\Jh.Abp.QuickComponents\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.csproj.CoreCompileInputs.cache
 D:\KimHo\AbpFramework\src\Jh.Abp.QuickComponents\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.dll
 D:\KimHo\AbpFramework\src\Jh.Abp.QuickComponents\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.pdb
+D:\KimHo\AbpFramework\src\Jh.Abp.QuickComponents\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.csprojAssemblyReference.cache

@@ -9,6 +9,8 @@
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Abp webapi项目需要使用的基础组件。Swagger、MIniProfiler、IdentityServer.</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/CaiJinHao/AbpFramework</PackageProjectUrl>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

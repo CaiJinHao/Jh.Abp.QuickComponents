@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>Jh.Abp.QuickComponents</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <authors>Jh.Abp.QuickComponents</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <icon>nugeticon.png</icon>

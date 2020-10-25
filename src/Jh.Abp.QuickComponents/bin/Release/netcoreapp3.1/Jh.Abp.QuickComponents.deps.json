@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "Jh.Abp.QuickComponents/1.0.0": {
+      "Jh.Abp.QuickComponents/1.0.1": {
         "dependencies": {
           "IdentityServer4.AccessTokenValidation": "3.0.1",
           "MiniProfiler.AspNetCore": "4.1.0",
@@ -1820,7 +1820,7 @@
     }
   },
   "libraries": {
-    "Jh.Abp.QuickComponents/1.0.0": {
+    "Jh.Abp.QuickComponents/1.0.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
