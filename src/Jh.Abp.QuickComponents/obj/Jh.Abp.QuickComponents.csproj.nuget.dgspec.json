@@ -5,7 +5,7 @@
   },
   "projects": {
     "E:\\MyWork\\GitHub\\Jh.Abp.QuickComponents\\src\\Jh.Abp.QuickComponents\\Jh.Abp.QuickComponents.csproj": {
-      "version": "1.0.2",
+      "version": "1.0.3",
       "restore": {
         "projectUniqueName": "E:\\MyWork\\GitHub\\Jh.Abp.QuickComponents\\src\\Jh.Abp.QuickComponents\\Jh.Abp.QuickComponents.csproj",
         "projectName": "Jh.Abp.QuickComponents",
@@ -63,19 +63,19 @@
             },
             "Volo.Abp.AspNetCore": {
               "target": "Package",
-              "version": "[3.2.1, )"
+              "version": "[3.3.1, )"
             },
             "Volo.Abp.Core": {
               "target": "Package",
-              "version": "[3.2.1, )"
+              "version": "[3.3.1, )"
             },
             "Volo.Abp.Ddd.Application": {
               "target": "Package",
-              "version": "[3.2.1, )"
+              "version": "[3.3.1, )"
             },
             "Volo.Abp.Ddd.Domain": {
               "target": "Package",
-              "version": "[3.2.1, )"
+              "version": "[3.3.1, )"
             }
           },
           "imports": [

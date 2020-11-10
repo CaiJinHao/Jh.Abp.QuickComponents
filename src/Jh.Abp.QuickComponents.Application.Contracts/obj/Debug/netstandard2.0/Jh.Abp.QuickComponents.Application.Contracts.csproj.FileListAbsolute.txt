@@ -1,0 +1,12 @@
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application.Contracts\bin\Debug\netstandard2.0\Jh.Abp.QuickComponents.Application.Contracts.deps.json
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application.Contracts\bin\Debug\netstandard2.0\Jh.Abp.QuickComponents.Application.Contracts.dll
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application.Contracts\bin\Debug\netstandard2.0\Jh.Abp.QuickComponents.Application.Contracts.pdb
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application.Contracts\bin\Debug\netstandard2.0\Jh.Abp.QuickComponents.Domain.Shared.dll
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application.Contracts\bin\Debug\netstandard2.0\Jh.Abp.QuickComponents.Domain.Shared.pdb
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application.Contracts\obj\Debug\netstandard2.0\Jh.Abp.QuickComponents.Application.Contracts.csprojAssemblyReference.cache
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application.Contracts\obj\Debug\netstandard2.0\Jh.Abp.QuickComponents.Application.Contracts.AssemblyInfoInputs.cache
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application.Contracts\obj\Debug\netstandard2.0\Jh.Abp.QuickComponents.Application.Contracts.AssemblyInfo.cs
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application.Contracts\obj\Debug\netstandard2.0\Jh.Abp.QuickComponents.Application.Contracts.csproj.CoreCompileInputs.cache
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application.Contracts\obj\Debug\netstandard2.0\Jh.Abp.QuickComponents.Application.Contracts.csproj.CopyComplete
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application.Contracts\obj\Debug\netstandard2.0\Jh.Abp.QuickComponents.Application.Contracts.dll
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application.Contracts\obj\Debug\netstandard2.0\Jh.Abp.QuickComponents.Application.Contracts.pdb

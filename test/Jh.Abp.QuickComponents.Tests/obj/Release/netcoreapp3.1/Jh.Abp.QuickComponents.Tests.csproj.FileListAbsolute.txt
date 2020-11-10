@@ -94,3 +94,4 @@ E:\MyWork\GitHub\Jh.Abp.QuickComponents\test\Jh.Abp.QuickComponents.Tests\obj\Re
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\test\Jh.Abp.QuickComponents.Tests\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.Tests.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\test\Jh.Abp.QuickComponents.Tests\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.Tests.pdb
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\test\Jh.Abp.QuickComponents.Tests\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.Tests.genruntimeconfig.cache
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\test\Jh.Abp.QuickComponents.Tests\bin\Release\netcoreapp3.1\testhost.exe

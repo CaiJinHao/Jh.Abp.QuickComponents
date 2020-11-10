@@ -16,9 +16,9 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Content Include="$(NuGetPackageRoot)volo.abp.aspnetcore\3.2.1\contentFiles\any\netcoreapp3.1\Properties\launchSettings.json" Condition="Exists('$(NuGetPackageRoot)volo.abp.aspnetcore\3.2.1\contentFiles\any\netcoreapp3.1\Properties\launchSettings.json')">
+    <Content Include="$(NuGetPackageRoot)volo.abp.aspnetcore\3.3.1\contentFiles\any\netcoreapp3.1\Properties\launchSettings.json" Condition="Exists('$(NuGetPackageRoot)volo.abp.aspnetcore\3.3.1\contentFiles\any\netcoreapp3.1\Properties\launchSettings.json')">
       <NuGetPackageId>Volo.Abp.AspNetCore</NuGetPackageId>
-      <NuGetPackageVersion>3.2.1</NuGetPackageVersion>
+      <NuGetPackageVersion>3.3.1</NuGetPackageVersion>
       <NuGetItemType>Content</NuGetItemType>
       <Private>False</Private>
       <Link>Properties\launchSettings.json</Link>

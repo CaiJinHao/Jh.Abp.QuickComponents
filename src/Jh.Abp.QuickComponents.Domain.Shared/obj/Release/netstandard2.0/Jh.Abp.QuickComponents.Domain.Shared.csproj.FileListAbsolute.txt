@@ -1,0 +1,9 @@
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Domain.Shared\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Domain.Shared.csprojAssemblyReference.cache
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Domain.Shared\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Domain.Shared.AssemblyInfoInputs.cache
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Domain.Shared\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Domain.Shared.AssemblyInfo.cs
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Domain.Shared\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Domain.Shared.csproj.CoreCompileInputs.cache
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Domain.Shared\bin\Release\netstandard2.0\Jh.Abp.QuickComponents.Domain.Shared.deps.json
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Domain.Shared\bin\Release\netstandard2.0\Jh.Abp.QuickComponents.Domain.Shared.dll
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Domain.Shared\bin\Release\netstandard2.0\Jh.Abp.QuickComponents.Domain.Shared.pdb
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Domain.Shared\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Domain.Shared.dll
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Domain.Shared\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Domain.Shared.pdb

@@ -1,0 +1,14 @@
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Application.csprojAssemblyReference.cache
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Application.AssemblyInfoInputs.cache
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Application.AssemblyInfo.cs
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Application.csproj.CoreCompileInputs.cache
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\bin\Release\netstandard2.0\Jh.Abp.QuickComponents.Application.deps.json
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\bin\Release\netstandard2.0\Jh.Abp.QuickComponents.Application.dll
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\bin\Release\netstandard2.0\Jh.Abp.QuickComponents.Application.pdb
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\bin\Release\netstandard2.0\Jh.Abp.QuickComponents.Application.Contracts.dll
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\bin\Release\netstandard2.0\Jh.Abp.QuickComponents.Application.Contracts.pdb
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Application.csproj.CopyComplete
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Application.dll
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Application.pdb
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\bin\Release\netstandard2.0\Jh.Abp.QuickComponents.Domain.Shared.dll
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\bin\Release\netstandard2.0\Jh.Abp.QuickComponents.Domain.Shared.pdb
