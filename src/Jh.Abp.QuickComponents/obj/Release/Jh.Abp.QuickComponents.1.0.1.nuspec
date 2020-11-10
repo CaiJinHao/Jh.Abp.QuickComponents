@@ -3,15 +3,15 @@
   <metadata>
     <id>Jh.Abp.QuickComponents</id>
     <version>1.0.1</version>
-    <authors>Jh.Abp.QuickComponents</authors>
+    <authors>KimHo</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <icon>nugeticon.png</icon>
-    <projectUrl>https://github.com/CaiJinHao/AbpFramework</projectUrl>
+    <projectUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</projectUrl>
     <description>Abp webapi项目需要使用的基础组件。Swagger、MIniProfiler、IdentityServer.</description>
     <releaseNotes>Abp webapi项目需要使用的基础组件。Swagger、MIniProfiler、IdentityServer.</releaseNotes>
-    <copyright>金浩</copyright>
+    <copyright>KimHo</copyright>
     <tags>Abp</tags>
-    <repository url="https://github.com/CaiJinHao/AbpFramework" />
+    <repository url="https://github.com/CaiJinHao/Jh.Abp.QuickComponents" />
     <dependencies>
       <group targetFramework=".NETCoreApp3.1">
         <dependency id="IdentityServer4.AccessTokenValidation" version="3.0.1" exclude="Build,Analyzers" />
@@ -35,9 +35,9 @@
     </contentFiles>
   </metadata>
   <files>
-    <file src="D:\KimHo\AbpFramework\src\Jh.Abp.QuickComponents\bin\Release\netcoreapp3.1\Jh.Abp.QuickComponents.dll" target="lib\netcoreapp3.1\Jh.Abp.QuickComponents.dll" />
+    <file src="E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents\bin\Release\netcoreapp3.1\Jh.Abp.QuickComponents.dll" target="lib\netcoreapp3.1\Jh.Abp.QuickComponents.dll" />
     <file src="C:\Users\Administrator\.nuget\packages\volo.abp.aspnetcore\3.2.1\contentFiles\any\netcoreapp3.1\Properties\launchSettings.json" target="content\launchSettings.json" />
     <file src="C:\Users\Administrator\.nuget\packages\volo.abp.aspnetcore\3.2.1\contentFiles\any\netcoreapp3.1\Properties\launchSettings.json" target="contentFiles\any\netcoreapp3.1\launchSettings.json" />
-    <file src="D:\KimHo\AbpFramework\document\images\nugeticon.png" target="nugeticon.png" />
+    <file src="E:\MyWork\GitHub\Jh.Abp.QuickComponents\document\images\nugeticon.png" target="nugeticon.png" />
   </files>
 </package>

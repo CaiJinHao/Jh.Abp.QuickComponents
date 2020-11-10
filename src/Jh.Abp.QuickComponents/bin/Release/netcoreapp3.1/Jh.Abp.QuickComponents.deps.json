@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "Jh.Abp.QuickComponents/1.0.1": {
+      "Jh.Abp.QuickComponents/1.0.2": {
         "dependencies": {
           "IdentityServer4.AccessTokenValidation": "3.0.1",
           "MiniProfiler.AspNetCore": "4.1.0",
@@ -1820,7 +1820,7 @@
     }
   },
   "libraries": {
-    "Jh.Abp.QuickComponents/1.0.1": {
+    "Jh.Abp.QuickComponents/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -2241,7 +2241,7 @@
     "runtime.native.System.IO.Compression/4.3.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-INBPonS5QPEgn7naufQFXJEp3zX6L4bwHgJ/ZH78aBTpeNfQMtf7C6VrAFhlq2xxWBveIOWyFzQjJ8XzHMhdOQ==",
+      "sha512": "sha512-b+V9JC/Ii3sR659flBeaBJww111425tgjcDS1k+hqV4sGh9FALRDBvJnDtQ895gAzpPTUOFDHdqaZ2Et7BpZMg==",
       "path": "runtime.native.system.io.compression/4.3.0",
       "hashPath": "runtime.native.system.io.compression.4.3.0.nupkg.sha512"
     },

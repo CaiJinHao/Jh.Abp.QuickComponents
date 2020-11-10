@@ -3505,17 +3505,21 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Administrator\\.nuget\\packages\\": {}
+    "C:\\Users\\Administrator\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\KimHo\\AbpFramework\\test\\Jh.Abp.QuickComponents.Tests\\Jh.Abp.QuickComponents.Tests.csproj",
+      "projectUniqueName": "E:\\MyWork\\GitHub\\Jh.Abp.QuickComponents\\test\\Jh.Abp.QuickComponents.Tests\\Jh.Abp.QuickComponents.Tests.csproj",
       "projectName": "Jh.Abp.QuickComponents.Tests",
-      "projectPath": "D:\\KimHo\\AbpFramework\\test\\Jh.Abp.QuickComponents.Tests\\Jh.Abp.QuickComponents.Tests.csproj",
+      "projectPath": "E:\\MyWork\\GitHub\\Jh.Abp.QuickComponents\\test\\Jh.Abp.QuickComponents.Tests\\Jh.Abp.QuickComponents.Tests.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "D:\\KimHo\\AbpFramework\\test\\Jh.Abp.QuickComponents.Tests\\obj\\",
+      "outputPath": "E:\\MyWork\\GitHub\\Jh.Abp.QuickComponents\\test\\Jh.Abp.QuickComponents.Tests\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
         "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"

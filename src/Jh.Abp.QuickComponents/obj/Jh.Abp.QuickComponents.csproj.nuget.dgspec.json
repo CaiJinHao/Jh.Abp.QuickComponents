@@ -1,18 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "D:\\KimHo\\AbpFramework\\src\\Jh.Abp.QuickComponents\\Jh.Abp.QuickComponents.csproj": {}
+    "E:\\MyWork\\GitHub\\Jh.Abp.QuickComponents\\src\\Jh.Abp.QuickComponents\\Jh.Abp.QuickComponents.csproj": {}
   },
   "projects": {
-    "D:\\KimHo\\AbpFramework\\src\\Jh.Abp.QuickComponents\\Jh.Abp.QuickComponents.csproj": {
-      "version": "1.0.1",
+    "E:\\MyWork\\GitHub\\Jh.Abp.QuickComponents\\src\\Jh.Abp.QuickComponents\\Jh.Abp.QuickComponents.csproj": {
+      "version": "1.0.2",
       "restore": {
-        "projectUniqueName": "D:\\KimHo\\AbpFramework\\src\\Jh.Abp.QuickComponents\\Jh.Abp.QuickComponents.csproj",
+        "projectUniqueName": "E:\\MyWork\\GitHub\\Jh.Abp.QuickComponents\\src\\Jh.Abp.QuickComponents\\Jh.Abp.QuickComponents.csproj",
         "projectName": "Jh.Abp.QuickComponents",
-        "projectPath": "D:\\KimHo\\AbpFramework\\src\\Jh.Abp.QuickComponents\\Jh.Abp.QuickComponents.csproj",
+        "projectPath": "E:\\MyWork\\GitHub\\Jh.Abp.QuickComponents\\src\\Jh.Abp.QuickComponents\\Jh.Abp.QuickComponents.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\KimHo\\AbpFramework\\src\\Jh.Abp.QuickComponents\\obj\\",
+        "outputPath": "E:\\MyWork\\GitHub\\Jh.Abp.QuickComponents\\src\\Jh.Abp.QuickComponents\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
           "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"

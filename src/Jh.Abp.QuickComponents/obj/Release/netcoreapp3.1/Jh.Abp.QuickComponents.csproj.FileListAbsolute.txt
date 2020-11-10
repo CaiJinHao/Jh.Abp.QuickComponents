@@ -8,3 +8,13 @@ D:\KimHo\AbpFramework\src\Jh.Abp.QuickComponents\obj\Release\netcoreapp3.1\Jh.Ab
 D:\KimHo\AbpFramework\src\Jh.Abp.QuickComponents\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.dll
 D:\KimHo\AbpFramework\src\Jh.Abp.QuickComponents\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.pdb
 D:\KimHo\AbpFramework\src\Jh.Abp.QuickComponents\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.csprojAssemblyReference.cache
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents\bin\Release\netcoreapp3.1\Jh\Abp\Swagger\index.html
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents\bin\Release\netcoreapp3.1\Jh.Abp.QuickComponents.deps.json
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents\bin\Release\netcoreapp3.1\Jh.Abp.QuickComponents.dll
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents\bin\Release\netcoreapp3.1\Jh.Abp.QuickComponents.pdb
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.csprojAssemblyReference.cache
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.AssemblyInfoInputs.cache
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.AssemblyInfo.cs
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.csproj.CoreCompileInputs.cache
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.dll
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.pdb
