@@ -22,8 +22,9 @@
   },
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "Jh.Abp.QuickComponents.HttpApi/1.0.0": {
+      "Jh.Abp.QuickComponents.HttpApi/1.0.1": {
         "dependencies": {
+          "Jh.Abp.QuickComponents.Application": "1.0.0",
           "Jh.Abp.QuickComponents.Application.Contracts": "1.0.0",
           "Volo.Abp.AspNetCore.Mvc": "3.3.1",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
@@ -102,15 +103,12 @@
           "Microsoft.AspNetCore.WebSockets": "3.1.0.0",
           "Microsoft.AspNetCore.WebUtilities": "3.1.0.0",
           "Microsoft.CSharp.Reference": "4.0.0.0",
-          "Microsoft.Extensions.Caching.Abstractions": "3.1.0.0",
-          "Microsoft.Extensions.Caching.Memory": "3.1.0.0",
           "Microsoft.Extensions.Configuration.Ini": "3.1.0.0",
           "Microsoft.Extensions.Configuration.KeyPerFile": "3.1.0.0",
           "Microsoft.Extensions.Configuration.Xml": "3.1.0.0",
           "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": "3.1.0.0",
           "Microsoft.Extensions.Diagnostics.HealthChecks": "3.1.0.0",
           "Microsoft.Extensions.Hosting": "3.1.0.0",
-          "Microsoft.Extensions.Http": "3.1.0.0",
           "Microsoft.Extensions.Identity.Core": "3.1.0.0",
           "Microsoft.Extensions.Identity.Stores": "3.1.0.0",
           "Microsoft.Extensions.Logging.Configuration": "3.1.0.0",
@@ -252,7 +250,7 @@
           "System.Text.Encoding.CodePages.Reference": "4.1.3.0",
           "System.Text.Encoding.Reference": "4.1.2.0",
           "System.Text.Encoding.Extensions": "4.1.2.0",
-          "System.Text.Encodings.Web": "4.0.5.0",
+          "System.Text.Encodings.Web.Reference": "4.0.5.0",
           "System.Text.RegularExpressions": "4.2.2.0",
           "System.Threading.Channels": "4.0.2.0",
           "System.Threading.Reference": "4.1.2.0",
@@ -287,6 +285,36 @@
         },
         "compile": {
           "Jh.Abp.QuickComponents.HttpApi.dll": {}
+        }
+      },
+      "AutoMapper/10.0.0": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0",
+          "System.Reflection.Emit": "4.7.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/AutoMapper.dll": {
+            "assemblyVersion": "10.0.0.0",
+            "fileVersion": "10.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/AutoMapper.dll": {}
+        }
+      },
+      "IdentityModel/4.4.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.3",
+          "System.Text.Encodings.Web": "4.7.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/IdentityModel.dll": {
+            "assemblyVersion": "4.4.0.0",
+            "fileVersion": "4.4.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/IdentityModel.dll": {}
         }
       },
       "JetBrains.Annotations/2020.1.0": {
@@ -545,6 +573,37 @@
         }
       },
       "Microsoft.CSharp/4.7.0": {},
+      "Microsoft.Extensions.Caching.Abstractions/3.1.8": {
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "3.1.8"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.Extensions.Caching.Abstractions.dll": {
+            "assemblyVersion": "3.1.8.0",
+            "fileVersion": "3.100.820.42004"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Microsoft.Extensions.Caching.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Caching.Memory/3.1.8": {
+        "dependencies": {
+          "Microsoft.Extensions.Caching.Abstractions": "3.1.8",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "3.1.8",
+          "Microsoft.Extensions.Logging.Abstractions": "3.1.8",
+          "Microsoft.Extensions.Options": "3.1.8"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.Extensions.Caching.Memory.dll": {
+            "assemblyVersion": "3.1.8.0",
+            "fileVersion": "3.100.820.42004"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Microsoft.Extensions.Caching.Memory.dll": {}
+        }
+      },
       "Microsoft.Extensions.Configuration/3.1.8": {
         "dependencies": {
           "Microsoft.Extensions.Configuration.Abstractions": "3.1.8"
@@ -561,7 +620,7 @@
       },
       "Microsoft.Extensions.Configuration.Abstractions/3.1.8": {
         "dependencies": {
-          "Microsoft.Extensions.Primitives": "3.1.9"
+          "Microsoft.Extensions.Primitives": "3.1.8"
         },
         "runtime": {
           "lib/netcoreapp3.1/Microsoft.Extensions.Configuration.Abstractions.dll": {
@@ -698,14 +757,14 @@
           "lib/netstandard2.0/Microsoft.Extensions.DependencyModel.dll": {}
         }
       },
-      "Microsoft.Extensions.FileProviders.Abstractions/3.1.9": {
+      "Microsoft.Extensions.FileProviders.Abstractions/3.1.8": {
         "dependencies": {
-          "Microsoft.Extensions.Primitives": "3.1.9"
+          "Microsoft.Extensions.Primitives": "3.1.8"
         },
         "runtime": {
           "lib/netcoreapp3.1/Microsoft.Extensions.FileProviders.Abstractions.dll": {
-            "assemblyVersion": "3.1.9.0",
-            "fileVersion": "3.100.920.47302"
+            "assemblyVersion": "3.1.8.0",
+            "fileVersion": "3.100.820.42004"
           }
         },
         "compile": {
@@ -714,7 +773,7 @@
       },
       "Microsoft.Extensions.FileProviders.Composite/3.1.8": {
         "dependencies": {
-          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.9"
+          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.8"
         },
         "runtime": {
           "lib/netcoreapp3.1/Microsoft.Extensions.FileProviders.Composite.dll": {
@@ -726,14 +785,14 @@
           "lib/netcoreapp3.1/Microsoft.Extensions.FileProviders.Composite.dll": {}
         }
       },
-      "Microsoft.Extensions.FileProviders.Embedded/3.1.9": {
+      "Microsoft.Extensions.FileProviders.Embedded/3.1.8": {
         "dependencies": {
-          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.9"
+          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.8"
         },
         "runtime": {
           "lib/netcoreapp3.1/Microsoft.Extensions.FileProviders.Embedded.dll": {
-            "assemblyVersion": "3.1.9.0",
-            "fileVersion": "3.100.920.47302"
+            "assemblyVersion": "3.1.8.0",
+            "fileVersion": "3.100.820.42004"
           }
         },
         "compile": {
@@ -742,7 +801,7 @@
       },
       "Microsoft.Extensions.FileProviders.Physical/3.1.8": {
         "dependencies": {
-          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.9",
+          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.8",
           "Microsoft.Extensions.FileSystemGlobbing": "3.1.8"
         },
         "runtime": {
@@ -770,7 +829,7 @@
         "dependencies": {
           "Microsoft.Extensions.Configuration.Abstractions": "3.1.8",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "3.1.8",
-          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.9",
+          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.8",
           "Microsoft.Extensions.Logging.Abstractions": "3.1.8"
         },
         "runtime": {
@@ -781,6 +840,22 @@
         },
         "compile": {
           "lib/netcoreapp3.1/Microsoft.Extensions.Hosting.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Http/3.1.8": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "3.1.8",
+          "Microsoft.Extensions.Logging": "3.1.8",
+          "Microsoft.Extensions.Options": "3.1.8"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.Extensions.Http.dll": {
+            "assemblyVersion": "3.1.8.0",
+            "fileVersion": "3.100.820.42004"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Microsoft.Extensions.Http.dll": {}
         }
       },
       "Microsoft.Extensions.Localization/3.1.8": {
@@ -842,7 +917,7 @@
       "Microsoft.Extensions.Options/3.1.8": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "3.1.8",
-          "Microsoft.Extensions.Primitives": "3.1.9"
+          "Microsoft.Extensions.Primitives": "3.1.8"
         },
         "runtime": {
           "lib/netcoreapp3.1/Microsoft.Extensions.Options.dll": {
@@ -871,11 +946,11 @@
           "lib/netcoreapp3.1/Microsoft.Extensions.Options.ConfigurationExtensions.dll": {}
         }
       },
-      "Microsoft.Extensions.Primitives/3.1.9": {
+      "Microsoft.Extensions.Primitives/3.1.8": {
         "runtime": {
           "lib/netcoreapp3.1/Microsoft.Extensions.Primitives.dll": {
-            "assemblyVersion": "3.1.9.0",
-            "fileVersion": "3.100.920.47302"
+            "assemblyVersion": "3.1.8.0",
+            "fileVersion": "3.100.820.42004"
           }
         },
         "compile": {
@@ -1064,7 +1139,7 @@
           "System.Linq": "4.3.0",
           "System.ObjectModel": "4.3.0",
           "System.Reflection": "4.3.0",
-          "System.Reflection.Emit": "4.3.0",
+          "System.Reflection.Emit": "4.7.0",
           "System.Reflection.Emit.ILGeneration": "4.3.0",
           "System.Reflection.Emit.Lightweight": "4.3.0",
           "System.Reflection.Extensions": "4.3.0",
@@ -1107,15 +1182,7 @@
           "System.Runtime": "4.3.0"
         }
       },
-      "System.Reflection.Emit/4.3.0": {
-        "dependencies": {
-          "System.IO": "4.3.0",
-          "System.Reflection": "4.3.0",
-          "System.Reflection.Emit.ILGeneration": "4.3.0",
-          "System.Reflection.Primitives": "4.3.0",
-          "System.Runtime": "4.3.0"
-        }
-      },
+      "System.Reflection.Emit/4.7.0": {},
       "System.Reflection.Emit.ILGeneration/4.3.0": {
         "dependencies": {
           "System.Reflection": "4.3.0",
@@ -1194,6 +1261,11 @@
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.1.2",
           "System.Runtime.CompilerServices.Unsafe": "4.5.2"
+        }
+      },
+      "System.Text.Encodings.Web/4.7.0": {
+        "compile": {
+          "lib/netstandard2.1/System.Text.Encodings.Web.dll": {}
         }
       },
       "System.Text.Json/4.7.2": {
@@ -1339,6 +1411,41 @@
           "lib/netstandard2.0/Volo.Abp.Authorization.dll": {}
         }
       },
+      "Volo.Abp.AutoMapper/3.3.1": {
+        "dependencies": {
+          "AutoMapper": "10.0.0",
+          "Volo.Abp.Auditing": "3.3.1",
+          "Volo.Abp.ObjectExtending": "3.3.1",
+          "Volo.Abp.ObjectMapping": "3.3.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Volo.Abp.AutoMapper.dll": {
+            "assemblyVersion": "3.3.1.0",
+            "fileVersion": "3.3.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Volo.Abp.AutoMapper.dll": {}
+        }
+      },
+      "Volo.Abp.Caching/3.3.1": {
+        "dependencies": {
+          "Microsoft.Extensions.Caching.Memory": "3.1.8",
+          "Volo.Abp.Json": "3.3.1",
+          "Volo.Abp.MultiTenancy": "3.3.1",
+          "Volo.Abp.Serialization": "3.3.1",
+          "Volo.Abp.Threading": "3.3.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Volo.Abp.Caching.dll": {
+            "assemblyVersion": "3.3.1.0",
+            "fileVersion": "3.3.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Volo.Abp.Caching.dll": {}
+        }
+      },
       "Volo.Abp.Core/3.3.1": {
         "dependencies": {
           "JetBrains.Annotations": "2020.1.0",
@@ -1463,7 +1570,7 @@
       },
       "Volo.Abp.ExceptionHandling/3.3.1": {
         "dependencies": {
-          "Microsoft.Extensions.FileProviders.Embedded": "3.1.9",
+          "Microsoft.Extensions.FileProviders.Embedded": "3.1.8",
           "Volo.Abp.Localization": "3.3.1"
         },
         "runtime": {
@@ -1548,6 +1655,24 @@
         },
         "compile": {
           "lib/netstandard2.0/Volo.Abp.Http.Abstractions.dll": {}
+        }
+      },
+      "Volo.Abp.IdentityModel/3.3.1": {
+        "dependencies": {
+          "IdentityModel": "4.4.0",
+          "Microsoft.Extensions.Http": "3.1.8",
+          "Volo.Abp.Caching": "3.3.1",
+          "Volo.Abp.MultiTenancy": "3.3.1",
+          "Volo.Abp.Threading": "3.3.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Volo.Abp.IdentityModel.dll": {
+            "assemblyVersion": "3.3.1.0",
+            "fileVersion": "3.3.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Volo.Abp.IdentityModel.dll": {}
         }
       },
       "Volo.Abp.Json/3.3.1": {
@@ -1669,6 +1794,20 @@
           "lib/netstandard2.0/Volo.Abp.Security.dll": {}
         }
       },
+      "Volo.Abp.Serialization/3.3.1": {
+        "dependencies": {
+          "Volo.Abp.Core": "3.3.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Volo.Abp.Serialization.dll": {
+            "assemblyVersion": "3.3.1.0",
+            "fileVersion": "3.3.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Volo.Abp.Serialization.dll": {}
+        }
+      },
       "Volo.Abp.Settings/3.3.1": {
         "dependencies": {
           "Volo.Abp.Localization.Abstractions": "3.3.1",
@@ -1776,7 +1915,7 @@
       "Volo.Abp.VirtualFileSystem/3.3.1": {
         "dependencies": {
           "Microsoft.Extensions.FileProviders.Composite": "3.1.8",
-          "Microsoft.Extensions.FileProviders.Embedded": "3.1.9",
+          "Microsoft.Extensions.FileProviders.Embedded": "3.1.8",
           "Microsoft.Extensions.FileProviders.Physical": "3.1.8",
           "Volo.Abp.Core": "3.3.1"
         },
@@ -1790,29 +1929,32 @@
           "lib/netstandard2.0/Volo.Abp.VirtualFileSystem.dll": {}
         }
       },
-      "Jh.Abp.QuickComponents.Application.Contracts/1.0.0": {
+      "Jh.Abp.QuickComponents.Application/1.0.0": {
         "dependencies": {
-          "Jh.Abp.QuickComponents.Domain.Shared": "1.0.0",
-          "Volo.Abp.Authorization": "3.3.1",
-          "Volo.Abp.Ddd.Application.Contracts": "3.3.1"
+          "IdentityModel": "4.4.0",
+          "Jh.Abp.QuickComponents.Application.Contracts": "1.0.0",
+          "Volo.Abp.AutoMapper": "3.3.1",
+          "Volo.Abp.Ddd.Application": "3.3.1",
+          "Volo.Abp.IdentityModel": "3.3.1"
         },
         "runtime": {
-          "Jh.Abp.QuickComponents.Application.Contracts.dll": {}
+          "Jh.Abp.QuickComponents.Application.dll": {}
         },
         "compile": {
-          "Jh.Abp.QuickComponents.Application.Contracts.dll": {}
+          "Jh.Abp.QuickComponents.Application.dll": {}
         }
       },
-      "Jh.Abp.QuickComponents.Domain.Shared/1.0.0": {
+      "Jh.Abp.QuickComponents.Application.Contracts/1.0.0": {
         "dependencies": {
-          "Microsoft.Extensions.FileProviders.Embedded": "3.1.9",
+          "Volo.Abp.Authorization": "3.3.1",
+          "Volo.Abp.Ddd.Application.Contracts": "3.3.1",
           "Volo.Abp.Validation": "3.3.1"
         },
         "runtime": {
-          "Jh.Abp.QuickComponents.Domain.Shared.dll": {}
+          "Jh.Abp.QuickComponents.Application.Contracts.dll": {}
         },
         "compile": {
-          "Jh.Abp.QuickComponents.Domain.Shared.dll": {}
+          "Jh.Abp.QuickComponents.Application.Contracts.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
@@ -2271,18 +2413,6 @@
         },
         "compileOnly": true
       },
-      "Microsoft.Extensions.Caching.Abstractions/3.1.0.0": {
-        "compile": {
-          "Microsoft.Extensions.Caching.Abstractions.dll": {}
-        },
-        "compileOnly": true
-      },
-      "Microsoft.Extensions.Caching.Memory/3.1.0.0": {
-        "compile": {
-          "Microsoft.Extensions.Caching.Memory.dll": {}
-        },
-        "compileOnly": true
-      },
       "Microsoft.Extensions.Configuration.Ini/3.1.0.0": {
         "compile": {
           "Microsoft.Extensions.Configuration.Ini.dll": {}
@@ -2316,12 +2446,6 @@
       "Microsoft.Extensions.Hosting/3.1.0.0": {
         "compile": {
           "Microsoft.Extensions.Hosting.dll": {}
-        },
-        "compileOnly": true
-      },
-      "Microsoft.Extensions.Http/3.1.0.0": {
-        "compile": {
-          "Microsoft.Extensions.Http.dll": {}
         },
         "compileOnly": true
       },
@@ -3171,7 +3295,7 @@
         },
         "compileOnly": true
       },
-      "System.Text.Encodings.Web/4.0.5.0": {
+      "System.Text.Encodings.Web.Reference/4.0.5.0": {
         "compile": {
           "System.Text.Encodings.Web.dll": {}
         },
@@ -3348,10 +3472,24 @@
     }
   },
   "libraries": {
-    "Jh.Abp.QuickComponents.HttpApi/1.0.0": {
+    "Jh.Abp.QuickComponents.HttpApi/1.0.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AutoMapper/10.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-T09NoqMZBqw0/JEauXulxnmmerl0Zj03e0r6VCcJ0LURWBIaYxZPPoiDv8bHf5Y4x2xcXJp4JPXoCaeOMJfHEA==",
+      "path": "automapper/10.0.0",
+      "hashPath": "automapper.10.0.0.nupkg.sha512"
+    },
+    "IdentityModel/4.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-b18wrIx5wnZlMxAX7oVsE+nDtAJ4hajYlH0xPlaRvo4r/fz08K6pPeZvbiqS9nfNbzfIgLFmNX+FL9qR9ZR5PA==",
+      "path": "identitymodel/4.4.0",
+      "hashPath": "identitymodel.4.4.0.nupkg.sha512"
     },
     "JetBrains.Annotations/2020.1.0": {
       "type": "package",
@@ -3451,6 +3589,20 @@
       "path": "microsoft.csharp/4.7.0",
       "hashPath": "microsoft.csharp.4.7.0.nupkg.sha512"
     },
+    "Microsoft.Extensions.Caching.Abstractions/3.1.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-iBIdKjKa2nR4LdknV2JMSRpJVM5TOca25EckPm6SZQT6HfH8RoHrn9m14GUAkvzE+uOziXRoAwr8YIC6ZOpyXg==",
+      "path": "microsoft.extensions.caching.abstractions/3.1.8",
+      "hashPath": "microsoft.extensions.caching.abstractions.3.1.8.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Caching.Memory/3.1.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-u04q7+tgc8l6pQ5HOcr6scgapkQQHnrhpGoCaaAZd24R36/NxGsGxuhSmhHOrQx9CsBLe2CVBN/4CkLlxtnnXw==",
+      "path": "microsoft.extensions.caching.memory/3.1.8",
+      "hashPath": "microsoft.extensions.caching.memory.3.1.8.nupkg.sha512"
+    },
     "Microsoft.Extensions.Configuration/3.1.8": {
       "type": "package",
       "serviceable": true,
@@ -3528,12 +3680,12 @@
       "path": "microsoft.extensions.dependencymodel/3.1.6",
       "hashPath": "microsoft.extensions.dependencymodel.3.1.6.nupkg.sha512"
     },
-    "Microsoft.Extensions.FileProviders.Abstractions/3.1.9": {
+    "Microsoft.Extensions.FileProviders.Abstractions/3.1.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Q4SGwEFZKiZbpzPgdGbQUULxtcH1zXMOwCPKSm6QwVcOCGshf3QLfBh+O/GyFH4B0RfZ16nKyeW1mMONlRyjUw==",
-      "path": "microsoft.extensions.fileproviders.abstractions/3.1.9",
-      "hashPath": "microsoft.extensions.fileproviders.abstractions.3.1.9.nupkg.sha512"
+      "sha512": "sha512-U7ffyzrPfRDH5K3h/mBpqJVoHbppw1kc1KyHZcZeDR7b1A0FRaqMSiizGpN9IGwWs9BuN7oXIKFyviuSGBjHtQ==",
+      "path": "microsoft.extensions.fileproviders.abstractions/3.1.8",
+      "hashPath": "microsoft.extensions.fileproviders.abstractions.3.1.8.nupkg.sha512"
     },
     "Microsoft.Extensions.FileProviders.Composite/3.1.8": {
       "type": "package",
@@ -3542,12 +3694,12 @@
       "path": "microsoft.extensions.fileproviders.composite/3.1.8",
       "hashPath": "microsoft.extensions.fileproviders.composite.3.1.8.nupkg.sha512"
     },
-    "Microsoft.Extensions.FileProviders.Embedded/3.1.9": {
+    "Microsoft.Extensions.FileProviders.Embedded/3.1.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-DItVt/2DcFM3f/MOyndi5KrP9is915KNSKS7WDUpkZGTCGSebNeMdRZkOLCFsPHQrh6RTFa28wDRrG2mUvNcrw==",
-      "path": "microsoft.extensions.fileproviders.embedded/3.1.9",
-      "hashPath": "microsoft.extensions.fileproviders.embedded.3.1.9.nupkg.sha512"
+      "sha512": "sha512-uijZzKXF1m2Shb1OVSs7q/NtQRsNwBrugjhsjxtyOrnknkogE5/V8tBOxFWe4EOksSOyGxUpWP2qLbqOqjHLzw==",
+      "path": "microsoft.extensions.fileproviders.embedded/3.1.8",
+      "hashPath": "microsoft.extensions.fileproviders.embedded.3.1.8.nupkg.sha512"
     },
     "Microsoft.Extensions.FileProviders.Physical/3.1.8": {
       "type": "package",
@@ -3569,6 +3721,13 @@
       "sha512": "sha512-7ZJUKwPipkDvuv2KJPZ3r01wp2AWNMiYH+61i0dL89F7QICknjKpWgLKLpTSUYFgl77S3b4264I6i4HzDdrb2A==",
       "path": "microsoft.extensions.hosting.abstractions/3.1.8",
       "hashPath": "microsoft.extensions.hosting.abstractions.3.1.8.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Http/3.1.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GRkzBs2wJG6jTGqRrT8l/Sqk4MiO0yQltiekDNw/X7L2l5/gKSud/6Vcjb9b5SPtgn6lxcn8qCmfDtk2kP/cOw==",
+      "path": "microsoft.extensions.http/3.1.8",
+      "hashPath": "microsoft.extensions.http.3.1.8.nupkg.sha512"
     },
     "Microsoft.Extensions.Localization/3.1.8": {
       "type": "package",
@@ -3612,12 +3771,12 @@
       "path": "microsoft.extensions.options.configurationextensions/3.1.8",
       "hashPath": "microsoft.extensions.options.configurationextensions.3.1.8.nupkg.sha512"
     },
-    "Microsoft.Extensions.Primitives/3.1.9": {
+    "Microsoft.Extensions.Primitives/3.1.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-IrHecH0eGG7/XoeEtv++oLg/sJHRNyeCqlA9RhAo6ig4GpOTjtDr32sBMYuuLtUq8ALahneWkrOzoBAwJ4L4iA==",
-      "path": "microsoft.extensions.primitives/3.1.9",
-      "hashPath": "microsoft.extensions.primitives.3.1.9.nupkg.sha512"
+      "sha512": "sha512-XcIoXQhT0kwnEhOKv/LmpWR6yF6QWmBTy9Fcsz4aHuCOgTJ7Zd23ELtUA4BfwlYoFlSedavS+vURz9tNekd44g==",
+      "path": "microsoft.extensions.primitives/3.1.8",
+      "hashPath": "microsoft.extensions.primitives.3.1.8.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/2.1.2": {
       "type": "package",
@@ -3780,12 +3939,12 @@
       "path": "system.reflection/4.3.0",
       "hashPath": "system.reflection.4.3.0.nupkg.sha512"
     },
-    "System.Reflection.Emit/4.3.0": {
+    "System.Reflection.Emit/4.7.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-228FG0jLcIwTVJyz8CLFKueVqQK36ANazUManGaJHkO0icjiIypKW7YLWLIWahyIkdh5M7mV2dJepllLyA1SKg==",
-      "path": "system.reflection.emit/4.3.0",
-      "hashPath": "system.reflection.emit.4.3.0.nupkg.sha512"
+      "sha512": "sha512-VR4kk8XLKebQ4MZuKuIni/7oh+QGFmZW3qORd1GvBq/8026OpW501SzT/oypwiQl4TvT8ErnReh/NzY9u+C6wQ==",
+      "path": "system.reflection.emit/4.7.0",
+      "hashPath": "system.reflection.emit.4.7.0.nupkg.sha512"
     },
     "System.Reflection.Emit.ILGeneration/4.3.0": {
       "type": "package",
@@ -3878,6 +4037,13 @@
       "path": "system.text.encoding.codepages/4.5.1",
       "hashPath": "system.text.encoding.codepages.4.5.1.nupkg.sha512"
     },
+    "System.Text.Encodings.Web/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IJanJWPQvya2sbGStt3Fkdy4IaomUBSadAfYWeJDQw0zclMk9ixSvMeei6cSmTTQ6ZkGIIAbhHZVCoLR7GgX7Q==",
+      "path": "system.text.encodings.web/4.7.0",
+      "hashPath": "system.text.encodings.web.4.7.0.nupkg.sha512"
+    },
     "System.Text.Json/4.7.2": {
       "type": "package",
       "serviceable": true,
@@ -3954,6 +4120,20 @@
       "sha512": "sha512-tCEiE1ttQ1F8EZtkuUUm50yc4rKaHDmPeMNkyzoKpITDGNbtYp/7kuIkENotnhFdwdIkQKfOoj1hk6oJwFk3mw==",
       "path": "volo.abp.authorization/3.3.1",
       "hashPath": "volo.abp.authorization.3.3.1.nupkg.sha512"
+    },
+    "Volo.Abp.AutoMapper/3.3.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-jcnZfbN4knyjwlDhotzF5Ogfokyy4yNeGoQbJyBW5Ew8MYEYYi9yLPN/fLP9Xbd3EGasIivPSXW11dm4uxNV6A==",
+      "path": "volo.abp.automapper/3.3.1",
+      "hashPath": "volo.abp.automapper.3.3.1.nupkg.sha512"
+    },
+    "Volo.Abp.Caching/3.3.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ikSMFiTfjwghrLQdJ8U2ZtIMGrbErl67201/6oF8eMmCWx6DG+Oo5Wb8CLInYxtjRRKAPHSJqHzbJ/4esch7Ug==",
+      "path": "volo.abp.caching/3.3.1",
+      "hashPath": "volo.abp.caching.3.3.1.nupkg.sha512"
     },
     "Volo.Abp.Core/3.3.1": {
       "type": "package",
@@ -4039,6 +4219,13 @@
       "path": "volo.abp.http.abstractions/3.3.1",
       "hashPath": "volo.abp.http.abstractions.3.3.1.nupkg.sha512"
     },
+    "Volo.Abp.IdentityModel/3.3.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6/7/LzPQ4CL7l8J20MfEFDixF3Dd6dZ/1zlBS3lNj/NxLW5SlaI0WUH3Zz1grq2eIYO4TMjIj15QNqbcISaO+w==",
+      "path": "volo.abp.identitymodel/3.3.1",
+      "hashPath": "volo.abp.identitymodel.3.3.1.nupkg.sha512"
+    },
     "Volo.Abp.Json/3.3.1": {
       "type": "package",
       "serviceable": true,
@@ -4094,6 +4281,13 @@
       "sha512": "sha512-Fw/O0qic0dFDbengW1f/CMkvEOvrBFki9hgxkq+40LLtKaRhzGwyKnTw5TpsPAYyvQ71Usqg8b1tlkjzr1fsoQ==",
       "path": "volo.abp.security/3.3.1",
       "hashPath": "volo.abp.security.3.3.1.nupkg.sha512"
+    },
+    "Volo.Abp.Serialization/3.3.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pVPc8muXUoogHAvv/VHRxTJkD5dXWKQMxYT+ZlBJCnEgDngDYsVa9XQN2qowaxS80sTZlXrLUVrrDXQa9IxC3w==",
+      "path": "volo.abp.serialization/3.3.1",
+      "hashPath": "volo.abp.serialization.3.3.1.nupkg.sha512"
     },
     "Volo.Abp.Settings/3.3.1": {
       "type": "package",
@@ -4151,12 +4345,12 @@
       "path": "volo.abp.virtualfilesystem/3.3.1",
       "hashPath": "volo.abp.virtualfilesystem.3.3.1.nupkg.sha512"
     },
-    "Jh.Abp.QuickComponents.Application.Contracts/1.0.0": {
+    "Jh.Abp.QuickComponents.Application/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Jh.Abp.QuickComponents.Domain.Shared/1.0.0": {
+    "Jh.Abp.QuickComponents.Application.Contracts/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -4541,16 +4735,6 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Microsoft.Extensions.Caching.Abstractions/3.1.0.0": {
-      "type": "referenceassembly",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Microsoft.Extensions.Caching.Memory/3.1.0.0": {
-      "type": "referenceassembly",
-      "serviceable": false,
-      "sha512": ""
-    },
     "Microsoft.Extensions.Configuration.Ini/3.1.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
@@ -4577,11 +4761,6 @@
       "sha512": ""
     },
     "Microsoft.Extensions.Hosting/3.1.0.0": {
-      "type": "referenceassembly",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Microsoft.Extensions.Http/3.1.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
@@ -5291,7 +5470,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "System.Text.Encodings.Web/4.0.5.0": {
+    "System.Text.Encodings.Web.Reference/4.0.5.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""

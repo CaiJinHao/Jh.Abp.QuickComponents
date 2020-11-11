@@ -9,10 +9,10 @@
     ".NETStandard,Version=v2.0/": {
       "Jh.Abp.QuickComponents.Application.Contracts/1.0.0": {
         "dependencies": {
-          "Jh.Abp.QuickComponents.Domain.Shared": "1.0.0",
           "NETStandard.Library": "2.0.3",
           "Volo.Abp.Authorization": "3.3.1",
-          "Volo.Abp.Ddd.Application.Contracts": "3.3.1"
+          "Volo.Abp.Ddd.Application.Contracts": "3.3.1",
+          "Volo.Abp.Validation": "3.3.1"
         },
         "runtime": {
           "Jh.Abp.QuickComponents.Application.Contracts.dll": {}
@@ -71,7 +71,7 @@
       },
       "Microsoft.Extensions.Configuration.Abstractions/3.1.8": {
         "dependencies": {
-          "Microsoft.Extensions.Primitives": "3.1.9"
+          "Microsoft.Extensions.Primitives": "3.1.8"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.Extensions.Configuration.Abstractions.dll": {
@@ -170,20 +170,20 @@
           }
         }
       },
-      "Microsoft.Extensions.FileProviders.Abstractions/3.1.9": {
+      "Microsoft.Extensions.FileProviders.Abstractions/3.1.8": {
         "dependencies": {
-          "Microsoft.Extensions.Primitives": "3.1.9"
+          "Microsoft.Extensions.Primitives": "3.1.8"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.Extensions.FileProviders.Abstractions.dll": {
-            "assemblyVersion": "3.1.9.0",
-            "fileVersion": "3.100.920.47302"
+            "assemblyVersion": "3.1.8.0",
+            "fileVersion": "3.100.820.42004"
           }
         }
       },
       "Microsoft.Extensions.FileProviders.Composite/3.1.8": {
         "dependencies": {
-          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.9"
+          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.8"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.Extensions.FileProviders.Composite.dll": {
@@ -192,20 +192,20 @@
           }
         }
       },
-      "Microsoft.Extensions.FileProviders.Embedded/3.1.9": {
+      "Microsoft.Extensions.FileProviders.Embedded/3.1.8": {
         "dependencies": {
-          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.9"
+          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.8"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.Extensions.FileProviders.Embedded.dll": {
-            "assemblyVersion": "3.1.9.0",
-            "fileVersion": "3.100.920.47302"
+            "assemblyVersion": "3.1.8.0",
+            "fileVersion": "3.100.820.42004"
           }
         }
       },
       "Microsoft.Extensions.FileProviders.Physical/3.1.8": {
         "dependencies": {
-          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.9",
+          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.8",
           "Microsoft.Extensions.FileSystemGlobbing": "3.1.8"
         },
         "runtime": {
@@ -228,7 +228,7 @@
           "Microsoft.Bcl.AsyncInterfaces": "1.1.1",
           "Microsoft.Extensions.Configuration.Abstractions": "3.1.8",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "3.1.8",
-          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.9",
+          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.8",
           "Microsoft.Extensions.Logging.Abstractions": "3.1.8"
         },
         "runtime": {
@@ -285,7 +285,7 @@
       "Microsoft.Extensions.Options/3.1.8": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "3.1.8",
-          "Microsoft.Extensions.Primitives": "3.1.9",
+          "Microsoft.Extensions.Primitives": "3.1.8",
           "System.ComponentModel.Annotations": "4.7.0"
         },
         "runtime": {
@@ -309,15 +309,15 @@
           }
         }
       },
-      "Microsoft.Extensions.Primitives/3.1.9": {
+      "Microsoft.Extensions.Primitives/3.1.8": {
         "dependencies": {
           "System.Memory": "4.5.4",
           "System.Runtime.CompilerServices.Unsafe": "4.7.1"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.Extensions.Primitives.dll": {
-            "assemblyVersion": "3.1.9.0",
-            "fileVersion": "3.100.920.47302"
+            "assemblyVersion": "3.1.8.0",
+            "fileVersion": "3.100.820.42004"
           }
         }
       },
@@ -951,15 +951,15 @@
           }
         }
       },
-      "Volo.Abp.Validation/3.2.1": {
+      "Volo.Abp.Validation/3.3.1": {
         "dependencies": {
           "Volo.Abp.Localization": "3.3.1",
           "Volo.Abp.Validation.Abstractions": "3.3.1"
         },
         "runtime": {
           "lib/netstandard2.0/Volo.Abp.Validation.dll": {
-            "assemblyVersion": "3.2.1.0",
-            "fileVersion": "3.2.1.0"
+            "assemblyVersion": "3.3.1.0",
+            "fileVersion": "3.3.1.0"
           }
         }
       },
@@ -977,7 +977,7 @@
       "Volo.Abp.VirtualFileSystem/3.3.1": {
         "dependencies": {
           "Microsoft.Extensions.FileProviders.Composite": "3.1.8",
-          "Microsoft.Extensions.FileProviders.Embedded": "3.1.9",
+          "Microsoft.Extensions.FileProviders.Embedded": "3.1.8",
           "Microsoft.Extensions.FileProviders.Physical": "3.1.8",
           "Volo.Abp.Core": "3.3.1"
         },
@@ -986,15 +986,6 @@
             "assemblyVersion": "3.3.1.0",
             "fileVersion": "3.3.1.0"
           }
-        }
-      },
-      "Jh.Abp.QuickComponents.Domain.Shared/1.0.0": {
-        "dependencies": {
-          "Microsoft.Extensions.FileProviders.Embedded": "3.1.9",
-          "Volo.Abp.Validation": "3.2.1"
-        },
-        "runtime": {
-          "Jh.Abp.QuickComponents.Domain.Shared.dll": {}
         }
       }
     }
@@ -1103,12 +1094,12 @@
       "path": "microsoft.extensions.dependencyinjection.abstractions/3.1.8",
       "hashPath": "microsoft.extensions.dependencyinjection.abstractions.3.1.8.nupkg.sha512"
     },
-    "Microsoft.Extensions.FileProviders.Abstractions/3.1.9": {
+    "Microsoft.Extensions.FileProviders.Abstractions/3.1.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Q4SGwEFZKiZbpzPgdGbQUULxtcH1zXMOwCPKSm6QwVcOCGshf3QLfBh+O/GyFH4B0RfZ16nKyeW1mMONlRyjUw==",
-      "path": "microsoft.extensions.fileproviders.abstractions/3.1.9",
-      "hashPath": "microsoft.extensions.fileproviders.abstractions.3.1.9.nupkg.sha512"
+      "sha512": "sha512-U7ffyzrPfRDH5K3h/mBpqJVoHbppw1kc1KyHZcZeDR7b1A0FRaqMSiizGpN9IGwWs9BuN7oXIKFyviuSGBjHtQ==",
+      "path": "microsoft.extensions.fileproviders.abstractions/3.1.8",
+      "hashPath": "microsoft.extensions.fileproviders.abstractions.3.1.8.nupkg.sha512"
     },
     "Microsoft.Extensions.FileProviders.Composite/3.1.8": {
       "type": "package",
@@ -1117,12 +1108,12 @@
       "path": "microsoft.extensions.fileproviders.composite/3.1.8",
       "hashPath": "microsoft.extensions.fileproviders.composite.3.1.8.nupkg.sha512"
     },
-    "Microsoft.Extensions.FileProviders.Embedded/3.1.9": {
+    "Microsoft.Extensions.FileProviders.Embedded/3.1.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-DItVt/2DcFM3f/MOyndi5KrP9is915KNSKS7WDUpkZGTCGSebNeMdRZkOLCFsPHQrh6RTFa28wDRrG2mUvNcrw==",
-      "path": "microsoft.extensions.fileproviders.embedded/3.1.9",
-      "hashPath": "microsoft.extensions.fileproviders.embedded.3.1.9.nupkg.sha512"
+      "sha512": "sha512-uijZzKXF1m2Shb1OVSs7q/NtQRsNwBrugjhsjxtyOrnknkogE5/V8tBOxFWe4EOksSOyGxUpWP2qLbqOqjHLzw==",
+      "path": "microsoft.extensions.fileproviders.embedded/3.1.8",
+      "hashPath": "microsoft.extensions.fileproviders.embedded.3.1.8.nupkg.sha512"
     },
     "Microsoft.Extensions.FileProviders.Physical/3.1.8": {
       "type": "package",
@@ -1187,12 +1178,12 @@
       "path": "microsoft.extensions.options.configurationextensions/3.1.8",
       "hashPath": "microsoft.extensions.options.configurationextensions.3.1.8.nupkg.sha512"
     },
-    "Microsoft.Extensions.Primitives/3.1.9": {
+    "Microsoft.Extensions.Primitives/3.1.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-IrHecH0eGG7/XoeEtv++oLg/sJHRNyeCqlA9RhAo6ig4GpOTjtDr32sBMYuuLtUq8ALahneWkrOzoBAwJ4L4iA==",
-      "path": "microsoft.extensions.primitives/3.1.9",
-      "hashPath": "microsoft.extensions.primitives.3.1.9.nupkg.sha512"
+      "sha512": "sha512-XcIoXQhT0kwnEhOKv/LmpWR6yF6QWmBTy9Fcsz4aHuCOgTJ7Zd23ELtUA4BfwlYoFlSedavS+vURz9tNekd44g==",
+      "path": "microsoft.extensions.primitives/3.1.8",
+      "hashPath": "microsoft.extensions.primitives.3.1.8.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/1.1.0": {
       "type": "package",
@@ -1593,12 +1584,12 @@
       "path": "volo.abp.uow/3.3.1",
       "hashPath": "volo.abp.uow.3.3.1.nupkg.sha512"
     },
-    "Volo.Abp.Validation/3.2.1": {
+    "Volo.Abp.Validation/3.3.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-N+CGa1W3k8fp2q9i5YP3BOUuaMAlVflnzTUj+Me2UJ1Fl3Tzr/RMtOMa5TjXhigrTuX93q31rP99WJys9Uv2Mg==",
-      "path": "volo.abp.validation/3.2.1",
-      "hashPath": "volo.abp.validation.3.2.1.nupkg.sha512"
+      "sha512": "sha512-Ix31IW3eMtgYDcCCOBiaiBp35k/vhIb1c4+vuV3SggLhqkzyTO6e215Fk/QmaE0o8JL5eBfpKLEF7zdtwiomxA==",
+      "path": "volo.abp.validation/3.3.1",
+      "hashPath": "volo.abp.validation.3.3.1.nupkg.sha512"
     },
     "Volo.Abp.Validation.Abstractions/3.3.1": {
       "type": "package",
@@ -1613,11 +1604,6 @@
       "sha512": "sha512-QAXSaVonZCm1+d+5tARpj0fjTQzVWZ69mH+daIUIvgLaXmtTjXXU97ZJv1joiOEDrL7p4rIfpOcPFxghmEQsdg==",
       "path": "volo.abp.virtualfilesystem/3.3.1",
       "hashPath": "volo.abp.virtualfilesystem.3.3.1.nupkg.sha512"
-    },
-    "Jh.Abp.QuickComponents.Domain.Shared/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     }
   }
 }

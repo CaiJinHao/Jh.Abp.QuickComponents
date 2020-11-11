@@ -2,6 +2,7 @@
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
 using Volo.Abp.Application;
+using Volo.Abp.VirtualFileSystem;
 
 namespace Jh.Abp.QuickComponents
 {
@@ -14,10 +15,9 @@ namespace Jh.Abp.QuickComponents
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
-            context.Services.AddAutoMapperObjectMapper<JhAbpQuickComponentsApplicationModule>();
-            Configure<AbpAutoMapperOptions>(options =>
+            Configure<AbpVirtualFileSystemOptions>(options =>
             {
-                options.AddMaps<JhAbpQuickComponentsApplicationModule>(validate: true);
+                options.FileSets.AddEmbedded<JhAbpQuickComponentsApplicationModule>();
             });
         }
     }

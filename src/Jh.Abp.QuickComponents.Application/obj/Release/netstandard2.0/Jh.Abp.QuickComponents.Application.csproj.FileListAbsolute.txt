@@ -10,5 +10,3 @@ E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\b
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Application.csproj.CopyComplete
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Application.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Application.pdb
-E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\bin\Release\netstandard2.0\Jh.Abp.QuickComponents.Domain.Shared.dll
-E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application\bin\Release\netstandard2.0\Jh.Abp.QuickComponents.Domain.Shared.pdb

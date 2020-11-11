@@ -8,6 +8,7 @@ namespace Jh.Abp.QuickComponents.HttpApi
 {
     [DependsOn(
         typeof(JhAbpQuickComponentsApplicationContractsModule),
+        typeof(JhAbpQuickComponentsApplicationModule),
         typeof(AbpAspNetCoreMvcModule))]
     public class JhAbpQuickComponentsHttpApiModule : AbpModule
     {

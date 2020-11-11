@@ -15,6 +15,7 @@
     <dependencies>
       <group targetFramework=".NETCoreApp3.1">
         <dependency id="Jh.Abp.QuickComponents.Application.Contracts" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="Jh.Abp.QuickComponents.Application" version="1.0.0" exclude="Build,Analyzers" />
         <dependency id="Volo.Abp.AspNetCore.Mvc" version="3.3.1" exclude="Build,Analyzers" />
       </group>
     </dependencies>

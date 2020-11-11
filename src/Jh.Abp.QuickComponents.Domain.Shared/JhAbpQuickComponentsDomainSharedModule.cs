@@ -26,7 +26,7 @@ namespace Jh.Abp.QuickComponents.Domain.Shared
             {
                 options.Resources
                     .Add<JhAbpQuickComponentsResource>("zh-Hans")
-                    //.AddBaseTypes(typeof(AbpValidationResource))
+                    .AddBaseTypes(typeof(AbpValidationResource))
                     .AddVirtualJson("/Localization/JhAbpQuickComponents");
             });
 

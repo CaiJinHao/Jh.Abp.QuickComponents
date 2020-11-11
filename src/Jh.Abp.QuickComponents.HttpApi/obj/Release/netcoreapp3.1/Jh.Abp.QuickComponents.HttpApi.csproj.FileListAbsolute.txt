@@ -81,15 +81,12 @@ E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\R
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\refs\Microsoft.AspNetCore.WebSockets.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\refs\Microsoft.AspNetCore.WebUtilities.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\refs\Microsoft.CSharp.dll
-E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\refs\Microsoft.Extensions.Caching.Abstractions.dll
-E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\refs\Microsoft.Extensions.Caching.Memory.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\refs\Microsoft.Extensions.Configuration.Ini.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\refs\Microsoft.Extensions.Configuration.KeyPerFile.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\refs\Microsoft.Extensions.Configuration.Xml.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\refs\Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\refs\Microsoft.Extensions.Diagnostics.HealthChecks.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\refs\Microsoft.Extensions.Hosting.dll
-E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\refs\Microsoft.Extensions.Http.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\refs\Microsoft.Extensions.Identity.Core.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\refs\Microsoft.Extensions.Identity.Stores.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\refs\Microsoft.Extensions.Logging.Configuration.dll
@@ -261,9 +258,9 @@ E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\R
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\refs\System.Xml.XPath.XDocument.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\refs\WindowsBase.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\Jh.Abp.QuickComponents.Application.Contracts.dll
-E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\Jh.Abp.QuickComponents.Domain.Shared.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\Jh.Abp.QuickComponents.Application.Contracts.pdb
-E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\Jh.Abp.QuickComponents.Domain.Shared.pdb
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.HttpApi.csproj.CopyComplete
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.HttpApi.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\obj\Release\netcoreapp3.1\Jh.Abp.QuickComponents.HttpApi.pdb
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\Jh.Abp.QuickComponents.Application.dll
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\Jh.Abp.QuickComponents.Application.pdb

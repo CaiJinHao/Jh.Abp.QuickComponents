@@ -11,11 +11,14 @@
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Abp QuickComponents</PackageReleaseNotes>
+    <Version>1.0.1</Version>
+    <Description>AccessToken</Description>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="3.3.1" />
     <ProjectReference Include="..\Jh.Abp.QuickComponents.Application.Contracts\Jh.Abp.QuickComponents.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Jh.Abp.QuickComponents.Application\Jh.Abp.QuickComponents.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>
