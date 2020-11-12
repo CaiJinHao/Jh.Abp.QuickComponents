@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.ExceptionHandling;
+using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.VirtualFileSystem;

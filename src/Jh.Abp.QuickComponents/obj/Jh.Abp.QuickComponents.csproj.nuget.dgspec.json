@@ -67,6 +67,10 @@
               "target": "Package",
               "version": "[3.3.1, )"
             },
+            "Volo.Abp.AspNetCore.Mvc": {
+              "target": "Package",
+              "version": "[3.3.1, )"
+            },
             "Volo.Abp.Core": {
               "target": "Package",
               "version": "[3.3.1, )"

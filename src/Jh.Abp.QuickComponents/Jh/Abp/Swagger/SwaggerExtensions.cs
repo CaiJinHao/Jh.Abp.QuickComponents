@@ -4,17 +4,36 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
-using Volo.Abp.VirtualFileSystem;
+using Microsoft.AspNetCore.Mvc;
+using Volo.Abp.Modularity;
+using Volo.Abp.AspNetCore.Mvc;
 
 namespace Jh.Abp.QuickComponents.Swagger
 {
     public static partial class SwaggerExtensions
     {
+        public static IServiceCollection AddApiVersion(this IServiceCollection services)
+        {
+             services.AddAbpApiVersioning(options =>
+             {
+                 options.ReportApiVersions = true;
+                 //是否在没有填写版本号的情况下使用默认版本
+                 options.AssumeDefaultVersionWhenUnspecified = true;
+                 options.DefaultApiVersion = new ApiVersion(1, 0);
+
+                 //options.ApiVersionReader = new HeaderApiVersionReader("api-version"); //Supports header too
+                 //options.ApiVersionReader = new MediaTypeApiVersionReader(); //Supports accept header too
+
+                 var mvcOptions = services.ExecutePreConfiguredActions<AbpAspNetCoreMvcOptions>();
+                 options.ConfigureAbp(mvcOptions);
+             });
+            return services;
+        }
+
         public static IServiceCollection AddSwaggerComponent(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddApiVersion();
             return services.AddSwaggerGen(
                 options =>
                 {

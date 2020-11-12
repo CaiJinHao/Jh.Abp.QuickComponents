@@ -6,8 +6,14 @@ using Volo.Abp;
 
 namespace Jh.Abp.QuickComponents.HttpApi.AccessToken
 {
+    /*
+     前端传的时候直接写死，SwaggerApi 参数化了
+    [MapToApiVersion("1.0")] 对Action进行版本标记
+     */
     [RemoteService(Name = JhAbpQuickComponentsRemoteServiceConsts.RemoteServiceName)]
-    [Route("api/AccessToken")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+    [Route("api/v{apiVersion:apiVersion}/[controller]")]
     public class AccessTokenController : JhAbpQuickComponentsController
     {
         private readonly IAccessTokenAppService _accessTokenAppService;
@@ -33,7 +39,7 @@ namespace Jh.Abp.QuickComponents.HttpApi.AccessToken
 
         [AllowAnonymous]
         [HttpPost("Swagger")]
-        public async Task<dynamic> GetSwaggerAccessTokenAsync(AccessTokenRequestDto requestDto)
+        public async Task<dynamic> GetSwaggerAccessTokenAsyncV1(AccessTokenRequestDto requestDto)
         {
             return await _accessTokenAppService.GetSwaggerAccessTokenAsync(requestDto);
         }
