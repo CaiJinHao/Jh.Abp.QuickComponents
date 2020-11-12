@@ -8,6 +8,8 @@ using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.Modularity;
 using Volo.Abp.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Linq;
 
 namespace Jh.Abp.QuickComponents.Swagger
 {
@@ -43,7 +45,28 @@ namespace Jh.Abp.QuickComponents.Swagger
                         Version = configuration["SwaggerApi:OpenApiInfo:Version"],
                         Description = configuration["SwaggerApi:OpenApiInfo:Description"],
                     });
-                    options.DocInclusionPredicate((docName, description) => true);
+                    options.DocInclusionPredicate((docName, description) => {
+                        //使用下面的方式解决MapToApiVersion生成Doc文档错误问题
+                        //if (!description.TryGetMethodInfo(out MethodInfo methodInfo)) return false;
+                       description.TryGetMethodInfo(out MethodInfo methodInfo);
+                        // Get the MapToApiVersion attributes of the action
+                        var mapApiVersions = methodInfo
+                            .GetCustomAttributes(true)
+                            .OfType<MapToApiVersionAttribute>()
+                            .SelectMany(attr => attr.Versions);
+
+                        //if it contains MapToApiVersion attributes, then we should check those as the ApiVersion ones are ignored
+                        if (mapApiVersions.Any() && mapApiVersions.Any(v => $"v{v.ToString()}" == docName))
+                            return true;
+
+                        // Get the ApiVersion attributes of the controller
+                        var versions = methodInfo.DeclaringType
+                            .GetCustomAttributes(true)
+                            .OfType<ApiVersionAttribute>()
+                            .SelectMany(attr => attr.Versions);
+                        return true;
+                        //return versions.Any(v => $"v{v.ToString()}" == docName);
+                    });
                     options.CustomSchemaIds(type => type.FullName);
 
                    //Swagger添加授权验证服务
