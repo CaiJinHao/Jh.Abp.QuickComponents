@@ -20,6 +20,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyProductAttribute("Jh.Abp.QuickComponents")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Jh.Abp.QuickComponents")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.3.0")]
+[assembly: System.Reflection.AssemblyMetadataAttribute("RepositoryUrl", "https://github.com/CaiJinHao/Jh.Abp.QuickComponents")]
 
 // 由 MSBuild WriteCodeFragment 类生成。
 
