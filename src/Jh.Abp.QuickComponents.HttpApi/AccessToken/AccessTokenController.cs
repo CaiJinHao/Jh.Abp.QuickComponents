@@ -7,7 +7,7 @@ using Volo.Abp;
 namespace Jh.Abp.QuickComponents.HttpApi.AccessToken
 {
     [RemoteService(Name = JhAbpQuickComponentsRemoteServiceConsts.RemoteServiceName)]
-    [Route("api/v1/AccessToken")]
+    [Route("api/AccessToken")]
     public class AccessTokenController : JhAbpQuickComponentsController
     {
         private readonly IAccessTokenAppService _accessTokenAppService;

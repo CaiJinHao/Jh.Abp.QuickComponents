@@ -15,11 +15,12 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyCopyrightAttribute("KimHo")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Abp webapi项目需要使用的基础组件。Swagger、MIniProfiler、IdentityServer.")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.2.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.2")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.3.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.3")]
 [assembly: System.Reflection.AssemblyProductAttribute("Jh.Abp.QuickComponents")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Jh.Abp.QuickComponents")]
-[assembly: System.Reflection.AssemblyVersionAttribute("1.0.2.0")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.0.3.0")]
+[assembly: System.Reflection.AssemblyMetadataAttribute("RepositoryUrl", "https://github.com/CaiJinHao/Jh.Abp.QuickComponents")]
 
 // 由 MSBuild WriteCodeFragment 类生成。
 

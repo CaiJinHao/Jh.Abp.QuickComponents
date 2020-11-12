@@ -254,7 +254,9 @@ E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\D
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Debug\netcoreapp3.1\refs\System.Xml.XPath.XDocument.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Debug\netcoreapp3.1\refs\WindowsBase.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Debug\netcoreapp3.1\Jh.Abp.QuickComponents.Application.Contracts.dll
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Debug\netcoreapp3.1\Jh.Abp.QuickComponents.Application.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Debug\netcoreapp3.1\Jh.Abp.QuickComponents.Application.Contracts.pdb
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Debug\netcoreapp3.1\Jh.Abp.QuickComponents.Application.pdb
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\obj\Debug\netcoreapp3.1\Jh.Abp.QuickComponents.HttpApi.csprojAssemblyReference.cache
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\obj\Debug\netcoreapp3.1\Jh.Abp.QuickComponents.HttpApi.AssemblyInfoInputs.cache
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\obj\Debug\netcoreapp3.1\Jh.Abp.QuickComponents.HttpApi.AssemblyInfo.cs
@@ -262,5 +264,3 @@ E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\obj\D
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\obj\Debug\netcoreapp3.1\Jh.Abp.QuickComponents.HttpApi.csproj.CopyComplete
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\obj\Debug\netcoreapp3.1\Jh.Abp.QuickComponents.HttpApi.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\obj\Debug\netcoreapp3.1\Jh.Abp.QuickComponents.HttpApi.pdb
-E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Debug\netcoreapp3.1\Jh.Abp.QuickComponents.Application.dll
-E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Debug\netcoreapp3.1\Jh.Abp.QuickComponents.Application.pdb
