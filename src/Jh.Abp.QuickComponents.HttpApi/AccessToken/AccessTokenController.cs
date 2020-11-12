@@ -43,5 +43,27 @@ namespace Jh.Abp.QuickComponents.HttpApi.AccessToken
         {
             return await _accessTokenAppService.GetSwaggerAccessTokenAsync(requestDto);
         }
+
+       /*
+        Swagger文档不支持展示
+        [HttpPost]
+        [MapToApiVersion("1.0")]
+        public Task<string> PostAsyncV1()
+        {
+            return PostAsync();
+        }
+
+        [HttpPost]
+        [MapToApiVersion("2.0")]
+        public Task<string> PostAsyncV2()
+        {
+            return PostAsync();
+        }
+
+        private Task<string> PostAsync()
+        {
+            return Task.FromResult($"Post-{HttpContext.GetRequestedApiVersion().ToString()}");
+        }
+       */
     }
 }
