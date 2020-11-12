@@ -35,7 +35,7 @@
             localStorage.setItem(remember_me_key,JSON.stringify(login_info));
         }
         $.ajax({
-            url: '/api/AccessToken/Swagger',
+            url: '/api/v1/AccessToken/Swagger',
             type: 'POST',
             data: JSON.stringify(login_info),
             contentType: 'application/json;charset=utf-8',
