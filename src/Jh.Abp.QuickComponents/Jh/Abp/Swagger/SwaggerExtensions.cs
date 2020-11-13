@@ -12,6 +12,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Routing;
+using System.Collections.Generic;
 
 namespace Jh.Abp.QuickComponents.Swagger
 {
@@ -52,28 +53,30 @@ namespace Jh.Abp.QuickComponents.Swagger
                         var _nowControllerAction = (ControllerActionDescriptor)description.ActionDescriptor;
                         var _controller = _nowControllerAction.ControllerTypeInfo;
                         var _nowHttpMethodAttr = _nowControllerAction.MethodInfo.GetCustomAttribute<HttpMethodAttribute>();
-                        var _nowMapToApiVersionAttr = _nowControllerAction.MethodInfo.GetCustomAttribute<MapToApiVersionAttribute>();
+                        var _nowMapToApiVersionAttr = _nowControllerAction.MethodInfo.GetCustomAttributes<MapToApiVersionAttribute>();
                         if (_nowMapToApiVersionAttr==null)
                         {
                             return true;
                         }
+                        //拿到当前方法中最大的版本号
+                        var _nowMethodMaxVersion = _nowMapToApiVersionAttr.Select(a => a.Versions.FirstOrDefault()).OrderByDescending(a => a.MajorVersion).ThenBy(a => a.MinorVersion).FirstOrDefault();
+
                         //找到与当前方法时同一个HTTP的方法只显示最小版本的或者最大版本的
                         //找到多个匹配的方法
                         var equalsMethods = _controller.DeclaredMethods
                         .Where(a => a.GetCustomAttributes<HttpMethodAttribute>().Contains(_nowHttpMethodAttr)).ToList();
                         //从多个匹配的方法中找到最大的版本号的方法与当前方法判断是否匹配
+                        var _nowControllerVersions = new List<ApiVersion>();
                         foreach (var item in equalsMethods)
                         {
-                            var mapToApiVersion= item.GetCustomAttribute<MapToApiVersionAttribute>();
-                            //当前方法最大版本
-                            var versionMax = mapToApiVersion.Versions.OrderByDescending(a=>a.MajorVersion).ThenBy(a=>a.MinorVersion).First();
+                            //找到每个方法的多个Version
+                            var mapToApiVersions = item.GetCustomAttributes<MapToApiVersionAttribute>();
+                            var actionVersions = mapToApiVersions.Select(a => a.Versions.FirstOrDefault());//测试发现Versions只有一个长度
+                            _nowControllerVersions.AddRange(actionVersions);
                         }
-                        var httpMethods = equalsMethods
-                        .Select(a => a.GetCustomAttribute<MapToApiVersionAttribute>().Versions.OrderByDescending(a => a.MajorVersion).ThenBy(a => a.MinorVersion).First())
-                        .OrderByDescending(a=>a.MajorVersion).ThenBy(a=>a.MinorVersion).ToList();
-                        var maxVersion = httpMethods.FirstOrDefault();
-                        var _nowMaxVersion = _nowMapToApiVersionAttr.Versions.OrderByDescending(a => a.MajorVersion).ThenBy(a => a.MinorVersion).FirstOrDefault();
-                        if (_nowMaxVersion == maxVersion)
+                        var _nowControllerMaxVersion = _nowControllerVersions.OrderByDescending(a => a.MajorVersion).ThenByDescending(a => a.MinorVersion).FirstOrDefault();
+                        //当前方法中最大的版本号和当前控制中最大的版本号显示最大的，整个控制器只显示一个
+                        if (_nowMethodMaxVersion == _nowControllerMaxVersion)
                         {
                             return true;
                         }
