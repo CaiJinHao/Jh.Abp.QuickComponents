@@ -9,10 +9,12 @@ namespace Jh.Abp.QuickComponents.HttpApi.AccessToken
     /*
      前端传的时候直接写死，SwaggerApi 参数化了
     [MapToApiVersion("1.0")] 对Action进行版本标记
+    默认1.0,方法有几个版本写几个版本
      */
     [RemoteService(Name = JhAbpQuickComponentsRemoteServiceConsts.RemoteServiceName)]
-    [ApiVersion("1.0")]
-    [ApiVersion("2.0")]
+    //[ApiVersion("1.0")]
+    //[ApiVersion("2.0")]
+    //[ApiVersion("3.0")]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
     public class AccessTokenController : JhAbpQuickComponentsController
     {
@@ -44,26 +46,26 @@ namespace Jh.Abp.QuickComponents.HttpApi.AccessToken
             return await _accessTokenAppService.GetSwaggerAccessTokenAsync(requestDto);
         }
 
-       /*
-        Swagger文档不支持展示
-        [HttpPost]
+        /*
+         [HttpPost]
         [MapToApiVersion("1.0")]
         public Task<string> PostAsyncV1()
         {
-            return PostAsync();
+            return PostAsync("v1");
         }
 
         [HttpPost]
         [MapToApiVersion("2.0")]
+        [MapToApiVersion("3.0")]
         public Task<string> PostAsyncV2()
         {
-            return PostAsync();
+            return PostAsync("v2v3");
         }
 
-        private Task<string> PostAsync()
+        private Task<string> PostAsync(string msg)
         {
-            return Task.FromResult($"Post-{HttpContext.GetRequestedApiVersion().ToString()}");
+            return Task.FromResult($"{msg}-Post-{HttpContext.GetRequestedApiVersion().ToString()}");
         }
-       */
+        */
     }
 }
