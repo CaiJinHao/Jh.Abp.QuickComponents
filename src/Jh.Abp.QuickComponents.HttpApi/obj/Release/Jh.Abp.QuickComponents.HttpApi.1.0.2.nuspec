@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Jh.Abp.QuickComponents.HttpApi</id>
+    <version>1.0.2</version>
+    <authors>KimHo</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <icon>nugeticon.png</icon>
+    <projectUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</projectUrl>
+    <description>AccessToken</description>
+    <releaseNotes>Abp QuickComponents</releaseNotes>
+    <copyright>KimHo</copyright>
+    <tags>Abp</tags>
+    <repository url="https://github.com/CaiJinHao/Jh.Abp.QuickComponents" />
+    <dependencies>
+      <group targetFramework=".NETCoreApp3.1">
+        <dependency id="Jh.Abp.QuickComponents.Application.Contracts" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="Jh.Abp.QuickComponents.Application" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="Volo.Abp.AspNetCore.Mvc" version="3.3.1" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkReferences>
+      <group targetFramework=".NETCoreApp3.1">
+        <frameworkReference name="Microsoft.AspNetCore.App" />
+      </group>
+    </frameworkReferences>
+  </metadata>
+  <files>
+    <file src="E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.HttpApi\bin\Release\netcoreapp3.1\Jh.Abp.QuickComponents.HttpApi.dll" target="lib\netcoreapp3.1\Jh.Abp.QuickComponents.HttpApi.dll" />
+    <file src="E:\MyWork\GitHub\Jh.Abp.QuickComponents\document\images\nugeticon.png" target="nugeticon.png" />
+  </files>
+</package>

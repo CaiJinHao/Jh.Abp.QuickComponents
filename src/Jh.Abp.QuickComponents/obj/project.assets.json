@@ -8571,7 +8571,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.3",
+    "version": "1.0.4",
     "restore": {
       "projectUniqueName": "E:\\MyWork\\GitHub\\Jh.Abp.QuickComponents\\src\\Jh.Abp.QuickComponents\\Jh.Abp.QuickComponents.csproj",
       "projectName": "Jh.Abp.QuickComponents",

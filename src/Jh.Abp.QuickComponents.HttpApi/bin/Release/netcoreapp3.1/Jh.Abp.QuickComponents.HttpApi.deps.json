@@ -22,7 +22,7 @@
   },
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "Jh.Abp.QuickComponents.HttpApi/1.0.1": {
+      "Jh.Abp.QuickComponents.HttpApi/1.0.2": {
         "dependencies": {
           "Jh.Abp.QuickComponents.Application": "1.0.0",
           "Jh.Abp.QuickComponents.Application.Contracts": "1.0.0",
@@ -3472,7 +3472,7 @@
     }
   },
   "libraries": {
-    "Jh.Abp.QuickComponents.HttpApi/1.0.1": {
+    "Jh.Abp.QuickComponents.HttpApi/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
