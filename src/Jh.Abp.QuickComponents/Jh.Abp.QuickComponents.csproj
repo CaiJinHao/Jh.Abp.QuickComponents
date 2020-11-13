@@ -13,6 +13,7 @@
     <Version>1.0.3</Version>
     <Authors>KimHo</Authors>
     <Company>KimHo</Company>
+    <RootNamespace>Jh.Abp.QuickComponents</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
