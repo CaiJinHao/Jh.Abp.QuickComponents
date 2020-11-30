@@ -1,4 +1,5 @@
-﻿using Volo.Abp.AspNetCore.Mvc;
+﻿using Jh.Abp.QuickComponents.Localization;
+using Volo.Abp.AspNetCore.Mvc;
 
 namespace Jh.Abp.QuickComponents.HttpApi
 {

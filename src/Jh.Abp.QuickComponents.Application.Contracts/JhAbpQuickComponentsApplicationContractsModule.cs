@@ -1,4 +1,5 @@
 ﻿using Jh.Abp.QuickComponents.AccessToken;
+using Jh.Abp.QuickComponents.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Application;
@@ -38,18 +39,21 @@ namespace Jh.Abp.QuickComponents
 
             Configure<AbpVirtualFileSystemOptions>(options =>
             {
+                //添加指定类所在程序集的所有 嵌入式资源
                 options.FileSets.AddEmbedded<JhAbpQuickComponentsApplicationContractsModule>();
             });
 
             //添加了一个新的本地化资源, 使用"en"（英语）作为默认的本地化.
             //用JSON文件存储本地化字符串.
             //使用虚拟文件系统 将JSON文件嵌入到程序集中.必须是嵌入的资源
+            //如果不知道嵌入式资源的虚拟路径可以注入IVirtualFileProvider _virtualFileProvider查看。一般是命名空间
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources
                     .Add<JhAbpQuickComponentsResource>("zh-Hans")
                     .AddBaseTypes(typeof(AbpValidationResource))
-                    .AddVirtualJson("/Localization/JhAbpQuickComponents");
+                    //指定嵌入式资源的虚拟路径
+                    .AddVirtualJson("/Jh/Abp/QuickComponents/Application/Contracts/Localization/JhAbpQuickComponents");
             });
 
             Configure<AbpExceptionLocalizationOptions>(options =>
