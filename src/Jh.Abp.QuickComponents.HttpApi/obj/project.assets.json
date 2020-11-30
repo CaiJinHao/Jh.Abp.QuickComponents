@@ -1694,12 +1694,12 @@
           "lib/netstandard2.0/Volo.Abp.VirtualFileSystem.dll": {}
         }
       },
-      "Jh.Abp.QuickComponents.Application/1.0.0": {
+      "Jh.Abp.QuickComponents.Application/1.0.3": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
           "IdentityModel": "4.4.0",
-          "Jh.Abp.QuickComponents.Application.Contracts": "1.0.0",
+          "Jh.Abp.QuickComponents.Application.Contracts": "1.0.3",
           "Volo.Abp.AutoMapper": "3.3.1",
           "Volo.Abp.Ddd.Application": "3.3.1",
           "Volo.Abp.IdentityModel": "3.3.1"
@@ -1711,7 +1711,7 @@
           "bin/placeholder/Jh.Abp.QuickComponents.Application.dll": {}
         }
       },
-      "Jh.Abp.QuickComponents.Application.Contracts/1.0.0": {
+      "Jh.Abp.QuickComponents.Application.Contracts/1.0.3": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -5038,12 +5038,12 @@
         "volo.abp.virtualfilesystem.nuspec"
       ]
     },
-    "Jh.Abp.QuickComponents.Application/1.0.0": {
+    "Jh.Abp.QuickComponents.Application/1.0.3": {
       "type": "project",
       "path": "../Jh.Abp.QuickComponents.Application/Jh.Abp.QuickComponents.Application.csproj",
       "msbuildProject": "../Jh.Abp.QuickComponents.Application/Jh.Abp.QuickComponents.Application.csproj"
     },
-    "Jh.Abp.QuickComponents.Application.Contracts/1.0.0": {
+    "Jh.Abp.QuickComponents.Application.Contracts/1.0.3": {
       "type": "project",
       "path": "../Jh.Abp.QuickComponents.Application.Contracts/Jh.Abp.QuickComponents.Application.Contracts.csproj",
       "msbuildProject": "../Jh.Abp.QuickComponents.Application.Contracts/Jh.Abp.QuickComponents.Application.Contracts.csproj"
@@ -5051,8 +5051,8 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "Jh.Abp.QuickComponents.Application >= 1.0.0",
-      "Jh.Abp.QuickComponents.Application.Contracts >= 1.0.0",
+      "Jh.Abp.QuickComponents.Application >= 1.0.3",
+      "Jh.Abp.QuickComponents.Application.Contracts >= 1.0.3",
       "Volo.Abp.AspNetCore.Mvc >= 3.3.1"
     ]
   },

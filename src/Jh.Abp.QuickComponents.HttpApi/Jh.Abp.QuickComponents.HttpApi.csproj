@@ -6,8 +6,8 @@
     <Authors>KimHo</Authors>
     <Company>KimHo</Company>
     <Copyright>KimHo</Copyright>
-    <PackageProjectUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents.HttpApi</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents.HttpApi</RepositoryUrl>
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Abp QuickComponents</PackageReleaseNotes>

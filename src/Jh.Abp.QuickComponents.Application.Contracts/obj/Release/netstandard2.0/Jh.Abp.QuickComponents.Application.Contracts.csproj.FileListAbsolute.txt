@@ -6,3 +6,4 @@ E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application.C
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application.Contracts\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Application.Contracts.csproj.CoreCompileInputs.cache
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application.Contracts\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Application.Contracts.dll
 E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application.Contracts\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Application.Contracts.pdb
+E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\Jh.Abp.QuickComponents.Application.Contracts\obj\Release\netstandard2.0\Jh.Abp.QuickComponents.Application.Contracts.csprojAssemblyReference.cache

@@ -7,10 +7,10 @@
   "targets": {
     ".NETStandard,Version=v2.0": {},
     ".NETStandard,Version=v2.0/": {
-      "Jh.Abp.QuickComponents.Application/1.0.0": {
+      "Jh.Abp.QuickComponents.Application/1.0.3": {
         "dependencies": {
           "IdentityModel": "4.4.0",
-          "Jh.Abp.QuickComponents.Application.Contracts": "1.0.0",
+          "Jh.Abp.QuickComponents.Application.Contracts": "1.0.3",
           "NETStandard.Library": "2.0.3",
           "Volo.Abp.AutoMapper": "3.3.1",
           "Volo.Abp.Ddd.Application": "3.3.1",
@@ -1216,7 +1216,7 @@
           }
         }
       },
-      "Jh.Abp.QuickComponents.Application.Contracts/1.0.0": {
+      "Jh.Abp.QuickComponents.Application.Contracts/1.0.3": {
         "dependencies": {
           "Volo.Abp.Authorization": "3.3.1",
           "Volo.Abp.Ddd.Application.Contracts": "3.3.1",
@@ -1229,7 +1229,7 @@
     }
   },
   "libraries": {
-    "Jh.Abp.QuickComponents.Application/1.0.0": {
+    "Jh.Abp.QuickComponents.Application/1.0.3": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -1969,7 +1969,7 @@
       "path": "volo.abp.virtualfilesystem/3.3.1",
       "hashPath": "volo.abp.virtualfilesystem.3.3.1.nupkg.sha512"
     },
-    "Jh.Abp.QuickComponents.Application.Contracts/1.0.0": {
+    "Jh.Abp.QuickComponents.Application.Contracts/1.0.3": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
