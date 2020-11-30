@@ -1371,7 +1371,7 @@
           "lib/netstandard2.0/Volo.Abp.VirtualFileSystem.dll": {}
         }
       },
-      "Jh.Abp.QuickComponents.Application.Contracts/1.0.3": {
+      "Jh.Abp.QuickComponents.Application.Contracts/1.0.4": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
@@ -4519,7 +4519,7 @@
         "volo.abp.virtualfilesystem.nuspec"
       ]
     },
-    "Jh.Abp.QuickComponents.Application.Contracts/1.0.3": {
+    "Jh.Abp.QuickComponents.Application.Contracts/1.0.4": {
       "type": "project",
       "path": "../Jh.Abp.QuickComponents.Application.Contracts/Jh.Abp.QuickComponents.Application.Contracts.csproj",
       "msbuildProject": "../Jh.Abp.QuickComponents.Application.Contracts/Jh.Abp.QuickComponents.Application.Contracts.csproj"
@@ -4528,7 +4528,7 @@
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
       "IdentityModel >= 4.4.0",
-      "Jh.Abp.QuickComponents.Application.Contracts >= 1.0.3",
+      "Jh.Abp.QuickComponents.Application.Contracts >= 1.0.4",
       "NETStandard.Library >= 2.0.3",
       "Volo.Abp.AutoMapper >= 3.3.1",
       "Volo.Abp.Ddd.Application >= 3.3.1",
@@ -4540,7 +4540,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.3",
+    "version": "1.0.4",
     "restore": {
       "projectUniqueName": "E:\\MyWork\\GitHub\\Jh.Abp.QuickComponents\\src\\Jh.Abp.QuickComponents.Application\\Jh.Abp.QuickComponents.Application.csproj",
       "projectName": "Jh.Abp.QuickComponents.Application",

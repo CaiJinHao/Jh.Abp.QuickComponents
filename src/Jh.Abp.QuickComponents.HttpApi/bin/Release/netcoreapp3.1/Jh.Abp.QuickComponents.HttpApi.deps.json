@@ -22,10 +22,10 @@
   },
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "Jh.Abp.QuickComponents.HttpApi/1.0.3": {
+      "Jh.Abp.QuickComponents.HttpApi/1.0.4": {
         "dependencies": {
-          "Jh.Abp.QuickComponents.Application": "1.0.3",
-          "Jh.Abp.QuickComponents.Application.Contracts": "1.0.3",
+          "Jh.Abp.QuickComponents.Application": "1.0.4",
+          "Jh.Abp.QuickComponents.Application.Contracts": "1.0.4",
           "Volo.Abp.AspNetCore.Mvc": "3.3.1",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.1.0.0",
@@ -1929,10 +1929,10 @@
           "lib/netstandard2.0/Volo.Abp.VirtualFileSystem.dll": {}
         }
       },
-      "Jh.Abp.QuickComponents.Application/1.0.3": {
+      "Jh.Abp.QuickComponents.Application/1.0.4": {
         "dependencies": {
           "IdentityModel": "4.4.0",
-          "Jh.Abp.QuickComponents.Application.Contracts": "1.0.3",
+          "Jh.Abp.QuickComponents.Application.Contracts": "1.0.4",
           "Volo.Abp.AutoMapper": "3.3.1",
           "Volo.Abp.Ddd.Application": "3.3.1",
           "Volo.Abp.IdentityModel": "3.3.1"
@@ -1944,7 +1944,7 @@
           "Jh.Abp.QuickComponents.Application.dll": {}
         }
       },
-      "Jh.Abp.QuickComponents.Application.Contracts/1.0.3": {
+      "Jh.Abp.QuickComponents.Application.Contracts/1.0.4": {
         "dependencies": {
           "Volo.Abp.Authorization": "3.3.1",
           "Volo.Abp.Ddd.Application.Contracts": "3.3.1",
@@ -3472,7 +3472,7 @@
     }
   },
   "libraries": {
-    "Jh.Abp.QuickComponents.HttpApi/1.0.3": {
+    "Jh.Abp.QuickComponents.HttpApi/1.0.4": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -4345,12 +4345,12 @@
       "path": "volo.abp.virtualfilesystem/3.3.1",
       "hashPath": "volo.abp.virtualfilesystem.3.3.1.nupkg.sha512"
     },
-    "Jh.Abp.QuickComponents.Application/1.0.3": {
+    "Jh.Abp.QuickComponents.Application/1.0.4": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Jh.Abp.QuickComponents.Application.Contracts/1.0.3": {
+    "Jh.Abp.QuickComponents.Application.Contracts/1.0.4": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

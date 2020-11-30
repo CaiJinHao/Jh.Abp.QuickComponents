@@ -5,7 +5,7 @@
   },
   "projects": {
     "E:\\MyWork\\GitHub\\Jh.Abp.QuickComponents\\src\\Jh.Abp.QuickComponents.Application.Contracts\\Jh.Abp.QuickComponents.Application.Contracts.csproj": {
-      "version": "1.0.3",
+      "version": "1.0.4",
       "restore": {
         "projectUniqueName": "E:\\MyWork\\GitHub\\Jh.Abp.QuickComponents\\src\\Jh.Abp.QuickComponents.Application.Contracts\\Jh.Abp.QuickComponents.Application.Contracts.csproj",
         "projectName": "Jh.Abp.QuickComponents.Application.Contracts",
@@ -77,7 +77,7 @@
       }
     },
     "E:\\MyWork\\GitHub\\Jh.Abp.QuickComponents\\src\\Jh.Abp.QuickComponents.Application\\Jh.Abp.QuickComponents.Application.csproj": {
-      "version": "1.0.3",
+      "version": "1.0.4",
       "restore": {
         "projectUniqueName": "E:\\MyWork\\GitHub\\Jh.Abp.QuickComponents\\src\\Jh.Abp.QuickComponents.Application\\Jh.Abp.QuickComponents.Application.csproj",
         "projectName": "Jh.Abp.QuickComponents.Application",
