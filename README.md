@@ -156,4 +156,4 @@ typeof(JhAbpQuickComponentsHttpApiModule)
 
 ## Use
 
-资源文件需要改为嵌入的资源
+最后将wwwroot文件夹copy到项目根路径
