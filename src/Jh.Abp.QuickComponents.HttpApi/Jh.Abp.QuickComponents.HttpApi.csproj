@@ -11,7 +11,7 @@
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Abp QuickComponents</PackageReleaseNotes>
-    <Version>1.0.6</Version>
+    <Version>1.0.7</Version>
     <Description>AccessToken</Description>
   </PropertyGroup>
 
@@ -108,9 +108,5 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="md &quot;$(SolutionDir)host\$(SolutionName).HttpApi.Host\wwwroot\&quot;&#xD;&#xA;Copy &quot;$(ProjectDir)wwwroot\apilogin.html&quot; &quot;$(SolutionDir)host\$(SolutionName).HttpApi.Host\wwwroot\&quot;&#xD;&#xA;&#xD;&#xA;md &quot;$(SolutionDir)host\$(SolutionName).HttpApi.Host\wwwroot\swagger\js\&quot;&#xD;&#xA;Copy &quot;$(ProjectDir)wwwroot\swagger\js\apilogin.js&quot; &quot;$(SolutionDir)host\$(SolutionName).HttpApi.Host\wwwroot\swagger\js\&quot;&#xD;&#xA;&#xD;&#xA;md &quot;$(SolutionDir)host\$(SolutionName).HttpApi.Host\wwwroot\swagger\js\&quot;&#xD;&#xA;Copy &quot;$(ProjectDir)wwwroot\swagger\js\jquery.js&quot; &quot;$(SolutionDir)host\$(SolutionName).HttpApi.Host\wwwroot\swagger\js\&quot;&#xD;&#xA;" />
-  </Target>
 
 </Project>
