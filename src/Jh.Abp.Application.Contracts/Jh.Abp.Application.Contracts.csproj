@@ -10,8 +10,8 @@
     <RepositoryUrl>https://github.com/CaiJinHao/Jh.Abp.Application.Contracts</RepositoryUrl>
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
-    <PackageReleaseNotes>Abp QuickComponents</PackageReleaseNotes>
-    <Version>1.0.4</Version>
+    <PackageReleaseNotes>Abp Extension</PackageReleaseNotes>
+    <Version>1.0.0</Version>
     <Description>AccessToken</Description>
   </PropertyGroup>
 
@@ -22,10 +22,6 @@
     </None>
   </ItemGroup>
   
-  <ItemGroup>
-    <None Remove="Extensions\ICrudApplicationService.cs~RFf6abe84.TMP" />
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="3.3.1" />
   </ItemGroup>
