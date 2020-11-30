@@ -17,7 +17,7 @@ Abp webapi项目需要使用的基础组件。Swagger、MiniProfiler、IdentityS
       "Description": "YourProjectName Description"
     },
     "DocumentTitle": "XXX平台 RESTfull Api",
-    "RoutePrefix": "restapi",
+    "RoutePrefix": "swagger",
     "SwaggerEndpoint": {
       "Name": "Support APP API"
     }
@@ -42,6 +42,7 @@ app.UseSwagger();
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
                 });
 */
+app.UseSwaggerComponent(configuration,this.GetType());
 
 ## IdentityServer
 
@@ -100,5 +101,59 @@ context.Services.AddCors(options =>
             });
 */
 
+## 引用模块
 
+typeof(AbpQuickComponentsModule),
+typeof(JhAbpQuickComponentsHttpApiModule)
 
+## 完整配置
+
+"Redis": {
+    "Configuration": "127.0.0.1"
+  },
+  "AuthServer": {
+    "Authority": "https://localhost:6002/",
+    "ApiName": "YourProjectName",
+    "RequireHttps": false
+  },
+  "DistributedCache": {
+    "KeyPrefix": "YourProjectName:"
+  },
+  "SwaggerApi": {
+    "User": {
+      "UserNameOrEmailAddress": "admin",
+      "Password": "123456"
+    },
+    "OpenApiInfo": {
+      "Title": "YourProjectName Title",
+      "Version": "v1",
+      "Description": "YourProjectName Description"
+    },
+    "DocumentTitle": "XXX平台 RESTfull Api",
+    "RoutePrefix": "swagger",
+    "SwaggerEndpoint": {
+      "Name": "Support APP API"
+    }
+  },
+  "IdentityServer": {
+    "Clients": {
+      "Web": {
+        "Authority": "https://localhost:6002/",
+        "ClientId": "YourProjectName_Web",
+        "ClientSecret": "1q2w3e*",
+        "Scope": "role email YourProjectName offline_access",
+        "RequireHttps": false
+      },
+      "WebApi": {
+        "Authority": "https://localhost:6002/",
+        "ClientId": "YourProjectName_ConsoleTestApp",
+        "ClientSecret": "1q2w3e*",
+        "Scope": "role email YourProjectName offline_access",
+        "RequireHttps": false
+      }
+    }
+  }
+
+## Use
+
+资源文件需要改为嵌入的资源
