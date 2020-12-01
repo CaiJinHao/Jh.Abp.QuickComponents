@@ -1,138 +1,67 @@
-﻿using Jh.Abp.Extensions;
+﻿using Jh.Abp.Common.Entity;
+using Jh.Abp.Common.Linq;
+using Jh.Abp.Domain.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Volo.Abp.Domain.Repositories;
-using System.Threading.Tasks;
-using Volo.Abp.Domain.Entities;
 using System.Linq;
-using Volo.Abp.Application.Services;
+using System.Threading;
+using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Application.Services;
+using Volo.Abp.Domain.Entities;
+using Volo.Abp.Domain.Repositories;
 
 namespace Jh.Abp.Extensions
 {
-    public abstract class CrudApplicationService<TEntity, TEntityDto, TPagedRetrieveInputDto, TKey, TRetrieveInputDto, TCreateInputDto, TUpdateInputDto, TDeleteInputDto>
-        : CrudAppService<TEntity, TEntityDto, TPagedRetrieveInputDto, TKey, TRetrieveInputDto, TCreateInputDto, TUpdateInputDto>
-        , ICrudApplicationService<TEntity, TEntityDto, TPagedRetrieveInputDto, TKey, TRetrieveInputDto, TCreateInputDto, TUpdateInputDto, TDeleteInputDto>
+    public abstract class CrudApplicationService<TEntity, TEntityDto, TPagedRetrieveOutputDto, TKey, TRetrieveInputDto, TCreateInputDto, TUpdateInputDto, TDeleteInputDto>
+        : CrudAppService<TEntity, TEntityDto, TPagedRetrieveOutputDto, TKey, TRetrieveInputDto, TCreateInputDto, TUpdateInputDto>
+        , ICrudApplicationService<TEntity, TEntityDto, TPagedRetrieveOutputDto, TKey, TRetrieveInputDto, TCreateInputDto, TUpdateInputDto, TDeleteInputDto>
         where TEntity : class, IEntity<TKey>
         where TEntityDto : IEntityDto<TKey>
-        where TPagedRetrieveInputDto : IEntityDto<TKey>
+        where TPagedRetrieveOutputDto : IEntityDto<TKey>
     {
-        public CrudApplicationService(IRepository<TEntity, TKey> repository) : base(repository)
+        private ICrudRepository<TEntity, TKey> crudRepository;
+        public CrudApplicationService(ICrudRepository<TEntity, TKey> repository) : base(repository)
         {
+            crudRepository = repository;
         }
 
-        public async Task DeleteAsync(TDeleteInputDto deleteInputDto)
+        public async Task<int> CreateAsync(TCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var delModels = await Repository.GetListAsync();
-            await DeleteAsync(delModels.Select(a => a.Id).ToArray());
+            var entitys = ObjectMapper.Map<TCreateInputDto[], TEntity[]>(inputDtos);
+            return await crudRepository.CreateAsync(entitys, autoSave,cancellationToken);
         }
 
-        public async Task DeleteAsync(TKey[] keys)
+        public async Task<TEntity> CreateAsync(TCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await Repository.DeleteAsync(a => keys.Contains(a.Id));
+            var entity = ObjectMapper.Map<TCreateInputDto, TEntity>(inputDto);
+            return await Repository.InsertAsync(entity, autoSave, cancellationToken);
         }
 
-        public async Task<List<TEntityDto>> GetModelsAsync(TRetrieveInputDto inputDto)
+        public async Task DeleteAsync(TDeleteInputDto deleteInputDto, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var query = ReadOnlyRepository;
+            var lambda = LinqExpression.ConvetToExpression<TDeleteInputDto, TEntity>(deleteInputDto);
+            await Repository.DeleteAsync(lambda, autoSave, cancellationToken);
+        }
+
+        public async Task DeleteAsync(TKey[] keys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await Repository.DeleteAsync(a => keys.Contains(a.Id), autoSave, cancellationToken);
+        }
+
+        public async Task<List<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto)
+        {
+            var lambda = LinqExpression.ConvetToExpression<TRetrieveInputDto, TEntity>(inputDto);
+            var query = ReadOnlyRepository.Where(lambda);
             var entities = await AsyncExecuter.ToListAsync(query);
             return ObjectMapper.Map<List<TEntity>, List<TEntityDto>>(entities);
         }
 
-        public async Task<TEntity> UpdatePortionAsync(TKey key, TUpdateInputDto updateInput)
+        public async Task<TEntity> UpdatePortionAsync(TKey key, TUpdateInputDto updateInput, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             var entity = await Repository.GetAsync(key);
-
-            var toFields = entity.GetType().GetProperties();
-            var formFields = updateInput.GetType().GetProperties();
-            foreach (var item in formFields)
-            {
-                var toField = toFields.Where(a => a.Name == item.Name).FirstOrDefault();
-                if (toField != null)
-                {
-                    var _value = item.GetValue(updateInput);
-                    if (_value != null)
-                    {
-                        var fieldType = _value.GetType();
-                        if (fieldType.IsEnum)
-                        {
-                            var _v = (int)_value;
-                            if (_v > 0)
-                            {
-                                toField.SetValue(entity, _value);
-                            }
-                        }
-                        else
-                        {
-                            switch (fieldType.Name)
-                            {
-                                case "String":
-                                    {
-                                        if (!string.IsNullOrEmpty((string)_value))
-                                        {
-                                            toField.SetValue(entity, _value);
-                                        }
-                                    }
-                                    break;
-                                case "DateTime":
-                                    {
-                                        var _v = (DateTime)_value;
-                                        if (_v > new DateTime(1900, 1, 1))
-                                        {
-                                            toField.SetValue(entity, _value);
-                                        }
-                                    }
-                                    break;
-                                case "Int16":
-                                    {
-                                        var _v = (Int16)_value;
-                                        if (_v > 0)
-                                        {
-                                            toField.SetValue(entity, _value);
-                                        }
-                                    }
-                                    break;
-                                case "Int32":
-                                    {
-                                        var _v = (Int32)_value;
-                                        if (_v > 0)
-                                        {
-                                            toField.SetValue(entity, _value);
-                                        }
-                                    }
-                                    break;
-                                case "Int64":
-                                    {
-                                        var _v = (Int64)_value;
-                                        if (_v > 0)
-                                        {
-                                            toField.SetValue(entity, _value);
-                                        }
-                                    }
-                                    break;
-                                case "Decimal":
-                                    {
-                                        var _v = (decimal)_value;
-                                        if (_v > 0)
-                                        {
-                                            toField.SetValue(entity, _value);
-                                        }
-                                    }
-                                    break;
-                                case "Boolean":
-                                    {
-                                        toField.SetValue(entity, _value);
-                                    }
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    }
-                }
-            }
-            return entity;
+            EntityOperator.UpdatePortionToEntity(updateInput, entity);
+            return await Repository.UpdateAsync(entity,autoSave,cancellationToken);
         }
     }
 }
