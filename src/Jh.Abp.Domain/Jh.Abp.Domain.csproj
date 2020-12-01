@@ -6,8 +6,8 @@
     <Authors>KimHo</Authors>
     <Company>KimHo</Company>
     <Copyright>KimHo</Copyright>
-    <PackageProjectUrl>https://github.com/CaiJinHao/Jh.Abp.Application.Contracts</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/CaiJinHao/Jh.Abp.Application.Contracts</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/CaiJinHao/Jh.Abp.Domain</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CaiJinHao/Jh.Abp.Domain</RepositoryUrl>
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Abp Extension</PackageReleaseNotes>

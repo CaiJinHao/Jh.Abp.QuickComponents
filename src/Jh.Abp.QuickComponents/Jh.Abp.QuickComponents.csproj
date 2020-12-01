@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Description>Abp webapi项目需要使用的基础组件。Swagger、MIniProfiler、IdentityServer.</Description>
+    <Authors>KimHo</Authors>
+    <Company>KimHo</Company>
     <Copyright>KimHo</Copyright>
     <PackageIcon>nugeticon.png</PackageIcon>
     <RepositoryUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</RepositoryUrl>
@@ -10,9 +12,7 @@
     <PackageReleaseNotes>Abp webapi项目需要使用的基础组件。Swagger、MIniProfiler、IdentityServer.</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</PackageProjectUrl>
-    <Version>1.0.5</Version>
-    <Authors>KimHo</Authors>
-    <Company>KimHo</Company>
+    <Version>1.1.0</Version>
     <RootNamespace>Jh.Abp.QuickComponents</RootNamespace>
   </PropertyGroup>
 
