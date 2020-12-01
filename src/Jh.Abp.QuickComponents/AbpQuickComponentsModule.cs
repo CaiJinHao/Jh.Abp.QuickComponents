@@ -1,4 +1,5 @@
 ﻿using Jh.Abp.QuickComponents.Cors;
+using Jh.Abp.QuickComponents.HttpApi;
 using Jh.Abp.QuickComponents.JwtAuthentication;
 using Jh.Abp.QuickComponents.Localization;
 using Jh.Abp.QuickComponents.MiniProfiler;
@@ -16,6 +17,7 @@ using Volo.Abp.VirtualFileSystem;
 
 namespace Jh.Abp.QuickComponents
 {
+    [DependsOn(typeof(JhAbpQuickComponentsHttpApiModule))]
     public class AbpQuickComponentsModule: AbpModule
     {
         private IConfiguration configuration { get; set; }
@@ -33,14 +35,6 @@ namespace Jh.Abp.QuickComponents
             context.Services.AddSwaggerComponent(configuration);
             context.Services.AddLocalizationComponent();
             context.Services.AddJwtAuthenticationComponent(configuration);
-
-#if DEBUG
-            Configure<AbpExceptionHandlingOptions>(options =>
-            {
-                //是否发送异常详情到客户端
-                options.SendExceptionsDetailsToClients = false;
-            });
-#endif
         }
 
         public override void OnApplicationInitialization(Volo.Abp.ApplicationInitializationContext context)

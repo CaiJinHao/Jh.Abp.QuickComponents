@@ -156,4 +156,4 @@ typeof(JhAbpQuickComponentsHttpApiModule)
 
 ## Use
 
-最后将wwwroot文件夹copy到项目根路径
+最后打开包所在路径将C:\Users\Administrator\.nuget\packages\jh.abp.quickcomponents.httpapi\1.0.8\content\wwwroot文件夹copy到项目根路径即可
