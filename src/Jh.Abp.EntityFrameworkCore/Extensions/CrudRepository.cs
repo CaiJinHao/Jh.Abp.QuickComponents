@@ -1,12 +1,14 @@
 ﻿using Jh.Abp.Domain.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
+using System.Linq;
 
 namespace Jh.Abp.EntityFrameworkCore.Extensions
 {
@@ -18,7 +20,7 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
         {
         }
 
-        public async Task<int> CreateAsync(TEntity[] entitys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<TEntity[]> CreateAsync(TEntity[] entitys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             //使用SqlBulk
             await DbSet.AddRangeAsync(entitys);
@@ -26,7 +28,18 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
             {
                 await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
             }
-            return entitys.Length;
+            return entitys;
+        }
+
+        public  async Task<TEntity[]> DeleteListAsync(Expression<Func<TEntity, bool>> predicate, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var entitys = DbSet.Where(predicate).ToArray();
+            DbSet.RemoveRange(entitys);
+            if (autoSave)
+            {
+                await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
+            }
+            return entitys;
         }
     }
 }

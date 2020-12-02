@@ -119,6 +119,10 @@ namespace Jh.Abp.Common.Linq
                     resultFilters = Expression.And(resultFilters, currentFilter);
                 }
             }
+            if (resultFilters == null)
+            {
+                resultFilters = Expression.Equal(Expression.Constant(true), Expression.Constant(true));
+            }
             //5.创建Lambda表达式
             var lambda = Expression.Lambda<Func<TSource, bool>>(resultFilters, new ParameterExpression[] { parameterExpression });
             return lambda;

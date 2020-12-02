@@ -37,7 +37,7 @@ namespace Jh.Abp.Extensions
         /// <param name="autoSave"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<int> CreateAsync(TCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task<TEntity[]> CreateAsync(TCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 根据条件删除多条[HttpDelete]
@@ -46,7 +46,7 @@ namespace Jh.Abp.Extensions
         /// <param name="autoSave"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task DeleteAsync(TDeleteInputDto deleteInputDto, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 根据主键删除多条[Route("keys")][HttpDelete]
@@ -55,7 +55,16 @@ namespace Jh.Abp.Extensions
         /// <param name="autoSave"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task DeleteAsync(TKey[] keys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task<TEntity[]> DeleteAsync(TKey[] keys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// 根据主键删除
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="autoSave"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<TEntity> DeleteAsync(TKey id, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 根据主键更新部分[HttpPatch]
@@ -72,6 +81,6 @@ namespace Jh.Abp.Extensions
         /// </summary>
         /// <param name="inputDto"></param>
         /// <returns></returns>
-        Task<List<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto);
+        Task<List<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

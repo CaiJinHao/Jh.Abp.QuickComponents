@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +17,15 @@ namespace Jh.Abp.Domain.Extensions
         /// </summary>
         /// <param name="models"></param>
         /// <returns></returns>
-        Task<int> CreateAsync(TEntity[] entitys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task<TEntity[]> CreateAsync(TEntity[] entitys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// 根据条件删除
+        /// </summary>
+        /// <param name="predicate">linq表达式</param>
+        /// <param name="autoSave"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<TEntity[]> DeleteListAsync(Expression<Func<TEntity, bool>> predicate, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
