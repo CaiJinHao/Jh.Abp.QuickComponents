@@ -28,45 +28,57 @@ namespace Jh.Abp.Extensions
 
         public async Task<TEntity[]> CreateAsync(TCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
+            await CheckCreatePolicyAsync().ConfigureAwait(false);
             var entitys = ObjectMapper.Map<TCreateInputDto[], TEntity[]>(inputDtos);
-            return await crudRepository.CreateAsync(entitys, autoSave, cancellationToken);
+            return await crudRepository.CreateAsync(entitys, autoSave, cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<TEntity> CreateAsync(TCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
+            await CheckCreatePolicyAsync().ConfigureAwait(false);
             var entity = ObjectMapper.Map<TCreateInputDto, TEntity>(inputDto);
-            return await crudRepository.InsertAsync(entity, autoSave, cancellationToken);
+            return await crudRepository.InsertAsync(entity, autoSave, cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
+            await CheckDeletePolicyAsync().ConfigureAwait(false);
             var lambda = LinqExpression.ConvetToExpression<TDeleteInputDto, TEntity>(deleteInputDto);
-            return await crudRepository.DeleteListAsync(lambda, autoSave, cancellationToken);
+            return await crudRepository.DeleteListAsync(lambda, autoSave, cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<TEntity[]> DeleteAsync(TKey[] keys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-           return await crudRepository.DeleteListAsync(a => keys.Contains(a.Id), autoSave, cancellationToken);
+            await CheckDeletePolicyAsync().ConfigureAwait(false);
+            return await crudRepository.DeleteListAsync(a => keys.Contains(a.Id), autoSave, cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<TEntity> DeleteAsync(TKey id, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return (await crudRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, cancellationToken)).FirstOrDefault();
+            await CheckDeletePolicyAsync().ConfigureAwait(false);
+            return (await crudRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, cancellationToken).ConfigureAwait(false)).FirstOrDefault();
         }
 
         public async Task<List<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var lambda = LinqExpression.ConvetToExpression<TRetrieveInputDto, TEntity>(inputDto);
-            var query = ReadOnlyRepository.Where(lambda);
-            var entities = await AsyncExecuter.ToListAsync(query, cancellationToken);
+            await CheckGetListPolicyAsync().ConfigureAwait(false);
+            var query = CreateFilteredQuery(inputDto);
+            var entities = await AsyncExecuter.ToListAsync(query, cancellationToken).ConfigureAwait(false);
             return ObjectMapper.Map<List<TEntity>, List<TEntityDto>>(entities);
         }
 
         public async Task<TEntity> UpdatePortionAsync(TKey key, TUpdateInputDto updateInput, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var entity = await crudRepository.GetAsync(key);
+            await CheckUpdatePolicyAsync().ConfigureAwait(false);
+            var entity = await crudRepository.GetAsync(key).ConfigureAwait(false);
             EntityOperator.UpdatePortionToEntity(updateInput, entity);
-            return await crudRepository.UpdateAsync(entity,autoSave,cancellationToken);
+            return await crudRepository.UpdateAsync(entity, autoSave, cancellationToken).ConfigureAwait(false);
+        }
+
+        protected override IQueryable<TEntity> CreateFilteredQuery(TRetrieveInputDto inputDto)
+        {
+            var lambda = LinqExpression.ConvetToExpression<TRetrieveInputDto, TEntity>(inputDto);
+            return ReadOnlyRepository.Where(lambda);
         }
     }
 }

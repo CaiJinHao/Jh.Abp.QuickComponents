@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jh.Abp.Common.Objects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,85 +24,67 @@ namespace Jh.Abp.Common.Entity
                 var toField = toFields.Where(a => a.Name == item.Name).FirstOrDefault();
                 if (toField != null)
                 {
-                    var _value = item.GetValue(target);
-                    if (_value != null)
+                    var propertyVal = item.GetValue(target);
+                    if (propertyVal == null)
                     {
-                        var fieldType = _value.GetType();
-                        if (fieldType.IsEnum)
-                        {
-                            var _v = (int)_value;
-                            if (_v > 0)
-                            {
-                                toField.SetValue(entity, _value);
-                            }
-                        }
-                        else
-                        {
-                            switch (fieldType.Name)
-                            {
-                                case "String":
-                                    {
-                                        if (!string.IsNullOrEmpty((string)_value))
-                                        {
-                                            toField.SetValue(entity, _value);
-                                        }
-                                    }
-                                    break;
-                                case "DateTime":
-                                    {
-                                        var _v = (DateTime)_value;
-                                        if (_v > new DateTime(1900, 1, 1))
-                                        {
-                                            toField.SetValue(entity, _value);
-                                        }
-                                    }
-                                    break;
-                                case "Int16":
-                                    {
-                                        var _v = (Int16)_value;
-                                        if (_v > 0)
-                                        {
-                                            toField.SetValue(entity, _value);
-                                        }
-                                    }
-                                    break;
-                                case "Int32":
-                                    {
-                                        var _v = (Int32)_value;
-                                        if (_v > 0)
-                                        {
-                                            toField.SetValue(entity, _value);
-                                        }
-                                    }
-                                    break;
-                                case "Int64":
-                                    {
-                                        var _v = (Int64)_value;
-                                        if (_v > 0)
-                                        {
-                                            toField.SetValue(entity, _value);
-                                        }
-                                    }
-                                    break;
-                                case "Decimal":
-                                    {
-                                        var _v = (decimal)_value;
-                                        if (_v > 0)
-                                        {
-                                            toField.SetValue(entity, _value);
-                                        }
-                                    }
-                                    break;
-                                case "Boolean":
-                                    {
-                                        toField.SetValue(entity, _value);
-                                    }
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
+                        continue;
                     }
+                    var propertyType = propertyVal.GetType();
+                    var valueType = ObjectExtensions.GetObjectType(propertyType);
+                    switch (valueType)
+                    {
+                        case Enums.ObjectType.Enum:
+                            {
+                                if (((int)propertyVal).Equals(0))
+                                {
+                                    continue;
+                                }
+                            }
+                            break;
+                        case Enums.ObjectType.Int16:
+                        case Enums.ObjectType.Int32:
+                        case Enums.ObjectType.Int64:
+                        case Enums.ObjectType.Float:
+                        case Enums.ObjectType.Double:
+                        case Enums.ObjectType.Decimal:
+                            {
+                                if (propertyVal.Equals(0))
+                                {
+                                    continue;
+                                }
+                            }
+                            break;
+                        case Enums.ObjectType.Guid:
+                            {
+                                if (propertyVal.Equals(Guid.Empty))
+                                {
+                                    continue;
+                                }
+                            }
+                            break;
+                        case Enums.ObjectType.String:
+                            {
+                                if (propertyVal.Equals(string.Empty))
+                                {
+                                    continue;
+                                }
+                            }
+                            break;
+                        case Enums.ObjectType.DateTime:
+                            {
+                                var _v = (DateTime)propertyVal;
+                                if (_v <= new DateTime(1900, 1, 1))
+                                {
+                                    continue;
+                                }
+                            }
+                            break;
+                        case Enums.ObjectType.Bool:
+                        case Enums.ObjectType.None:
+                        default:
+                            continue;
+                    }
+                    toField.SetValue(entity, propertyVal);
                 }
             }
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jh.Abp.Common.Objects;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -23,89 +24,67 @@ namespace Jh.Abp.Common.Linq
             var propertyInfos = inputDto.GetType().GetProperties();
             foreach (var item in propertyInfos)
             {
-                var propertyName = item.Name;
                 var propertyVal = item.GetValue(inputDto, null);
                 if (propertyVal == null)
                 {
                     continue;
                 }
                 var propertyType = propertyVal.GetType();
+                var valueType = ObjectExtensions.GetObjectType(propertyType);
                 MethodInfo method = null;
-                if (propertyType.IsEnum)
+                switch (valueType)
                 {
-                    if ((int)propertyVal == 0)
-                    {
-                        continue;
-                    }
-                    method = propertyType.GetMethod("Equals", new Type[] { propertyType });
-                }
-                else
-                {
-                    switch (propertyType.Name)
-                    {
-                        case "Int16":
-                            {
-                                if ((Int16)propertyVal == 0)
-                                {
-                                    continue;
-                                }
-                                method = propertyType.GetMethod("Equals", new Type[] { propertyType });
-                            }
-                            break;
-                        case "Int32":
-                            {
-                                if ((Int32)propertyVal == 0)
-                                {
-                                    continue;
-                                }
-                                method = propertyType.GetMethod("Equals", new Type[] { propertyType });
-                            }
-                            break;
-                        case "Int64":
-                            {
-                                if ((Int64)propertyVal == 0)
-                                {
-                                    continue;
-                                }
-                                method = propertyType.GetMethod("Equals", new Type[] { propertyType });
-                            }
-                            break;
-                        case "Decimal":
-                            {
-                                if ((Decimal)propertyVal == 0)
-                                {
-                                    continue;
-                                }
-                                method = propertyType.GetMethod("Equals", new Type[] { propertyType });
-                            }
-                            break;
-                        case "String":
-                            {
-                                if (string.IsNullOrEmpty((string)propertyVal))
-                                {
-                                    continue;
-                                }
-                                method = propertyType.GetMethod("Contains", new Type[] { propertyType });
-                            }
-                            break;
-                        case "Guid":
-                            {
-                                if ((Guid)propertyVal == Guid.Empty)
-                                {
-                                    continue;
-                                }
-                                method = propertyType.GetMethod("Contains", new Type[] { propertyType });
-                            }
-                            break;
-                        default:
+                    case Enums.ObjectType.Enum:
+                        {
+                            propertyType = typeof(Int32);
+                            propertyVal = (int)propertyVal;
+                            if (propertyVal.Equals(0))
                             {
                                 continue;
                             }
-                    }
+                            method = propertyType.GetMethod("Equals", new Type[] { propertyType });
+                        }
+                        break;
+                    case Enums.ObjectType.Int16:
+                    case Enums.ObjectType.Int32:
+                    case Enums.ObjectType.Int64:
+                    case Enums.ObjectType.Float:
+                    case Enums.ObjectType.Double:
+                    case Enums.ObjectType.Decimal:
+                        {
+                            if (propertyVal.Equals(0))
+                            {
+                                continue;
+                            }
+                            method = propertyType.GetMethod("Equals", new Type[] { propertyType });
+                        }
+                        break;
+                    case Enums.ObjectType.Guid:
+                        {
+                            if (propertyVal.Equals(Guid.Empty))
+                            {
+                                continue;
+                            }
+                            method = propertyType.GetMethod("Contains", new Type[] { propertyType });
+                        }
+                        break;
+                    case Enums.ObjectType.String:
+                        {
+                            if (propertyVal.Equals(string.Empty))
+                            {
+                                continue;
+                            }
+                            method = propertyType.GetMethod("Contains", new Type[] { propertyType });
+                        }
+                        break;
+                    case Enums.ObjectType.Bool:
+                    case Enums.ObjectType.DateTime:
+                    default:
+                        continue;
                 }
                 //a(1)=>a.Name(2).Equals(4)("val")(3);(5)
                 //2.创建属性表达式
-                Expression proerty = Expression.Property(parameterExpression, propertyName);
+                Expression proerty = Expression.Property(parameterExpression, item.Name);
                 //3.创建常数表达式
                 ConstantExpression constantExpression = Expression.Constant(propertyVal, propertyType);
                 //4.创建方法调用表达式

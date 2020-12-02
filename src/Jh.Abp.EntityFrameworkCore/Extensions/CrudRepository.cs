@@ -9,6 +9,7 @@ using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Jh.Abp.EntityFrameworkCore.Extensions
 {
@@ -23,10 +24,10 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
         public async Task<TEntity[]> CreateAsync(TEntity[] entitys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             //使用SqlBulk
-            await DbSet.AddRangeAsync(entitys);
+            await DbSet.AddRangeAsync(entitys).ConfigureAwait(false);
             if (autoSave)
             {
-                await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
+                await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
             }
             return entitys;
         }
@@ -37,7 +38,7 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
             DbSet.RemoveRange(entitys);
             if (autoSave)
             {
-                await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
+                await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
             }
             return entitys;
         }
