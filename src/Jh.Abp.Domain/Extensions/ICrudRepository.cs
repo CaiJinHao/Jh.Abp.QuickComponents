@@ -13,6 +13,15 @@ namespace Jh.Abp.Domain.Extensions
          where TEntity : class, IEntity<TKey>
     {
         /// <summary>
+        /// 创建一条数据
+        /// </summary>
+        /// <param name="entitys"></param>
+        /// <param name="autoSave"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<TEntity> CreateAsync(TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// 创建多条数据
         /// </summary>
         /// <param name="models"></param>

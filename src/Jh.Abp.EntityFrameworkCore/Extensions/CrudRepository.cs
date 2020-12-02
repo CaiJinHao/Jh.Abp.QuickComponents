@@ -21,7 +21,7 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
         {
         }
 
-        public async Task<TEntity[]> CreateAsync(TEntity[] entitys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity[]> CreateAsync(TEntity[] entitys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             //使用SqlBulk
             await DbSet.AddRangeAsync(entitys).ConfigureAwait(false);
@@ -32,7 +32,17 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
             return entitys;
         }
 
-        public  async Task<TEntity[]> DeleteListAsync(Expression<Func<TEntity, bool>> predicate, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity> CreateAsync(TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await DbSet.AddAsync(entity).ConfigureAwait(false);
+            if (autoSave)
+            {
+                await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
+            }
+            return entity;
+        }
+
+        public virtual async Task<TEntity[]> DeleteListAsync(Expression<Func<TEntity, bool>> predicate, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             var entitys = DbSet.Where(predicate).ToArray();
             DbSet.RemoveRange(entitys);
