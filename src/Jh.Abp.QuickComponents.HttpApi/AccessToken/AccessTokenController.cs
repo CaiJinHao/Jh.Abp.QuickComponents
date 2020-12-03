@@ -41,7 +41,7 @@ namespace Jh.Abp.QuickComponents.HttpApi.AccessToken
 
         [AllowAnonymous]
         [HttpPost("Swagger")]
-        public async Task<dynamic> GetSwaggerAccessTokenAsyncV1(AccessTokenRequestDto requestDto)
+        public async Task<dynamic> GetSwaggerAccessTokenAsync(AccessTokenRequestDto requestDto)
         {
             return await _accessTokenAppService.GetSwaggerAccessTokenAsync(requestDto);
         }
