@@ -6,8 +6,8 @@
     <Authors>KimHo</Authors>
     <Company>KimHo</Company>
     <Copyright>KimHo</Copyright>
-    <PackageProjectUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents.HttpApi</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents.HttpApi</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/CaiJinHao/QuickComponents/Jh.Abp.QuickComponents.HttpApi</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CaiJinHao/QuickComponents/Jh.Abp.QuickComponents.HttpApi</RepositoryUrl>
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Abp QuickComponents</PackageReleaseNotes>
@@ -44,7 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\document\images\nugeticon.png">
+    <None Include="..\..\..\document\images\nugeticon.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>

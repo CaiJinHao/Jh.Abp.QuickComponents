@@ -6,16 +6,16 @@
     <Authors>KimHo</Authors>
     <Company>KimHo</Company>
     <Copyright>KimHo</Copyright>
-    <PackageProjectUrl>https://github.com/CaiJinHao/Jh.Abp.Common</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/CaiJinHao/Jh.Abp.Common</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/CaiJinHao/Common/Jh.Abp.Common</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CaiJinHao/Common/Jh.Abp.Common</RepositoryUrl>
     <PackageIcon>nugeticon.png</PackageIcon>
-    <PackageTags>Abp</PackageTags>
-    <PackageReleaseNotes>Abp Common</PackageReleaseNotes>
+    <PackageTags>Common</PackageTags>
+    <PackageReleaseNotes>Common libs</PackageReleaseNotes>
     <Version>1.0.1</Version>
-    <Description>AccessToken</Description>
+    <Description>Common libs</Description>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\document\images\nugeticon.png">
+    <None Include="..\..\..\document\images\nugeticon.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>

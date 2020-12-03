@@ -7,18 +7,17 @@
     <Company>KimHo</Company>
     <Copyright>KimHo</Copyright>
     <PackageIcon>nugeticon.png</PackageIcon>
-    <RepositoryUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</RepositoryUrl>
+    <RepositoryUrl>https://github.com/CaiJinHao/QuickComponents/Jh.Abp.QuickComponents</RepositoryUrl>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Abp webapi项目需要使用的基础组件。Swagger、MIniProfiler、IdentityServer.</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageProjectUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/CaiJinHao/QuickComponents/Jh.Abp.QuickComponents</PackageProjectUrl>
     <Version>1.1.0</Version>
     <RootNamespace>Jh.Abp.QuickComponents</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Jh\Abp\Swagger\index.html" />
-    <None Include="..\..\document\images\nugeticon.png">
+    <None Include="..\..\..\document\images\nugeticon.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>

@@ -6,8 +6,8 @@
     <Authors>KimHo</Authors>
     <Company>KimHo</Company>
     <Copyright>KimHo</Copyright>
-    <PackageProjectUrl>https://github.com/CaiJinHao/Jh.Abp.EntityFrameworkCore</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/CaiJinHao/Jh.Abp.EntityFrameworkCore</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/CaiJinHao/Jh.AbpExtensions/Jh.Abp.EntityFrameworkCore</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CaiJinHao/Jh.AbpExtensions/Jh.Abp.EntityFrameworkCore</RepositoryUrl>
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Abp Extension</PackageReleaseNotes>
@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\document\images\nugeticon.png">
+    <None Include="..\..\..\document\images\nugeticon.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
