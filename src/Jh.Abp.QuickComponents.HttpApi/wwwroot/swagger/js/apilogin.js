@@ -1,13 +1,25 @@
 (function init() {
     var remember_me_key='remember-me-key';
-    var page={
-        prompt:function(title,msg,time){
+    var page = {
+        loadding:false,
+        prompt: function (title, msg, time) {
+            let _the = this;
             $('.prompt .prompt-title').html(title);
             $('.prompt .prompt-msg').html(msg);
             $('.prompt').fadeIn();
-            setTimeout(function(){
-                $('.prompt').fadeOut();
-            },time);
+            if (time) {
+                setTimeout(function () { _the.promptHide(); }, time);
+            }
+        },
+        promptHide: function () {
+            let _the = this;
+            _the.loadding = false;
+            $('.prompt').fadeOut();
+        },
+        loaddingAjax: function (title,msg) {
+            let _the = this;
+            _the.loadding = true;
+            _the.prompt(title, msg);
         },
         remember:function(){
             var login_info_str = localStorage.getItem(remember_me_key);
@@ -35,6 +47,10 @@
         } else {
             localStorage.removeItem(remember_me_key);
         }
+        if (page.loadding) {
+            return;
+        }
+        page.loaddingAjax("登录提示","正在登录中...");
         $.ajax({
             url: '/api/v1/AccessToken/Swagger',
             type: 'POST',
@@ -47,6 +63,8 @@
             error: function (XMLHttpRequest) {
                 var api_result = XMLHttpRequest.responseJSON;
                 page.prompt("登录提示", api_result.error.message, 3000);
+            },
+            complete: function (jqXHR, textStatus) {
             }
         });
     });
