@@ -4,6 +4,7 @@ using Jh.Abp.QuickComponents.AccessToken;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Volo.Abp.AutoMapper;
 
 namespace YourProjectName.AccessToken
 {

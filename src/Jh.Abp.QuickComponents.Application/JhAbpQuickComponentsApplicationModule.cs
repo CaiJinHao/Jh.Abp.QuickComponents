@@ -19,6 +19,12 @@ namespace Jh.Abp.QuickComponents
             {
                 options.FileSets.AddEmbedded<JhAbpQuickComponentsApplicationModule>();
             });
+
+            context.Services.AddAutoMapperObjectMapper<JhAbpQuickComponentsApplicationModule>();
+            Configure<AbpAutoMapperOptions>(options =>
+            {
+                options.AddMaps<JhAbpQuickComponentsApplicationModule>(validate: true);
+            });
         }
     }
 }
