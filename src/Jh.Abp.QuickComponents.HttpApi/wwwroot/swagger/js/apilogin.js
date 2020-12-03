@@ -10,12 +10,12 @@
             },time);
         },
         remember:function(){
-            var login_info_str=localStorage.getItem(remember_me_key);
-            if(login_info_str!=null)
+            var login_info_str = localStorage.getItem(remember_me_key);
+            if (login_info_str)
             {
-                var login_info=JSON.parse(login_info_str);
-                $('#UserName').val(login_info.Key);
-                $('#Password').val(login_info.Secret);
+                var login_info =JSON.parse(login_info_str);
+                $('#UserName').val(login_info.UserNameOrEmailAddress);
+                $('#Password').val(login_info.Password);
                 $('#remember-me').prop('checked',true);
             }
         }
@@ -25,14 +25,15 @@
 
     $('#login-form').submit(function (event) {
         event.preventDefault();
-        var remember_me=$('#remember-me').prop('checked');
+        var remember_me = $('#remember-me').prop('checked');
         var login_info = {
             UserNameOrEmailAddress: $('#UserName').val(),
             Password: $('#Password').val()
         };
-        if(remember_me)
-        {
-            localStorage.setItem(remember_me_key,JSON.stringify(login_info));
+        if (remember_me) {
+            localStorage.setItem(remember_me_key, JSON.stringify(login_info));
+        } else {
+            localStorage.removeItem(remember_me_key);
         }
         $.ajax({
             url: '/api/v1/AccessToken/Swagger',
