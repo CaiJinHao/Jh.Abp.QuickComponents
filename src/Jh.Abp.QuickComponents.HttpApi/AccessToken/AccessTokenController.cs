@@ -50,7 +50,7 @@ namespace Jh.Abp.QuickComponents.HttpApi.AccessToken
         public string GetClaimsAsync(string type)
         {
             var claims= HttpContext.User.FindFirst(type);
-            return claims.Value;
+            return claims?.Value;
         }
 
         /*
