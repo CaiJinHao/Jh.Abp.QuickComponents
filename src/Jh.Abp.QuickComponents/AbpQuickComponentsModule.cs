@@ -35,6 +35,7 @@ namespace Jh.Abp.QuickComponents
             context.Services.AddSwaggerComponent(configuration);
             context.Services.AddLocalizationComponent();
             context.Services.AddJwtAuthenticationComponent(configuration);
+            context.Services.AddCorsPolicy(configuration);
         }
 
         public override void OnApplicationInitialization(Volo.Abp.ApplicationInitializationContext context)

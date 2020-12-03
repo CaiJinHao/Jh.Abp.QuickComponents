@@ -46,6 +46,13 @@ namespace Jh.Abp.QuickComponents.HttpApi.AccessToken
             return await _accessTokenAppService.GetSwaggerAccessTokenAsync(requestDto);
         }
 
+        [HttpGet]
+        public string GetClaimsAsync(string type)
+        {
+            var claims= HttpContext.User.FindFirst(type);
+            return claims.Value;
+        }
+
         /*
          [HttpPost]
         [MapToApiVersion("1.0")]
