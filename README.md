@@ -104,20 +104,28 @@ context.Services.AddCors(options =>
 ## 引用模块
 
 typeof(AbpQuickComponentsModule),
-typeof(JhAbpQuickComponentsHttpApiModule)
+
+## 其他扩展修改
+
+context.Services.Configure<AbpExceptionHandlingOptions>(options =>
+            {
+                options.SendExceptionsDetailsToClients = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
+            });
 
 ## 完整配置
-
-"Redis": {
+"AppSettings": {
+    "SendExceptionsDetailsToClients": false
+  },
+  "Redis": {
     "Configuration": "127.0.0.1"
   },
   "AuthServer": {
-    "Authority": "https://localhost:6002/",
-    "ApiName": "YourProjectName",
+    "Authority": "https://localhost:44332/",
+    "ApiName": "EquipmentQuotationApp",
     "RequireHttps": false
   },
   "DistributedCache": {
-    "KeyPrefix": "YourProjectName:"
+    "KeyPrefix": "EquipmentQuotationApp:"
   },
   "SwaggerApi": {
     "User": {
@@ -125,11 +133,11 @@ typeof(JhAbpQuickComponentsHttpApiModule)
       "Password": "123456"
     },
     "OpenApiInfo": {
-      "Title": "YourProjectName Title",
+      "Title": "设备报价系统",
       "Version": "v1",
-      "Description": "YourProjectName Description"
+      "Description": "设备报价系统"
     },
-    "DocumentTitle": "XXX平台 RESTfull Api",
+    "DocumentTitle": "设备报价平台 RESTfull Api",
     "RoutePrefix": "swagger",
     "SwaggerEndpoint": {
       "Name": "Support APP API"
@@ -138,17 +146,17 @@ typeof(JhAbpQuickComponentsHttpApiModule)
   "IdentityServer": {
     "Clients": {
       "Web": {
-        "Authority": "https://localhost:6002/",
-        "ClientId": "YourProjectName_Web",
+        "Authority": "https://localhost:44332/",
+        "ClientId": "EquipmentQuotationApp_Web",
         "ClientSecret": "1q2w3e*",
-        "Scope": "role email YourProjectName offline_access",
+        "Scope": "role email EquipmentQuotationApp offline_access",
         "RequireHttps": false
       },
       "WebApi": {
-        "Authority": "https://localhost:6002/",
-        "ClientId": "YourProjectName_ConsoleTestApp",
+        "Authority": "https://localhost:44332/",
+        "ClientId": "EquipmentQuotationApp_ConsoleTestApp",
         "ClientSecret": "1q2w3e*",
-        "Scope": "role email YourProjectName offline_access",
+        "Scope": "role email EquipmentQuotationApp offline_access",
         "RequireHttps": false
       }
     }
