@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -11,7 +11,7 @@
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Abp QuickComponents</PackageReleaseNotes>
-    <Version>1.1.1</Version>
+    <Version>1.1.2</Version>
     <Description>AccessToken</Description>
   </PropertyGroup>
   
@@ -23,7 +23,7 @@
   </ItemGroup>
 
     <ItemGroup>
-    <PackageReference Include="IdentityModel" Version="4.4.0" />
+    <PackageReference Include="IdentityModel" Version="4.3.1" />
     <PackageReference Include="Volo.Abp.AutoMapper" Version="3.3.1" />
     <PackageReference Include="Volo.Abp.Ddd.Application" Version="3.3.1" />
     <PackageReference Include="Volo.Abp.IdentityModel" Version="3.3.1" />

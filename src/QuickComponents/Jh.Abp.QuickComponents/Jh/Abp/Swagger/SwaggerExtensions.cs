@@ -1,18 +1,16 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
-using System.Reflection;
-using Microsoft.AspNetCore.Mvc;
-using Volo.Abp.Modularity;
-using Volo.Abp.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.Routing;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Volo.Abp.AspNetCore.Mvc;
 
 namespace Jh.Abp.QuickComponents.Swagger
 {
@@ -117,7 +115,7 @@ namespace Jh.Abp.QuickComponents.Swagger
                 });
         }
 
-        public static IApplicationBuilder UseSwaggerComponent(this IApplicationBuilder app, IConfiguration configuration, Type StarupType)
+        public static IApplicationBuilder UseJhSwagger(this IApplicationBuilder app, IConfiguration configuration, Type StarupType)
         {
             //StarupType用于加载Swagger文档的类的程序集
             if (StarupType == null)
