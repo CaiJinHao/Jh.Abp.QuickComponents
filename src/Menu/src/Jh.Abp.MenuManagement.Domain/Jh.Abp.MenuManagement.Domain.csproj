@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Jh.Abp.MenuManagement</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Jh.Abp.Domain" Version="1.0.5" />
+    <PackageReference Include="Volo.Abp.Ddd.Domain" Version="4.0.0" />
+    <ProjectReference Include="..\Jh.Abp.MenuManagement.Domain.Shared\Jh.Abp.MenuManagement.Domain.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

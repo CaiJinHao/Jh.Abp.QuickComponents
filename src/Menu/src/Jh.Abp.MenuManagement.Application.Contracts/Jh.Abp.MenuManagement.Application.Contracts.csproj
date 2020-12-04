@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Jh.Abp.MenuManagement</RootNamespace>
+    <UserSecretsId>aa13ea6e-f093-48d9-9bbf-1dc6e97ee752</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Jh.Abp.Application.Contracts" Version="1.0.5" />
+    <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="4.0.0" />
+    <PackageReference Include="Volo.Abp.Authorization" Version="4.0.0" />
+    <ProjectReference Include="..\Jh.Abp.MenuManagement.Domain.Shared\Jh.Abp.MenuManagement.Domain.Shared.csproj" />
+    <ProjectReference Include="..\Jh.Abp.MenuManagement.Domain\Jh.Abp.MenuManagement.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
