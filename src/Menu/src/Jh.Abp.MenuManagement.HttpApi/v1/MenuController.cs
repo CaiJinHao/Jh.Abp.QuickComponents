@@ -9,8 +9,7 @@ using Volo.Abp.Application.Dtos;
 namespace Jh.Abp.MenuManagement.v1
 {
     [RemoteService]
-    //[Route("api/v{apiVersion:apiVersion}/[controller]")]
-    [Route("api/v1/[controller]")]
+    [Route("api/v{apiVersion:apiVersion}/[controller]")]
     public class MenuController: MenuManagementController
     {
         private readonly IMenuAppService menuAppService;

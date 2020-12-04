@@ -32,10 +32,14 @@ using Volo.Abp.Security.Claims;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.VirtualFileSystem;
+using Jh.Abp.QuickComponents;
+using Jh.Abp.QuickComponents.Localization;
+using Jh.Abp.QuickComponents.Swagger;
 
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
+        typeof(AbpQuickComponentsModule),
         typeof(MenuManagementApplicationModule),
         typeof(MenuManagementEntityFrameworkCoreModule),
         typeof(MenuManagementHttpApiModule),
@@ -79,18 +83,18 @@ namespace Jh.Abp.MenuManagement
                 });
             }
 
-            context.Services.AddAbpSwaggerGenWithOAuth(
-                configuration["AuthServer:Authority"],
-                new Dictionary<string, string>
-                {
-                    {"MenuManagement", "MenuManagement API"}
-                },
-                options =>
-                {
-                    options.SwaggerDoc("v1", new OpenApiInfo {Title = "MenuManagement API", Version = "v1"});
-                    options.DocInclusionPredicate((docName, description) => true);
-                    options.CustomSchemaIds(type => type.FullName);
-                });
+            //context.Services.AddAbpSwaggerGenWithOAuth(
+            //    configuration["AuthServer:Authority"],
+            //    new Dictionary<string, string>
+            //    {
+            //        {"MenuManagement", "MenuManagement API"}
+            //    },
+            //    options =>
+            //    {
+            //        options.SwaggerDoc("v1", new OpenApiInfo {Title = "MenuManagement API", Version = "v1"});
+            //        options.DocInclusionPredicate((docName, description) => true);
+            //        options.CustomSchemaIds(type => type.FullName);
+            //    });
 
             Configure<AbpLocalizationOptions>(options =>
             {
@@ -105,13 +109,13 @@ namespace Jh.Abp.MenuManagement
                 options.Languages.Add(new LanguageInfo("zh-Hant", "zh-Hant", "繁體中文"));
             });
 
-            context.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = configuration["AuthServer:Authority"];
-                    options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
-                    options.Audience = "MenuManagement";
-                });
+            //context.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddJwtBearer(options =>
+            //    {
+            //        options.Authority = configuration["AuthServer:Authority"];
+            //        options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
+            //        options.Audience = "MenuManagement";
+            //    });
 
             Configure<AbpDistributedCacheOptions>(options =>
             {
@@ -126,24 +130,24 @@ namespace Jh.Abp.MenuManagement
                     .PersistKeysToStackExchangeRedis(redis, "MenuManagement-Protection-Keys");
             }
 
-            context.Services.AddCors(options =>
-            {
-                options.AddPolicy(DefaultCorsPolicyName, builder =>
-                {
-                    builder
-                        .WithOrigins(
-                            configuration["App:CorsOrigins"]
-                                .Split(",", StringSplitOptions.RemoveEmptyEntries)
-                                .Select(o => o.RemovePostFix("/"))
-                                .ToArray()
-                        )
-                        .WithAbpExposedHeaders()
-                        .SetIsOriginAllowedToAllowWildcardSubdomains()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials();
-                });
-            });
+            //context.Services.AddCors(options =>
+            //{
+            //    options.AddPolicy(DefaultCorsPolicyName, builder =>
+            //    {
+            //        builder
+            //            .WithOrigins(
+            //                configuration["App:CorsOrigins"]
+            //                    .Split(",", StringSplitOptions.RemoveEmptyEntries)
+            //                    .Select(o => o.RemovePostFix("/"))
+            //                    .ToArray()
+            //            )
+            //            .WithAbpExposedHeaders()
+            //            .SetIsOriginAllowedToAllowWildcardSubdomains()
+            //            .AllowAnyHeader()
+            //            .AllowAnyMethod()
+            //            .AllowCredentials();
+            //    });
+            //});
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -165,23 +169,24 @@ namespace Jh.Abp.MenuManagement
             app.UseCorrelationId();
             app.UseVirtualFiles();
             app.UseRouting();
-            app.UseCors(DefaultCorsPolicyName);
+            //app.UseCors(DefaultCorsPolicyName);
             app.UseAuthentication();
             if (MultiTenancyConsts.IsEnabled)
             {
                 app.UseMultiTenancy();
             }
-            app.UseAbpRequestLocalization();
+            app.UseJhRequestLocalization();
             app.UseAuthorization();
-            app.UseSwagger();
-            app.UseSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
+            //app.UseSwagger();
+            //app.UseSwaggerUI(options =>
+            //{
+            //    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
 
-                var configuration = context.GetConfiguration();
-                options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
-                options.OAuthClientSecret(configuration["AuthServer:SwaggerClientSecret"]);
-            });
+            //    var configuration = context.GetConfiguration();
+            //    options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
+            //    options.OAuthClientSecret(configuration["AuthServer:SwaggerClientSecret"]);
+            //});
+            app.UseSwaggerComponent(context.GetConfiguration(),this.GetType());
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();
