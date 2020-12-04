@@ -23,7 +23,11 @@ bld/
 [Ll]og/
 
 # Visual Studio 2015 cache/options directory
+<<<<<<< HEAD
 **/.vs/
+=======
+.vs/
+>>>>>>> dev-menu-management
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
 
@@ -251,6 +255,7 @@ paket-files/
 .idea/
 *.sln.iml
 
+<<<<<<< HEAD
 # ABP
 build/outputs
 !framework/src/Volo.Abp.AspNetCore.Mvc.UI.Packages/Volo/Abp/AspNetCore/Mvc/UI/Packages/*
@@ -304,3 +309,10 @@ modules/virtual-file-explorer/app/Volo.Abp.VirtualFileExplorer.DemoApp/Logs/
 /templates/app/angular/package-lock.json
 /modules/client-simulation/demo/Volo.ClientSimulation.Demo/package-lock.json
 
+=======
+# YourProjectName
+host/YourProjectName.IdentityServer/Logs/logs.txt
+host/YourProjectName.HttpApi.Host/Logs/logs.txt
+host/YourProjectName.Web.Host/Logs/logs.txt
+host/YourProjectName.Web.Unified/Logs/logs.txt
+>>>>>>> dev-menu-management

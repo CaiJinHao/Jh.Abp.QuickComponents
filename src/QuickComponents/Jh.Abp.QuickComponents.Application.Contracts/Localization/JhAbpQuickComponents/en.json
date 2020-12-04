@@ -1,0 +1,8 @@
+{
+  "culture": "en",
+  "texts": {
+    "YourProjectName:000001": "Invalid username '{UserNameOrEmailAddress}', check username or password",
+    "YourProjectName:000002": "RefreshToken is invalid or expired",
+    "YourProjectName:000003": "Authentication service exception"
+  }
+}

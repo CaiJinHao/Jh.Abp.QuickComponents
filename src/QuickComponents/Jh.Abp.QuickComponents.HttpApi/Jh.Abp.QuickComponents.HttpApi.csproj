@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>KimHo</Authors>
+    <Company>KimHo</Company>
+    <Copyright>KimHo</Copyright>
+    <PackageProjectUrl>https://github.com/CaiJinHao/QuickComponents/Jh.Abp.QuickComponents.HttpApi</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CaiJinHao/QuickComponents/Jh.Abp.QuickComponents.HttpApi</RepositoryUrl>
+    <PackageIcon>nugeticon.png</PackageIcon>
+    <PackageTags>Abp</PackageTags>
+    <PackageReleaseNotes>Abp QuickComponents</PackageReleaseNotes>
+    <Version>1.1.2</Version>
+    <Description>AccessToken</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\swagger\js\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\swagger\resources\images\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\swagger\resources\images\bg\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\swagger\resources\images\login\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot\swagger\resources\themes\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="3.3.1" />
+    <ProjectReference Include="..\Jh.Abp.QuickComponents.Application.Contracts\Jh.Abp.QuickComponents.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Jh.Abp.QuickComponents.Application\Jh.Abp.QuickComponents.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\document\images\nugeticon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+</Project>

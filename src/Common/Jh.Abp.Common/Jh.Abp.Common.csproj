@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>KimHo</Authors>
+    <Company>KimHo</Company>
+    <Copyright>KimHo</Copyright>
+    <PackageProjectUrl>https://github.com/CaiJinHao/Common/Jh.Abp.Common</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CaiJinHao/Common/Jh.Abp.Common</RepositoryUrl>
+    <PackageIcon>nugeticon.png</PackageIcon>
+    <PackageTags>Common</PackageTags>
+    <PackageReleaseNotes>Common libs</PackageReleaseNotes>
+    <Version>1.0.5</Version>
+    <Description>Common libs</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\..\document\images\nugeticon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>KimHo</Authors>
+    <Company>KimHo</Company>
+    <Copyright>KimHo</Copyright>
+    <PackageProjectUrl>https://github.com/CaiJinHao/QuickComponents/Jh.Abp.QuickComponents.Application</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CaiJinHao/QuickComponents/Jh.Abp.QuickComponents.Application</RepositoryUrl>
+    <PackageIcon>nugeticon.png</PackageIcon>
+    <PackageTags>Abp</PackageTags>
+    <PackageReleaseNotes>Abp QuickComponents</PackageReleaseNotes>
+    <Version>1.1.2</Version>
+    <Description>AccessToken</Description>
+  </PropertyGroup>
+  
+    <ItemGroup>
+      <None Include="..\..\..\document\images\nugeticon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+    <ItemGroup>
+    <PackageReference Include="IdentityModel" Version="4.3.1" />
+    <PackageReference Include="Volo.Abp.AutoMapper" Version="3.3.1" />
+    <PackageReference Include="Volo.Abp.Ddd.Application" Version="3.3.1" />
+    <PackageReference Include="Volo.Abp.IdentityModel" Version="3.3.1" />
+  </ItemGroup>  
+  <ItemGroup>
+    <ProjectReference Include="..\Jh.Abp.QuickComponents.Application.Contracts\Jh.Abp.QuickComponents.Application.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

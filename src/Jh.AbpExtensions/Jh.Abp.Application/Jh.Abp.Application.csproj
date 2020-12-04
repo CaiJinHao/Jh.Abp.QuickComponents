@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>KimHo</Authors>
+    <Company>KimHo</Company>
+    <Copyright>KimHo</Copyright>
+    <PackageProjectUrl>https://github.com/CaiJinHao/Jh.AbpExtensions/Jh.Abp.Application</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CaiJinHao/Jh.AbpExtensions/Jh.Abp.Application</RepositoryUrl>
+    <PackageIcon>nugeticon.png</PackageIcon>
+    <PackageTags>Abp</PackageTags>
+    <PackageReleaseNotes>Abp Extension</PackageReleaseNotes>
+    <Version>1.0.5</Version>
+    <Description>AccessToken</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\document\images\nugeticon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Ddd.Application" Version="3.3.1" />
+    <PackageReference Include="Volo.Abp.Ddd.Domain" Version="3.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Jh.Abp.Common\Jh.Abp.Common.csproj" />
+    <ProjectReference Include="..\Jh.Abp.Application.Contracts\Jh.Abp.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Jh.Abp.Domain\Jh.Abp.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
