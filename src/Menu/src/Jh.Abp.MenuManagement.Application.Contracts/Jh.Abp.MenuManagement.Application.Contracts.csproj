@@ -6,7 +6,25 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Jh.Abp.MenuManagement</RootNamespace>
     <UserSecretsId>aa13ea6e-f093-48d9-9bbf-1dc6e97ee752</UserSecretsId>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>KimHo</Authors>
+    <Company>KimHo</Company>
+    <Copyright>KimHo</Copyright>
+    <PackageProjectUrl>https://github.com/CaiJinHao/Menu/src/Jh.Abp.MenuManagement.Application.Contracts</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CaiJinHao/Menu/src/Jh.Abp.MenuManagement.Application.Contracts</RepositoryUrl>
+    <PackageIcon>nugeticon.png</PackageIcon>
+    <PackageTags>Abp</PackageTags>
+    <PackageReleaseNotes>Jh.Abp.MenuManagement</PackageReleaseNotes>
+    <Version>0.0.1</Version>
+    <Description>Jh.Abp.MenuManagement</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\document\images\nugeticon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Jh.Abp.Application.Contracts" Version="1.0.5" />

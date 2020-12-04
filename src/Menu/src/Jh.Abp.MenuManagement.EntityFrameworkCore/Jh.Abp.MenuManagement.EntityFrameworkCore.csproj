@@ -5,7 +5,25 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <RootNamespace>Jh.Abp.MenuManagement</RootNamespace>
+  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>KimHo</Authors>
+    <Company>KimHo</Company>
+    <Copyright>KimHo</Copyright>
+    <PackageProjectUrl>https://github.com/CaiJinHao/Menu/src/Jh.Abp.MenuManagement.EntityFrameworkCore</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CaiJinHao/Menu/src/Jh.Abp.MenuManagement.EntityFrameworkCore</RepositoryUrl>
+    <PackageIcon>nugeticon.png</PackageIcon>
+    <PackageTags>Abp</PackageTags>
+    <PackageReleaseNotes>Jh.Abp.MenuManagement</PackageReleaseNotes>
+    <Version>0.0.1</Version>
+    <Description>Jh.Abp.MenuManagement</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\document\images\nugeticon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Jh.Abp.EntityFrameworkCore" Version="1.0.5" />
