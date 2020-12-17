@@ -30,8 +30,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Jh.Abp.MenuManagement.HttpApi\Jh.Abp.MenuManagement.HttpApi.csproj" />
-    <ProjectReference Include="..\..\src\Jh.Abp.MenuManagement.Application\Jh.Abp.MenuManagement.Application.csproj" />
-    <ProjectReference Include="..\..\src\Jh.Abp.MenuManagement.EntityFrameworkCore\Jh.Abp.MenuManagement.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Jh.Abp.MenuManagement.Host.Shared\Jh.Abp.MenuManagement.Host.Shared.csproj" />
   </ItemGroup>
 

@@ -40,8 +40,6 @@ namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
         typeof(AbpQuickComponentsModule),
-        typeof(MenuManagementApplicationModule),
-        typeof(MenuManagementEntityFrameworkCoreModule),
         typeof(MenuManagementHttpApiModule),
         typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
         typeof(AbpAutofacModule),
