@@ -5,8 +5,7 @@ using Volo.Abp.EntityFrameworkCore;
 
 namespace Jh.Abp.MenuManagement.EntityFrameworkCore
 {
-    //不赋值使用的是主项目的DbContext赋值的字符串
-    //[ConnectionStringName(MenuManagementDbProperties.ConnectionStringName)]
+    [ConnectionStringName(MenuManagementDbProperties.ConnectionStringName)]
     public class MenuManagementDbContext : AbpDbContext<MenuManagementDbContext>, IMenuManagementDbContext
     {
         /* Add DbSet for each Aggregate Root here. Example:

@@ -8,6 +8,9 @@ using Jh.Abp.MenuManagement.EntityFrameworkCore;
 
 namespace Jh.Abp.MenuManagement
 {
+    /// <summary>
+    /// 系统管理模块(菜单管理)
+    /// </summary>
     [DependsOn(
         typeof(MenuManagementApplicationModule),
         typeof(MenuManagementEntityFrameworkCoreModule),
