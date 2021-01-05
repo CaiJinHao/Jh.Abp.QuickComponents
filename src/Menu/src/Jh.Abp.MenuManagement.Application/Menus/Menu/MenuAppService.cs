@@ -66,5 +66,12 @@ namespace Jh.Abp.MenuManagement.Menus
             await menuAndRoleMapRepository.DeleteListAsync(a => entitys.Select(b => b.Id).Contains(a.MenuId)).ConfigureAwait(false);
             return entitys;
         }
+
+        public  Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync()
+        {
+            //var menus = await GetListAsync(new MenuRetrieveInputDto() { Use = UseType.Yes });
+            //var auth_menus = await menuAndRoleMapRepository.get
+            throw new Exception();
+        }
     }
 }

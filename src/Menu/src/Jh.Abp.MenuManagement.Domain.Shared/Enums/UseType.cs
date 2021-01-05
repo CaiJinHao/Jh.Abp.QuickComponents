@@ -5,7 +5,7 @@ using System.Text;
 namespace Jh.Abp.MenuManagement
 {
    /// <summary>
-   /// 可用类型
+   /// 可用类型(是or否)
    /// </summary>
     public enum UseType
     {
