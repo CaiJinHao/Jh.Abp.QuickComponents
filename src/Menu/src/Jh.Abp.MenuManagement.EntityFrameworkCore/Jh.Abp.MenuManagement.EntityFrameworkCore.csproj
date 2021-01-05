@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Jh.Abp.EntityFrameworkCore" Version="1.0.5" />
     <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="4.0.0" />
+    <ProjectReference Include="..\..\..\Jh.AbpExtensions\Jh.Abp.EntityFrameworkCore\Jh.Abp.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Jh.Abp.MenuManagement.Domain\Jh.Abp.MenuManagement.Domain.csproj" />
   </ItemGroup>
 

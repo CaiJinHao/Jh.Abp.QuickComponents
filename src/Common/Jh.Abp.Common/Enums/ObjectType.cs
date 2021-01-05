@@ -20,6 +20,6 @@ namespace Jh.Abp.Common.Enums
         Guid,
         String,
         Bool,
-        DateTime,
+        DateTime
     }
 }

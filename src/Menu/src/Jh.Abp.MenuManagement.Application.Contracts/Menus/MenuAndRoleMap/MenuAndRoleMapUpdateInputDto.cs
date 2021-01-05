@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
-    class MenuAndRoleMapUpdateInputDto
+    public class MenuAndRoleMapUpdateInputDto: MenuAndRoleMapCreateInputDto
     {
     }
 }

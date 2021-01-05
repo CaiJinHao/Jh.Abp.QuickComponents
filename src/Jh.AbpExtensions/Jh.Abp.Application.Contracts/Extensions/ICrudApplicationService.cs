@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -81,6 +83,6 @@ namespace Jh.Abp.Extensions
         /// </summary>
         /// <param name="inputDto"></param>
         /// <returns></returns>
-        Task<List<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, CancellationToken cancellationToken = default(CancellationToken));
+        Task<List<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, Action<IQueryable<TEntity>> queryFunc = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

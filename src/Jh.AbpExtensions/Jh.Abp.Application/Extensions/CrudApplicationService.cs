@@ -4,6 +4,7 @@ using Jh.Abp.Domain.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
@@ -44,6 +45,7 @@ namespace Jh.Abp.Extensions
         {
             await CheckDeletePolicyAsync().ConfigureAwait(false);
             var lambda = LinqExpression.ConvetToExpression<TDeleteInputDto, TEntity>(deleteInputDto);
+            //queryFunc(lambda);
             return await crudRepository.DeleteListAsync(lambda, autoSave, cancellationToken).ConfigureAwait(false);
         }
 
@@ -59,10 +61,10 @@ namespace Jh.Abp.Extensions
             return (await crudRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, cancellationToken).ConfigureAwait(false)).FirstOrDefault();
         }
 
-        public virtual async Task<List<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<List<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, Action<IQueryable<TEntity>> queryFunc=null, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckGetListPolicyAsync().ConfigureAwait(false);
-            var query = CreateFilteredQuery(inputDto);
+            var query = CreateFilteredQuery(inputDto, queryFunc);
             var entities = await AsyncExecuter.ToListAsync(query, cancellationToken).ConfigureAwait(false);
             return ObjectMapper.Map<List<TEntity>, List<TEntityDto>>(entities);
         }
@@ -79,6 +81,17 @@ namespace Jh.Abp.Extensions
         {
             var lambda = LinqExpression.ConvetToExpression<TRetrieveInputDto, TEntity>(inputDto);
             return ReadOnlyRepository.Where(lambda);
+        }
+
+        protected IQueryable<TEntity> CreateFilteredQuery(TRetrieveInputDto inputDto, Action<IQueryable<TEntity>> queryFunc)
+        {
+            var lambda = LinqExpression.ConvetToExpression<TRetrieveInputDto, TEntity>(inputDto);
+            var query = ReadOnlyRepository.Where(lambda);
+            if (queryFunc != null)
+            {
+                queryFunc(query);
+            }
+            return query;
         }
     }
 }
