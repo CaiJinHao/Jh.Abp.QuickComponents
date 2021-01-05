@@ -59,29 +59,41 @@ img {vertical-align: middle;}
 
 
 .prompt {
-    position: absolute;
+    position: fixed;
     top: 30%;
     left: 40%;
-    width: 20%;
-    background-color: #fff;
+    width: 400px;
     min-height: 35px;
     display: none;
     font-size: 1.3rem;
+    padding: 14px 26px 14px 13px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ebeef5;
+    background-color: #fff;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+    transition: opacity .3s,transform .3s,left .3s,right .3s,top .4s,bottom .3s;
+    overflow: hidden;
 }
-.prompt .prompt-title{
-    letter-spacing: 10px;
-    color:#000000;    
-    background-color: lightgrey;
-    padding: 5px;
-    padding-left: 15px;
-}
-.prompt .prompt-msg{
-    color:green;
-    padding: 5px;
-    padding-left: 15px;
-    font-size:1.4rem;
-}
+    .prompt .prompt_group {
+        margin-left: 13px;
+        margin-right: 8px;
+    }
 
+        .prompt .prompt_group .prompt-title {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #303133;
+            margin: 0;
+        }
+
+        .prompt .prompt_group .prompt-content {
+            font-size: 1.1rem;
+            line-height: 21px;
+            margin: 6px 0 0;
+            color: #606266;
+            text-align: justify;
+        }
 
 button:focus {
     outline: none !important;

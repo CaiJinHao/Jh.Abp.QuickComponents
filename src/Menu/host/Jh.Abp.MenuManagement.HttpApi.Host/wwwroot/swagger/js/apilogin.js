@@ -5,7 +5,7 @@
         prompt: function (title, msg, time) {
             let _the = this;
             $('.prompt .prompt-title').html(title);
-            $('.prompt .prompt-msg').html(msg);
+            $('.prompt .prompt-content').html(msg);
             $('.prompt').fadeIn();
             if (time) {
                 setTimeout(function () { _the.promptHide(); }, time);
