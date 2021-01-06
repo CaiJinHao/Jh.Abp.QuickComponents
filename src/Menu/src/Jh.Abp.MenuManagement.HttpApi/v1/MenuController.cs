@@ -74,7 +74,9 @@ namespace Jh.Abp.MenuManagement.v1
         [HttpGet]
         public async Task<List<MenuDto>> GetEntitysAsync(MenuRetrieveInputDto inputDto)
         {
-            return await menuAppService.GetEntitysAsync(inputDto,(q)=> { q = q.Where(a => a.Code == "A0101"); });
+            var expressTest = Jh.Abp.Common.Linq.LinqExpression.True<Menu>();
+            expressTest = expressTest.And(a=>a.Code== "A0101");
+            return await menuAppService.GetEntitysAsync(inputDto, expressTest);
         }
 
         /// <summary>

@@ -83,6 +83,6 @@ namespace Jh.Abp.Extensions
         /// </summary>
         /// <param name="inputDto"></param>
         /// <returns></returns>
-        Task<List<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, Action<IQueryable<TEntity>> queryFunc = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<List<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, Expression<Func<TEntity, bool>> queryFunc = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

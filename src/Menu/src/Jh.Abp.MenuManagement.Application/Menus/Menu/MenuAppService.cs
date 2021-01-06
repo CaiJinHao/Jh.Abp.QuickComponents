@@ -80,10 +80,9 @@ namespace Jh.Abp.MenuManagement.Menus
             var auth_menus = await menuAndRoleMapRepository.Where(a => a.RoleId == roleid).ToListAsync();
 
             var test1 = await menuAndRoleMapAppService.GetEntitysAsync(new MenuAndRoleMapRetrieveInputDto() { RoleId = roleid });
-            var test2 = await menuAndRoleMapAppService.GetEntitysAsync(new MenuAndRoleMapRetrieveInputDto(), (query) =>
-            {
-                query.Where(a => a.RoleId == roleid);
-            });
+            var expressTest = Jh.Abp.Common.Linq.LinqExpression.True<MenuAndRoleMap>();
+            expressTest=expressTest.And(a => a.RoleId == roleid);
+            var test2 = await menuAndRoleMapAppService.GetEntitysAsync(new MenuAndRoleMapRetrieveInputDto(), expressTest);
             //TODO:获取菜单树
             throw new Exception();
         }

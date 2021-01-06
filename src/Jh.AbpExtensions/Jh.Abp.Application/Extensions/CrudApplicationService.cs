@@ -61,7 +61,7 @@ namespace Jh.Abp.Extensions
             return (await crudRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, cancellationToken).ConfigureAwait(false)).FirstOrDefault();
         }
 
-        public virtual async Task<List<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, Action<IQueryable<TEntity>> queryFunc=null, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<List<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, Expression<Func<TEntity, bool>> queryFunc=null, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckGetListPolicyAsync().ConfigureAwait(false);
             var query = CreateFilteredQuery(inputDto, queryFunc);
@@ -83,7 +83,7 @@ namespace Jh.Abp.Extensions
             return ReadOnlyRepository.Where(lambda);
         }
 
-        protected IQueryable<TEntity> CreateFilteredQuery(TRetrieveInputDto inputDto, Action<IQueryable<TEntity>> queryFunc)
+        protected IQueryable<TEntity> CreateFilteredQuery(TRetrieveInputDto inputDto, Expression<Func<TEntity, bool>> queryFunc)
         {
             var lambda = LinqExpression.ConvetToExpression<TRetrieveInputDto, TEntity>(inputDto);
             return ReadOnlyRepository.Where(lambda);
