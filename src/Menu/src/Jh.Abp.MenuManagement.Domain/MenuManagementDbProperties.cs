@@ -3,7 +3,7 @@
     public static class MenuManagementDbProperties
     {
         /// <summary>
-        /// 系统管理模块
+        /// 隶属于系统管理模块
         /// </summary>
         public const string BaseDbTablePrefix = "Sys";
         public static string DbTablePrefix { get; set; } = BaseDbTablePrefix;
@@ -12,6 +12,6 @@
         /// <summary>
         /// 系统管理模块
         /// </summary>
-        public const string ConnectionStringName = "SysManagement";
+        public const string ConnectionStringName = "MenuManagement";
     }
 }
