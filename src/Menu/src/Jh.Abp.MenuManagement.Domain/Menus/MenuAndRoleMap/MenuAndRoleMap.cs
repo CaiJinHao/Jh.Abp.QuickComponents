@@ -21,6 +21,7 @@ namespace Jh.Abp.MenuManagement.Menus
         [Required]
         public Guid RoleId { get; set; }
 
+        [NotMapped]
         public Menu Menu { get; set; }
 
         public MenuAndRoleMap() { }

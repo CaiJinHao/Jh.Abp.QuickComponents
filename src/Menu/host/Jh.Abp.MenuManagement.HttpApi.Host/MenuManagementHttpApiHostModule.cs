@@ -184,7 +184,7 @@ namespace Jh.Abp.MenuManagement
             //    options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
             //    options.OAuthClientSecret(configuration["AuthServer:SwaggerClientSecret"]);
             //});
-            app.UseSwaggerComponent(context.GetConfiguration(),this.GetType());
+            app.UseJhSwagger(context.GetConfiguration(),this.GetType());
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();

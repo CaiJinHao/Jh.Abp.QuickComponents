@@ -46,6 +46,7 @@ namespace Jh.Abp.MenuManagement
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseUrls("https://*:6101");
                     webBuilder.UseStartup<Startup>();
                 })
                 .UseAutofac()

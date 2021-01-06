@@ -12,17 +12,17 @@ namespace Jh.Abp.MenuManagement.Menus
         {
             CreateMap<MenuAndRoleMap, MenuAndRoleMapDto>();
 
-            CreateMap<MenuAndRoleMapCreateInputDto, MenuAndRoleMap>()
-                 .Ignore(a => a.Id);
+            CreateMap<MenuAndRoleMapCreateInputDto, MenuAndRoleMap>().IgnoreCreationAuditedObjectProperties()
+                 .Ignore(a => a.Id).Ignore(a=>a.Menu);
 
-            CreateMap<MenuAndRoleMapDeleteInputDto, MenuAndRoleMap>()
-                 .Ignore(a => a.Id);
+            CreateMap<MenuAndRoleMapDeleteInputDto, MenuAndRoleMap>().IgnoreCreationAuditedObjectProperties()
+                 .Ignore(a => a.Id).Ignore(a => a.Menu);
 
-            CreateMap<MenuAndRoleMapRetrieveInputDto, MenuAndRoleMap>()
-                 .Ignore(a => a.Id);
+            CreateMap<MenuAndRoleMapRetrieveInputDto, MenuAndRoleMap>().IgnoreCreationAuditedObjectProperties()
+                 .Ignore(a => a.Id).Ignore(a => a.Menu);
 
-            CreateMap<MenuAndRoleMapUpdateInputDto, MenuAndRoleMap>()
-                 .Ignore(a => a.Id);
+            CreateMap<MenuAndRoleMapUpdateInputDto, MenuAndRoleMap>().IgnoreCreationAuditedObjectProperties()
+                 .Ignore(a => a.Id).Ignore(a => a.Menu);
         }
     }
 }
