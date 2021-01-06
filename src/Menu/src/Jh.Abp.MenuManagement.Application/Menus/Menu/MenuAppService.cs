@@ -21,13 +21,15 @@ namespace Jh.Abp.MenuManagement.Menus
 
         private readonly IMenuAndRoleMapDomainService menuAndRoleMapDomainService;
         private readonly IMenuAndRoleMapRepository menuAndRoleMapRepository;
-        private readonly IMenuAndRoleMapAppService menuAndRoleMapAppService;
+
+        private IMenuAndRoleMapAppService _menuAndRoleMapAppService;
+        public IMenuAndRoleMapAppService menuAndRoleMapAppService => LazyGetRequiredService(ref _menuAndRoleMapAppService);
+
         public MenuAppService(IMenuRepository repository, IMenuAndRoleMapRepository _menuAndRoleMapRepository, IMenuAndRoleMapDomainService _menuAndRoleMapDomainService) : base(repository)
         {
             menuRepository = repository;
             menuAndRoleMapDomainService = _menuAndRoleMapDomainService;
             menuAndRoleMapRepository = _menuAndRoleMapRepository;
-            LazyGetRequiredService(ref menuAndRoleMapAppService);
         }
 
         public override async Task<Menu> CreateAsync(MenuCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
@@ -77,11 +79,11 @@ namespace Jh.Abp.MenuManagement.Menus
             //查看CurrentUser.Roles 是的值是否为guid ,只能用一个角色的权限渲染菜单
             var auth_menus = await menuAndRoleMapRepository.Where(a => a.RoleId == roleid).ToListAsync();
 
-            //var auth_menus = await menuAndRoleMapAppService.GetEntitysAsync(new MenuAndRoleMapRetrieveInputDto() { RoleId = roleid });
-            //var auth_menus = await menuAndRoleMapAppService.GetEntitysAsync(new MenuAndRoleMapRetrieveInputDto(), (query) =>
-            //{
-            //    query.Where(a => a.RoleId == roleid);
-            //});
+            var test1 = await menuAndRoleMapAppService.GetEntitysAsync(new MenuAndRoleMapRetrieveInputDto() { RoleId = roleid });
+            var test2 = await menuAndRoleMapAppService.GetEntitysAsync(new MenuAndRoleMapRetrieveInputDto(), (query) =>
+            {
+                query.Where(a => a.RoleId == roleid);
+            });
             //TODO:获取菜单树
             throw new Exception();
         }

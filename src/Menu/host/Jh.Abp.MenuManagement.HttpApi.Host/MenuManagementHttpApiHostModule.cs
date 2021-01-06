@@ -35,6 +35,8 @@ using Volo.Abp.VirtualFileSystem;
 using Jh.Abp.QuickComponents;
 using Jh.Abp.QuickComponents.Localization;
 using Jh.Abp.QuickComponents.Swagger;
+using Volo.Abp.AspNetCore.ExceptionHandling;
+using Jh.Abp.QuickComponents.JwtAuthentication;
 
 namespace Jh.Abp.MenuManagement
 {
@@ -146,6 +148,13 @@ namespace Jh.Abp.MenuManagement
             //            .AllowCredentials();
             //    });
             //});
+
+            context.Services.Configure<AbpExceptionHandlingOptions>(options =>
+            {
+                options.SendExceptionsDetailsToClients = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
+            });
+
+            context.Services.AddAuthorizeFilter();
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
