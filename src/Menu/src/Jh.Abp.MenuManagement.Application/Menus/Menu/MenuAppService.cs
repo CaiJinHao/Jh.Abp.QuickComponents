@@ -9,6 +9,7 @@ using System.Linq;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
@@ -74,7 +75,9 @@ namespace Jh.Abp.MenuManagement.Menus
         {
             var menus = await GetListAsync(new MenuRetrieveInputDto() { Use = UseType.Yes });
             //查看CurrentUser.Roles 是的值是否为guid ,只能用一个角色的权限渲染菜单
-            var auth_menus = await menuAndRoleMapAppService.GetEntitysAsync(new MenuAndRoleMapRetrieveInputDto() { RoleId = roleid });
+            var auth_menus = await menuAndRoleMapRepository.Where(a => a.RoleId == roleid).ToListAsync();
+
+            //var auth_menus = await menuAndRoleMapAppService.GetEntitysAsync(new MenuAndRoleMapRetrieveInputDto() { RoleId = roleid });
             //var auth_menus = await menuAndRoleMapAppService.GetEntitysAsync(new MenuAndRoleMapRetrieveInputDto(), (query) =>
             //{
             //    query.Where(a => a.RoleId == roleid);

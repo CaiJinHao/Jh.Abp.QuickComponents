@@ -14,6 +14,6 @@ namespace Jh.Abp.MenuManagement.Menus
         /// 获取当前登录角色有权限的菜单树
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync();
+        Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(Guid roleid);
     }
 }
