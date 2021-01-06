@@ -86,12 +86,7 @@ namespace Jh.Abp.Extensions
         protected IQueryable<TEntity> CreateFilteredQuery(TRetrieveInputDto inputDto, Action<IQueryable<TEntity>> queryFunc)
         {
             var lambda = LinqExpression.ConvetToExpression<TRetrieveInputDto, TEntity>(inputDto);
-            var query = ReadOnlyRepository.Where(lambda);
-            if (queryFunc != null)
-            {
-                queryFunc(query);
-            }
-            return query;
+            return ReadOnlyRepository.Where(lambda);
         }
     }
 }
