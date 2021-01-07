@@ -205,12 +205,12 @@ namespace Jh.Abp.MenuManagement
         /// </summary>
         private void RestAbpClaimTypesName()
         {
-            AbpClaimTypes.UserName = "name";
-            AbpClaimTypes.Name = "name";
-            AbpClaimTypes.SurName = "surname";
-            AbpClaimTypes.UserId = "sub";
-            AbpClaimTypes.Role = "role";
-            AbpClaimTypes.Email = "email";
+            AbpClaimTypes.UserId = JwtClaimTypes.Subject;
+            AbpClaimTypes.UserName = JwtClaimTypes.Name;
+            AbpClaimTypes.Role = JwtClaimTypes.Role;
+            AbpClaimTypes.Email = JwtClaimTypes.Email;
+            //AbpClaimTypes.Name = JwtClaimTypes.GivenName;
+            //AbpClaimTypes.SurName = JwtClaimTypes.FamilyName;
         }
     }
 }

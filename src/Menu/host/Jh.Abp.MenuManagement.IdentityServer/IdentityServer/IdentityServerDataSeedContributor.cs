@@ -77,7 +77,9 @@ namespace Jh.Abp.MenuManagement.IdentityServer
                 "name",
                 "phone_number",
                 "phone_number_verified",
-                "role"
+                "role",
+                "user_name",
+                "sur_name",
             };
 
             await CreateApiResourceAsync("MenuManagement", commonApiUserClaims);
