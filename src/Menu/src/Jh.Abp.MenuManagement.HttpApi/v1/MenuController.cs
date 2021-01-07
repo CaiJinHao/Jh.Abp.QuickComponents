@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using System.Linq;
+using Volo.Abp.Security.Claims;
+using Volo.Abp.Users;
+using System.Security.Claims;
 
 namespace Jh.Abp.MenuManagement.v1
 {
@@ -139,7 +142,7 @@ namespace Jh.Abp.MenuManagement.v1
         [HttpGet("Trees")]
         public async Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync()
         {
-            var id = CurrentUser.Roles[0];
+            var id = "";
             return await menuAppService.GetMenusTreesAsync(new Guid(id));
         }
 
@@ -147,7 +150,7 @@ namespace Jh.Abp.MenuManagement.v1
         [HttpGet]
         public dynamic GetClaimsAsync()
         {
-            return HttpContext.User.Claims;
+            return CurrentUser.Id;
         }
     }
 }

@@ -197,6 +197,20 @@ namespace Jh.Abp.MenuManagement
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();
+            RestAbpClaimTypesName();
+        }
+
+        /// <summary>
+        /// 重置AbpClaimTypes名称
+        /// </summary>
+        private void RestAbpClaimTypesName()
+        {
+            AbpClaimTypes.UserName = "name";
+            AbpClaimTypes.Name = "name";
+            AbpClaimTypes.SurName = "surname";
+            AbpClaimTypes.UserId = "sub";
+            AbpClaimTypes.Role = "role";
+            AbpClaimTypes.Email = "email";
         }
     }
 }
