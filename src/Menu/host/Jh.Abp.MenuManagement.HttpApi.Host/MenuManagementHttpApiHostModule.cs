@@ -197,7 +197,7 @@ namespace Jh.Abp.MenuManagement
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();
-            RestAbpClaimTypesName();
+            //RestAbpClaimTypesName();
         }
 
         /// <summary>

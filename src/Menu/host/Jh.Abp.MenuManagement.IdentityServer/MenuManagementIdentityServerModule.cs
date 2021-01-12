@@ -45,6 +45,9 @@ using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.Threading;
 using Volo.Abp.UI.Navigation.Urls;
+using IdentityServer4.Services;
+using Jh.Abp.MenuManagement.Extensions;
+using Volo.Abp.IdentityServer;
 
 namespace Jh.Abp.MenuManagement
 {
@@ -81,6 +84,19 @@ namespace Jh.Abp.MenuManagement
     public class MenuManagementIdentityServerModule : AbpModule
     {
         private const string DefaultCorsPolicyName = "Default";
+
+        public override void PreConfigureServices(ServiceConfigurationContext context)
+        {
+            PreConfigure<AbpIdentityServerBuilderOptions>(options =>
+            {
+                options.UpdateAbpClaimTypes = true;
+            });
+
+            PreConfigure<IIdentityServerBuilder>(identityServerBuilder =>
+            {
+                identityServerBuilder.AddProfileService<MyProfileServices>();
+            });
+        }
 
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
