@@ -209,8 +209,6 @@ namespace Jh.Abp.MenuManagement
             AbpClaimTypes.UserName = JwtClaimTypes.Name;
             AbpClaimTypes.Role = JwtClaimTypes.Role;
             AbpClaimTypes.Email = JwtClaimTypes.Email;
-            //AbpClaimTypes.Name = JwtClaimTypes.GivenName;
-            //AbpClaimTypes.SurName = JwtClaimTypes.FamilyName;
         }
     }
 }
