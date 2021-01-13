@@ -86,7 +86,7 @@ namespace Jh.Abp.Extensions
 
         protected override IQueryable<TEntity> CreateFilteredQuery(TRetrieveInputDto inputDto)
         {
-            var lambda = LinqExpression.ConvetToExpression<TRetrieveInputDto, TEntity>(inputDto);
+            var lambda = LinqExpression.ConvetToExpression<TRetrieveInputDto, TEntity>(inputDto, StringTypeMethod.Contains.ToString());
             return ReadOnlyRepository.Where(lambda);
         }
     }

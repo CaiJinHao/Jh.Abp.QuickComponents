@@ -31,6 +31,12 @@ namespace Jh.Abp.Common.Linq
         }
     }
 
+    public enum StringTypeMethod
+    {
+        Contains,
+        Equals
+    }
+
     public static class LinqExpression
     {
         /// <summary>
@@ -39,8 +45,9 @@ namespace Jh.Abp.Common.Linq
         /// <typeparam name="TWhere">要生成linq条件的类</typeparam>
         /// <typeparam name="TSource">要查询的类</typeparam>
         /// <param name="inputDto">要生成linq条件的参数</param>
+        /// <param name="methodStringType">String类型的字段要使用的查询方法</param>
         /// <returns></returns>
-        public static Expression<Func<TSource, bool>> ConvetToExpression<TWhere, TSource>(TWhere inputDto)
+        public static Expression<Func<TSource, bool>> ConvetToExpression<TWhere, TSource>(TWhere inputDto,string methodStringType= "Equals")
         {
             Expression resultFilters = null;
             //1.创建参数表达式
@@ -94,7 +101,7 @@ namespace Jh.Abp.Common.Linq
                             {
                                 continue;
                             }
-                            method = propertyType.GetMethod("Contains", new Type[] { propertyType });
+                            method = propertyType.GetMethod("Equals", new Type[] { propertyType });
                         }
                         break;
                     case Enums.ObjectType.String:
@@ -103,12 +110,14 @@ namespace Jh.Abp.Common.Linq
                             {
                                 continue;
                             }
-                            method = propertyType.GetMethod("Contains", new Type[] { propertyType });
+                            //method = typeof(string).GetMethod(methodStringType, new Type[] { typeof(string) });
+                            method = propertyType.GetMethod(methodStringType, new Type[] { propertyType });
                         }
                         break;
                     case Enums.ObjectType.Bool:
                     case Enums.ObjectType.DateTime:
                     default:
+                        //其他不添加查询条件
                         continue;
                 }
    
