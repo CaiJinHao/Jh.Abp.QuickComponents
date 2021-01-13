@@ -10,9 +10,5 @@ namespace Jh.Abp.Common.Extensions
         /// 角色id ","号隔开
         /// </summary>
         public const string RoleId = "role_id";
-        /// <summary>
-        /// 真实姓名
-        /// </summary>
-        public const string RealName = "real_name";
     }
 }

@@ -30,7 +30,7 @@ namespace Jh.Abp.MenuManagement.v1
         [HttpPost]
         public async Task<Menu> CreateAsync(MenuCreateInputDto input)
         {
-            return await menuAppService.CreateAsync(input);
+            return await menuAppService.CreateAsync(input,true);
         }
 
         /// <summary>
@@ -142,8 +142,8 @@ namespace Jh.Abp.MenuManagement.v1
         [HttpGet("Trees")]
         public async Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync()
         {
-            var id = "";
-            return await menuAppService.GetMenusTreesAsync(new Guid(id));
+            var roleid = CurrentUser.FindClaim(Common.Extensions.JhJwtClaimTypes.RoleId);
+            return await menuAppService.GetMenusTreesAsync(new Guid(roleid.Value));
         }
 
         [Route("claims")]

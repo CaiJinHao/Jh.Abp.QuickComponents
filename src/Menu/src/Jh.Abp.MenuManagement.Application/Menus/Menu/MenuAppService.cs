@@ -10,6 +10,7 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using Volo.Abp.Uow;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
@@ -32,6 +33,7 @@ namespace Jh.Abp.MenuManagement.Menus
             menuAndRoleMapRepository = _menuAndRoleMapRepository;
         }
 
+        [UnitOfWork]
         public override async Task<Menu> CreateAsync(MenuCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             var entity = await base.CreateAsync(inputDto, autoSave, cancellationToken);
@@ -47,11 +49,13 @@ namespace Jh.Abp.MenuManagement.Menus
             }
         }
 
+        [UnitOfWork]
         public override Task<Menu[]> CreateAsync(MenuCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             return Task.FromResult(EnumerableCreateAsync(inputDtos, autoSave, cancellationToken).ToArray());
         }
 
+        [UnitOfWork]
         public override async Task<Menu> DeleteAsync(Guid id, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             var entity = await base.DeleteAsync(id, autoSave, cancellationToken);
@@ -59,6 +63,7 @@ namespace Jh.Abp.MenuManagement.Menus
             return entity;
         }
 
+        [UnitOfWork]
         public override async Task<Menu[]> DeleteAsync(Guid[] keys, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             var entitys = await base.DeleteAsync(keys, autoSave, cancellationToken);
@@ -66,6 +71,7 @@ namespace Jh.Abp.MenuManagement.Menus
             return entitys;
         }
 
+        [UnitOfWork]
         public override async Task<Menu[]> DeleteAsync(MenuDeleteInputDto deleteInputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             var entitys = await base.DeleteAsync(deleteInputDto,  autoSave, cancellationToken);

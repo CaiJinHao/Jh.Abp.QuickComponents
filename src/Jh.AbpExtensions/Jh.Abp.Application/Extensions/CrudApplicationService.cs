@@ -11,6 +11,7 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Uow;
 
 namespace Jh.Abp.Extensions
 {
@@ -27,6 +28,7 @@ namespace Jh.Abp.Extensions
             crudRepository = repository;
         }
 
+        [UnitOfWork]
         public virtual async Task<TEntity[]> CreateAsync(TCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckCreatePolicyAsync().ConfigureAwait(false);
@@ -34,6 +36,7 @@ namespace Jh.Abp.Extensions
             return await crudRepository.CreateAsync(entitys, autoSave, cancellationToken).ConfigureAwait(false);
         }
 
+        [UnitOfWork]
         public virtual async Task<TEntity> CreateAsync(TCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckCreatePolicyAsync().ConfigureAwait(false);
@@ -41,6 +44,7 @@ namespace Jh.Abp.Extensions
             return await crudRepository.CreateAsync(entity, autoSave, cancellationToken).ConfigureAwait(false);
         }
 
+        [UnitOfWork]
         public virtual async Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckDeletePolicyAsync().ConfigureAwait(false);
@@ -49,12 +53,14 @@ namespace Jh.Abp.Extensions
             return await crudRepository.DeleteListAsync(lambda, autoSave, cancellationToken).ConfigureAwait(false);
         }
 
+        [UnitOfWork]
         public virtual async Task<TEntity[]> DeleteAsync(TKey[] keys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckDeletePolicyAsync().ConfigureAwait(false);
             return await crudRepository.DeleteListAsync(a => keys.Contains(a.Id), autoSave, cancellationToken).ConfigureAwait(false);
         }
 
+        [UnitOfWork]
         public virtual async Task<TEntity> DeleteAsync(TKey id, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckDeletePolicyAsync().ConfigureAwait(false);
@@ -69,6 +75,7 @@ namespace Jh.Abp.Extensions
             return ObjectMapper.Map<List<TEntity>, List<TEntityDto>>(entities);
         }
 
+        [UnitOfWork]
         public virtual async Task<TEntity> UpdatePortionAsync(TKey key, TUpdateInputDto updateInput, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckUpdatePolicyAsync().ConfigureAwait(false);
