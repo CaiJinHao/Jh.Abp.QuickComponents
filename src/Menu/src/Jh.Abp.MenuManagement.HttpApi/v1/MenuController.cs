@@ -135,19 +135,5 @@ namespace Jh.Abp.MenuManagement.v1
         {
             return await menuAppService.GetAsync(id);
         }
-
-        [HttpGet("Trees")]
-        public async Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync()
-        {
-            var roleid = CurrentUser.FindClaim(Common.Extensions.JhJwtClaimTypes.RoleId);
-            return await menuAppService.GetMenusTreesAsync(new Guid(roleid.Value));
-        }
-
-        [Route("claims")]
-        [HttpGet]
-        public dynamic GetClaimsAsync()
-        {
-            return CurrentUser.GetAllClaims().Select(a => new { a.Type, a.Value });
-        }
     }
 }

@@ -9,6 +9,7 @@ using System.Linq;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Uow;
+using Microsoft.EntityFrameworkCore;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
@@ -16,10 +17,14 @@ namespace Jh.Abp.MenuManagement.Menus
         : CrudApplicationService<MenuAndRoleMap, MenuAndRoleMapDto, MenuAndRoleMapDto, Guid, MenuAndRoleMapRetrieveInputDto, MenuAndRoleMapCreateInputDto, MenuAndRoleMapUpdateInputDto, MenuAndRoleMapDeleteInputDto>,
         IMenuAndRoleMapAppService
     {
+        private IMenuRepository _menuRepository;
+        protected IMenuRepository MenuRepository => LazyGetRequiredService(ref _menuRepository);
+
         private readonly IMenuAndRoleMapRepository MenuAndRoleMapRepository;
         public MenuAndRoleMapAppService(IMenuAndRoleMapRepository repository) : base(repository)
         {
             MenuAndRoleMapRepository = repository;
+
         }
 
         public override Task<MenuAndRoleMap> CreateAsync(MenuAndRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
@@ -62,6 +67,39 @@ namespace Jh.Abp.MenuManagement.Menus
                     yield return new MenuAndRoleMap(menuid, roleid, GuidGenerator.Create());
                 }
             }
+        }
+
+        public async Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(Guid roleid)
+        {
+            //查看CurrentUser.Roles 是的值是否为guid ,只能用一个角色的权限渲染菜单
+            var auth_menus_id = crudRepository.Where(a => a.RoleId == roleid).Select(a=>a.MenuId);
+            var menus = MenuRepository.Where(a => a.Use == UseType.Yes);
+
+            //按照前端要求字段返回
+            var auth_menus = await menus.Where(m => auth_menus_id.Contains(m.Id))
+                .Select(a => new MenusTreeDto() { id = a.Code, icon = a.Icon, parent_id = a.ParentCode, sort = a.Sort, title = a.Name, url = a.Url}).ToListAsync();
+
+            //组装树
+            async Task<IEnumerable<MenusTreeDto>> GetChildNodes(string parentNodeId)
+            {
+                var childs = auth_menus.Where(a => a.parent_id == parentNodeId);
+                foreach (var item in childs)
+                {
+                    item.children = await GetChildNodes(item.id);
+                }
+                return childs;
+            }
+
+
+            //找到根节点
+            var roots = auth_menus.Where(a => a.parent_id == null).ToList();
+            foreach (var item in roots)
+            {
+                item.children = await GetChildNodes(item.id);
+            }
+
+            //返回多个跟节点
+            return roots;
         }
     }
 }

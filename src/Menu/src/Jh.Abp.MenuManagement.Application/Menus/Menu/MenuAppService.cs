@@ -78,16 +78,5 @@ namespace Jh.Abp.MenuManagement.Menus
             await menuAndRoleMapRepository.DeleteListAsync(a => entitys.Select(b => b.Id).Contains(a.MenuId)).ConfigureAwait(false);
             return entitys;
         }
-
-        public async Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(Guid roleid)
-        {
-            //查看CurrentUser.Roles 是的值是否为guid ,只能用一个角色的权限渲染菜单
-            var auth_menus = menuAndRoleMapRepository.Where(a => a.RoleId == roleid);
-            var menus = crudRepository.Where(a => a.Use == UseType.Yes)     ;
-
-       
-            //TODO:获取菜单树
-            throw new Exception();
-        }
     }
 }

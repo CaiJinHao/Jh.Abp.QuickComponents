@@ -12,5 +12,11 @@ namespace Jh.Abp.MenuManagement.Menus
         :ICrudApplicationService<MenuAndRoleMap, MenuAndRoleMapDto, MenuAndRoleMapDto, Guid, MenuAndRoleMapRetrieveInputDto, MenuAndRoleMapCreateInputDto, MenuAndRoleMapUpdateInputDto, MenuAndRoleMapDeleteInputDto>
     {
         Task<MenuAndRoleMap[]> CreateV2Async(MenuAndRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 获取当前登录角色有权限的菜单树
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(Guid roleid);
     }
 }
