@@ -1,4 +1,5 @@
 ﻿using Jh.Abp.Common.Objects;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +48,10 @@ namespace Jh.Abp.Common.Linq
             var propertyInfos = inputDto.GetType().GetProperties();
             foreach (var item in propertyInfos)
             {
+                //a(1)=>a.Name(2).Equals(4)("val")(3);(5)
+                //2.创建属性表达式
+                Expression proerty = Expression.Property(parameterExpression, item.Name);
+
                 var propertyVal = item.GetValue(inputDto, null);
                 if (propertyVal == null)
                 {
@@ -66,6 +71,7 @@ namespace Jh.Abp.Common.Linq
                                 continue;
                             }
                             method = propertyType.GetMethod("Equals", new Type[] { propertyType });
+                            proerty = Expression.Convert(proerty, propertyType);
                         }
                         break;
                     case Enums.ObjectType.Int16:
@@ -105,9 +111,7 @@ namespace Jh.Abp.Common.Linq
                     default:
                         continue;
                 }
-                //a(1)=>a.Name(2).Equals(4)("val")(3);(5)
-                //2.创建属性表达式
-                Expression proerty = Expression.Property(parameterExpression, item.Name);
+   
                 //3.创建常数表达式
                 ConstantExpression constantExpression = Expression.Constant(propertyVal, propertyType);
                 //4.创建方法调用表达式
