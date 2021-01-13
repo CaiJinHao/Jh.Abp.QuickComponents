@@ -1,15 +1,15 @@
-using System;
-using System.Linq;
+using Jh.Abp.IdentityServer;
+using Jh.Abp.MenuManagement.MultiTenancy;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Jh.Abp.MenuManagement.MultiTenancy;
-using StackExchange.Redis;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Swagger;
+using StackExchange.Redis;
+using System;
+using System.Linq;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Web;
@@ -45,14 +45,11 @@ using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.Threading;
 using Volo.Abp.UI.Navigation.Urls;
-using IdentityServer4.Services;
-using Jh.Abp.MenuManagement.Extensions;
-using Volo.Abp.IdentityServer;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
+        typeof(JhAbpIdentityServerModule),
         typeof(AbpAccountWebIdentityServerModule),
         typeof(AbpAccountApplicationModule),
         typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
@@ -85,19 +82,6 @@ namespace Jh.Abp.MenuManagement
     public class MenuManagementIdentityServerModule : AbpModule
     {
         private const string DefaultCorsPolicyName = "Default";
-
-        public override void PreConfigureServices(ServiceConfigurationContext context)
-        {
-            PreConfigure<AbpIdentityServerBuilderOptions>(options =>
-            {
-                options.UpdateAbpClaimTypes = true;
-            });
-
-            PreConfigure<IIdentityServerBuilder>(identityServerBuilder =>
-            {
-                identityServerBuilder.AddProfileService<MyProfileServices>();
-            });
-        }
 
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
