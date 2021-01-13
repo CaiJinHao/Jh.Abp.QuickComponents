@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Uow;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
@@ -21,22 +22,14 @@ namespace Jh.Abp.MenuManagement.Menus
             MenuAndRoleMapRepository = repository;
         }
 
-        public override async Task<MenuAndRoleMap> CreateAsync(MenuAndRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
+        public override Task<MenuAndRoleMap> CreateAsync(MenuAndRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
-            return await base.CreateAsync(inputDto, autoSave, cancellationToken);
-        }
-
-        private IEnumerable<MenuAndRoleMap> EnumerableCreateAsync(MenuAndRoleMapCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default)
-        {
-            foreach (var item in inputDtos)
-            {
-                yield return this.CreateAsync(item, autoSave, cancellationToken).Result;
-            }
+            throw new NotImplementedException();
         }
 
         public override Task<MenuAndRoleMap[]> CreateAsync(MenuAndRoleMapCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default)
         {
-            return Task.FromResult(EnumerableCreateAsync(inputDtos, autoSave, cancellationToken).ToArray());
+            throw new NotImplementedException();
         }
 
         public override async Task<MenuAndRoleMap> DeleteAsync(Guid id, bool autoSave = false, CancellationToken cancellationToken = default)
@@ -52,6 +45,23 @@ namespace Jh.Abp.MenuManagement.Menus
         public override async Task<MenuAndRoleMap[]> DeleteAsync(MenuAndRoleMapDeleteInputDto deleteInputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             return await base.DeleteAsync(deleteInputDto, autoSave, cancellationToken);
+        }
+
+        [UnitOfWork]
+        public async Task<MenuAndRoleMap[]> CreateV2Async(MenuAndRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
+        {
+            return await crudRepository.CreateAsync(GetCreateEnumerableAsync(inputDto).ToArray());
+        }
+
+        private IEnumerable<MenuAndRoleMap> GetCreateEnumerableAsync(MenuAndRoleMapCreateInputDto inputDtos, bool autoSave = false, CancellationToken cancellationToken = default)
+        {
+            foreach (var roleid in inputDtos.RoleIds)
+            {
+                foreach (var menuid in inputDtos.MenuIds)
+                {
+                    yield return new MenuAndRoleMap(menuid, roleid, GuidGenerator.Create());
+                }
+            }
         }
     }
 }

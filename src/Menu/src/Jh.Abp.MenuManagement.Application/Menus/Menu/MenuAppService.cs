@@ -81,14 +81,11 @@ namespace Jh.Abp.MenuManagement.Menus
 
         public async Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(Guid roleid)
         {
-            var menus = await GetListAsync(new MenuRetrieveInputDto() { Use = UseType.Yes });
             //查看CurrentUser.Roles 是的值是否为guid ,只能用一个角色的权限渲染菜单
-            var auth_menus = await menuAndRoleMapRepository.Where(a => a.RoleId == roleid).ToListAsync();
+            var auth_menus = menuAndRoleMapRepository.Where(a => a.RoleId == roleid);
+            var menus = crudRepository.Where(a => a.Use == UseType.Yes)     ;
 
-            var test1 = await menuAndRoleMapAppService.GetEntitysAsync(new MenuAndRoleMapRetrieveInputDto() { RoleId = roleid });
-            var expressTest = Jh.Abp.Common.Linq.LinqExpression.True<MenuAndRoleMap>();
-            expressTest=expressTest.And(a => a.RoleId == roleid);
-            var test2 = await menuAndRoleMapAppService.GetEntitysAsync(new MenuAndRoleMapRetrieveInputDto(), expressTest);
+       
             //TODO:获取菜单树
             throw new Exception();
         }

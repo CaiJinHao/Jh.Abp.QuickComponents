@@ -12,9 +12,6 @@ namespace Jh.Abp.MenuManagement.Menus
         {
             CreateMap<MenuAndRoleMap, MenuAndRoleMapDto>();
 
-            CreateMap<MenuAndRoleMapCreateInputDto, MenuAndRoleMap>().IgnoreCreationAuditedObjectProperties()
-                 .Ignore(a => a.Id).Ignore(a=>a.Menu);
-
             CreateMap<MenuAndRoleMapDeleteInputDto, MenuAndRoleMap>().IgnoreCreationAuditedObjectProperties()
                  .Ignore(a => a.Id).Ignore(a => a.Menu);
 

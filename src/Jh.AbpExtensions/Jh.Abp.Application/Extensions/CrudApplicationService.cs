@@ -22,7 +22,7 @@ namespace Jh.Abp.Extensions
         where TEntityDto : IEntityDto<TKey>
         where TPagedRetrieveOutputDto : IEntityDto<TKey>
     {
-        private ICrudRepository<TEntity, TKey> crudRepository;
+        public ICrudRepository<TEntity, TKey> crudRepository;
         public CrudApplicationService(ICrudRepository<TEntity, TKey> repository) : base(repository)
         {
             crudRepository = repository;
@@ -92,6 +92,7 @@ namespace Jh.Abp.Extensions
 
         protected IQueryable<TEntity> CreateFilteredQuery(TRetrieveInputDto inputDto, Expression<Func<TEntity, bool>> queryFunc)
         {
+            //TODO:Expression 不能传值否则会抛出异常
             var lambda = LinqExpression.ConvetToExpression<TRetrieveInputDto, TEntity>(inputDto);
             return ReadOnlyRepository.Where(lambda);
         }

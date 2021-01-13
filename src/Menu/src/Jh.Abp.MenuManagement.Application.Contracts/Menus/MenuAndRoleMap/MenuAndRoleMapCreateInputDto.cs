@@ -11,12 +11,12 @@ namespace Jh.Abp.MenuManagement.Menus
         /// 菜单外键
         /// </summary>
         [Required]
-        public Guid MenuId { get; set; }
+        public Guid[] MenuIds { get; set; }
 
         /// <summary>
         /// 角色外键
         /// </summary>
         [Required]
-        public Guid RoleId { get; set; }
+        public Guid[] RoleIds { get; set; }
     }
 }

@@ -29,5 +29,10 @@ namespace Jh.Abp.MenuManagement.Menus
             this.MenuId = menuid;
             this.RoleId = roleid;
         }
+        public MenuAndRoleMap(Guid menuid, Guid roleid, Guid id) : base(id)
+        {
+            this.MenuId = menuid;
+            this.RoleId = roleid;
+        }
     }
 }
