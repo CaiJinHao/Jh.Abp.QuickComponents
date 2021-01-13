@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -11,7 +11,7 @@
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Common</PackageTags>
     <PackageReleaseNotes>Common libs</PackageReleaseNotes>
-    <Version>1.0.5</Version>
+    <Version>1.0.7</Version>
     <Description>Common libs</Description>
   </PropertyGroup>
   <ItemGroup>
