@@ -1,4 +1,5 @@
-﻿using Jh.Abp.QuickComponents.Cors;
+﻿using IdentityModel;
+using Jh.Abp.QuickComponents.Cors;
 using Jh.Abp.QuickComponents.HttpApi;
 using Jh.Abp.QuickComponents.JwtAuthentication;
 using Jh.Abp.QuickComponents.Localization;
@@ -13,6 +14,7 @@ using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
+using Volo.Abp.Security.Claims;
 using Volo.Abp.VirtualFileSystem;
 
 namespace Jh.Abp.QuickComponents
@@ -21,6 +23,15 @@ namespace Jh.Abp.QuickComponents
     public class AbpQuickComponentsModule: AbpModule
     {
         private IConfiguration configuration { get; set; }
+
+        public override void PreConfigureServices(ServiceConfigurationContext context)
+        {
+            AbpClaimTypes.UserId = JwtClaimTypes.Subject;
+            AbpClaimTypes.UserName = JwtClaimTypes.Name;
+            AbpClaimTypes.Role = JwtClaimTypes.Role;
+            AbpClaimTypes.Email = JwtClaimTypes.Email;
+        }
+
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             var hostingEnvironment = context.Services.GetHostingEnvironment();

@@ -80,6 +80,7 @@ namespace Jh.Abp.MenuManagement.IdentityServer
                 "role",
                 "user_name",
                 "sur_name",
+                "role_id"
             };
 
             await CreateApiResourceAsync("MenuManagement", commonApiUserClaims);

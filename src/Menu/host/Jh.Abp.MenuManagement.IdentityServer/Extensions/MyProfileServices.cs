@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using IdentityServer4.AspNetIdentity;
+using IdentityServer4.Extensions;
+using IdentityServer4.Models;
+using Jh.Abp.Common.Extensions;
+using Microsoft.AspNetCore.Identity;
+using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -12,7 +17,7 @@ namespace Jh.Abp.MenuManagement.Extensions
     /// <summary>
     /// 添加自定义的Claims
     /// </summary>
-    public class MyProfileServices : AbpProfileService
+    public class MyProfileServices :  AbpProfileService
     {
         public MyProfileServices(IdentityUserManager userManager, IUserClaimsPrincipalFactory<IdentityUser> claimsFactory, ICurrentTenant currentTenant) : base(userManager, claimsFactory, currentTenant)
         {
@@ -23,7 +28,7 @@ namespace Jh.Abp.MenuManagement.Extensions
             var claimsPrincipal = await base.GetUserClaimsAsync(user);
             claimsPrincipal.Identities
                        .First()
-                       .AddClaim(new Claim("roleid", string.Join(',', user.Roles.Select(a => a.RoleId))));
+                       .AddClaim(new Claim(JwtClaimTypes.RoleId, string.Join(',', user.Roles.Select(a => a.RoleId))));
             return claimsPrincipal;
         }
     }

@@ -57,6 +57,11 @@ namespace Jh.Abp.MenuManagement
     {
         private const string DefaultCorsPolicyName = "Default";
 
+        public override void PreConfigureServices(ServiceConfigurationContext context)
+        {
+   
+        }
+
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             var hostingEnvironment = context.Services.GetHostingEnvironment();
@@ -197,18 +202,6 @@ namespace Jh.Abp.MenuManagement
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();
-            //RestAbpClaimTypesName();
-        }
-
-        /// <summary>
-        /// 重置AbpClaimTypes名称
-        /// </summary>
-        private void RestAbpClaimTypesName()
-        {
-            AbpClaimTypes.UserId = JwtClaimTypes.Subject;
-            AbpClaimTypes.UserName = JwtClaimTypes.Name;
-            AbpClaimTypes.Role = JwtClaimTypes.Role;
-            AbpClaimTypes.Email = JwtClaimTypes.Email;
         }
     }
 }

@@ -150,7 +150,7 @@ namespace Jh.Abp.MenuManagement.v1
         [HttpGet]
         public dynamic GetClaimsAsync()
         {
-            return CurrentUser.Id;
+            return CurrentUser.GetAllClaims().Select(a => new { a.Type, a.Value });
         }
     }
 }

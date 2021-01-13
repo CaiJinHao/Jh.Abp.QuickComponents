@@ -48,6 +48,7 @@ using Volo.Abp.UI.Navigation.Urls;
 using IdentityServer4.Services;
 using Jh.Abp.MenuManagement.Extensions;
 using Volo.Abp.IdentityServer;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Jh.Abp.MenuManagement
 {
