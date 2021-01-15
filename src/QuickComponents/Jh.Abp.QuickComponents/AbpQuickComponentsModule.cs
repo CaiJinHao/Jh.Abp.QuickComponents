@@ -1,13 +1,17 @@
 ﻿using IdentityModel;
 using Jh.Abp.QuickComponents.Cors;
 using Jh.Abp.QuickComponents.HttpApi;
+using Jh.Abp.QuickComponents.Jh.Abp.Json;
 using Jh.Abp.QuickComponents.JwtAuthentication;
 using Jh.Abp.QuickComponents.Localization;
 using Jh.Abp.QuickComponents.MiniProfiler;
 using Jh.Abp.QuickComponents.Swagger;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.ExceptionHandling;
@@ -32,6 +36,13 @@ namespace Jh.Abp.QuickComponents
             AbpClaimTypes.Email = JwtClaimTypes.Email;
             AbpClaimTypes.Name = JwtClaimTypes.GivenName;
             AbpClaimTypes.SurName = JwtClaimTypes.FamilyName;
+
+            PreConfigure<IMvcBuilder>(mvcBuilder=> {
+                mvcBuilder.AddNewtonsoftJson(options=> {
+                    options.SerializerSettings.ContractResolver =
+                     new AbpMvcJsonContractResolver(context.Services);
+                });
+            });
         }
 
         public override void ConfigureServices(ServiceConfigurationContext context)

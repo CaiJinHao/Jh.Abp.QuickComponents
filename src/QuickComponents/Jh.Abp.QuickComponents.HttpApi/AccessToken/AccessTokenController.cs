@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Volo.Abp;
+using System.Linq;
+using Volo.Abp.Users;
 
 namespace Jh.Abp.QuickComponents.HttpApi.AccessToken
 {
@@ -46,11 +48,18 @@ namespace Jh.Abp.QuickComponents.HttpApi.AccessToken
             return await _accessTokenAppService.GetSwaggerAccessTokenAsync(requestDto);
         }
 
+        [Route("User")]
         [HttpGet]
-        public string GetClaimsAsync(string type)
+        public ICurrentUser GetLoginUserInfoAsync()
         {
-            var claims= HttpContext.User.FindFirst(type);
-            return claims?.Value;
+            return CurrentUser;
+        }
+
+        [Route("claims")]
+        [HttpGet]
+        public dynamic GetClaimsAsync()
+        {
+            return CurrentUser.GetAllClaims().Select(a => new { a.Type, a.Value });
         }
 
         /*

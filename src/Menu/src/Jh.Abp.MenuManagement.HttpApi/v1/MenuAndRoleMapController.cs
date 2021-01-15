@@ -128,12 +128,5 @@ namespace Jh.Abp.MenuManagement.v1
             var roleid = CurrentUser.FindClaim(Common.Extensions.JhJwtClaimTypes.RoleId);
             return await menuAndRoleMapAppService.GetMenusTreesAsync(new Guid(roleid.Value));
         }
-
-        [Route("claims")]
-        [HttpGet]
-        public dynamic GetClaimsAsync()
-        {
-            return CurrentUser.GetAllClaims().Select(a => new { a.Type, a.Value });
-        }
     }
 }
