@@ -1,7 +1,7 @@
 ﻿using IdentityModel;
 using Jh.Abp.QuickComponents.Cors;
 using Jh.Abp.QuickComponents.HttpApi;
-using Jh.Abp.QuickComponents.Jh.Abp.Json;
+using Jh.Abp.QuickComponents.Json;
 using Jh.Abp.QuickComponents.JwtAuthentication;
 using Jh.Abp.QuickComponents.Localization;
 using Jh.Abp.QuickComponents.MiniProfiler;
@@ -10,8 +10,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
 using Volo.Abp;
 using Volo.Abp.Json;
 using Volo.Abp.Modularity;
@@ -33,6 +31,12 @@ namespace Jh.Abp.QuickComponents
             AbpClaimTypes.Email = JwtClaimTypes.Email;
             AbpClaimTypes.Name = JwtClaimTypes.GivenName;
             AbpClaimTypes.SurName = JwtClaimTypes.FamilyName;
+
+            PreConfigure<AbpJsonOptions>(options =>
+            {
+                //use coustomer ContractResolver
+                options.UseHybridSerializer = false;
+            });
         }
 
         public override void ConfigureServices(ServiceConfigurationContext context)
@@ -45,8 +49,15 @@ namespace Jh.Abp.QuickComponents
                 options.FileSets.AddEmbedded<AbpQuickComponentsModule>();
             });
 
-            Configure<AbpJsonOptions>(options => {
+            Configure<AbpJsonOptions>(options =>
+            {
                 options.DefaultDateTimeFormat = "yyyy-MM-dd HH:mm:ss:fff";
+            });
+
+            Configure<MvcNewtonsoftJsonOptions>(options =>
+            {
+                // 配合UseHybridSerializer=false 使用
+                options.SerializerSettings.ContractResolver = new JhMvcJsonContractResolver(context.Services);
             });
 
             context.Services.AddMiniProfilerComponent();

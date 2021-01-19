@@ -13,5 +13,6 @@ namespace Jh.Abp.QuickComponents.AccessToken
         public int ExpiresIn { get; set; }
         public string TokenType { get; set; }
         public string RefreshToken { get; set; }
+        public DateTime now { get; set; } = DateTime.Now;
     }
 }

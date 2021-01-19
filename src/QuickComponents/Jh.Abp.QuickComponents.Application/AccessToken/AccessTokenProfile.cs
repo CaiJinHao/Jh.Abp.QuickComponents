@@ -13,7 +13,8 @@ namespace YourProjectName.AccessToken
         public AccessTokenProfile()
         {
             //身份验证服务器响应
-            CreateMap<TokenResponse, AccessTokenResponseDto>();
+            CreateMap<TokenResponse, AccessTokenResponseDto>()
+                .Ignore(a=>a.now);
         }
     }
 }

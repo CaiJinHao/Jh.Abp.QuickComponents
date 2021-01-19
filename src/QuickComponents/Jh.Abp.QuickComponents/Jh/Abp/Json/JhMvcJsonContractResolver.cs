@@ -12,7 +12,7 @@ using Volo.Abp.Json.Newtonsoft;
 using Volo.Abp.Reflection;
 using Volo.Abp.Timing;
 
-namespace Jh.Abp.QuickComponents.Jh.Abp.Json
+namespace Jh.Abp.QuickComponents.Json
 {
     public class JhMvcJsonContractResolver : DefaultContractResolver, ITransientDependency
     {
@@ -54,21 +54,6 @@ namespace Jh.Abp.QuickComponents.Jh.Abp.Json
                 }
                 property.Converter = _dateTimeConverter.Value;
             }
-        }
-    }
-
-    public class JhMvcNewtonsoftJsonOptionsSetup : IConfigureOptions<MvcNewtonsoftJsonOptions>
-    {
-        protected IServiceProvider ServiceProvider { get; }
-
-        public JhMvcNewtonsoftJsonOptionsSetup(IServiceProvider serviceProvider)
-        {
-            ServiceProvider = serviceProvider;
-        }
-
-        public void Configure(MvcNewtonsoftJsonOptions options)
-        {
-            options.SerializerSettings.ContractResolver = ServiceProvider.GetRequiredService<JhMvcJsonContractResolver>();
         }
     }
 }

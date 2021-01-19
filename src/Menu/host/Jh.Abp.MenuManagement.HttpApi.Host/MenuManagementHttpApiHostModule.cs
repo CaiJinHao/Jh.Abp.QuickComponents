@@ -1,20 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using IdentityModel;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Jh.Abp.MenuManagement.MultiTenancy;
+using Jh.Abp.QuickComponents;
+using Jh.Abp.QuickComponents.JwtAuthentication;
+using Jh.Abp.QuickComponents.Localization;
+using Jh.Abp.QuickComponents.Swagger;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Jh.Abp.MenuManagement.EntityFrameworkCore;
-using Jh.Abp.MenuManagement.MultiTenancy;
 using StackExchange.Redis;
-using Microsoft.OpenApi.Models;
+using System.IO;
 using Volo.Abp;
+using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
@@ -28,20 +25,9 @@ using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
-using Volo.Abp.Security.Claims;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.VirtualFileSystem;
-using Jh.Abp.QuickComponents;
-using Jh.Abp.QuickComponents.Localization;
-using Jh.Abp.QuickComponents.Swagger;
-using Volo.Abp.AspNetCore.ExceptionHandling;
-using Jh.Abp.QuickComponents.JwtAuthentication;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc;
-using Jh.Abp.QuickComponents.Jh.Abp.Json;
-using Volo.Abp.Json;
 
 namespace Jh.Abp.MenuManagement
 {
@@ -62,23 +48,10 @@ namespace Jh.Abp.MenuManagement
     {
         private const string DefaultCorsPolicyName = "Default";
 
-        public override void PreConfigureServices(ServiceConfigurationContext context)
-        {
-            PreConfigure<AbpJsonOptions>(options =>
-            {
-                options.UseHybridSerializer = false;
-            });
-        }
-
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             var hostingEnvironment = context.Services.GetHostingEnvironment();
             var configuration = context.Services.GetConfiguration();
-
-            Configure<MvcNewtonsoftJsonOptions>(options =>
-            {
-                options.SerializerSettings.ContractResolver = new JhMvcJsonContractResolver(context.Services);
-            });
 
             Configure<AbpDbContextOptions>(options =>
             {
