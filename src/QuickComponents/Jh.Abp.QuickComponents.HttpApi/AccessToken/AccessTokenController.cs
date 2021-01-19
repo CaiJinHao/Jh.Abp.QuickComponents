@@ -30,20 +30,20 @@ namespace Jh.Abp.QuickComponents.HttpApi.AccessToken
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<dynamic> GetAccessTokenAsync(AccessTokenRequestDto requestDto)
+        public async Task<AccessTokenResponseDto> GetAccessTokenAsync(AccessTokenRequestDto requestDto)
         {
             return await _accessTokenAppService.GetAccessTokenAsync(requestDto);
         }
 
         [HttpPost("Refresh")]
-        public async Task<dynamic> GetRefreshAccessTokenAsync(string refreshToken)
+        public async Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(string refreshToken)
         {
             return await _accessTokenAppService.GetRefreshAccessTokenAsync(refreshToken);
         }
 
         [AllowAnonymous]
         [HttpPost("Swagger")]
-        public async Task<dynamic> GetSwaggerAccessTokenAsync(AccessTokenRequestDto requestDto)
+        public async Task<AccessTokenResponseDto> GetSwaggerAccessTokenAsync(AccessTokenRequestDto requestDto)
         {
             return await _accessTokenAppService.GetSwaggerAccessTokenAsync(requestDto);
         }

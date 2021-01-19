@@ -12,11 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
-using System.Collections.Generic;
 using Volo.Abp;
-using Volo.Abp.AspNetCore.ExceptionHandling;
-using Volo.Abp.AspNetCore.Mvc;
-using Volo.Abp.Localization;
+using Volo.Abp.Json;
 using Volo.Abp.Modularity;
 using Volo.Abp.Security.Claims;
 using Volo.Abp.VirtualFileSystem;
@@ -36,13 +33,6 @@ namespace Jh.Abp.QuickComponents
             AbpClaimTypes.Email = JwtClaimTypes.Email;
             AbpClaimTypes.Name = JwtClaimTypes.GivenName;
             AbpClaimTypes.SurName = JwtClaimTypes.FamilyName;
-
-            PreConfigure<IMvcBuilder>(mvcBuilder=> {
-                mvcBuilder.AddNewtonsoftJson(options=> {
-                    options.SerializerSettings.ContractResolver =
-                     new AbpMvcJsonContractResolver(context.Services);
-                });
-            });
         }
 
         public override void ConfigureServices(ServiceConfigurationContext context)
@@ -53,6 +43,10 @@ namespace Jh.Abp.QuickComponents
             Configure<AbpVirtualFileSystemOptions>(options =>
             {
                 options.FileSets.AddEmbedded<AbpQuickComponentsModule>();
+            });
+
+            Configure<AbpJsonOptions>(options => {
+                options.DefaultDateTimeFormat = "yyyy-MM-dd HH:mm:ss:fff";
             });
 
             context.Services.AddMiniProfilerComponent();

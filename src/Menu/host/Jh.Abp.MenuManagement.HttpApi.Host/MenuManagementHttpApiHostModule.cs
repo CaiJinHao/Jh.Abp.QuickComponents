@@ -37,6 +37,11 @@ using Jh.Abp.QuickComponents.Localization;
 using Jh.Abp.QuickComponents.Swagger;
 using Volo.Abp.AspNetCore.ExceptionHandling;
 using Jh.Abp.QuickComponents.JwtAuthentication;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc;
+using Jh.Abp.QuickComponents.Jh.Abp.Json;
+using Volo.Abp.Json;
 
 namespace Jh.Abp.MenuManagement
 {
@@ -59,13 +64,21 @@ namespace Jh.Abp.MenuManagement
 
         public override void PreConfigureServices(ServiceConfigurationContext context)
         {
-   
+            PreConfigure<AbpJsonOptions>(options =>
+            {
+                options.UseHybridSerializer = false;
+            });
         }
 
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             var hostingEnvironment = context.Services.GetHostingEnvironment();
             var configuration = context.Services.GetConfiguration();
+
+            Configure<MvcNewtonsoftJsonOptions>(options =>
+            {
+                options.SerializerSettings.ContractResolver = new JhMvcJsonContractResolver(context.Services);
+            });
 
             Configure<AbpDbContextOptions>(options =>
             {
