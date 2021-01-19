@@ -48,7 +48,10 @@ namespace Jh.Abp.QuickComponents.Jh.Abp.Json
 
             if (ReflectionHelper.GetSingleAttributeOfMemberOrDeclaringTypeOrDefault<DisableDateTimeNormalizationAttribute>(member) == null)
             {
-                _dateTimeConverter = _services.GetRequiredServiceLazy<AbpJsonIsoDateTimeConverter>();
+                if (_dateTimeConverter == null)
+                {
+                    _dateTimeConverter = _services.GetRequiredServiceLazy<AbpJsonIsoDateTimeConverter>();
+                }
                 property.Converter = _dateTimeConverter.Value;
             }
         }
