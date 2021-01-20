@@ -60,7 +60,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <returns></returns>
         [Route("keys")]
         [HttpDelete]
-        public async Task<Menu[]> DeleteAsync(Guid[] keys)
+        public async Task<Menu[]> DeleteAsync([FromBody]Guid[] keys)
         {
             return await menuAppService.DeleteAsync(keys);
         }

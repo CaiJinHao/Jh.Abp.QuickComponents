@@ -26,6 +26,10 @@ namespace Jh.Abp.MenuManagement.Menus
 
         public virtual async Task<MenuAndRoleMap[]> CreateAsync(Guid[] RoleIds, Guid MenuId, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (RoleIds == null)
+            {
+                return default;
+            }
             var entitys = GetEntitys(RoleIds, MenuId).ToArray();
             await menuAndRoleMapRepository.CreateAsync(entitys, autoSave, cancellationToken).ConfigureAwait(false);
             return entitys;
