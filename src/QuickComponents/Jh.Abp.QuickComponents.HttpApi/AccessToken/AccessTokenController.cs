@@ -13,10 +13,10 @@ namespace Jh.Abp.QuickComponents.HttpApi.AccessToken
     [MapToApiVersion("1.0")] 对Action进行版本标记
     默认1.0,方法有几个版本写几个版本
      */
-    [RemoteService(Name = JhAbpQuickComponentsRemoteServiceConsts.RemoteServiceName)]
     //[ApiVersion("1.0")]
     //[ApiVersion("2.0")]
     //[ApiVersion("3.0")]
+    [RemoteService(Name = JhAbpQuickComponentsRemoteServiceConsts.RemoteServiceName)]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
     public class AccessTokenController : JhAbpQuickComponentsController
     {

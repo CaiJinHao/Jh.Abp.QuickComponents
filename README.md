@@ -165,3 +165,7 @@ context.Services.Configure<AbpExceptionHandlingOptions>(options =>
 ## Use
 
 最后打开包所在路径将C:\Users\Administrator\.nuget\packages\jh.abp.quickcomponents.httpapi\x.x.x\content\wwwroot文件夹copy到项目根路径即可
+
+## IdentityServer
+
+依赖模块：JhAbpIdentityServerModule

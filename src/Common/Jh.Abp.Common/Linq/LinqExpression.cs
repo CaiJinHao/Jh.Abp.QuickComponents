@@ -52,18 +52,22 @@ namespace Jh.Abp.Common.Linq
             Expression resultFilters = null;
             //1.创建参数表达式
             ParameterExpression parameterExpression = Expression.Parameter(typeof(TSource), "a");
-            var propertyInfos = inputDto.GetType().GetProperties();
-            foreach (var item in propertyInfos)
+            var sourcePropertyInfosNames = typeof(TSource).GetProperties().Select(a => a.Name);
+            var inputPropertyInfos = inputDto.GetType().GetProperties();
+            foreach (var item in inputPropertyInfos)
             {
-                //a(1)=>a.Name(2).Equals(4)("val")(3);(5)
-                //2.创建属性表达式
-                Expression proerty = Expression.Property(parameterExpression, item.Name);
-
+                if (!sourcePropertyInfosNames.Contains(item.Name))
+                {
+                    continue;
+                }
                 var propertyVal = item.GetValue(inputDto, null);
                 if (propertyVal == null)
                 {
                     continue;
                 }
+                //a(1)=>a.Name(2).Equals(4)("val")(3);(5)
+                //2.创建属性表达式
+                Expression proerty = Expression.Property(parameterExpression, item.Name);
                 var propertyType = propertyVal.GetType();
                 var valueType = ObjectExtensions.GetObjectType(propertyType);
                 MethodInfo method = null;

@@ -83,10 +83,10 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="key"></param>
         /// <param name="inputDto"></param>
         /// <returns></returns>
-        [HttpPatch]
-        public async Task<Menu> UpdatePortionAsync(Guid key, MenuUpdateInputDto inputDto)
+        [HttpPatch("{id}")]
+        public async Task<Menu> UpdatePortionAsync(Guid id, MenuUpdateInputDto inputDto)
         {
-            return await menuAppService.UpdatePortionAsync(key, inputDto);
+            return await menuAppService.UpdatePortionAsync(id, inputDto);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="id"></param>
         /// <param name="input"></param>
         /// <returns></returns>
-        [HttpPut("id")]
+        [HttpPut("{id}")]
         public async Task<MenuDto> UpdateAsync(Guid id, MenuUpdateInputDto input)
         {
             return await menuAppService.UpdateAsync(id, input);
@@ -117,7 +117,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
         public async Task<Menu> DeleteAsync(Guid id)
         {
             return await menuAppService.DeleteAsync(id);
@@ -128,7 +128,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<MenuDto> GetAsync(Guid id)
         {
             return await menuAppService.GetAsync(id);

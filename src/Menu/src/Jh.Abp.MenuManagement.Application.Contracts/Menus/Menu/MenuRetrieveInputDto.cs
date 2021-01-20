@@ -8,7 +8,7 @@ namespace Jh.Abp.MenuManagement.Menus
     /// <summary>
     /// 只存放需要查询的字段
     /// </summary>
-    public class MenuRetrieveInputDto : AuditedEntityDto<Guid>
+    public class MenuRetrieveInputDto : PagedAndSortedResultRequestDto
     {
         /// <summary>
         /// 菜单编号
