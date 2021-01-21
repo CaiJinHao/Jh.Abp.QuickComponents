@@ -1,15 +1,12 @@
-﻿using Jh.Abp.Domain.Extensions;
-using Jh.Abp.Extensions;
+﻿using Jh.Abp.Extensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Uow;
-using Microsoft.EntityFrameworkCore;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
@@ -62,6 +59,8 @@ namespace Jh.Abp.MenuManagement.Menus
         {
             foreach (var roleid in inputDtos.RoleIds)
             {
+                //删除所有角色的权限
+                DeleteAsync(new MenuAndRoleMapDeleteInputDto() { RoleId = roleid }).Wait();
                 foreach (var menuid in inputDtos.MenuIds)
                 {
                     yield return new MenuAndRoleMap(menuid, roleid, GuidGenerator.Create());
@@ -69,7 +68,7 @@ namespace Jh.Abp.MenuManagement.Menus
             }
         }
 
-        public async Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(Guid roleid)
+        public async Task<IEnumerable<MenusNavDto>> GetMenusNavTreesAsync(Guid roleid)
         {
             //查看CurrentUser.Roles 是的值是否为guid ,只能用一个角色的权限渲染菜单
             var auth_menus_id = crudRepository.Where(a => a.RoleId == roleid).Select(a=>a.MenuId);
@@ -77,13 +76,13 @@ namespace Jh.Abp.MenuManagement.Menus
 
             //按照前端要求字段返回
             var auth_menus = await menus.Where(m => auth_menus_id.Contains(m.Id))
-                .Select(a => new MenusTreeDto() { id = a.Code, icon = a.Icon, parent_id = a.ParentCode, sort = a.Sort, title = a.Name, url = a.Url}).ToListAsync();
+                .Select(a => new MenusNavDto() { id = a.Code, icon = a.Icon, parent_id = a.ParentCode, sort = a.Sort, title = a.Name, url = a.Url}).ToListAsync();
 
             //返回多个根节点
-            return GetMenusTreeDtosAsync(auth_menus);
+            return GetMenusTreeAsync(auth_menus).OrderBy(a => a.id).ThenBy(a => a.sort);
         }
 
-        public async Task<IEnumerable<MenusTreeDto>> GetAllMenusTreesAsync(Guid roleid)
+        public async Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(Guid roleid)
         {
             var auth_menus_id = crudRepository.Where(a => a.RoleId == roleid).Select(a => a.MenuId).ToList();
             var menus = MenuRepository.Where(a => a.Use == UseType.Yes);
@@ -104,19 +103,27 @@ namespace Jh.Abp.MenuManagement.Menus
             ).ToListAsync();
 
             //返回多个根节点
-            return GetMenusTreeDtosAsync(resutlMenus);
+            return GetMenusTreeAsync(resutlMenus).OrderBy(a=>a.id).ThenBy(a=>a.sort);
         }
 
         
-        private List<MenusTreeDto> GetMenusTreeDtosAsync(List<MenusTreeDto> menus)
+        private List<T> GetMenusTreeAsync<T>(List<T> menus) where T:MenusTree
         {
+            var _type = typeof(T);
             //组装树
-            IEnumerable<MenusTreeDto> GetChildNodes(string parentNodeId)
+            IEnumerable<T> GetChildNodes(string parentNodeId)
             {
                 var childs = menus.Where(a => a.parent_id == parentNodeId);
                 foreach (var item in childs)
                 {
-                    item.children =  GetChildNodes(item.id);
+                    if (_type==typeof(MenusNavDto))
+                    {
+                        (item as MenusNavDto).children = GetChildNodes(item.id) as IEnumerable<MenusNavDto>;
+                    }
+                    else
+                    {
+                        (item as MenusTreeDto).data = GetChildNodes(item.id) as IEnumerable<MenusTreeDto>;
+                    }
                 }
                 return childs;
             }
@@ -125,7 +132,14 @@ namespace Jh.Abp.MenuManagement.Menus
             var roots = menus.Where(a => a.parent_id == null).ToList();
             foreach (var item in roots)
             {
-                item.children = GetChildNodes(item.id);
+                if (_type == typeof(MenusNavDto))
+                {
+                    (item as MenusNavDto).children = GetChildNodes(item.id) as IEnumerable<MenusNavDto>;
+                }
+                else
+                {
+                    (item as MenusTreeDto).data = GetChildNodes(item.id) as IEnumerable<MenusTreeDto>;
+                }
             }
             return roots;
         }

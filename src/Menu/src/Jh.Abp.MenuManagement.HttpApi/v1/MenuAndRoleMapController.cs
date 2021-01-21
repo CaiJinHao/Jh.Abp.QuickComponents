@@ -123,17 +123,17 @@ namespace Jh.Abp.MenuManagement.v1
         }
 
         [HttpGet("Trees")]
-        public async Task<dynamic> GetMenusTreesAsync()
+        public async Task<dynamic> GetMenusNavTreesAsync()
         {
             var roleid = CurrentUser.FindClaim(Common.Extensions.JhJwtClaimTypes.RoleId);
-            var items = await menuAndRoleMapAppService.GetMenusTreesAsync(new Guid(roleid.Value));
+            var items = await menuAndRoleMapAppService.GetMenusNavTreesAsync(new Guid(roleid.Value));
             return new { items };
         }
 
         [HttpGet("TreesAll")]
-        public async Task<dynamic> GetAllMenusTreesAsync(Guid roleId)
+        public async Task<dynamic> GetMenusTreesAsync(Guid roleId)
         {
-            var items = await menuAndRoleMapAppService.GetAllMenusTreesAsync(roleId);
+            var items = await menuAndRoleMapAppService.GetMenusTreesAsync(roleId);
             return new { items };
         }
     }
