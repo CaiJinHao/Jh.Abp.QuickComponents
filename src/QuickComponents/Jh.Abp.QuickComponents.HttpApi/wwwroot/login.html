@@ -1,0 +1,64 @@
+﻿<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>设备报价平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="/main/resources/themes/login.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="./main/layui/css/layui.css" media="all">
+
+    <style>
+        .layui-form-checkbox[lay-skin=primary] span {
+            color: #ffffff !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main" id="page-vm">
+        <div class="topmenu">
+            <div class="topmenun"> <a href="#" class="borderr">我们的产品</a> <a href="#" class="borderr">解决方案</a> <a
+                    href="#" class="borderr">帮助文档</a> <a href="#">合作与生态</a> </div>
+        </div>
+        <div class="main-title">
+            <div class="m-tite">设备报价平台</div>
+            <div class="sub-title">海纳百川，有容乃大；传递可靠，安如泰山</div>
+        </div>
+        <div class="input_main">
+            <form class="layui-form" action="">
+                    <div class="input_name">
+                        <span>用户名</span>
+                        <input type="text" v-model="loginUser.Key" name="Key" lay-verify="required"
+                        placeholder="用户名" autocomplete="off">
+                    </div>
+                    <div class="input_key">
+                        <span>密&nbsp;&nbsp;码</span>
+                        <input type="password" v-model="loginUser.Secret" name="Secret" lay-verify="required"
+                        placeholder="密  码" autocomplete="off">
+                    </div>
+                <div class="layui-row">
+                    <div class="layui-col-md4" style="line-height: 53px;">
+                        <input type="checkbox"  name="rememberMe" v-model="loginUser.rememberMe" value="1" lay-skin="primary" title="记住密码">
+                    </div>
+                    <div class="layui-col-md8">
+                        <button class="login_botton" lay-submit lay-filter="form-login">登 录</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="foot">
+            版权所有：金浩科技股份有限公司&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copyright © 2020-2025
+            www.caijinhao.com.
+        </div>
+    </div>
+    <script src="./main/layui/layui.js"></script>
+    <script src="./main/plugins/vue/vue.min.js"></script>
+    <script src="./main/modules/extend/common.js"></script>
+    <script>
+        layui.use('login');
+    </script>
+</body>
+
+</html>

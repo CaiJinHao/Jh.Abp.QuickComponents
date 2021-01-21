@@ -1,0 +1,277 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>系统_菜单</title>
+    <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="../../build/css/common.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="page-vm" class="layui-fluid iframe-top">
+        <div class="table_menu_mg">
+            <fieldset class="layui-elem-field">
+                <div class="layui-field-box">
+                    <form class="layui-form">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">菜单名称：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" id="name" name="name">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">上级菜单：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" id="parentCode" name="parentCode">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">是否可用：</label>
+                                <div class="layui-input-inline">
+                                    <select lay-search name="use">
+                                        <option value="0">请选择</option>
+                                        <option v-for="option in uselist" v-bind:value="option.value">{{ option.text }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline btngroup">
+                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_menu_from" id="btn_menu_from_query">查询</a>
+                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_menu_from_export">导出</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+            <table id="table_menu" class="layui-hide" lay-filter="table_menu_list"></table>
+            <div id="table_menu_page" class="laypage"></div>
+        </div>
+    </div>
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+            <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="delbatch">批量删除</button>
+        </div>
+    </script>
+    <script type="text/html" id="tpl_use">
+        <input type="checkbox" name="use" value="1" lay-skin="switch" data-code="{{d.id}}" lay-text="是|否" lay-filter="table_tpl_use" {{d.use==1?'checked':''}}>
+    </script>
+    <script type="text/html" id="table_menu_operator">
+        <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="edit" data-code="id">编辑</a>
+        <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="id">删除</a>
+    </script>
+    <script src="../../layui/layui.js"></script>
+    <script src="../../plugins/vue/vue.min.js"></script>
+    <!--公共函数库-->
+    <script src="../../modules/extend/common.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#page-vm',
+            data: {
+                currPage: 1,
+                uselist: []
+            },
+            methods: {
+                RenderDom: function (form, callback) {
+                    vm.$forceUpdate();//强制重新渲染 dom
+                    // DOM 还没有更新
+                    vm.$nextTick(function () {
+                        // DOM 现在更新了
+                        form.render();
+                        if (callback) {
+                            callback();
+                        }
+                    });
+                }
+            }
+        });
+        layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod', 'datatable','excel'], function () {
+            var table = layui.table,
+                $ = layui.jquery,
+                layer = layui.layer,
+                form = layui.form,
+                laypage = layui.laypage,
+                ajaxmod = layui.ajaxmod,
+                excel=layui.excel,
+                datatable = layui.datatable;
+            var _context = $('.table_menu_mg'),
+                _table_style = { align: 'center' };//公共样式
+
+            var menuObj = {
+                renderTable: function (_options) {
+                    var optDefault = {
+                        Page: vm.currPage,
+                        PageSize: PageSize,//common中定义的全局
+                        Sorting:'code'
+                    };
+                    $.extend(optDefault, _options);
+                    var _the = this;
+                    datatable.renderTable(optDefault, {
+                        url: '/menu',
+                        tableElem: 'table_menu',//laypage 自动加_page
+                        tableCols: [[
+                            { type: 'checkbox' },
+                            $.extend({ field: 'code', title: '菜单ID' }, _table_style),
+                            $.extend({ field: 'name', title: '菜单名称' }, _table_style),
+                            $.extend({ field: 'parentCode', title: '父级菜单ID' }, _table_style),
+                            $.extend({ field: 'icon', title: '菜单图标' }, _table_style),
+                            $.extend({ field: 'url', title: '菜单URL' }, _table_style),
+                            $.extend({ field: 'sort', title: '菜单排序' }, _table_style),
+                            $.extend({ field: 'description', title: '菜单描述' }, _table_style),
+                            $.extend({ field: 'use', title: '菜单是否启用', templet: '#tpl_use' }, _table_style),
+                            $.extend({ field: 'id', title: '操作', width: 190, templet: '#table_menu_operator', fixed: 'right' }, _table_style)
+                        ]],
+                    });
+                },
+                edit: function (_data) {
+                    var _the = this;
+                    datatable.edit({
+                        title: '编辑系统_菜单',
+                        area: ['850px', '500px'],
+                        content: 'view/menu/edit.html?id=' + _data.id,
+                    });
+                },
+                add: function () {
+                    var _the = this;
+                    datatable.add({
+                        title: '新增系统_菜单',
+                        area: ['850px', '500px'],
+                        content: 'view/menu/edit.html',
+                    });
+                },
+                del: function (_data) {
+                    var _the = this;
+                    datatable.del({
+                        url: '/menu/' + _data.id,
+                        type: 'Delete',
+                        success: function (response) {
+                            top.tool.publish('edit_menu_form_refresh');//触发事件刷新列表
+                        }
+                    });
+                },
+                delbatch: function (_data) {
+                    var checkStatus = table.checkStatus('table_menu'),
+                        data = checkStatus.data;
+                        console.log(data);
+                    var delIdList = [];
+                    for (const item of data) {
+                        delIdList.push(item.id);
+                    }
+                    datatable.delbatch({
+                        url: '/menu/keys',
+                        type: 'Delete',
+                        data: delIdList,
+                        success: function (response) {
+                            top.tool.publish('edit_menu_form_refresh');//触发事件刷新列表
+                        }
+                    });
+                },
+                patchObj: function (_data) {
+                    ajaxmod.requestAuthorize({
+                        url: '/menu/'+_data.id,
+                        type: 'Patch',
+                        data: _data,
+                        success: function (response) {
+                            top.tool.publish('edit_menu_form_refresh');
+                        }
+                    });
+                },
+                exportExcel: function (data) {
+                    //跟表格显示的数据一样
+                    data = excel.filterExportData(data, [
+                        'id',
+                        'name',
+                        'icon',
+                        'sort',
+                        'parentCode',
+                        'url',
+                        'description',
+                        'use',
+                    ]);
+
+                    data.unshift({
+                        id: 'id',
+                        name: '菜单名称',
+                        icon: '菜单图标',
+                        sort: '菜单排序',
+                        parentCode: '父级菜单',
+                        url: '菜单URL',
+                        description: '菜单描述',
+                        use: '菜单是否启用',
+                    });
+
+                    excel.exportExcel({
+                        menu: data
+                    }, 'menu' + new Date().toLocaleString() + '.xlsx', 'xlsx');
+                },
+                loadtable: function () {
+                    $('#btn_menu_from_query').click();
+                },
+                loadList: function () {
+                    var _the = this;
+                    ajaxmod.ajaxArray([
+                        {
+                            url: '/appenums/use',
+                            type: 'Get',
+                            success: function (response) {
+                                vm.uselist = response;
+                            }
+                        }
+                    ], function () {
+                        vm.RenderDom(form);
+                    });
+                }
+            };
+            menuObj.loadList();
+            menuObj.renderTable();//加载第一页
+
+            //绑定编辑也保存事件
+            top.tool.subscribe("edit_menu_form_refresh", function () {
+                menuObj.renderTable();
+            });
+
+            table.on('tool(table_menu_list)', function (obj) {
+                var data = obj.data;
+                menuObj[obj.event] ? menuObj[obj.event].call(menuObj, data) : '';
+            });
+
+            table.on('toolbar(table_menu_list)', function (obj) {
+                var data = obj.data;
+                menuObj[obj.event] ? menuObj[obj.event].call(menuObj, data) : '';
+            });
+
+            form.on('submit(btn_menu_from)', function (data) {
+                vm.currPage = 1;
+                menuObj.renderTable(data.field);
+                return false;
+            });
+
+            form.on('submit(btn_menu_from_export)', function (data) {
+                ajaxmod.requestAuthorize({
+                    url: '/menu/list',
+                    type: 'Get',
+                    data: data.field,
+                    success: function (response) {
+                        menuObj.exportExcel(response);
+                    }
+                });
+                return false;
+            });
+
+            form.on('switch(table_tpl_use)', function (data) {
+                let _id = data.elem.attributes["data-code"].value;
+                let _value = 1;
+                if (data.elem.checked) {
+                    _value = 1;
+                } else {
+                    _value = 2;
+                }
+                menuObj.patchObj({ id: _id, use: _value });
+            });
+        });
+    </script>
+</body>
+</html>

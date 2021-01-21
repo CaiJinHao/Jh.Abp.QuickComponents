@@ -1,0 +1,55 @@
+@charset "utf-8";
+*{margin:0;padding:0;list-style:none;}
+html{width:100%;height:100%;}
+body {font-family: "Microsoft Yahei",Tahoma,Arial,Helvetica,STHeiti;width:100%;height:100%; background: url("../images/login/backbg.jpg") repeat-x top; background-color: #145bbb;}
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, hr, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, textarea, tfoot, th, thead, time, tr, tt, u, ul, var, video {margin: 0;padding: 0;border: 0;box-sizing:border-box;}
+table{border-collapse:collapse;border-spacing:0}
+a{text-decoration:none;}
+img {vertical-align: middle;}
+.fl {float:left;}
+.fr {float:right;}
+
+/* 登录*/
+.main {width:100vw; height: 820px; margin: 0px auto; background: url("../images/login/mainbg.jpg") no-repeat center top;}
+.topmenu {width:100%; height: 54px; }
+.topmenun {float:right; width:auto; height: 26px; margin-top: 13px; line-height: 26px;}
+.topmenun a {float: left; width:136px; height: 26px; color: #fff; font-size:14px; text-align: center;}
+.topmenun a:hover {color:#55f3eb;}
+.borderr {border-right: 1px solid #799dcd;}
+.input_main {width:430px; height: auto; margin-top: 307px; margin-left: 30vw;}
+.input_name { width:360px; height: 36px; border: 1px solid #6baaff; border-radius: 18px; background: url("../images/login/user.png") no-repeat center left; padding-left: 40px; background-color: #fff; margin-bottom: 30px; -webkit-border-radius:; -moz-border-radius:; -ms-border-radius:; -o-border-radius:; }
+.input_name span {float: left; width: 60px; height: 36px; line-height: 36px; font-size: 16px; color: #0554bb;}
+.input_name input {float: left; width: 245px; height: 28px; line-height: 28px; border-radius: 14px; background-color: #dfe5ed; font-size: 16px; color: #5a6677; margin-top: 3px; border: 0px; padding-left: 10px;}
+
+.input_key {width:360px; height: 36px;  border: 1px solid #6baaff; border-radius: 18px;  background: url("../images/login/key.png") no-repeat center left; padding-left: 40px; background-color: #fff; margin-bottom: 20px;}
+.input_key span {float: left; width: 60px; height: 36px; line-height: 36px; font-size: 16px; color: #0554bb;}
+.input_key input {float: left; width: 245px; height: 28px; line-height: 28px; border-radius: 14px; background-color: #dfe5ed; font-size: 16px; color: #5a6677; margin-top: 3px; border: 0px; padding-left: 10px;}
+
+.login_botton_block {width: 100%; height: auto;}
+.remember {float: left; width:150px; height: 54px; line-height: 54px; font-size: 14px; color: #fff; }
+.remember input {float:left; width: 16px; height: 16px; border-radius: 3px; border: 0px; background-color: #69a7fb; color: #fff; margin : 19px 10px 0px 0px;}
+.login_botton {float: left; width: 200px; height: 53px; background: url("../images/login/loginbotton.png") no-repeat center; line-height: 53px; font-size: 24px; border: 0px; background-color: none; color: #fff; font-weight: bold; cursor: pointer; }
+
+.foot {width: 100%; height: 50px; line-height: 50px; color: #fff; text-align: center; margin-top: 267px; font-size: 12px; color: #aecffc;}
+
+.main-title {
+    position: absolute;
+    top: 150px;
+    left: 28%;
+    letter-spacing: 5px;
+    color:#fff;
+}
+    .main-title > div {
+        margin: 25px;
+    }
+    .main-title .m-tite{
+        font-size:2.5rem;
+        font-weight:600;
+    }
+    .main-title .sub-tite {
+        font-size:1.5rem;
+    }
+    .topmenu {
+        width: 100%;
+        height: 54px;
+    }
