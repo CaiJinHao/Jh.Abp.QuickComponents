@@ -6,7 +6,7 @@ using Volo.Abp;
 using System.Linq;
 using Volo.Abp.Users;
 
-namespace Jh.Abp.QuickComponents.HttpApi.AccessToken
+namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
 {
     /*
      前端传的时候直接写死，SwaggerApi 参数化了

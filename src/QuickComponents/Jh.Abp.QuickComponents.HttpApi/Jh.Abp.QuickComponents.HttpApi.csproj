@@ -50,4 +50,8 @@
       <PackagePath></PackagePath>
     </None>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="v1\App\" />
+  </ItemGroup>
 </Project>
