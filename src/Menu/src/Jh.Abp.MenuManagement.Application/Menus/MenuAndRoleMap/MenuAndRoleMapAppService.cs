@@ -79,26 +79,54 @@ namespace Jh.Abp.MenuManagement.Menus
             var auth_menus = await menus.Where(m => auth_menus_id.Contains(m.Id))
                 .Select(a => new MenusTreeDto() { id = a.Code, icon = a.Icon, parent_id = a.ParentCode, sort = a.Sort, title = a.Name, url = a.Url}).ToListAsync();
 
+            //返回多个根节点
+            return GetMenusTreeDtosAsync(auth_menus);
+        }
+
+        public async Task<IEnumerable<MenusTreeDto>> GetAllMenusTreesAsync(Guid roleid)
+        {
+            var auth_menus_id = crudRepository.Where(a => a.RoleId == roleid).Select(a => a.MenuId).ToList();
+            var menus = MenuRepository.Where(a => a.Use == UseType.Yes);
+
+            var resutlMenus = await menus.Select(a =>
+                new MenusTreeDto()
+                {
+                    id = a.Code,
+                    icon = a.Icon,
+                    parent_id = a.ParentCode,
+                    sort = a.Sort,
+                    title = a.Name,
+                    url = a.Url,
+                    value = a.Id.ToString(),
+                    @checked = auth_menus_id.Contains(a.Id),
+                    disabled = false
+                }
+            ).ToListAsync();
+
+            //返回多个根节点
+            return GetMenusTreeDtosAsync(resutlMenus);
+        }
+
+        
+        private List<MenusTreeDto> GetMenusTreeDtosAsync(List<MenusTreeDto> menus)
+        {
             //组装树
-            async Task<IEnumerable<MenusTreeDto>> GetChildNodes(string parentNodeId)
+            IEnumerable<MenusTreeDto> GetChildNodes(string parentNodeId)
             {
-                var childs = auth_menus.Where(a => a.parent_id == parentNodeId);
+                var childs = menus.Where(a => a.parent_id == parentNodeId);
                 foreach (var item in childs)
                 {
-                    item.children = await GetChildNodes(item.id);
+                    item.children =  GetChildNodes(item.id);
                 }
                 return childs;
             }
 
-
             //找到根节点
-            var roots = auth_menus.Where(a => a.parent_id == null).ToList();
+            var roots = menus.Where(a => a.parent_id == null).ToList();
             foreach (var item in roots)
             {
-                item.children = await GetChildNodes(item.id);
+                item.children = GetChildNodes(item.id);
             }
-
-            //返回多个跟节点
             return roots;
         }
     }

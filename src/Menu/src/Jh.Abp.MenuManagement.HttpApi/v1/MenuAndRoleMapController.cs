@@ -60,7 +60,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <returns></returns>
         [Route("list")]
         [HttpGet]
-        public async Task<List<MenuAndRoleMapDto>> GetEntitysAsync(MenuAndRoleMapRetrieveInputDto inputDto)
+        public async Task<ListResultDto<MenuAndRoleMapDto>> GetEntitysAsync(MenuAndRoleMapRetrieveInputDto inputDto)
         {
             return await menuAndRoleMapAppService.GetEntitysAsync(inputDto);
         }
@@ -123,10 +123,18 @@ namespace Jh.Abp.MenuManagement.v1
         }
 
         [HttpGet("Trees")]
-        public async Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync()
+        public async Task<dynamic> GetMenusTreesAsync()
         {
             var roleid = CurrentUser.FindClaim(Common.Extensions.JhJwtClaimTypes.RoleId);
-            return await menuAndRoleMapAppService.GetMenusTreesAsync(new Guid(roleid.Value));
+            var items = await menuAndRoleMapAppService.GetMenusTreesAsync(new Guid(roleid.Value));
+            return new { items };
+        }
+
+        [HttpGet("TreesAll")]
+        public async Task<dynamic> GetAllMenusTreesAsync(Guid roleId)
+        {
+            var items = await menuAndRoleMapAppService.GetAllMenusTreesAsync(roleId);
+            return new { items };
         }
     }
 }

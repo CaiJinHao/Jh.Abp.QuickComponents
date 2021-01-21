@@ -35,7 +35,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        [Route("list")]
+        [Route("items")]
         [HttpPost]
         public async Task<Menu[]> CreateAsync(MenuCreateInputDto[] input)
         {
@@ -70,9 +70,9 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="inputDto"></param>
         /// <returns></returns>
-        [Route("list")]
+        [Route("all")]
         [HttpGet]
-        public async Task<List<MenuDto>> GetEntitysAsync(MenuRetrieveInputDto inputDto)
+        public async Task<ListResultDto<MenuDto>> GetEntitysAsync(MenuRetrieveInputDto inputDto)
         {
             return await menuAppService.GetEntitysAsync(inputDto);
         }

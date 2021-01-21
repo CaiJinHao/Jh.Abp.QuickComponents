@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 
 namespace Jh.Abp.Extensions
@@ -83,6 +84,6 @@ namespace Jh.Abp.Extensions
         /// </summary>
         /// <param name="inputDto"></param>
         /// <returns></returns>
-        Task<List<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -36,7 +36,7 @@ namespace Jh.Abp.MenuManagement.Menus
         public int sort { get; set; }
 
         public bool @checked { get; set; }
-        public UseType is_module { get; set; }
-        public UseType is_leaf { get; set; }
+        public bool disabled { get; set; }
+        public string value { get; set; }
     }
 }
