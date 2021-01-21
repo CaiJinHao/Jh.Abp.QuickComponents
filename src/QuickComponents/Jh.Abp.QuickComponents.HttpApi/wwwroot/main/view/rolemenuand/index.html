@@ -22,6 +22,7 @@
                 </div>
                 <div class="layui-inline btngroup">
                     <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysmenurolemiddle_query">查询</a>
+                    <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysmenurolemiddle_from_add">新增</a>
                 </div>
             </div>
             <br />
@@ -80,8 +81,7 @@
             el: '#page-vm',
             data: {
                 currPage: 1,
-                selectedRole: {},
-                roleList: [],
+                selectedRole: {}
             },
             methods: {
                 RenderDom: (form) => {
@@ -94,13 +94,14 @@
                 }
             }
         });
-        layui.use(['layer', 'form', 'laypage', 'jquery', 'ajaxmod', 'tree'], function () {
+        layui.use(['layer', 'form', 'laypage', 'jquery', 'ajaxmod', 'tree', 'datatable'], function () {
             var $ = layui.jquery,
                 layer = layui.layer,
                 form = layui.form,
                 tree = layui.tree,
                 laypage = layui.laypage,
-                ajaxmod = layui.ajaxmod;
+                ajaxmod = layui.ajaxmod,
+                datatable = layui.datatable;
 
             var sysmenurolemiddleObj = {
                 modulepointTree: {},
@@ -112,9 +113,20 @@
                     }, 1000);
                 },
                 seletedRoleBg: function (el) {
-                    var _c_li = $(el).parents('li');
-                    $(_c_li).siblings('li').removeClass('role_selected');
-                    $(_c_li).addClass('role_selected');
+                    $(el).siblings('.layui-tree-spread').removeClass('role_selected');
+                    $(el).addClass('role_selected');
+                },
+                setSeletedRole:function(node){
+                    let _the=this;
+                    vm.selectedRole=node;
+                    //找到文本
+                    for (const elem of $('#role_tree .layui-tree-spread')) {
+                        let name= $('.layui-tree-txt',$(elem)).html();
+                        if (name === vm.selectedRole.title) {
+                            _the.seletedRoleBg(elem);
+                            break;
+                        }
+                    }
                 },
                 loadRoleList: function (form_data) {
                     var _the = this;
@@ -130,24 +142,59 @@
                                 return;
                             }
                             $('#role_tree').html('');
-                            vm.roleList = response.items;
-                            vm.selectedRole = response.items[0];
-                            _the.loadModulePointList();
-                            vm.RenderDom(form);
 
-                            //tree交互
                             _the.roleTree = tree.render({
                                 elem: '#role_tree',
                                 data: response.items,
+                                edit: ['update', 'del'],
                                 click: function (node) {
-                                    _the.seletedRoleBg(event.target);
+                                    _the.seletedRoleBg(node.elem);
                                     vm.selectedRole = node.data;
                                     vm.RenderDom(form);
                                     //加载选中的权限
                                     _the.loadModulePointList();
+                                },
+                                operate: function (obj) {
+                                    var type = obj.type; //得到操作类型：add、edit、del
+                                    var data = obj.data; //得到当前节点的数据
+                                    var elem = obj.elem; //得到当前节点元素
+                                    var id = data.id; //得到节点索引
+                                    if (type === 'add') { //增加节点
+                                        
+                                    } else if (type === 'update') { //修改节点
+                                        let name= elem.find('.layui-tree-txt').html();
+                                        let requestData = data.data;
+                                        requestData.name = name;
+                                        ajaxmod.requestAuthorize({
+                                            url: '/Role/'+ data.id,
+                                            data: requestData,
+                                            type: 'Put',
+                                            success: function (response) {
+                                                vm.selectedRole = { id: response.id, spread: true, title: response.name, data: response };
+                                                sysmenurolemiddleObj.loadRoleList();
+                                            }
+                                        });
+                                    } else if (type === 'del') { //删除节点
+                                        datatable.del({
+                                            url: '/role/' + data.id,
+                                            type: 'Delete',
+                                            confirm:false,
+                                            success: function (response) {
+                                                _the.setSeletedRole({});
+                                                sysmenurolemiddleObj.loadRoleList();
+                                            }
+                                        });
+                                    };
                                 }
                             });
-                            _the.seletedRoleBg($('#role_tree>li:eq(0)>a'));
+
+                            if (!vm.selectedRole.id) {
+                                _the.setSeletedRole(response.items[0]);
+                            }else{
+                                _the.setSeletedRole(vm.selectedRole);
+                            }
+                            _the.loadModulePointList();
+                            vm.RenderDom(form);
                         }
                     });
                 },
@@ -189,8 +236,23 @@
 
             sysmenurolemiddleObj.init();
 
+            //绑定编辑也保存事件
+            top.tool.subscribe("roles_refresh", function (role) {
+                sysmenurolemiddleObj.loadRoleList();
+                sysmenurolemiddleObj.setSeletedRole({ id: role.id, spread: true, title: role.name, data: role });
+            });
+
             form.on('submit(btn_sysmenurolemiddle_query)', function (data) {
                 sysmenurolemiddleObj.loadRoleList(data.field);
+                return false;
+            });
+
+            form.on('submit(btn_sysmenurolemiddle_from_add)', function (data) {
+                datatable.add({
+                    title: '新增角色',
+                    area: ['400px', '300px'],
+                    content: 'view/role/edit.html',
+                });
                 return false;
             });
 
@@ -198,7 +260,8 @@
                 var cks = sysmenurolemiddleObj.modulepointTree.GetChecked();//不包含父级
                 var menuIds = [];
                 $.each(cks, function (k, v) {
-                    menuIds.push(v.value);
+                    if(v.value!='on')
+                        menuIds.push(v.value);
                 });
                 if (menuIds.length < 1) {
                     layer.msg("请选择菜单权限");

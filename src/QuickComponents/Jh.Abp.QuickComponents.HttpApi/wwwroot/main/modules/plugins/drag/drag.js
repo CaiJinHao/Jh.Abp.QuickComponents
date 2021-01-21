@@ -56,9 +56,9 @@
                 async: true,
                 data: JSON.stringify({ spec: __spec, action: 'getcode' }),
                 success: function (_json) {
-                    if (_json.Code!=0) {
+                    if (_json.errorCode!=0) {
                         document.getElementById(__codediv).innerHTML =
-                            "<span style='color:red'>\u9a8c\u8bc1\u7801\u83b7\u53d6\u5931\u8d25\u002c" + _json.Msg + "</span>";
+                            "<span style='color:red'>\u9a8c\u8bc1\u7801\u83b7\u53d6\u5931\u8d25\u002c" + _json.errorMsg + "</span>";
                         return;
                     }
                     var result = _json.data;
@@ -234,7 +234,7 @@
                     }),
                     success: function (_json) {
                         var result = _json.data;
-                        if (_json.Code != 0) {
+                        if (_json.errorCode != 0) {
                             $(".refesh_bg").show();
                             $xy_img.css({ 'left': 0 });
                             handler.css({ 'left': 0 });
@@ -245,7 +245,7 @@
                                 console.log("%cVerificationCode Refresh", "color:blue");
                             }
                             else {
-                                console.log("%cNumber of errors: " + _json.Msg, "color:red");
+                                console.log("%cNumber of errors: " + _json.errorMsg, "color:red");
                             }
                             return;
                         }

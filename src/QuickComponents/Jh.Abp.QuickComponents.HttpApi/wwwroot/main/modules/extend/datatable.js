@@ -112,15 +112,20 @@ layui.define(['table', 'layer', 'form', 'laypage', 'ajaxmod', 'jquery'], functio
             var optDefault = {
                 url: '/userinfo/0',
                 type: 'Delete',
+                confirm:true,
                 success: function (response) {
                     console.log("没有触发事件刷新列表")//触发事件刷新列表
                 }
             };
             $.extend(optDefault, _options);
-            top.layer.confirm('确认删除吗？', { icon: 3, title: '提示' }, function (index, layero) {
+            if(optDefault.confirm){
+                top.layer.confirm('确认删除吗？', { icon: 3, title: '提示' }, function (index, layero) {
+                    ajaxmod.requestAuthorize(optDefault);
+                    top.layer.close(index);
+                }, function () { });
+            }else{
                 ajaxmod.requestAuthorize(optDefault);
-                top.layer.close(index);
-            }, function () { });
+            }
         },
         delbatch: function (_options) {
             var _the = this;

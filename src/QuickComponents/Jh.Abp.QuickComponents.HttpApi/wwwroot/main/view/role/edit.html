@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>编辑角色</title>
+    <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="../../build/css/common.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="page-vm" class="layui-fluid iframe-top lable-len">
+        <form class="layui-form edit_sysroles_form">
+            <div class="layui-fluid">
+                <div class="layui-row">
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">角色名称：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入名称"
+                                        v-model="sysroles.name">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="layui-row" style="text-align:center;">
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-normal" lay-submit lay-filter="btn_submit_sysroles_form"
+                            href="javascript:;">保存</a>
+                        <a class="layui-btn layui-btn-primary" id="cancel" href="javascript:;">关闭</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="../../layui/layui.js"></script>
+    <script src="../../plugins/vue/vue.min.js"></script>
+    <!--公共函数库-->
+    <script src="../../modules/extend/common.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#page-vm',
+            data: {
+                paramObj: {},//querystirng 参数对象
+                //默认值
+                sysroles: {
+                    id: '',
+                    name: '',
+                    isDefault: false,
+                    isPublic: true,
+                    isStatic: true
+                }
+            },
+            watch: {
+                sysroles: {
+                    deep: true,
+                    handler: function (val, old_val) {
+                        var _the = this;
+                    }
+                }
+            },
+            methods: {
+                RenderDom: function (form, callback) {
+                    vm.$forceUpdate();//强制重新渲染 dom
+                    // DOM 还没有更新
+                    vm.$nextTick(function () {
+                        // DOM 现在更新了
+                        form.render();
+                        if (callback) {
+                            callback();
+                        }
+                    });
+                }
+            }
+        });
+
+        layui.use(['layer', 'form', 'ajaxmod', 'jquery', 'laydate', 'formvalidate'], function () {
+            var layer = layui.layer,
+                $ = layui.jquery,
+                form = layui.form,
+                ajaxmod = layui.ajaxmod,
+                formvalidate = layui.formvalidate,
+                laydate = layui.laydate;
+            var _context = $('.edit_sysroles_form');
+            var _table_style = { align: 'center' };//公共样式
+
+            var sysrolesObj = {
+                //初始化页面 layui样式
+                initPage: function () {
+                    var _the = this;
+                    vm.paramObj = geturlparam();
+                    _the.loadData();
+                },
+                loadData: function () {
+                    if (vm.paramObj.id) {
+                        ajaxmod.requestAuthorize({
+                            url: '/Role/' + vm.paramObj.id,
+                            type: 'Get',
+                            success: function (response) {
+                                vm.$set(vm, 'sysroles', response);
+                                vm.RenderDom(form);
+                            }
+                        });
+                    }
+                }
+            };
+            sysrolesObj.initPage();
+
+            //parent 上一级别
+            $('#cancel', $(_context)).on('click', function () {
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            });
+
+            form.on('submit(btn_submit_sysroles_form)', function (_from_data) {
+                var data = vm.sysroles;
+                var url = '/Role';
+                var type = 'Post';
+                if (vm.paramObj.id) {
+                    url = '/Role/' + vm.paramObj.id;
+                    type = 'Put';
+                }
+                //阻止表单提交可以  return false;
+                ajaxmod.requestAuthorize({
+                    url: url,
+                    data: data,
+                    type: type,
+                    success: function (response) {
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                        top.tool.publish('roles_refresh',response);
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+
+</html>
