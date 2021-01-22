@@ -48,13 +48,6 @@ namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
             return await _accessTokenAppService.GetSwaggerAccessTokenAsync(requestDto);
         }
 
-        [Route("User")]
-        [HttpGet]
-        public ICurrentUser GetLoginUserInfoAsync()
-        {
-            return CurrentUser;
-        }
-
         [Route("claims")]
         [HttpGet]
         public dynamic GetClaimsAsync()

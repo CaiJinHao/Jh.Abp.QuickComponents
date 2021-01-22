@@ -33,5 +33,16 @@ namespace Jh.Abp.MenuManagement.v1
                 items = datas.Select(a => new { title = a.Name, id = a.Id, data = a, spread = true })
             };
         }
+
+        [HttpGet]
+        [Route("select")]
+        public async virtual Task<dynamic> GetSelectAsync(string name)
+        {
+            var datas = await RoleRepository.GetListAsync(filter: name);
+            return new
+            {
+                items = datas.Select(a => new { name = a.Name, value = a.Id })
+            };
+        }
     }
 }
