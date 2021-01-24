@@ -472,8 +472,7 @@
         getUserInfo: function (callback) {
             var _the = this;
             ajaxobj.requestAuthorize({
-                url: '/AccessToken/User',
-                // data: {type:'sub'},
+                url: '/User',
                 type: 'Get',
                 success: function (response) {
                     callback(response);
@@ -560,7 +559,7 @@
             if (optDefault.identityServer) {
                 optDefault.url = identityServerApi + optDefault.url;
             }
-            if (optDefault.url.indexOf('http') <0) {
+            if (optDefault.url.indexOf('http') <0&&optDefault.url.indexOf('/api/') <0) {
                 optDefault.url = baseUrl + optDefault.url;
             }
             if (optDefault.type !== 'Get' && optDefault.contentType !== false) { //post 必须要转为json字符串  get 必须不能转

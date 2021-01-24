@@ -1,0 +1,257 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用户</title>
+    <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="../../build/css/common.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="page-vm" class="layui-fluid iframe-top">
+        <div class="table_user_mg">
+            <fieldset class="layui-elem-field">
+                <div class="layui-field-box">
+                    <div class="layui-form">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">过滤值：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" name="Filter">
+                                </div>
+                            </div>
+                            <div class="layui-inline btngroup">
+                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_user_from"
+                                   id="btn_user_from_query">查询</a>
+                                <!-- <a href="javascript:;" class="layui-btn" lay-submit
+                                   lay-filter="btn_user_from_export">导出</a> -->
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+            </fieldset>
+            <table id="table_user" class="layui-hide" lay-filter="table_user_list"></table>
+            <div id="table_user_page" class="laypage"></div>
+        </div>
+    </div>
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+            <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="delbatch">批量删除</button>
+        </div>
+    </script>
+    <script type="text/html" id="tpl_name">
+        {{d.surname + d.name}}
+    </script>
+    <script type="text/html" id="tpl_lockoutEnabled">
+        <input type="checkbox" name="lockoutEnabled" value="1" lay-skin="switch" data-code="{{d.id}}" lay-text="是|否" lay-filter="table_tpl_lockoutEnabled" {{d.lockoutEnabled?'checked':''}}>
+    </script>
+    <script type="text/html" id="table_user_operator">
+        <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="edit" data-code="id">编辑</a>
+        <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="id">删除</a>
+    </script>
+    <script src="../../layui/layui.js"></script>
+    <script src="../../plugins/vue/vue.min.js"></script>
+    <!--公共函数库-->
+    <script src="../../modules/extend/common.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#page-vm',
+            data: {
+                currPage: 1,
+            },
+            methods: {
+                RenderDom: function (form, callback) {
+                    vm.$forceUpdate();//强制重新渲染 dom
+                    // DOM 还没有更新
+                    vm.$nextTick(function () {
+                        // DOM 现在更新了
+                        form.render();
+                        if (callback) {
+                            callback();
+                        }
+                    });
+                }
+            }
+        });
+        layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod', 'datatable'], function () {
+            var table = layui.table,
+                $ = layui.jquery,
+                layer = layui.layer,
+                form = layui.form,
+                laypage = layui.laypage,
+                ajaxmod = layui.ajaxmod,
+                datatable = layui.datatable;
+            var _context = $('.table_user_mg'),
+                _table_style = { align: 'center' };//公共样式
+
+            var userObj = {
+                renderTable: function (_options) {
+                    var optDefault = {
+                        Page: vm.currPage,
+                        PageSize: PageSize,//common中定义的全局
+                    };
+                    $.extend(optDefault, _options);
+                    var _the = this;
+                    datatable.renderTable(optDefault, {
+                        url: '/api/identity/users',
+                        tableElem: 'table_user',//laypage 自动加_page
+                        tableCols: [[
+                            { type: 'checkbox' },
+                            $.extend({ title: '名称' ,templet:'#tpl_name'}, _table_style),
+                            $.extend({ field: 'userName', title: '账号' }, _table_style),
+                            // $.extend({ field: 'role_name', title: '角色' }, _table_style),
+                            $.extend({ field: 'phoneNumber', title: '手机号' }, _table_style),
+                            $.extend({ field: 'email', title: '邮箱' }, _table_style),
+                            // $.extend({ field: 'user_icon', title: '头像' }, _table_style),
+                            // $.extend({ field: 'user_sex', title: '性别', templet: '#tpl_user_sex' }, _table_style),
+                            $.extend({ field: 'lockoutEnabled', title: '启用锁定', templet: '#tpl_lockoutEnabled' }, _table_style),
+                            $.extend({ field: 'creationTime', title: '创建时间' }, _table_style),
+                            $.extend({ field: 'lastModificationTime', title: '最后一次修改时间' }, _table_style),
+                            $.extend({ field: 'id', title: '操作', width: 190, templet: '#table_user_operator', fixed: 'right' }, _table_style)
+                        ]],
+                    });
+                },
+                edit: function (_data) {
+                    var _the = this;
+                    datatable.edit({
+                        title: '编辑用户',
+                        area: ['850px', '500px'],
+                        content: 'view/user/edit.html?id=' + _data.id,
+                    });
+                },
+                add: function () {
+                    var _the = this;
+                    datatable.add({
+                        title: '新增用户',
+                        area: ['850px', '500px'],
+                        content: 'view/user/edit.html',
+                    });
+                },
+                del: function (_data) {
+                    var _the = this;
+                    datatable.del({
+                        url: '/user/' + _data.id,
+                        type: 'Delete',
+                        success: function (response) {
+                            top.tool.publish('edit_user_form_refresh');//触发事件刷新列表
+                        }
+                    });
+                },
+                delbatch: function (_data) {
+                    var checkStatus = table.checkStatus('table_user'),
+                        data = checkStatus.data;
+                    var delIdList = [];
+                    $.each(data, function (k, v) {
+                        delIdList.push(v._id);
+                    });
+                    datatable.delbatch({
+                        url: '/user',
+                        type: 'Delete',
+                        data: delIdList,
+                        success: function (response) {
+                            top.tool.publish('edit_user_form_refresh');//触发事件刷新列表
+                        }
+                    });
+                },
+                patchObj: function (data,url) {
+                    ajaxmod.requestAuthorize({
+                        url:url,
+                        type: 'Patch',
+                        data: data,
+                        success: function (response) {
+                        }
+                    });
+                },
+                exportExcel: function (data) {
+                    //跟表格显示的数据一样
+                    data = excel.filterExportData(data, [
+                        'id',
+                        'id',
+                        'userName',
+                        'user_pwd',
+                        'isDeleted',
+                        'phoneNumber',
+                        'email',
+                        'user_time',
+                        'user_icon',
+                        'user_name',
+                        'user_sex',
+                    ]);
+
+                    data.unshift({
+                        id: 'id',
+                        id: 'id',
+                        userName: '账号',
+                        user_pwd: '密码',
+                        isDeleted: '是否启用',
+                        phoneNumber: '手机号',
+                        email: '邮箱',
+                        user_time: '创建时间',
+                        user_icon: '头像',
+                        user_name: '名称',
+                        user_sex: '性别',
+                    });
+
+                    excel.exportExcel({
+                        user: data
+                    }, 'user' + new Date().toLocaleString() + '.xlsx', 'xlsx');
+                },
+                loadtable: function () {
+                    $('#btn_user_from_query').click();
+                }
+            };
+
+            userObj.renderTable();//加载第一页
+
+            //绑定编辑也保存事件
+            top.tool.subscribe("edit_user_form_refresh", function () {
+                userObj.renderTable();
+            });
+
+            table.on('tool(table_user_list)', function (obj) {
+                var data = obj.data;
+                userObj[obj.event] ? userObj[obj.event].call(userObj, data) : '';
+            });
+
+            table.on('toolbar(table_user_list)', function (obj) {
+                var data = obj.data;
+                userObj[obj.event] ? userObj[obj.event].call(userObj, data) : '';
+            });
+
+            form.on('submit(btn_user_from)', function (data) {
+                vm.currPage = 1;
+                userObj.renderTable(data.field);
+                return false;
+            });
+
+            form.on('submit(btn_user_from_export)', function (data) {
+                ajaxmod.requestAuthorize({
+                    url: '/user?option=1',
+                    type: 'Get',
+                    data: data.field,
+                    success: function (response) {
+                        userObj.exportExcel(response.Result);
+                    }
+                });
+                return false;
+            });
+
+            form.on('switch(table_tpl_lockoutEnabled)', function (data) {
+                let _id = data.elem.attributes["data-code"].value;
+                let _value = true;
+                if (data.elem.checked) {
+                    _value = true;//启用
+                } else {
+                    _value = false;//删除
+                }
+                userObj.patchObj(_value,'/user/'+_id+'/lockoutEnabled');
+            });
+        });
+    </script>
+</body>
+
+</html>

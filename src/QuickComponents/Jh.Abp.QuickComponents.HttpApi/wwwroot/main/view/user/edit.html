@@ -1,0 +1,266 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>编辑用户</title>
+    <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="../../build/css/common.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="page-vm" class="layui-fluid iframe-top lable-len">
+        <form class="layui-form edit_user_form">
+            <div class="layui-fluid">
+                <input type="hidden" name="id" v-model="user.id" />
+                <div class="layui-row">
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">账号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入账号" v-model="user.userName">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">密码：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" placeholder="请输入密码" v-model="user.password">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">姓：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入姓" v-model="user.surname">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">名：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入名称" v-model="user.name">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">手机号：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入手机号" v-model="user.phoneNumber">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">邮箱：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入邮箱" v-model="user.email">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm12">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <!-- 多选角色 -->
+                                <label class="layui-form-label">角色：</label>
+                                <div class="layui-input-inline">
+                                    <div id="roleNames" style="width: 577px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">头像：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入头像" v-model="user.user_icon">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">性别：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入性别" v-model="user.user_sex">
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+                </div> 
+                            <br />
+                            <div class="layui-row" style="text-align:center;">
+                                <div class="layui-inline">
+                                    <a class="layui-btn layui-btn-normal" lay-submit lay-filter="btn_submit_user_form" href="javascript:;">保存</a>
+                                    <a class="layui-btn layui-btn-primary" id="cancel" href="javascript:;">关闭</a>
+                                </div>
+                            </div>
+            </div>
+        </form>
+    </div>
+    <script src="../../layui/layui.js"></script>
+    <script src="../../plugins/vue/vue.min.js"></script>
+    <!--公共函数库-->
+    <script src="../../modules/extend/common.js"></script>
+    <script src="../../plugins/xm-select/xm-select.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#page-vm',
+            data: {
+                paramObj: {},//querystirng 参数对象
+				//默认值
+               user:{
+                    id:'',
+                    userName:'',
+                    password:'',
+                    phoneNumber:'',
+                    email:'',
+                    surname:'',
+                    name:'',
+                    lockoutEnabled:false,
+                    roleNames:[]
+               }
+            },
+            watch:{
+                user:{
+                    deep: true,
+                    handler:function(val,old_val){
+                        var _this = this;
+                                if((typeof val.user_is_enable) === 'string')
+                                    val.user_is_enable = parseInt(val.user_is_enable);
+                                if((typeof val.user_sex) === 'string')
+                                    val.user_sex = parseInt(val.user_sex);
+                    }
+                }
+            },
+            methods: {
+                RenderDom: function(form,callback){
+                    vm.$forceUpdate();//强制重新渲染 dom
+                    // DOM 还没有更新
+                    vm.$nextTick(function () {
+                        // DOM 现在更新了
+                        form.render();
+                        if (callback) {
+                            callback();
+                        }
+                    });
+                }
+            }
+        });
+
+        layui.use(['layer', 'form', 'ajaxmod', 'jquery','laydate','formvalidate'], function () {
+            var layer = layui.layer,
+                $ = layui.jquery,
+                form = layui.form,
+                ajaxmod = layui.ajaxmod,
+                formvalidate = layui.formvalidate,
+                laydate = layui.laydate;
+            var _context = $('.edit_user_form');
+            var _table_style = { align: 'center' };//公共样式
+
+            var userObj = {
+                roleNamesSelects:{},
+                //初始化页面 layui样式
+                initPage: function () {
+                    var _the = this;
+                    vm.paramObj = geturlparam();
+                    _the.loadRoleNames(function(){
+                        _the.loadData();
+                    });
+                },
+                loadData: function () {
+                    let _the=this;
+					if (vm.paramObj.id) {
+                        ajaxmod.requestAuthorize({
+                            url: '/api/identity/users/' + vm.paramObj.id,
+                            type: 'Get',
+                            success: function (response) {
+                                vm.$set(vm, 'user', response);
+							    vm.RenderDom(form);
+                            }
+                        });
+                        _the.setRoleNamesValue();
+					}
+                },
+                setRoleNamesValue:function(){
+                    let _the=this;
+                    ajaxmod.requestAuthorize({
+                        url: '/user/'+vm.paramObj.id+'/roles',
+                        type: 'Get',
+                        success: function (response) {
+                            _the.roleNamesSelects.setValue(response.items);
+                        }
+                    });
+                },
+                loadRoleNames:function(_fn){
+                    let _the=this;
+                    ajaxmod.requestAuthorize({
+                        url: '/role/select',
+                        type: 'Get',
+                        success: function (response) {
+                            _the.roleNamesSelects = xmSelect.render({
+                                el: '#roleNames',
+                                language: 'zn',
+                                data: response.items
+                            });
+                            _fn();
+                        }
+                    });
+                },
+            };
+            userObj.initPage();
+
+            //parent 上一级别
+            $('#cancel', $(_context)).on('click', function () {
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            });
+
+            form.on('submit(btn_submit_user_form)', function (_from_data) {
+                var data = vm.user;
+                //获取rolenames
+                data.roleNames=userObj.roleNamesSelects.getValue('name');
+                var url = '/api/identity/users/';
+                var type = 'Post';
+                if (vm.paramObj.id) {
+                    url =url + vm.paramObj.id;
+                    type = 'Put';
+                }
+                //阻止表单提交可以  return false;
+                ajaxmod.requestAuthorize({
+                    url: url,
+                    data: data,
+                    type: type,
+                    success: function (response) {
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                        top.tool.publish('edit_user_form_refresh');
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>

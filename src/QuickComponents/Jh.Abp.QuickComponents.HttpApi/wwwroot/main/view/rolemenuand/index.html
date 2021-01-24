@@ -260,8 +260,7 @@
                 var cks = sysmenurolemiddleObj.modulepointTree.GetChecked();//不包含父级
                 var menuIds = [];
                 $.each(cks, function (k, v) {
-                    if(v.value!='on')
-                        menuIds.push(v.value);
+                    menuIds.push(v.value);
                 });
                 if (menuIds.length < 1) {
                     layer.msg("请选择菜单权限");

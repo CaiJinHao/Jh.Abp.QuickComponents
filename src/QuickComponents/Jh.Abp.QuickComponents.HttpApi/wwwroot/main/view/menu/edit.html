@@ -92,18 +92,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="layui-col-sm6">
-                        <div class="layui-row">
-                            <div class="layui-inline">
-                                <label class="layui-form-label">菜单是否启用：</label>
-                                <div class="layui-input-inline">
-                                    <input type="checkbox" lay-filter="fil_use" checked name="use"
-                                        lay-skin="switch" lay-text="是|否" value="1"
-                                        v-bind:checked="menu.use===1">
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
                 <br />
                 <div class="layui-row" style="text-align:center;">
@@ -132,10 +120,8 @@
                     icon: '',
                     sort: 0,
                     parentCode: '',
-                    menu_grade: 0,
                     url: '',
                     description: '',
-                    use: 1,
                 }
             },
             watch: {
@@ -143,12 +129,6 @@
                     deep: true,
                     handler: function (val, old_val) {
                         var _this = this;
-                        if ((typeof val.sort) === 'string')
-                            val.sort = parseInt(val.sort);
-                        if ((typeof val.menu_grade) === 'string')
-                            val.menu_grade = parseInt(val.menu_grade);
-                        if ((typeof val.use) === 'string')
-                            val.use = parseInt(val.use);
                     }
                 }
             },
@@ -225,10 +205,6 @@
                     }
                 });
                 return false;
-            });
-
-            form.on('switch(fil_use)', function (data) {
-                vm.menu.use = data.elem.checked ? 1 : 2;
             });
         });
     </script>
