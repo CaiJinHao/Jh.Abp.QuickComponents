@@ -5,8 +5,8 @@ Abp webapi项目需要使用的基础组件。Swagger、MiniProfiler、IdentityS
 
 ## Swagger
 
-> 在appsetings.json添加Swagger配置
-"SwaggerApi": {
+### 在appsetings.json添加Swagger配置
+`"SwaggerApi": {
     "User": {
       "UserNameOrEmailAddress": "admin",
       "Password": "123456"
@@ -21,9 +21,9 @@ Abp webapi项目需要使用的基础组件。Swagger、MiniProfiler、IdentityS
     "SwaggerEndpoint": {
       "Name": "Support APP API"
     }
- }
-> 在ConfigureServices中删除掉或者注释掉以下代码段
-/*
+ }`
+### 在ConfigureServices中删除掉或者注释掉以下代码段
+`/*
  context.Services.AddSwaggerGen(
                 options =>
                 {
@@ -31,9 +31,9 @@ Abp webapi项目需要使用的基础组件。Swagger、MiniProfiler、IdentityS
                     options.DocInclusionPredicate((docName, description) => true);
                     options.CustomSchemaIds(type => type.FullName);
                 });
-*/
->在OnApplicationInitialization中这么用
-//app.UseAbpRequestLocalization();
+*/`
+### 在OnApplicationInitialization中这么用
+`//app.UseAbpRequestLocalization();
 app.UseJhRequestLocalization();
 /*
 app.UseSwagger();
@@ -42,12 +42,12 @@ app.UseSwagger();
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
                 });
 */
-app.UseSwaggerComponent(configuration,this.GetType());
+app.UseSwaggerComponent(configuration,this.GetType());`
 
 ## IdentityServer
 
-> 在appsetings.json添加IdentityServer配置
-"AuthServer": {
+### 在appsetings.json添加IdentityServer配置
+`"AuthServer": {
     "Authority": "https://localhost:6002/",
     "ApiName": "YourProjectName",
     "RequireHttps": false
@@ -69,9 +69,9 @@ app.UseSwaggerComponent(configuration,this.GetType());
         "RequireHttps": false
       }
     }
-  }
-> 在ConfigureServices中删除掉或者注释掉以下代码段
-/*
+  }`
+### 在ConfigureServices中删除掉或者注释掉以下代码段
+`/*
 context.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -99,7 +99,7 @@ context.Services.AddCors(options =>
                         .AllowCredentials();
                 });
             });
-*/
+*/`
 
 ## 引用模块
 
@@ -107,25 +107,26 @@ typeof(AbpQuickComponentsModule),
 
 ## 其他扩展修改
 
+`
 context.Services.Configure<AbpExceptionHandlingOptions>(options =>
             {
                 options.SendExceptionsDetailsToClients = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
             });
+`
 
 ## 完整配置
+
+`
 "AppSettings": {
-    "SendExceptionsDetailsToClients": false
-  },
-  "Redis": {
-    "Configuration": "127.0.0.1"
+    "SendExceptionsDetailsToClients": true
   },
   "AuthServer": {
-    "Authority": "https://localhost:44332/",
-    "ApiName": "EquipmentQuotationApp",
+    "Authority": "https://localhost:44381/",
+    "ApiName": "DemoApp",
     "RequireHttps": false
   },
   "DistributedCache": {
-    "KeyPrefix": "EquipmentQuotationApp:"
+    "KeyPrefix": "DemoApp:"
   },
   "SwaggerApi": {
     "User": {
@@ -146,25 +147,29 @@ context.Services.Configure<AbpExceptionHandlingOptions>(options =>
   "IdentityServer": {
     "Clients": {
       "Web": {
-        "Authority": "https://localhost:44332/",
-        "ClientId": "EquipmentQuotationApp_Web",
-        "ClientSecret": "1q2w3e*",
-        "Scope": "role email EquipmentQuotationApp offline_access",
+        "Authority": "https://localhost:44381/",
+        "ClientId": "DemoApp_Web",
+        "ClientSecret": "kimho",
+        "Scope": "role email DemoApp offline_access",
         "RequireHttps": false
       },
       "WebApi": {
-        "Authority": "https://localhost:44332/",
-        "ClientId": "EquipmentQuotationApp_ConsoleTestApp",
-        "ClientSecret": "1q2w3e*",
-        "Scope": "role email EquipmentQuotationApp offline_access",
+        "Authority": "https://localhost:44381/",
+        "ClientId": "DemoApp_App",
+        "ClientSecret": "kimho",
+        "Scope": "role email DemoApp offline_access",
         "RequireHttps": false
       }
     }
   }
-
+`
 ## Use
 
 最后打开包所在路径将C:\Users\Administrator\.nuget\packages\jh.abp.quickcomponents.httpapi\x.x.x\content\wwwroot文件夹copy到项目根路径即可
+
+## Use Demo 
+
+具体使用可参考Menu模块
 
 ## IdentityServer
 
