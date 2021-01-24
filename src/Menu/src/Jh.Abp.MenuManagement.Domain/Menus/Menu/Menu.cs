@@ -10,7 +10,7 @@ namespace Jh.Abp.MenuManagement.Menus
 {
     [Description("菜单")]
     [Table(MenuManagementDbProperties.BaseDbTablePrefix + "Menu")]
-    public class Menu : AuditedAggregateRoot<Guid>
+    public class Menu : FullAuditedAggregateRoot<Guid>
     {
         [Description("菜单编号")]
         [Required]
@@ -36,12 +36,5 @@ namespace Jh.Abp.MenuManagement.Menus
 
         [Description("菜单描述")]
         public string Description { get; set; }
-
-        [Description("菜单可用类型")]
-        [Required]
-        public UseType Use { get; set; }
-        public Menu() {
-            this.Use = UseType.Yes;
-        }
     }
 }

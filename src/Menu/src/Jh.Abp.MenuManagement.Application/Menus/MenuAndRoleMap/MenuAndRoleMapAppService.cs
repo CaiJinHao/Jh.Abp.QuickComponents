@@ -72,10 +72,9 @@ namespace Jh.Abp.MenuManagement.Menus
         {
             //查看CurrentUser.Roles 是的值是否为guid ,只能用一个角色的权限渲染菜单
             var auth_menus_id = crudRepository.Where(a => a.RoleId == roleid).Select(a=>a.MenuId);
-            var menus = MenuRepository.Where(a => a.Use == UseType.Yes);
 
             //按照前端要求字段返回
-            var auth_menus = await menus.Where(m => auth_menus_id.Contains(m.Id))
+            var auth_menus = await MenuRepository.Where(m => auth_menus_id.Contains(m.Id))
                 .Select(a => new MenusNavDto() { id = a.Code, icon = a.Icon, parent_id = a.ParentCode, sort = a.Sort, title = a.Name, url = a.Url}).ToListAsync();
 
             //返回多个根节点
@@ -85,9 +84,8 @@ namespace Jh.Abp.MenuManagement.Menus
         public async Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(Guid roleid)
         {
             var auth_menus_id = crudRepository.Where(a => a.RoleId == roleid).Select(a => a.MenuId).ToList();
-            var menus = MenuRepository.Where(a => a.Use == UseType.Yes);
 
-            var resutlMenus = await menus.Select(a =>
+            var resutlMenus = await MenuRepository.Select(a =>
                 new MenusTreeDto()
                 {
                     id = a.Code,

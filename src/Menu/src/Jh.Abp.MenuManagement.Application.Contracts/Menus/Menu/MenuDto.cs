@@ -5,7 +5,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
-    public class MenuDto: AuditedEntityDto<Guid>
+    public class MenuDto: FullAuditedEntityDto<Guid>
     {
         /// <summary>
         /// 菜单编号
@@ -41,10 +41,5 @@ namespace Jh.Abp.MenuManagement.Menus
         /// 菜单描述
         /// </summary>
         public string Description { get; set; }
-
-        /// <summary>
-        /// 菜单可用类型
-        /// </summary>
-        public UseType Use { get; set; }
     }
 }

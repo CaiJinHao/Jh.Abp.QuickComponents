@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Volo.Abp;
 using Volo.Abp.EntityFrameworkCore.Modeling;
 
+
 namespace Jh.Abp.MenuManagement.EntityFrameworkCore
 {
     public static class MenuManagementDbContextModelCreatingExtensions
@@ -27,6 +28,8 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
 
             builder.Entity<MenuAndRoleMap>(b => {
                 b.ConfigureByConvention();
+
+                b.HasIndex(c => c.RoleId).IncludeProperties(p => p.MenuId);//mysql不能使用包含列
             });
         }
     }

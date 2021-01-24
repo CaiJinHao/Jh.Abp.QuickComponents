@@ -40,10 +40,5 @@ namespace Jh.Abp.MenuManagement.Menus
         /// 菜单描述
         /// </summary>
         public string Description { get; set; }
-
-        /// <summary>
-        /// 菜单可用类型
-        /// </summary>
-        public UseType Use { get; set; }
     }
 }

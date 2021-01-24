@@ -24,10 +24,5 @@ namespace Jh.Abp.MenuManagement.Menus
         /// 上级菜单编号，顶级可为null
         /// </summary>
         public string ParentCode { get; set; }
-
-        /// <summary>
-        /// 菜单可用类型
-        /// </summary>
-        public UseType Use { get; set; }
     }
 }
