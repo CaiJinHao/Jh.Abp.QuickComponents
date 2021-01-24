@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>设备报价平台</title>
+    <!--layui-v2.3.0-->
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <!--功能按钮样式-->
+    <link rel="stylesheet" href="./build/css/app.css" media="all">
+    <!--默认样式-->
+    <link href="./build/css/styles.css" rel="stylesheet" />
+    <!--默认皮肤-->
+    <link rel="stylesheet" href="./build/css/themes/default.css" media="all" id="skin" kit-skin />
+    <!--公共样式-->
+    <link href="./build/css/common.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/favicon.ico">
+</head>
+<body class="kit-theme">
+    <div class="layui-layout layui-layout-admin kit-layout-admin" id="page-wrapper" v-cloak>
+        <div class="layui-header">
+            <div class="layui-logo"><a href="/">设备报价平台</a></div>
+            <div class="layui-logo kit-logo-mobile">K</div>
+            <form class="layui-form layui-layout-left search-menu">
+                <select lay-search="" lay-filter="select-search" id="search-menu">
+                </select>
+            </form>
+            <ul class="layui-nav layui-layout-left kit-nav">
+                <li class="layui-nav-item layui-action my-nva-item" data-type="jurisdiction" v-for="option in navList">
+                    <a href="javascript:;" v-bind:data-code="option.id" v-on:click="loadMenu"><i v-bind:class="option.icon"></i>{{option.title}}</a>
+                </li>
+            </ul>
+            <ul class="layui-nav layui-layout-right kit-nav" id="right-menu">
+                <!--服务器时间-->
+                <!--天气展示-->
+                <!--<li class="layui-nav-item">
+                    <iframe width="450" scrolling="no" height="22" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&id=1&icon=1&wind=1&num=2&site=12"></iframe>
+                </li>-->
+                <!--<li class="layui-nav-item " id="tag">
+                    <a href="javascript:;"><i class="fa fa-tag" aria-hidden="true"></i>便签</a>
+                </li>-->
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <i class="fa fa-cloud-download" aria-hidden="true"></i>插件下载
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd class="layui-action">
+                            <a href="resources/software/PrintPlugin.exe"><i class="fa fa-print" aria-hidden="true"></i>Print Plugin Download</a>
+                        </dd>
+                    </dl>
+                </li>
+                <!-- <li class="layui-nav-item" id="color">
+                    <a href="javascript:;">皮肤<span class="layui-badge-dot"></span></a>
+                </li> -->
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="resources/images/admin.jpg" class="layui-nav-img" />{{userinfo.surname + userinfo.name}} {{ userinfo.email }}
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd class="layui-action" data-type="resetpassword">
+                            <a href="javascript:;">修改密码</a>
+                        </dd>
+                        <dd class="layui-action" data-type="loginout">
+                            <a href="javascript:;">退出</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <!--<a href="javascript:;" id="copyright" style="color:#333;"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>-->
+                    <a href="javascript:;" style="color:#333;"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
+                </li>
+            </ul>
+        </div>
+        <div class="layui-side layui-bg-black kit-side">
+            <div class="layui-side-scroll">
+                <div class="kit-side-fold">
+                    <i class="fa fa-navicon" aria-hidden="true"></i>
+                </div>
+                <!--菜单列表-->
+                <ul class="layui-nav layui-nav-tree" lay-filter="kitNavbar" kit-navbar></ul>
+            </div>
+        </div>
+        <div class="layui-body" id="container">
+            <!-- 内容主体区域 -->
+            <div style="padding: 15px;">内容加载中,请稍等...</div>
+        </div>
+        <div class="layui-footer" style="text-align:center;">
+            <!-- 底部固定区域 -->
+            CopyRight © 2019<a href=""> 设备报价平台 </a>all rights rerserved  license
+        </div>
+        <!--锁屏-->
+        <div class="admin-header-lock" id="lock-box" style="display: none;">
+            <div class="admin-header-lock-img"><img src="resources/images/admin.jpg" /></div>
+            <div class="admin-header-lock-name">{{userinfo.name}}</div>
+            <div class="input_btn">
+                <input type="password" name="lockPwd" class="admin-header-lock-input layui-input" placeholder="请输入密码解锁.." id="lockPwd" />
+                <button class="layui-btn" id="unlock">解锁</button>
+            </div>
+            <p>请输入登陆密码进行解锁 !</p>
+        </div>
+    </div>
+
+    <script src="layui/layui.js"></script>
+    <!--v2.2.2-->
+    <script src="plugins/vue/vue.min.js"></script>
+    <!--公共函数库-->
+    <script src="modules/extend/common.js"></script>
+    <script src="plugins/EventTool.js"></script>
+    <script>
+        layui.use('index');
+    </script>
+</body>
+</html>
