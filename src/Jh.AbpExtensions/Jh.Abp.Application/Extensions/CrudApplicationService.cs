@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Entities;
@@ -78,11 +79,16 @@ namespace Jh.Abp.Extensions
         }
 
         [UnitOfWork]
-        public virtual async Task<TEntity> UpdatePortionAsync(TKey key, TUpdateInputDto updateInput, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity> UpdatePortionAsync(TKey key, TUpdateInputDto updateInput,bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckUpdatePolicyAsync().ConfigureAwait(false);
             var entity = await crudRepository.GetAsync(key).ConfigureAwait(false);
             EntityOperator.UpdatePortionToEntity(updateInput, entity);
+            //var _otherUpdate = (updateInput as IUpdateDeleted<TEntity>);
+            //if (_otherUpdate != null)
+            //{
+            //    _otherUpdate.OtherUpdate(entity);
+            //}
             return await crudRepository.UpdateAsync(entity, autoSave, cancellationToken).ConfigureAwait(false);
         }
 
@@ -90,6 +96,15 @@ namespace Jh.Abp.Extensions
         {
             var lambda = LinqExpression.ConvetToExpression<TRetrieveInputDto, TEntity>(inputDto, StringTypeMethod.Contains.ToString());
             return ReadOnlyRepository.Where(lambda);
+        }
+
+        [UnitOfWork]
+        public virtual async Task<TEntity> UpdateIsDeletedAsync(TKey key, bool IsDeleted, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken)) 
+        {
+            await CheckUpdatePolicyAsync().ConfigureAwait(false);
+            var entity = await crudRepository.GetAsync(key).ConfigureAwait(false);
+            (entity as ISoftDelete).IsDeleted = IsDeleted;
+            return await crudRepository.UpdateAsync(entity, autoSave, cancellationToken).ConfigureAwait(false);
         }
     }
 }

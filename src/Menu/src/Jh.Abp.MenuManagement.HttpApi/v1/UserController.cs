@@ -14,7 +14,7 @@ namespace Jh.Abp.MenuManagement.v1
 {
     [RemoteService]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
-    public class UserController: MenuManagementController
+    public class UserController : MenuManagementController
     {
         public IDataFilter<ISoftDelete> dataFilter { get; set; }
         protected IIdentityUserAppService UserAppService { get; }
@@ -26,7 +26,7 @@ namespace Jh.Abp.MenuManagement.v1
             IProfileAppService profileAppService,
             IIdentityUserAppService userAppService,
             IIdentityUserRepository userRepository,
-            IdentityUserManager userManager) 
+            IdentityUserManager userManager)
         {
             UserAppService = userAppService;
             ProfileAppService = profileAppService;
@@ -38,7 +38,7 @@ namespace Jh.Abp.MenuManagement.v1
         [Route("{id}/roles")]
         public virtual async Task<dynamic> GetRolesToSelectAsync(Guid id)
         {
-            var datas= await UserRepository.GetRolesAsync(id);
+            var datas = await UserRepository.GetRolesAsync(id);
             return new
             {
                 items = datas.Select(a => new { name = a.Name, value = a.Id })
@@ -74,20 +74,26 @@ namespace Jh.Abp.MenuManagement.v1
 
         [HttpPatch]
         [Route("{id}/lockoutEnabled")]
-        public virtual async Task UpdateLockoutEnabledAsync(Guid id, [FromBody]bool lockoutEnabled)
+        public virtual async Task UpdateLockoutEnabledAsync(Guid id, [FromBody] bool lockoutEnabled)
         {
-            var user= await UserManager.GetByIdAsync(id);
-            (await UserManager.SetLockoutEnabledAsync(user, lockoutEnabled)).CheckErrors();
-            await CurrentUnitOfWork.SaveChangesAsync();
+            using (dataFilter.Disable())
+            {
+                var user = await UserManager.GetByIdAsync(id);
+                (await UserManager.SetLockoutEnabledAsync(user, lockoutEnabled)).CheckErrors();
+                await CurrentUnitOfWork.SaveChangesAsync();
+            }
         }
 
         [HttpPatch]
         [Route("{id}/Deleted")]
-        public virtual async Task UpdateDeletedAsync(Guid id, [FromBody]bool isDeleted)
+        public virtual async Task UpdateDeletedAsync(Guid id, [FromBody] bool isDeleted)
         {
-            var user = await UserManager.GetByIdAsync(id);
-            user.IsDeleted = isDeleted;
-            await CurrentUnitOfWork.SaveChangesAsync();
+            using (dataFilter.Disable())
+            {
+                var user = await UserManager.GetByIdAsync(id);
+                user.IsDeleted = isDeleted;
+                await CurrentUnitOfWork.SaveChangesAsync();
+            }
         }
 
         /// <summary>
@@ -112,7 +118,7 @@ namespace Jh.Abp.MenuManagement.v1
         {
             foreach (var item in keys)
             {
-               await UserAppService.DeleteAsync(item);
+                await UserAppService.DeleteAsync(item);
             }
         }
     }

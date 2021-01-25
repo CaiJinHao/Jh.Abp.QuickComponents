@@ -139,5 +139,18 @@ namespace Jh.Abp.MenuManagement.v1
         {
             return await menuAppService.GetAsync(id);
         }
+
+        [HttpPatch]
+        [Route("{id}/Deleted")]
+        public virtual async Task UpdateDeletedAsync(Guid id, [FromBody] bool isDeleted)
+        {
+            using (dataFilter.Disable())
+            {
+                await menuAppService.UpdateIsDeletedAsync(id, isDeleted);
+                //await menuAppService.UpdatePortionAsync(id,new MenuUpdateInputDto() {
+                //    OtherUpdate = (entity) => { entity.IsDeleted = isDeleted; }
+                //});
+            }
+        }
     }
 }

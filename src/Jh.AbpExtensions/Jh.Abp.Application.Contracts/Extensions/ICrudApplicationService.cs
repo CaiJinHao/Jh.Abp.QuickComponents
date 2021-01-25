@@ -10,6 +10,11 @@ using Volo.Abp.Application.Services;
 
 namespace Jh.Abp.Extensions
 {
+    public interface IUpdateDeleted<TEntity>
+    {
+        Action<TEntity> OtherUpdate { get; set; }
+    }
+
     /// <summary>
     /// 应用程序服务继承
     /// </summary>
@@ -74,6 +79,7 @@ namespace Jh.Abp.Extensions
         /// </summary>
         /// <param name="key"></param>
         /// <param name="inputDto"></param>
+        /// <param name="otherUpdate">更新无法自动赋值的字段、如bool</param>
         /// <param name="autoSave"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -85,5 +91,15 @@ namespace Jh.Abp.Extensions
         /// <param name="inputDto"></param>
         /// <returns></returns>
         Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// 更新是否删除字段
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="IsDeleted"></param>
+        /// <param name="autoSave"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<TEntity> UpdateIsDeletedAsync(TKey key, bool IsDeleted, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

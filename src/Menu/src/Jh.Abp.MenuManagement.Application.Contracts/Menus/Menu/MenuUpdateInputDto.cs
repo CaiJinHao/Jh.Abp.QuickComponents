@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Jh.Abp.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
-    public class MenuUpdateInputDto
+    public class MenuUpdateInputDto: IUpdateDeleted<Menu>
     {
         /// <summary>
         /// 菜单编号
@@ -40,5 +41,8 @@ namespace Jh.Abp.MenuManagement.Menus
         /// 菜单描述
         /// </summary>
         public string Description { get; set; }
+
+        public bool IsDeleted { get; set; }
+        public Action<Menu> OtherUpdate { get; set; }
     }
 }
