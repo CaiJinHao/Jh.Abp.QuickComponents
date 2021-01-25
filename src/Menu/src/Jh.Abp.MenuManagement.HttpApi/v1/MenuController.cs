@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Data;
 
 namespace Jh.Abp.MenuManagement.v1
 {
@@ -14,6 +15,8 @@ namespace Jh.Abp.MenuManagement.v1
     public class MenuController: MenuManagementController
     {
         private readonly IMenuAppService menuAppService;
+        public IDataFilter<ISoftDelete> dataFilter { get; set; }
+
         public MenuController(IMenuAppService _menuAppService)
         {
             menuAppService = _menuAppService;
@@ -109,7 +112,10 @@ namespace Jh.Abp.MenuManagement.v1
         [HttpGet]
         public async Task<PagedResultDto<MenuDto>> GetListAsync(MenuRetrieveInputDto input)
         {
-            return await menuAppService.GetListAsync(input);
+            using (dataFilter.Disable())
+            {
+                return await menuAppService.GetListAsync(input);
+            }
         }
 
         /// <summary>
