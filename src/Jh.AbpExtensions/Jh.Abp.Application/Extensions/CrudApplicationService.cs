@@ -1,4 +1,5 @@
-﻿using Jh.Abp.Common.Entity;
+﻿using Jh.Abp.Application.Contracts.Extensions;
+using Jh.Abp.Common.Entity;
 using Jh.Abp.Common.Linq;
 using Jh.Abp.Domain.Extensions;
 using System;
@@ -24,6 +25,7 @@ namespace Jh.Abp.Extensions
         where TPagedRetrieveOutputDto : IEntityDto<TKey>
     {
         public ICrudRepository<TEntity, TKey> crudRepository;
+
         public CrudApplicationService(ICrudRepository<TEntity, TKey> repository) : base(repository)
         {
             crudRepository = repository;
@@ -83,12 +85,15 @@ namespace Jh.Abp.Extensions
         {
             await CheckUpdatePolicyAsync().ConfigureAwait(false);
             var entity = await crudRepository.GetAsync(key).ConfigureAwait(false);
-            EntityOperator.UpdatePortionToEntity(updateInput, entity);
-            //var _otherUpdate = (updateInput as IUpdateDeleted<TEntity>);
-            //if (_otherUpdate != null)
-            //{
-            //    _otherUpdate.OtherUpdate(entity);
-            //}
+            if (updateInput != null)
+            {
+                EntityOperator.UpdatePortionToEntity(updateInput, entity);
+            }
+            var updateActionBase = updateInput as UpdateActionBase<TEntity>;
+            if (updateActionBase != null)
+            {
+                updateActionBase.UpdateEntityAction(entity);
+            }
             return await crudRepository.UpdateAsync(entity, autoSave, cancellationToken).ConfigureAwait(false);
         }
 

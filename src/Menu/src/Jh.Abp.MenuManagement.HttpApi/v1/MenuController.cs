@@ -146,10 +146,12 @@ namespace Jh.Abp.MenuManagement.v1
         {
             using (dataFilter.Disable())
             {
-                await menuAppService.UpdateIsDeletedAsync(id, isDeleted);
-                //await menuAppService.UpdatePortionAsync(id,new MenuUpdateInputDto() {
-                //    OtherUpdate = (entity) => { entity.IsDeleted = isDeleted; }
-                //});
+                //await menuAppService.UpdateIsDeletedAsync(id, isDeleted);
+                await menuAppService.UpdatePortionAsync(id, new MenuUpdateInputDto() {
+                    UpdateEntityAction = (entity) =>{
+                        entity.IsDeleted = isDeleted;
+                    }
+                });
             }
         }
     }
