@@ -11,6 +11,7 @@ using Volo.Abp.Domain.Repositories;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Uow;
+using Jh.Abp.Application.Contracts.Extensions;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
@@ -72,9 +73,9 @@ namespace Jh.Abp.MenuManagement.Menus
         }
 
         [UnitOfWork]
-        public override async Task<Menu[]> DeleteAsync(MenuDeleteInputDto deleteInputDto, bool autoSave = false, CancellationToken cancellationToken = default)
+        public override async Task<Menu[]> DeleteAsync(MenuDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.Equals, MethodInputDto<Menu> methodInputDto = null, bool autoSave = false, CancellationToken cancellationToken = default)
         {
-            var entitys = await base.DeleteAsync(deleteInputDto,  autoSave, cancellationToken);
+            var entitys = await base.DeleteAsync(deleteInputDto, autoSave:autoSave, cancellationToken:cancellationToken);
             await menuAndRoleMapRepository.DeleteListAsync(a => entitys.Select(b => b.Id).Contains(a.MenuId)).ConfigureAwait(false);
             return entitys;
         }

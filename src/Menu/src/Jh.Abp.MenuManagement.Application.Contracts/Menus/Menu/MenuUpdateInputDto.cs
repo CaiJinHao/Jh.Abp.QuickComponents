@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
-    public class MenuUpdateInputDto: UpdateActionBase<Menu>
+    public class MenuUpdateInputDto
     {
         /// <summary>
         /// 菜单编号

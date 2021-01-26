@@ -48,12 +48,18 @@ namespace Jh.Abp.Extensions
         }
 
         [UnitOfWork]
-        public virtual async Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.Equals, MethodInputDto<TEntity> methodInputDto = null, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckDeletePolicyAsync().ConfigureAwait(false);
-            var lambda = LinqExpression.ConvetToExpression<TDeleteInputDto, TEntity>(deleteInputDto);
-            //queryFunc(lambda);
-            return await crudRepository.DeleteListAsync(lambda, autoSave, cancellationToken).ConfigureAwait(false);
+            var query = CreateFilteredQuery(deleteInputDto, methodStringType);
+            if (methodInputDto != null)
+            {
+                if (methodInputDto.QueryAction != null)
+                {
+                    query = methodInputDto.QueryAction(query);
+                }
+            }
+            return await crudRepository.DeleteEntitysAsync(query, autoSave, cancellationToken).ConfigureAwait(false);
         }
 
         [UnitOfWork]
@@ -70,10 +76,17 @@ namespace Jh.Abp.Extensions
             return (await crudRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, cancellationToken).ConfigureAwait(false)).FirstOrDefault();
         }
 
-        public virtual async Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.Contains, MethodInputDto<TEntity> methodInputDto = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckGetListPolicyAsync().ConfigureAwait(false);
-            var query = CreateFilteredQuery(inputDto);
+            var query = CreateFilteredQuery(inputDto, methodStringType);
+            if (methodInputDto != null)
+            {
+                if (methodInputDto.QueryAction != null)
+                {
+                    query = methodInputDto.QueryAction(query);
+                }
+            }
             var entities = await AsyncExecuter.ToListAsync(query,cancellationToken).ConfigureAwait(false);
             return new ListResultDto<TEntityDto>(
                  ObjectMapper.Map<List<TEntity>, List<TEntityDto>>(entities)
@@ -81,25 +94,30 @@ namespace Jh.Abp.Extensions
         }
 
         [UnitOfWork]
-        public virtual async Task<TEntity> UpdatePortionAsync(TKey key, TUpdateInputDto updateInput,bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity> UpdatePortionAsync(TKey key, TUpdateInputDto updateInput, MethodInputDto<TEntity> methodInputDto = null, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckUpdatePolicyAsync().ConfigureAwait(false);
             var entity = await crudRepository.GetAsync(key).ConfigureAwait(false);
-            if (updateInput != null)
+            EntityOperator.UpdatePortionToEntity(updateInput, entity);
+            if (methodInputDto != null)
             {
-                EntityOperator.UpdatePortionToEntity(updateInput, entity);
-            }
-            var updateActionBase = updateInput as UpdateActionBase<TEntity>;
-            if (updateActionBase != null)
-            {
-                updateActionBase.UpdateEntityAction(entity);
+                if (methodInputDto.UpdateEntityAction != null)
+                {
+                    methodInputDto.UpdateEntityAction(entity);
+                }
             }
             return await crudRepository.UpdateAsync(entity, autoSave, cancellationToken).ConfigureAwait(false);
         }
 
-        protected override IQueryable<TEntity> CreateFilteredQuery(TRetrieveInputDto inputDto)
+        protected  IQueryable<TEntity> CreateFilteredQueryOld(TRetrieveInputDto inputDto)
         {
-            var lambda = LinqExpression.ConvetToExpression<TRetrieveInputDto, TEntity>(inputDto, StringTypeMethod.Contains.ToString());
+            var lambda = LinqExpression.ConvetToExpression<TRetrieveInputDto, TEntity>(inputDto, ObjectMethodConsts.Contains);
+            return ReadOnlyRepository.Where(lambda);
+        }
+
+        protected  IQueryable<TEntity> CreateFilteredQuery<TWhere>(TWhere inputDto, string methodStringType)
+        {
+            var lambda = LinqExpression.ConvetToExpression<TWhere, TEntity>(inputDto, methodStringType);
             return ReadOnlyRepository.Where(lambda);
         }
 

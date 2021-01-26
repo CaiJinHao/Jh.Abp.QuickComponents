@@ -52,5 +52,16 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
             }
             return entitys;
         }
+
+        public virtual async Task<TEntity[]> DeleteEntitysAsync(IQueryable<TEntity> query, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var entitys = query.ToArray();
+            DbSet.RemoveRange(entitys);
+            if (autoSave)
+            {
+                await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
+            }
+            return entitys;
+        }
     }
 }

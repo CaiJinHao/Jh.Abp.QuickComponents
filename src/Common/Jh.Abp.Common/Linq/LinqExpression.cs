@@ -31,12 +31,6 @@ namespace Jh.Abp.Common.Linq
         }
     }
 
-    public enum StringTypeMethod
-    {
-        Contains,
-        Equals
-    }
-
     public static class LinqExpression
     {
         /// <summary>

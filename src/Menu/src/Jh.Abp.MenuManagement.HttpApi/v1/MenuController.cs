@@ -1,4 +1,5 @@
-﻿using Jh.Abp.MenuManagement.Menus;
+﻿using Jh.Abp.Application.Contracts.Extensions;
+using Jh.Abp.MenuManagement.Menus;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -147,10 +148,9 @@ namespace Jh.Abp.MenuManagement.v1
             using (dataFilter.Disable())
             {
                 //await menuAppService.UpdateIsDeletedAsync(id, isDeleted);
-                await menuAppService.UpdatePortionAsync(id, new MenuUpdateInputDto() {
-                    UpdateEntityAction = (entity) =>{
-                        entity.IsDeleted = isDeleted;
-                    }
+                await menuAppService.UpdatePortionAsync(id, new MenuUpdateInputDto(), new MethodInputDto<Menu>()
+                {
+                    UpdateEntityAction = (entity) => entity.IsDeleted = isDeleted
                 });
             }
         }

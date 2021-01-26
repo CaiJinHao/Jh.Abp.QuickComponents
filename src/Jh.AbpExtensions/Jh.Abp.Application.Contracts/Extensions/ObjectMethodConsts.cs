@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Jh.Abp.Application.Contracts.Extensions
 {
-    public abstract class UpdateActionBase<TEntity>
+    public class ObjectMethodConsts
     {
-        public Action<TEntity> UpdateEntityAction;
+        public const string Contains = "Contains";
+        public const string Equals = "Equals";
     }
 }

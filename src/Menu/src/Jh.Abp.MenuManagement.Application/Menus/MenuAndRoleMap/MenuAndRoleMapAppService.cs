@@ -34,21 +34,6 @@ namespace Jh.Abp.MenuManagement.Menus
             throw new NotImplementedException();
         }
 
-        public override async Task<MenuAndRoleMap> DeleteAsync(Guid id, bool autoSave = false, CancellationToken cancellationToken = default)
-        {
-            return await base.DeleteAsync(id, autoSave, cancellationToken);
-        }
-
-        public override async Task<MenuAndRoleMap[]> DeleteAsync(Guid[] keys, bool autoSave = false, CancellationToken cancellationToken = default)
-        {
-            return await base.DeleteAsync(keys, autoSave, cancellationToken);
-        }
-
-        public override async Task<MenuAndRoleMap[]> DeleteAsync(MenuAndRoleMapDeleteInputDto deleteInputDto, bool autoSave = false, CancellationToken cancellationToken = default)
-        {
-            return await base.DeleteAsync(deleteInputDto, autoSave, cancellationToken);
-        }
-
         [UnitOfWork]
         public async Task<MenuAndRoleMap[]> CreateV2Async(MenuAndRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
