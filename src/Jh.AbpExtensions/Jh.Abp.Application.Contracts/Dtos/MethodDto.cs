@@ -10,7 +10,7 @@ namespace Jh.Abp.Application.Contracts.Extensions
     /// 方法输入参数Dto
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public  class MethodInputDto<TEntity>
+    public  class MethodDto<TEntity>
     {
         public Action<TEntity> UpdateEntityAction;
 

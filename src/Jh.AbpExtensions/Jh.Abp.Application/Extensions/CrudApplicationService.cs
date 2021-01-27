@@ -1,4 +1,5 @@
-﻿using Jh.Abp.Application.Contracts.Extensions;
+﻿using Jh.Abp.Application.Contracts.Dtos;
+using Jh.Abp.Application.Contracts.Extensions;
 using Jh.Abp.Common.Entity;
 using Jh.Abp.Common.Linq;
 using Jh.Abp.Domain.Extensions;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
+using Volo.Abp.Data;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Uow;
@@ -24,6 +26,8 @@ namespace Jh.Abp.Extensions
         where TEntityDto : IEntityDto<TKey>
         where TPagedRetrieveOutputDto : IEntityDto<TKey>
     {
+        public IDataFilter DataFilter { get; set; }
+
         public ICrudRepository<TEntity, TKey> crudRepository;
 
         public CrudApplicationService(ICrudRepository<TEntity, TKey> repository) : base(repository)
@@ -48,17 +52,10 @@ namespace Jh.Abp.Extensions
         }
 
         [UnitOfWork]
-        public virtual async Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.Equals, MethodInputDto<TEntity> methodInputDto = null, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.Equals, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckDeletePolicyAsync().ConfigureAwait(false);
             var query = CreateFilteredQuery(deleteInputDto, methodStringType);
-            if (methodInputDto != null)
-            {
-                if (methodInputDto.QueryAction != null)
-                {
-                    query = methodInputDto.QueryAction(query);
-                }
-            }
             return await crudRepository.DeleteEntitysAsync(query, autoSave, cancellationToken).ConfigureAwait(false);
         }
 
@@ -76,17 +73,10 @@ namespace Jh.Abp.Extensions
             return (await crudRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, cancellationToken).ConfigureAwait(false)).FirstOrDefault();
         }
 
-        public virtual async Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.Contains, MethodInputDto<TEntity> methodInputDto = null, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.Contains, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckGetListPolicyAsync().ConfigureAwait(false);
             var query = CreateFilteredQuery(inputDto, methodStringType);
-            if (methodInputDto != null)
-            {
-                if (methodInputDto.QueryAction != null)
-                {
-                    query = methodInputDto.QueryAction(query);
-                }
-            }
             var entities = await AsyncExecuter.ToListAsync(query,cancellationToken).ConfigureAwait(false);
             return new ListResultDto<TEntityDto>(
                  ObjectMapper.Map<List<TEntity>, List<TEntityDto>>(entities)
@@ -94,40 +84,68 @@ namespace Jh.Abp.Extensions
         }
 
         [UnitOfWork]
-        public virtual async Task<TEntity> UpdatePortionAsync(TKey key, TUpdateInputDto updateInput, MethodInputDto<TEntity> methodInputDto = null, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity> UpdatePortionAsync(TKey key, TUpdateInputDto updateInput, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckUpdatePolicyAsync().ConfigureAwait(false);
             var entity = await crudRepository.GetAsync(key).ConfigureAwait(false);
             EntityOperator.UpdatePortionToEntity(updateInput, entity);
-            if (methodInputDto != null)
+            var methodDto = updateInput as IMethodDto<TEntity>;
+            if (methodDto != null)
             {
-                if (methodInputDto.UpdateEntityAction != null)
+                if (methodDto.MethodInput != null)
                 {
-                    methodInputDto.UpdateEntityAction(entity);
+                    if (methodDto.MethodInput.UpdateEntityAction != null)
+                    {
+                        methodDto.MethodInput.UpdateEntityAction(entity);
+                    }
                 }
             }
             return await crudRepository.UpdateAsync(entity, autoSave, cancellationToken).ConfigureAwait(false);
         }
 
-        protected  IQueryable<TEntity> CreateFilteredQueryOld(TRetrieveInputDto inputDto)
+        protected override IQueryable<TEntity> CreateFilteredQuery(TRetrieveInputDto inputDto)
         {
-            var lambda = LinqExpression.ConvetToExpression<TRetrieveInputDto, TEntity>(inputDto, ObjectMethodConsts.Contains);
-            return ReadOnlyRepository.Where(lambda);
+            return CreateFilteredQuery(inputDto, ObjectMethodConsts.Contains);
         }
 
         protected  IQueryable<TEntity> CreateFilteredQuery<TWhere>(TWhere inputDto, string methodStringType)
         {
             var lambda = LinqExpression.ConvetToExpression<TWhere, TEntity>(inputDto, methodStringType);
-            return ReadOnlyRepository.Where(lambda);
-        }
-
-        [UnitOfWork]
-        public virtual async Task<TEntity> UpdateIsDeletedAsync(TKey key, bool IsDeleted, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken)) 
-        {
-            await CheckUpdatePolicyAsync().ConfigureAwait(false);
-            var entity = await crudRepository.GetAsync(key).ConfigureAwait(false);
-            (entity as ISoftDelete).IsDeleted = IsDeleted;
-            return await crudRepository.UpdateAsync(entity, autoSave, cancellationToken).ConfigureAwait(false);
+            var query = ReadOnlyRepository.Where(lambda);
+            var methodDto = inputDto as IMethodDto<TEntity>;
+            if (methodDto != null)
+            {
+                if (methodDto.MethodInput != null)
+                {
+                    if (methodDto.MethodInput.QueryAction != null)
+                    {
+                        query = methodDto.MethodInput.QueryAction(query);
+                    }
+                }
+            }
+            if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
+            {
+                var retrieveDelete = inputDto as IRetrieveDelete;
+                if (retrieveDelete != null)
+                {
+                    switch (retrieveDelete.Deleted)
+                    {
+                        case 1:
+                            {
+                                query = query.Where(e => ((ISoftDelete)e).IsDeleted == true);
+                            }
+                            break;
+                        case 2:
+                            {
+                                query = query.Where(e => ((ISoftDelete)e).IsDeleted == false);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            return query;
         }
     }
 }
