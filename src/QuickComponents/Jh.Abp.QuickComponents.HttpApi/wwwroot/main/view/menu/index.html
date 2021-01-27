@@ -29,6 +29,15 @@
                                     <input type="text" class="layui-input" id="parentCode" name="parentCode">
                                 </div>
                             </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">是否禁用：</label>
+                                <div class="layui-input-inline">
+                                    <select lay-search name="deleted">
+                                        <option value="0">请选择</option>
+                                        <option v-for="option in deletedlist" v-bind:value="option.value">{{ option.text }}</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="layui-inline btngroup">
                                 <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_menu_from" id="btn_menu_from_query">查询</a>
                                 <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_menu_from_export">导出</a>
@@ -44,12 +53,20 @@
     <script type="text/html" id="toolbarDemo">
         <div class="layui-btn-container">
             <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
-            <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="delbatch">批量删除</button>
+            <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="delbatch">批量禁用</button>
         </div>
     </script>
     <script type="text/html" id="table_menu_operator">
+        {{# if(d.isDeleted){ }}
+        <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-disabled" data-code="id">编辑</a>
+        <!-- <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="rollbackDel" data-code="id">启用</a> -->
+        {{# }else{ }}
         <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="edit" data-code="id">编辑</a>
-        <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="id">删除</a>
+        <!-- <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="id">禁用</a> -->
+        {{# } }}
+    </script>
+    <script type="text/html" id="tpl_isDeleted">
+        <input type="checkbox" name="isDeleted" value="1" lay-skin="switch" data-code="{{d.id}}" lay-text="已启用|已禁用" lay-filter="table_tpl_isDeleted" {{d.isDeleted?'':'checked'}}>
     </script>
     <script src="../../layui/layui.js"></script>
     <script src="../../plugins/vue/vue.min.js"></script>
@@ -60,6 +77,7 @@
             el: '#page-vm',
             data: {
                 currPage: 1,
+                deletedlist: []
             },
             methods: {
                 RenderDom: function (form, callback) {
@@ -108,7 +126,8 @@
                             $.extend({ field: 'url', title: '菜单URL' }, _table_style),
                             $.extend({ field: 'sort', title: '菜单排序' }, _table_style),
                             $.extend({ field: 'description', title: '菜单描述' }, _table_style),
-                            $.extend({ field: 'id', title: '操作', width: 190, templet: '#table_menu_operator', fixed: 'right' }, _table_style)
+                            $.extend({ field: 'isDeleted', title: '状态', templet: '#tpl_isDeleted' }, _table_style),
+                            $.extend({ field: 'id', title: '操作', width: 100, templet: '#table_menu_operator', fixed: 'right' }, _table_style)
                         ]],
                     });
                 },
@@ -134,7 +153,7 @@
                         url: '/menu/' + _data.id,
                         type: 'Delete',
                         success: function (response) {
-                            top.tool.publish('edit_menu_form_refresh');//触发事件刷新列表
+                            _the.renderTable();
                         }
                     });
                 },
@@ -151,17 +170,18 @@
                         type: 'Delete',
                         data: delIdList,
                         success: function (response) {
-                            top.tool.publish('edit_menu_form_refresh');//触发事件刷新列表
+                            _the.renderTable();
                         }
                     });
                 },
-                patchObj: function (_data) {
+                patchObj: function (data,url) {
+                    let _the = this;
                     ajaxmod.requestAuthorize({
-                        url: '/menu/'+_data.id,
+                        url:url,
                         type: 'Patch',
-                        data: _data,
+                        data: data,
                         success: function (response) {
-                            top.tool.publish('edit_menu_form_refresh');
+                            _the.renderTable();
                         }
                     });
                 },
@@ -193,8 +213,23 @@
                 },
                 loadtable: function () {
                     $('#btn_menu_from_query').click();
+                },
+                loadList: function () {
+                    var _the = this;
+                    ajaxmod.ajaxArray([
+                        {
+                            url: '/appenums/use',
+                            type: 'Get',
+                            success: function (response) {
+                                vm.deletedlist = response;
+                            }
+                        }
+                    ], function () {
+                        vm.RenderDom(form);
+                    });
                 }
             };
+            menuObj.loadList();
             menuObj.renderTable();//加载第一页
 
             //绑定编辑也保存事件
@@ -228,6 +263,17 @@
                     }
                 });
                 return false;
+            });
+
+            form.on('switch(table_tpl_isDeleted)', function (data) {
+                let _id = data.elem.attributes["data-code"].value;
+                let _value = false;
+                if (data.elem.checked) {
+                    _value = false;//启用
+                } else {
+                    _value = true;//删除
+                }
+                menuObj.patchObj(_value,'/menu/'+_id+'/Deleted');
             });
         });
     </script>

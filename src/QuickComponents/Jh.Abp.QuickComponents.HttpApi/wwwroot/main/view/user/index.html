@@ -40,7 +40,7 @@
     <script type="text/html" id="toolbarDemo">
         <div class="layui-btn-container">
             <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
-            <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="delbatch">批量删除</button>
+            <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="delbatch">批量禁用</button>
         </div>
     </script>
     <script type="text/html" id="tpl_name">
@@ -49,9 +49,17 @@
     <script type="text/html" id="tpl_lockoutEnabled">
         <input type="checkbox" name="lockoutEnabled" value="1" lay-skin="switch" data-code="{{d.id}}" lay-text="是|否" lay-filter="table_tpl_lockoutEnabled" {{d.lockoutEnabled?'checked':''}}>
     </script>
+    <script type="text/html" id="tpl_isDeleted">
+        <input type="checkbox" name="isDeleted" value="1" lay-skin="switch" data-code="{{d.id}}" lay-text="已启用|已禁用" lay-filter="table_tpl_isDeleted" {{d.isDeleted?'':'checked'}}>
+    </script>
     <script type="text/html" id="table_user_operator">
+        {{# if(d.isDeleted){ }}
+        <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-disabled" data-code="id">编辑</a>
+        <!-- <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="rollbackDel" data-code="id">启用</a> -->
+        {{# }else{ }}
         <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="edit" data-code="id">编辑</a>
-        <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="id">删除</a>
+        <!-- <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="id">禁用</a> -->
+        {{# } }}
     </script>
     <script src="../../layui/layui.js"></script>
     <script src="../../plugins/vue/vue.min.js"></script>
@@ -97,7 +105,7 @@
                     $.extend(optDefault, _options);
                     var _the = this;
                     datatable.renderTable(optDefault, {
-                        url: '/api/identity/users',
+                        url: '/user',
                         tableElem: 'table_user',//laypage 自动加_page
                         tableCols: [[
                             { type: 'checkbox' },
@@ -109,9 +117,10 @@
                             // $.extend({ field: 'user_icon', title: '头像' }, _table_style),
                             // $.extend({ field: 'user_sex', title: '性别', templet: '#tpl_user_sex' }, _table_style),
                             $.extend({ field: 'lockoutEnabled', title: '启用锁定', templet: '#tpl_lockoutEnabled' }, _table_style),
+                            $.extend({ field: 'isDeleted', title: '用户状态', templet: '#tpl_isDeleted' }, _table_style),
                             $.extend({ field: 'creationTime', title: '创建时间' }, _table_style),
                             $.extend({ field: 'lastModificationTime', title: '最后一次修改时间' }, _table_style),
-                            $.extend({ field: 'id', title: '操作', width: 190, templet: '#table_user_operator', fixed: 'right' }, _table_style)
+                            $.extend({ field: 'id', title: '操作', width: 100, templet: '#table_user_operator', fixed: 'right' }, _table_style)
                         ]],
                     });
                 },
@@ -137,32 +146,39 @@
                         url: '/user/' + _data.id,
                         type: 'Delete',
                         success: function (response) {
-                            top.tool.publish('edit_user_form_refresh');//触发事件刷新列表
+                            _the.renderTable();
                         }
                     });
                 },
                 delbatch: function (_data) {
+                    let _the = this;
                     var checkStatus = table.checkStatus('table_user'),
                         data = checkStatus.data;
                     var delIdList = [];
                     $.each(data, function (k, v) {
-                        delIdList.push(v._id);
+                        delIdList.push(v.id);
                     });
                     datatable.delbatch({
-                        url: '/user',
+                        url: '/user/keys',
                         type: 'Delete',
                         data: delIdList,
                         success: function (response) {
-                            top.tool.publish('edit_user_form_refresh');//触发事件刷新列表
+                            _the.renderTable();
                         }
                     });
                 },
+                rollbackDel: function (data) {
+                    let _the = this;
+                    _the.patchObj(false, '/user/' + data.id + '/Deleted');
+                },
                 patchObj: function (data,url) {
+                    let _the = this;
                     ajaxmod.requestAuthorize({
                         url:url,
                         type: 'Patch',
                         data: data,
                         success: function (response) {
+                            _the.renderTable();
                         }
                     });
                 },
@@ -249,6 +265,17 @@
                     _value = false;//删除
                 }
                 userObj.patchObj(_value,'/user/'+_id+'/lockoutEnabled');
+            });
+
+            form.on('switch(table_tpl_isDeleted)', function (data) {
+                let _id = data.elem.attributes["data-code"].value;
+                let _value = false;
+                if (data.elem.checked) {
+                    _value = false;//启用
+                } else {
+                    _value = true;//删除
+                }
+                userObj.patchObj(_value,'/user/'+_id+'/Deleted');
             });
         });
     </script>

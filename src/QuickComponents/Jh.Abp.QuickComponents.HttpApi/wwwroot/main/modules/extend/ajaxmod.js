@@ -2,20 +2,6 @@
     var $ = layui.jquery,
         layer = layui.layer;
 
-    //url, data, success, alone, type, dataType, error
-    /* layui ajax 封装
-     * url 接口地址
-     * data 数据
-     * success 成功回调函数
-     * cache 浏览器缓存
-     * alone
-     * async 异步请求
-     * type 请求的类型
-     * dataType 接收数据类型
-     * error ： 请求失败后执行的函数
-     */
-
-
     var ajaxobjold = {
         ajaxArray:function(_opts,callback){
             var _the=this;
@@ -472,7 +458,7 @@
         getUserInfo: function (callback) {
             var _the = this;
             ajaxobj.requestAuthorize({
-                url: '/User',
+                url: '/User/info',
                 type: 'Get',
                 success: function (response) {
                     callback(response);
