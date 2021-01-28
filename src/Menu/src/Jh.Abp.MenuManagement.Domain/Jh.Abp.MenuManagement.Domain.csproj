@@ -30,6 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\GeneratorCoding\Jh.GeneratorCoding\Jh.GeneratorCoding.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\..\..\GeneratorCoding\Jh.SourceGenerator.Common\Jh.SourceGenerator.Common.csproj" />
     <ProjectReference Include="..\..\..\Jh.AbpExtensions\Jh.Abp.Domain\Jh.Abp.Domain.csproj" />
     <ProjectReference Include="..\Jh.Abp.MenuManagement.Domain.Shared\Jh.Abp.MenuManagement.Domain.Shared.csproj" />
   </ItemGroup>

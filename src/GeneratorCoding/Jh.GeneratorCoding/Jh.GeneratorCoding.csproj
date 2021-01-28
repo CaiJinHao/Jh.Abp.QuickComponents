@@ -10,4 +10,8 @@
     <PackageReference Include="Microsoft.CodeAnalysis" Version="3.8.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Jh.SourceGenerator.Common\Jh.SourceGenerator.Common.csproj" />
+  </ItemGroup>
+
 </Project>

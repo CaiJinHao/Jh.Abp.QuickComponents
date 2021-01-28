@@ -1,4 +1,6 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using Jh.GeneratorCoding.CodeBuilders;
+using Jh.SourceGenerator.Common.GeneratorAttributes;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 using System.Collections.Generic;
 using System.Text;
@@ -10,41 +12,20 @@ namespace Jh.GeneratorCoding.SourceGenerators
     {
         public void Execute(GeneratorExecutionContext context)
         {
-            // begin creating the source we'll inject into the users compilation
-            var sourceBuilder = new StringBuilder(@"
-using System;
-namespace HelloWorldGenerated
-{
-    public static class HelloWorld
-    {
-        public static void SayHello() 
-        {
-            Console.WriteLine(""Hello from generated code!CaiJinHao666"");
-            Console.WriteLine(""The following syntax trees existed in the compilation that created this program:"");
-");
-
-            // using the context, get a list of syntax trees in the users compilation
-            IEnumerable<SyntaxTree> syntaxTrees = context.Compilation.SyntaxTrees;
-
-            // add the filepath of each tree to the class we're building
-            foreach (SyntaxTree tree in syntaxTrees)
+            System.Diagnostics.Debugger.Launch();
+            if (context.SyntaxReceiver is IRepositorySyntaxReceiver receiver)
             {
-                sourceBuilder.AppendLine($@"Console.WriteLine(@"" - {tree.FilePath}"");");
+                foreach (var table in receiver.CandidateClassCollection)
+                {
+                    var code = new IRepositoryCodeBuilder(receiver.GetTableDto(table));
+                    // inject the created source into the users compilation
+                    context.AddSource("codename", SourceText.From(code.ToString(), Encoding.UTF8));
+                }
             }
-
-            // finish creating the source to inject
-            sourceBuilder.Append(@"
-        }
-    }
-}");
-
-            // inject the created source into the users compilation
-            context.AddSource("helloWorldGenerated", SourceText.From(sourceBuilder.ToString(), Encoding.UTF8));
         }
 
         public void Initialize(GeneratorInitializationContext context)
         {
-            System.Diagnostics.Debugger.Launch();
             context.RegisterForSyntaxNotifications(() => new IRepositorySyntaxReceiver());
         }
     }
