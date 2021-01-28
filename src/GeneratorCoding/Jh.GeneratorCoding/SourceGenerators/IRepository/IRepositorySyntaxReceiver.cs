@@ -15,15 +15,13 @@ namespace Jh.GeneratorCoding.SourceGenerators
 
         public void OnVisitSyntaxNode(SyntaxNode syntaxNode)
         {
-            //var classDeclarationSyntax = syntaxNode is ClassDeclarationSyntax;
             if (syntaxNode is ClassDeclarationSyntax classDeclarationSyntax
                    && classDeclarationSyntax.AttributeLists.Count>0
-                   && classDeclarationSyntax.AttributeLists.Any(a=>a.Attributes.First().Name.GetText().ToString().Equals("Table"))
+                   && classDeclarationSyntax.AttributeLists.Any(a=>GetAttributeName(a.Attributes.First()).Equals(nameof(GeneratorClassAttribute)))
                    )
             {
-                //找到domain table类
-                //CandidateClassCollection.Add(classDeclarationSyntax);
-                var tableName = GetTableName(classDeclarationSyntax);
+                //find  Generator Class
+                CandidateClassCollection.Add(classDeclarationSyntax);
             }
         }
 
@@ -42,34 +40,31 @@ namespace Jh.GeneratorCoding.SourceGenerators
                     yield return item as PropertyDeclarationSyntax;
                 }
             }
-            //foreach (var item in classDeclarationSyntax.AttributeLists)
-            //{
-            //    var attr = item.Attributes.First();
-            //    var attrArgs = attr.ArgumentList;
-            //    var attrName = attr.Name.GetText().ToString();
-            //}
         }
 
         public TableDto GetTableDto(ClassDeclarationSyntax classDeclarationSyntax)
         {
             var tableName = GetTableName(classDeclarationSyntax);
-            var members = GetMembers<CreateInputDtoAttribute>(classDeclarationSyntax);
+            var members = GetMembers<CreateInputDtoAttribute>(classDeclarationSyntax).ToList();
+            var fields = GetFieldDto(members).ToList();
             return new TableDto()
             {
                 Name = tableName,
-                Fields = GetFieldDto(members)
+                Fields = fields
             };
         }
 
-        public IEnumerable<FieldDto> GetFieldDto(IEnumerable<PropertyDeclarationSyntax> properties)
+        public IEnumerable<FieldDto> GetFieldDto(List<PropertyDeclarationSyntax> properties)
         {
             foreach (var property in properties)
             {
+                var description = GetAttrArgs<System.ComponentModel.DescriptionAttribute>(property).First().GetText().ToString();
+                var required = GetAttr<System.ComponentModel.DataAnnotations.RequiredAttribute>(property);
                 yield return new FieldDto()
                 {
                     Name = GetFiledName(property),
-                    Description = GetAttrArgs<System.ComponentModel.DescriptionAttribute>(property).First().GetText().ToString(),
-                    IsRequired = GetAttr<System.ComponentModel.DataAnnotations.RequiredAttribute>(property) != null
+                    Description = description,
+                    IsRequired = required != null
                 };
             }
         }

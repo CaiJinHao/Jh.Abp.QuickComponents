@@ -17,9 +17,10 @@ namespace Jh.GeneratorCoding.SourceGenerators
             {
                 foreach (var table in receiver.CandidateClassCollection)
                 {
-                    var code = new IRepositoryCodeBuilder(receiver.GetTableDto(table));
+                    var tableDto = receiver.GetTableDto(table);
+                    var code = new IRepositoryCodeBuilder(tableDto);
                     // inject the created source into the users compilation
-                    context.AddSource("codename", SourceText.From(code.ToString(), Encoding.UTF8));
+                    context.AddSource(tableDto.Name, SourceText.From(code.ToString(), Encoding.UTF8));
                 }
             }
         }

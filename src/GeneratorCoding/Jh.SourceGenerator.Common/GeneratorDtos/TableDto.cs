@@ -13,7 +13,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// <summary>
         /// 生成.cs文件的命名空间
         /// </summary>
-        public string Namespace { get; set; }
+        public string Namespace { get; set; } = "Jh.Abp.MenuManagement";
         /// <summary>
         /// 主键类型
         /// </summary>

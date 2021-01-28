@@ -9,6 +9,7 @@ using Jh.SourceGenerator.Common.GeneratorAttributes;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
+    [GeneratorClass]
     [Description("菜单")]
     [Table(MenuManagementDbProperties.BaseDbTablePrefix + "Menu")]
     public class Menu : FullAuditedAggregateRoot<Guid>
@@ -37,9 +38,11 @@ namespace Jh.Abp.MenuManagement.Menus
         [Description("上级菜单编号，顶级可为null")]
         public string ParentCode { get; set; }
 
+        [CreateInputDto]
         [Description("导航路径")]
         public string Url { get; set; }
 
+        [CreateInputDto]
         [Description("菜单描述")]
         public string Description { get; set; }
     }
