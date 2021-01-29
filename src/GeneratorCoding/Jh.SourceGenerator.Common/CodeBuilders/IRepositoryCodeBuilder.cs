@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using Jh.SourceGenerator.Common.GeneratorDtos;
 
-namespace Jh.SourceGenerator.CodeBuilders
+namespace Jh.SourceGenerator.Common.CodeBuilders
 {
-    public class IRepositoryCodeBuilder
+    public class IRepositoryCodeBuilder:CodeBuilderAbs
     {
-        private TableDto table { get; }
-        public IRepositoryCodeBuilder(TableDto tableDto)
+        public IRepositoryCodeBuilder(TableDto tableDto) : base(tableDto)
         {
-            //用构造函数传值
-            table = tableDto;
         }
 
         public override string ToString()

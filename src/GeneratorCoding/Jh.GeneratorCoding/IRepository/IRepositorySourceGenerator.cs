@@ -1,11 +1,9 @@
-﻿using Jh.SourceGenerator.CodeBuilders;
-using Jh.SourceGenerator.Common.GeneratorAttributes;
+﻿using Jh.SourceGenerator.Common.CodeBuilders;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
-using System.Collections.Generic;
 using System.Text;
 
-namespace Jh.SourceGenerator.SourceGenerators
+namespace Jh.SourceGenerator
 {
     [Generator]
     public class IRepositorySourceGenerator : ISourceGenerator

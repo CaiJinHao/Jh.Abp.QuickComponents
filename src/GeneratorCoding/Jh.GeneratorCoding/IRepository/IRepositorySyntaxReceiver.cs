@@ -7,7 +7,7 @@ using System.Linq;
 using Jh.SourceGenerator.Common.GeneratorAttributes;
 using Jh.SourceGenerator.Common.GeneratorDtos;
 
-namespace Jh.SourceGenerator.SourceGenerators
+namespace Jh.SourceGenerator
 {
     public class IRepositorySyntaxReceiver : ISyntaxReceiver
     {
