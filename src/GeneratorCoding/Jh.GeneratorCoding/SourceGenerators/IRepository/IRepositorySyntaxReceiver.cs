@@ -45,8 +45,8 @@ namespace Jh.GeneratorCoding.SourceGenerators
         public TableDto GetTableDto(ClassDeclarationSyntax classDeclarationSyntax)
         {
             var tableName = GetTableName(classDeclarationSyntax);
-            var members = GetMembers<CreateInputDtoAttribute>(classDeclarationSyntax).ToList();
-            var fields = GetFieldDto(members).ToList();
+            var members = GetMembers<CreateInputDtoAttribute>(classDeclarationSyntax);
+            var fields = GetFieldDto(members);
             return new TableDto()
             {
                 Name = tableName,
@@ -54,17 +54,17 @@ namespace Jh.GeneratorCoding.SourceGenerators
             };
         }
 
-        public IEnumerable<FieldDto> GetFieldDto(List<PropertyDeclarationSyntax> properties)
+        public IEnumerable<FieldDto> GetFieldDto(IEnumerable<PropertyDeclarationSyntax> properties)
         {
             foreach (var property in properties)
             {
                 var description = GetAttrArgs<System.ComponentModel.DescriptionAttribute>(property).First().GetText().ToString();
-                var required = GetAttr<System.ComponentModel.DataAnnotations.RequiredAttribute>(property);
+                //var required = GetAttr<System.ComponentModel.DataAnnotations.RequiredAttribute>(property);
                 yield return new FieldDto()
                 {
                     Name = GetFiledName(property),
-                    Description = description,
-                    IsRequired = required != null
+                    Description = description.Trim('"'),
+                    IsRequired = true
                 };
             }
         }
@@ -83,9 +83,13 @@ namespace Jh.GeneratorCoding.SourceGenerators
         public AttributeSyntax GetAttr<TAttribute>(PropertyDeclarationSyntax property)
         {
             var attrName = typeof(TAttribute).Name;
-            return property.AttributeLists
-                .Where(a => GetAttributeName(a.Attributes.First()).Equals(attrName)).First()
-                .Attributes.First();
+            var attr = property.AttributeLists
+                .Where(a => GetAttributeName(a.Attributes.First()).Equals(attrName)).FirstOrDefault();
+            if (attr != null)
+            {
+                return attr.Attributes.First();
+            }
+            return default;
         }
 
         /// <summary>

@@ -26,18 +26,21 @@ using System.Text;");
             builder.AppendLine("{");
             {
                 builder.AppendLine($"\tpublic class {table.Name}CreateInputDto");
-                builder.AppendLine("{");
+                builder.AppendLine("\t{");
                 {
                     foreach (var _field in table.Fields)
                     {
                         builder.AppendLine($"\t\t/// <summary>");
                         builder.AppendLine($"\t\t/// {_field.Description}");
                         builder.AppendLine($"\t\t/// <summary>");
-                        builder.AppendLine($"\t\t[Required]");
-                        builder.AppendLine($"\t\tpublic string {_field} " + "{ get; set; }");
+                        if (_field.IsRequired)
+                        {
+                            builder.AppendLine($"\t\t[Required]");
+                        }
+                        builder.AppendLine($"\t\tpublic string {_field.Name} " + "{ get; set; }");
                     }
                 }
-                builder.AppendLine("}");
+                builder.AppendLine("\t}");
             }
             builder.AppendLine("}");
             return builder.ToString();
