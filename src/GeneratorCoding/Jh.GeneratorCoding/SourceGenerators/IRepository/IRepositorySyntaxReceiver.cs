@@ -30,18 +30,6 @@ namespace Jh.GeneratorCoding.SourceGenerators
             return classDeclarationSyntax.Identifier.ValueText;
         }
 
-        public IEnumerable<PropertyDeclarationSyntax> GetMembers<TAttribute>(ClassDeclarationSyntax classDeclarationSyntax)
-        {
-            foreach (var item in classDeclarationSyntax.Members)
-            {
-                var attrName = typeof(TAttribute).Name;
-                if (item.AttributeLists.Any(a => GetAttributeName(a.Attributes.First()).Equals(attrName)))
-                {
-                    yield return item as PropertyDeclarationSyntax;
-                }
-            }
-        }
-
         public TableDto GetTableDto(ClassDeclarationSyntax classDeclarationSyntax)
         {
             var tableName = GetTableName(classDeclarationSyntax);
@@ -52,6 +40,18 @@ namespace Jh.GeneratorCoding.SourceGenerators
                 Name = tableName,
                 Fields = fields
             };
+        }
+
+        public IEnumerable<PropertyDeclarationSyntax> GetMembers<TAttribute>(ClassDeclarationSyntax classDeclarationSyntax)
+        {
+            foreach (var item in classDeclarationSyntax.Members)
+            {
+                var attrName = typeof(TAttribute).Name;
+                if (item.AttributeLists.Any(a => GetAttributeName(a.Attributes.First()).Equals(attrName)))
+                {
+                    yield return item as PropertyDeclarationSyntax;
+                }
+            }
         }
 
         public IEnumerable<FieldDto> GetFieldDto(IEnumerable<PropertyDeclarationSyntax> properties)
@@ -89,7 +89,7 @@ namespace Jh.GeneratorCoding.SourceGenerators
             {
                 return attr.Attributes.First();
             }
-            return default;
+            return null;
         }
 
         /// <summary>
