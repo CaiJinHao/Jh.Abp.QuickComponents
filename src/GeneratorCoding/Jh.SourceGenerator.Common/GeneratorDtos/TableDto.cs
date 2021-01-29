@@ -7,10 +7,6 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
     public class TableDto
     {
         /// <summary>
-        /// 引用
-        /// </summary>
-        public string Using { get; set; }
-        /// <summary>
         /// 生成.cs文件的命名空间
         /// </summary>
         public string Namespace { get; set; } = "Jh.Abp.MenuManagement";

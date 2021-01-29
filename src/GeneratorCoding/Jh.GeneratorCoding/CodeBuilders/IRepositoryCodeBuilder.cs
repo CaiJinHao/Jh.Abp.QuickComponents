@@ -17,7 +17,6 @@ namespace Jh.SourceGenerator.CodeBuilders
         public override string ToString()
         {
             var builder =new StringBuilder();
-            //builder.AppendLine(table.Using);
             builder.AppendLine(@"using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

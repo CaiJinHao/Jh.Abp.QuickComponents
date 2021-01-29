@@ -71,11 +71,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.QuickComponents", ".
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.IdentityServer", "..\Jh.AbpExtensions\Jh.Abp.IdentityServer\Jh.Abp.IdentityServer.csproj", "{E2C922F4-CAD0-48CB-A1F6-DCE4C7F8BC3E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.GeneratorCoding", "..\GeneratorCoding\Jh.GeneratorCoding\Jh.GeneratorCoding.csproj", "{765E46CB-D209-41B2-9C50-CB7EC208A9F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.SourceGenerator", "..\GeneratorCoding\Jh.GeneratorCoding\Jh.SourceGenerator.csproj", "{765E46CB-D209-41B2-9C50-CB7EC208A9F9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.QuickComponents.Tests", "..\..\test\Jh.Abp.QuickComponents.Tests\Jh.Abp.QuickComponents.Tests.csproj", "{9ADC0FCF-EE9E-4894-85E9-EEF537680677}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jh.SourceGenerator.Common", "..\GeneratorCoding\Jh.SourceGenerator.Common\Jh.SourceGenerator.Common.csproj", "{5B24A626-9020-463D-8072-670D47E5707E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.SourceGenerator.Common", "..\GeneratorCoding\Jh.SourceGenerator.Common\Jh.SourceGenerator.Common.csproj", "{5B24A626-9020-463D-8072-670D47E5707E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
