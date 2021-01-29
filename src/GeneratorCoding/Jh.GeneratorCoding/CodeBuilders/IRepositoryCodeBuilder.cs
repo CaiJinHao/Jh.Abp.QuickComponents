@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Jh.SourceGenerator.Common.GeneratorDtos;
 
-namespace Jh.GeneratorCoding.CodeBuilders
+namespace Jh.SourceGenerator.CodeBuilders
 {
     public class IRepositoryCodeBuilder
     {
