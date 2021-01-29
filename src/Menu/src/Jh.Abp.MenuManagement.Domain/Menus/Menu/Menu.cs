@@ -14,35 +14,38 @@ namespace Jh.Abp.MenuManagement.Menus
     [Table(MenuManagementDbProperties.BaseDbTablePrefix + "Menu")]
     public class Menu : FullAuditedAggregateRoot<Guid>
     {
-        [CreateInputDto]
+        [RetrieveDto]
+        [CreateOrUpdateInputDto]
         [Description("菜单编号")]
         [Required]
         public string Code { get; set; }
 
-        [CreateInputDto]
+        [RetrieveDto]
+        [CreateOrUpdateInputDto]
         [Description("菜单名称")]
         [Required]
         public string Name { get; set; }
 
-        [CreateInputDto]
+        [CreateOrUpdateInputDto]
         [Description("菜单图标")]
         [Required]
         public string Icon { get; set; }
 
-        [CreateInputDto]
+        [CreateOrUpdateInputDto]
         [Description("同一级别内排序")]
         [Required]
         public int Sort { get; set; }
 
-        [CreateInputDto]
+        [RetrieveDto]
+        [CreateOrUpdateInputDto]
         [Description("上级菜单编号，顶级可为null")]
         public string ParentCode { get; set; }
 
-        [CreateInputDto]
+        [CreateOrUpdateInputDto]
         [Description("导航路径")]
         public string Url { get; set; }
 
-        [CreateInputDto]
+        [CreateOrUpdateInputDto]
         [Description("菜单描述")]
         public string Description { get; set; }
     }

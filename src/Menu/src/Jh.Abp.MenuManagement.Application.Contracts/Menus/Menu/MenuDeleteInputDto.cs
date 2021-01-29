@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Jh.Abp.MenuManagement.Menus
+﻿namespace Jh.Abp.MenuManagement.Menus
 {
-    public class MenuDeleteInputDto:MenuRetrieveInputDto
+    public class MenuDeleteInputDto : MenuRetrieveInputDto
     {
     }
 }

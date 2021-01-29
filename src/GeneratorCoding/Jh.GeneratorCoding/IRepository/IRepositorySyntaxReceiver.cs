@@ -54,6 +54,14 @@ namespace Jh.SourceGenerator
             }
         }
 
+        public IEnumerable<PropertyDeclarationSyntax> GetAllMembers(ClassDeclarationSyntax classDeclarationSyntax)
+        {
+            foreach (var item in classDeclarationSyntax.Members)
+            {
+                yield return item as PropertyDeclarationSyntax;
+            }
+        }
+
         public IEnumerable<FieldDto> GetFieldDto(IEnumerable<PropertyDeclarationSyntax> properties)
         {
             foreach (var property in properties)

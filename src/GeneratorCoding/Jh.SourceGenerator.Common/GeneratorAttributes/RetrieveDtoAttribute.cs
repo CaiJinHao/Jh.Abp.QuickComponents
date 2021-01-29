@@ -5,7 +5,7 @@ using System.Text;
 namespace Jh.SourceGenerator.Common.GeneratorAttributes
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class CreateOrUpdateInputDtoAttribute : Attribute
+    public class RetrieveDtoAttribute: Attribute
     {
     }
 }

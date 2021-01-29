@@ -1,27 +1,25 @@
-﻿using System;
+﻿using Jh.SourceGenerator.Common.GeneratorDtos;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Jh.SourceGenerator.Common.GeneratorDtos;
 
 namespace Jh.SourceGenerator.Common.CodeBuilders
 {
-    public class IRepositoryCodeBuilder:CodeBuilderAbs
+    public class CreateInputDtoCodeBuilder : CodeBuilderAbs
     {
-        public IRepositoryCodeBuilder(TableDto tableDto) : base(tableDto)
+        public CreateInputDtoCodeBuilder(TableDto tableDto) : base(tableDto)
         {
         }
 
         public override string ToString()
         {
-            var builder =new StringBuilder();
+            var builder = new StringBuilder();
             builder.AppendLine(@"using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;");
+using Volo.Abp.Application.Dtos;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
-                builder.AppendLine($"\tpublic class {table.Name}CreateInputDto");
+                builder.AppendLine($"\tpublic class {table.Name}Dto: {table.InheritClass}<{table.KeyType}>");
                 builder.AppendLine("\t{");
                 {
                     foreach (var _field in table.Fields)
