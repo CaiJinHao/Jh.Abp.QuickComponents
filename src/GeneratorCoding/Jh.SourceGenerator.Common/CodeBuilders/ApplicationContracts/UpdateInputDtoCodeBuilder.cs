@@ -22,7 +22,7 @@ using Jh.Abp.Application.Contracts.Extensions;");
                 builder.AppendLine($"\tpublic class {table.Name}UpdateInputDto: IMethodDto<{table.Name}>");
                 builder.AppendLine("\t{");
                 {
-                    foreach (var _field in table.Fields)
+                    foreach (var _field in table.FieldsCreateOrUpdateInput)
                     {
                         builder.AppendLine($"\t\t/// <summary>");
                         builder.AppendLine($"\t\t/// {_field.Description}");

@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\GeneratorCoding\Jh.SourceGenerator.Common\Jh.SourceGenerator.Common.csproj" />
     <ProjectReference Include="..\..\src\Menu\src\Jh.Abp.MenuManagement.Domain\Jh.Abp.MenuManagement.Domain.csproj" />
   </ItemGroup>
 

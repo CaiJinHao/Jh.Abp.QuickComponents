@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jh.SourceGenerator.Common.CodeBuilders.HttpApi
+namespace Jh.SourceGenerator.Common.CodeBuilders
 {
     public class ControllerCodeBuilder : CodeBuilderAbs
     {

@@ -22,7 +22,7 @@ using Volo.Abp.Application.Dtos;");
                 builder.AppendLine($"\tpublic class {table.Name}Dto: {table.InheritClass}<{table.KeyType}>");
                 builder.AppendLine("\t{");
                 {
-                    foreach (var _field in table.Fields)
+                    foreach (var _field in table.FieldsCreateOrUpdateInput)
                     {
                         builder.AppendLine($"\t\t/// <summary>");
                         builder.AppendLine($"\t\t/// {_field.Description}");

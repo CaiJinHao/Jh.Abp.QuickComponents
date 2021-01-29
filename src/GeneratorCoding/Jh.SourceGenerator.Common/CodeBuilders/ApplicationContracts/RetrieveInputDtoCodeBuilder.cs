@@ -23,7 +23,7 @@ using Volo.Abp.Application.Dtos;");
                 builder.AppendLine($"\tpublic class {table.Name}RetrieveInputDto: PagedAndSortedResultRequestDto, IFullRetrieveDto<{table.KeyType}>");
                 builder.AppendLine("\t{");
                 {
-                    foreach (var _field in table.Fields)
+                    foreach (var _field in table.FieldsRetrieve)
                     {
                         builder.AppendLine($"\t\t/// <summary>");
                         builder.AppendLine($"\t\t/// {_field.Description}");

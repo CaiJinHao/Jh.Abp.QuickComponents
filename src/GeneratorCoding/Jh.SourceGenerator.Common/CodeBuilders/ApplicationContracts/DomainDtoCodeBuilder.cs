@@ -27,7 +27,7 @@ using System.Text;");
                 builder.AppendLine($"\tpublic class {table.Name}DeleteInputDto");
                 builder.AppendLine("\t{");
                 {
-                    foreach (var _field in table.Fields)
+                    foreach (var _field in table.FieldsAll)
                     {
                         builder.AppendLine($"\t\t/// <summary>");
                         builder.AppendLine($"\t\t/// {_field.Description}");

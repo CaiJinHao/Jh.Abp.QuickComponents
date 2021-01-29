@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jh.SourceGenerator.Common.CodeBuilders.Ef
+namespace Jh.SourceGenerator.Common.CodeBuilders
 {
     public class RepositoryCodeBuilder : CodeBuilderAbs
     {

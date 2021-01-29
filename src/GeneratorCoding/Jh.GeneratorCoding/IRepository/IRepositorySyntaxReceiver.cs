@@ -6,6 +6,7 @@ using System.Text;
 using System.Linq;
 using Jh.SourceGenerator.Common.GeneratorAttributes;
 using Jh.SourceGenerator.Common.GeneratorDtos;
+using Jh.SourceGenerator.Common;
 
 namespace Jh.SourceGenerator
 {
@@ -25,22 +26,20 @@ namespace Jh.SourceGenerator
             }
         }
 
-        public string GetTableName(ClassDeclarationSyntax  classDeclarationSyntax)
-        {
-            return classDeclarationSyntax.Identifier.ValueText;
-        }
-
         public TableDto GetTableDto(ClassDeclarationSyntax classDeclarationSyntax)
         {
             var tableName = GetTableName(classDeclarationSyntax);
-            var members = GetMembers<CreateOrUpdateInputDtoAttribute>(classDeclarationSyntax);
-            var fields = GetFieldDto(members);
-            //TODO:需要传值
-            return new TableDto("MenuManagementDbContext", "Jh.Abp.MenuManagement", "MenuManagementController")
+            return new TableDto(GeneratorConsts.DbContext, GeneratorConsts.Namespace, GeneratorConsts.ControllerBase)
             {
                 Name = tableName,
-                Fields = fields
+                FieldsCreateOrUpdateInput = GetFieldDto(GetMembers<CreateOrUpdateInputDtoAttribute>(classDeclarationSyntax)).ToList(),
+                FieldsRetrieve = GetFieldDto(GetMembers<RetrieveDtoAttribute>(classDeclarationSyntax)).ToList(),
             };
+        }
+
+        public string GetTableName(ClassDeclarationSyntax classDeclarationSyntax)
+        {
+            return classDeclarationSyntax.Identifier.ValueText;
         }
 
         public IEnumerable<PropertyDeclarationSyntax> GetMembers<TAttribute>(ClassDeclarationSyntax classDeclarationSyntax)
@@ -55,25 +54,22 @@ namespace Jh.SourceGenerator
             }
         }
 
-        public IEnumerable<PropertyDeclarationSyntax> GetAllMembers(ClassDeclarationSyntax classDeclarationSyntax)
-        {
-            foreach (var item in classDeclarationSyntax.Members)
-            {
-                yield return item as PropertyDeclarationSyntax;
-            }
-        }
-
         public IEnumerable<FieldDto> GetFieldDto(IEnumerable<PropertyDeclarationSyntax> properties)
         {
             foreach (var property in properties)
             {
-                var description = GetAttrArgs<System.ComponentModel.DescriptionAttribute>(property).First().GetText().ToString();
-                //var required = GetAttr<System.ComponentModel.DataAnnotations.RequiredAttribute>(property);
+                var descriptionAttr = GetAttrArgs<System.ComponentModel.DescriptionAttribute>(property).FirstOrDefault();
+                var description = string.Empty;
+                if (description != null)
+                {
+                    description = descriptionAttr.GetText().ToString();
+                }
+                var required = GetAttr<System.ComponentModel.DataAnnotations.RequiredAttribute>(property);
                 yield return new FieldDto()
                 {
                     Name = GetFiledName(property),
                     Description = description.Trim('"'),
-                    IsRequired = true
+                    IsRequired = required != null
                 };
             }
         }
@@ -110,28 +106,14 @@ namespace Jh.SourceGenerator
         public IEnumerable<AttributeArgumentSyntax> GetAttrArgs<TAttribute>(PropertyDeclarationSyntax property)
         {
             var attrName = typeof(TAttribute).Name;
-            var args = property.AttributeLists
+            var attr = property.AttributeLists
                 .Where(a => GetAttributeName(a.Attributes.First()).Equals(attrName)).First()
-                .Attributes.First()
-                .ArgumentList.Arguments;
-            foreach (var item in args)
+                .Attributes.FirstOrDefault();
+            if (attr == null)
             {
-                yield return item;
+                return default;
             }
-            //return args.First().GetText().ToString();
-            //获取指定特性的对象
-            /*foreach (var _attrs in property.AttributeLists)
-            {
-                var attr = _attrs.Attributes.First();
-                //var attrArgs = attr.ArgumentList;
-                //var attrName = attr.Name.GetText().ToString();
-                //var attrNameAttr = GetAttributeName(attr);
-                if (GetAttributeName(attr).Equals(nameof(CreateInputDtoAttribute)))
-                {
-                    System.Diagnostics.Debugger.Launch();
-                    return attr;
-                }
-            }*/
+            return attr.ArgumentList.Arguments.AsEnumerable();
         }
 
         private string GetAttributeName(AttributeSyntax attributeSyntax)
