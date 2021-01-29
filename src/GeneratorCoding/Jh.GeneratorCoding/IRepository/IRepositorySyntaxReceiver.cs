@@ -33,9 +33,10 @@ namespace Jh.SourceGenerator
         public TableDto GetTableDto(ClassDeclarationSyntax classDeclarationSyntax)
         {
             var tableName = GetTableName(classDeclarationSyntax);
-            var members = GetMembers<CreateInputDtoAttribute>(classDeclarationSyntax);
+            var members = GetMembers<CreateOrUpdateInputDtoAttribute>(classDeclarationSyntax);
             var fields = GetFieldDto(members);
-            return new TableDto()
+            //TODO:需要传值
+            return new TableDto("MenuManagementDbContext", "Jh.Abp.MenuManagement", "MenuManagementController")
             {
                 Name = tableName,
                 Fields = fields
