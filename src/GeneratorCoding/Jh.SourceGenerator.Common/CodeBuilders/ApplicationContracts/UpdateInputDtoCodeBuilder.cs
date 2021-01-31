@@ -9,6 +9,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
     {
         public UpdateInputDtoCodeBuilder(TableDto tableDto) : base(tableDto)
         {
+            this.FileName = $"{table.Name}UpdateInputDto";
         }
 
         public override string ToString()
@@ -19,7 +20,7 @@ using Jh.Abp.Application.Contracts.Extensions;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
-                builder.AppendLine($"\tpublic class {table.Name}UpdateInputDto: IMethodDto<{table.Name}>");
+                builder.AppendLine($"\tpublic class {FileName}: IMethodDto<{table.Name}>");
                 builder.AppendLine("\t{");
                 {
                     foreach (var _field in table.FieldsCreateOrUpdateInput)

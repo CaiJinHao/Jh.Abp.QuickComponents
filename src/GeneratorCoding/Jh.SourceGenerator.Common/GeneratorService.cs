@@ -8,6 +8,7 @@ using Jh.SourceGenerator.Common.GeneratorDtos;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using Jh.SourceGenerator.Common.CodeBuilders;
+using System.IO;
 
 namespace Jh.SourceGenerator.Common
 {
@@ -67,7 +68,7 @@ namespace Jh.SourceGenerator.Common
                 var description = string.Empty;
                 if (description != null)
                 {
-                    descriptionAttr.Value?.ToString();
+                    description = descriptionAttr.Value?.ToString();
                 }
                 var required = GetAttr<RequiredAttribute>(property);
                 yield return new FieldDto()
@@ -107,8 +108,6 @@ namespace Jh.SourceGenerator.Common
             return property.Name;
         }
 
-
-
         public IEnumerable<dynamic> GeneratorCode()
         { 
             var tableClass = GetTableClass();
@@ -118,27 +117,28 @@ namespace Jh.SourceGenerator.Common
                 yield return new
                 {
                     item,
-                    CreateCreateInputDto = CreateFile(new CreateInputDtoCodeBuilder(tableDto).ToString()),
-                    CreateRetrieveInputDto = CreateFile(new RetrieveInputDtoCodeBuilder(tableDto).ToString()),
-                    CreateDeleteInputDto = CreateFile(new DeleteInputDtoCodeBuilder(tableDto).ToString()),
-                    CreateUpdateInputDto = CreateFile(new UpdateInputDtoCodeBuilder(tableDto).ToString()),
-                    CreateDomainDto = CreateFile(new DomainDtoCodeBuilder(tableDto).ToString()),
-                    CreateIAppService = CreateFile(new IAppServiceCodeBuilder(tableDto).ToString()),
+                    CreateCreateInputDto = CreateFile(new CreateInputDtoCodeBuilder(tableDto)),
+                    CreateRetrieveInputDto = CreateFile(new RetrieveInputDtoCodeBuilder(tableDto)),
+                    CreateDeleteInputDto = CreateFile(new DeleteInputDtoCodeBuilder(tableDto)),
+                    CreateUpdateInputDto = CreateFile(new UpdateInputDtoCodeBuilder(tableDto)),
+                    CreateDomainDto = CreateFile(new DomainDtoCodeBuilder(tableDto)),
+                    CreateIAppService = CreateFile(new IAppServiceCodeBuilder(tableDto)),
 
-                    CreateIRepository = CreateFile(new IRepositoryCodeBuilder(tableDto).ToString()),
-                    CreateRepository = CreateFile(new RepositoryCodeBuilder(tableDto).ToString()),
+                    CreateIRepository = CreateFile(new IRepositoryCodeBuilder(tableDto)),
+                    CreateRepository = CreateFile(new RepositoryCodeBuilder(tableDto)),
 
-                    CreateAppService = CreateFile(new AppServiceCodeBuilder(tableDto).ToString()),
-                    CreateProfile = CreateFile(new ProfileCodeBuilder(tableDto).ToString()),
+                    CreateAppService = CreateFile(new AppServiceCodeBuilder(tableDto)),
+                    CreateProfile = CreateFile(new ProfileCodeBuilder(tableDto)),
             
-                    CreateController = CreateFile(new ControllerCodeBuilder(tableDto).ToString()),
+                    CreateController = CreateFile(new ControllerCodeBuilder(tableDto)),
                 };
             }
         }
 
-        public bool CreateFile(string codeSource)
+        public bool CreateFile(CodeBuilderAbs codeBuilder)
         {
-            Console.WriteLine(codeSource);
+            var filePath = Path.Combine(@"E:\TEMP\ttt", codeBuilder.FileName + codeBuilder.Suffix);
+            File.WriteAllText(filePath, codeBuilder.ToString());
             return true;
         }
     }

@@ -9,6 +9,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
     {
         public DeleteInputDtoCodeBuilder(TableDto tableDto) : base(tableDto)
         {
+            this.FileName = $"{table.Name}DeleteInputDto";
         }
 
         public override string ToString()
@@ -17,7 +18,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
-                builder.AppendLine($"\tpublic class {table.Name}CreateInputDto : {table.Name}RetrieveInputDto");
+                builder.AppendLine($"\tpublic class {FileName} : {table.Name}RetrieveInputDto");
                 builder.AppendLine("\t{");
                 builder.AppendLine("\t}");
             }

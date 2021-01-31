@@ -9,6 +9,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
     {
         public RetrieveInputDtoCodeBuilder(TableDto tableDto) : base(tableDto)
         {
+            this.FileName = $"{table.Name}RetrieveInputDto";
         }
 
         public override string ToString()
@@ -20,7 +21,7 @@ using Volo.Abp.Application.Dtos;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
-                builder.AppendLine($"\tpublic class {table.Name}RetrieveInputDto: PagedAndSortedResultRequestDto, IFullRetrieveDto<{table.KeyType}>");
+                builder.AppendLine($"\tpublic class {FileName}: PagedAndSortedResultRequestDto, IFullRetrieveDto<{table.KeyType}>");
                 builder.AppendLine("\t{");
                 {
                     foreach (var _field in table.FieldsRetrieve)

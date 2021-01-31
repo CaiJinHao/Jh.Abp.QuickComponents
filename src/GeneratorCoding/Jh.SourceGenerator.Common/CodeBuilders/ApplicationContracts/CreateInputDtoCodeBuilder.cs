@@ -9,17 +9,20 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
     {
         public CreateInputDtoCodeBuilder(TableDto tableDto) : base(tableDto)
         {
+            this.FileName = $"{table.Name}CreateInputDto";
         }
 
         public override string ToString()
         {
             var builder = new StringBuilder();
             builder.AppendLine(@"using System;
-using Volo.Abp.Application.Dtos;");
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
-                builder.AppendLine($"\tpublic class {table.Name}Dto: {table.InheritClass}<{table.KeyType}>");
+                builder.AppendLine($"\tpublic class {FileName}");
                 builder.AppendLine("\t{");
                 {
                     foreach (var _field in table.FieldsCreateOrUpdateInput)

@@ -12,26 +12,29 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
     {
         public DomainDtoCodeBuilder(TableDto tableDto) : base(tableDto)
         {
+            this.FileName = $"{table.Name}Dto";
         }
 
         public override string ToString()
         {
             var builder = new StringBuilder();
             builder.AppendLine(@"using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;");
+using Volo.Abp.Application.Dtos;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
-                builder.AppendLine($"\tpublic class {table.Name}DeleteInputDto");
+                builder.AppendLine($"\tpublic class {FileName}: {table.InheritClass}<{table.KeyType}>");
                 builder.AppendLine("\t{");
                 {
-                    foreach (var _field in table.FieldsAll)
+                    foreach (var _field in table.FieldsCreateOrUpdateInput)
                     {
                         builder.AppendLine($"\t\t/// <summary>");
                         builder.AppendLine($"\t\t/// {_field.Description}");
                         builder.AppendLine($"\t\t/// <summary>");
+                        if (_field.IsRequired)
+                        {
+                            builder.AppendLine($"\t\t[Required]");
+                        }
                         builder.AppendLine($"\t\tpublic string {_field.Name} " + "{ get; set; }");
                     }
                 }

@@ -9,6 +9,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
     {
         public AppServiceCodeBuilder(TableDto tableDto) : base(tableDto)
         {
+            this.FileName = $"{table.Name}AndRoleMapAppService";
         }
 
         public override string ToString()
@@ -19,13 +20,13 @@ using System;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
-                builder.AppendLine($"\tpublic class {table.Name}AndRoleMapAppService");
+                builder.AppendLine($"\tpublic class {FileName}");
                 builder.AppendLine($"\t\t: CrudApplicationService<{table.Name}, {table.Name}Dto, {table.Name}Dto, {table.KeyType}, {table.Name}RetrieveInputDto, {table.Name}CreateInputDto, {table.Name}UpdateInputDto, {table.Name}DeleteInputDto>,");
                 builder.AppendLine($"\t\tI{table.Name}AppService");
                 builder.AppendLine("\t{");
                 {
                     builder.AppendLine($"\t\tprivate readonly I{table.Name}Repository {table.Name}Repository;");
-                    builder.AppendLine($"\t\tpublic {table.Name}AppService(I{table.Name}Repository repository) : base(repository)");
+                    builder.AppendLine($"\t\tpublic {FileName}(I{table.Name}Repository repository) : base(repository)");
                     builder.AppendLine("\t\t{");
                     builder.AppendLine($"\t\t{table.Name}Repository = repository;");
                     builder.AppendLine("\t\t}");

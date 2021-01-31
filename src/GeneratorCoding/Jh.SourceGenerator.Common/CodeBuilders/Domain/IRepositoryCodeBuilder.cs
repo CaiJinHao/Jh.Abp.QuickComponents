@@ -9,6 +9,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
     {
         public IRepositoryCodeBuilder(TableDto tableDto) : base(tableDto)
         {
+            this.FileName = $"I{table.Name}Repository";
         }
 
         public override string ToString()
@@ -19,7 +20,7 @@ using System;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
-                builder.AppendLine($"\tpublic interface I{table.Name}Repository: ICrudRepository<{table.Name}, {table.KeyType}>");
+                builder.AppendLine($"\tpublic interface {FileName}: ICrudRepository<{table.Name}, {table.KeyType}>");
                 builder.AppendLine("\t{");
                 builder.AppendLine("\t}");
             }

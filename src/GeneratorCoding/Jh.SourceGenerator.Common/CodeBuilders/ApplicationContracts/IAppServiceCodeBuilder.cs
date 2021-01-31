@@ -9,6 +9,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
     {
         public IAppServiceCodeBuilder(TableDto tableDto) : base(tableDto)
         {
+            this.FileName = $"I{table.Name}AppService";
         }
 
         public override string ToString()
@@ -19,7 +20,7 @@ using System;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
-                builder.AppendLine($"\tpublic interface I{table.Name}AppService: ICrudRepository<{table.Name}, {table.KeyType}>");
+                builder.AppendLine($"\tpublic interface {FileName}: ICrudRepository<{table.Name}, {table.KeyType}>");
                 builder.AppendLine($"\t\t: ICrudApplicationService<{table.Name}, {table.Name}Dto, {table.Name}Dto, {table.KeyType}, {table.Name}RetrieveInputDto, {table.Name}CreateInputDto, {table.Name}UpdateInputDto, {table.Name}DeleteInputDto>");
                 builder.AppendLine("\t{");
                 builder.AppendLine("\t}");
