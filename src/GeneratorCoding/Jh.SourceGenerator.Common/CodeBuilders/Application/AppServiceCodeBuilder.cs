@@ -7,7 +7,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
 {
     public class AppServiceCodeBuilder : CodeBuilderAbs
     {
-        public AppServiceCodeBuilder(TableDto tableDto) : base(tableDto)
+        public AppServiceCodeBuilder(TableDto tableDto, string filePath) : base(tableDto, filePath)
         {
             this.FileName = $"{table.Name}AndRoleMapAppService";
         }

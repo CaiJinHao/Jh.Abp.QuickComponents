@@ -7,7 +7,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
 {
     public class DeleteInputDtoCodeBuilder : CodeBuilderAbs
     {
-        public DeleteInputDtoCodeBuilder(TableDto tableDto) : base(tableDto)
+        public DeleteInputDtoCodeBuilder(TableDto tableDto, string filePath) : base(tableDto, filePath)
         {
             this.FileName = $"{table.Name}DeleteInputDto";
         }

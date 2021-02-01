@@ -8,4 +8,8 @@
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Jh.Abp.Common\Jh.Abp.Common.csproj" />
+  </ItemGroup>
+
 </Project>

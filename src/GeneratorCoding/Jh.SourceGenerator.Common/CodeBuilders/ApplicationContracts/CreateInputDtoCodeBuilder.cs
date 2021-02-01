@@ -7,7 +7,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
 {
     public class CreateInputDtoCodeBuilder : CodeBuilderAbs
     {
-        public CreateInputDtoCodeBuilder(TableDto tableDto) : base(tableDto)
+        public CreateInputDtoCodeBuilder(TableDto tableDto, string filePath) : base(tableDto, filePath)
         {
             this.FileName = $"{table.Name}CreateInputDto";
         }

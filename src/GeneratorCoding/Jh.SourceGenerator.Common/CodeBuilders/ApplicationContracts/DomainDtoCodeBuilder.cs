@@ -10,7 +10,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
     /// </summary>
     public class DomainDtoCodeBuilder : CodeBuilderAbs
     {
-        public DomainDtoCodeBuilder(TableDto tableDto) : base(tableDto)
+        public DomainDtoCodeBuilder(TableDto tableDto, string filePath) : base(tableDto, filePath)
         {
             this.FileName = $"{table.Name}Dto";
         }

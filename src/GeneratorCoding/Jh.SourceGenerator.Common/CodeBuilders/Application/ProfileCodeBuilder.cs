@@ -7,7 +7,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
 {
     public class ProfileCodeBuilder : CodeBuilderAbs
     {
-        public ProfileCodeBuilder(TableDto tableDto) : base(tableDto)
+        public ProfileCodeBuilder(TableDto tableDto, string filePath) : base(tableDto, filePath)
         {
             FileName = $"{table.Name}Profile";
         }

@@ -9,15 +9,21 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using Jh.SourceGenerator.Common.CodeBuilders;
 using System.IO;
+using Jh.Abp.Common;
 
 namespace Jh.SourceGenerator.Common
 {
     public class GeneratorService
     {
+        public GeneratorOptions generatorOptions { get; set; }
         public Assembly LoadAssembly { get; }
-        public GeneratorService(Assembly assembly)
+        public GeneratorService(Assembly assembly, GeneratorOptions options)
         {
             LoadAssembly = assembly;
+            generatorOptions = options;
+            GeneratorConsts.DbContext = options.DbContext;
+            GeneratorConsts.Namespace = options.Namespace;
+            GeneratorConsts.ControllerBase = options.ControllerBase;
         }
 
         public IEnumerable<Type> GetLoadableTypes()
@@ -117,27 +123,33 @@ namespace Jh.SourceGenerator.Common
                 yield return new
                 {
                     item,
-                    CreateCreateInputDto = CreateFile(new CreateInputDtoCodeBuilder(tableDto)),
-                    CreateRetrieveInputDto = CreateFile(new RetrieveInputDtoCodeBuilder(tableDto)),
-                    CreateDeleteInputDto = CreateFile(new DeleteInputDtoCodeBuilder(tableDto)),
-                    CreateUpdateInputDto = CreateFile(new UpdateInputDtoCodeBuilder(tableDto)),
-                    CreateDomainDto = CreateFile(new DomainDtoCodeBuilder(tableDto)),
-                    CreateIAppService = CreateFile(new IAppServiceCodeBuilder(tableDto)),
+                    CreateCreateInputDto = CreateFile(new CreateInputDtoCodeBuilder(tableDto,generatorOptions.CreateContractsPath)),
+                    CreateRetrieveInputDto = CreateFile(new RetrieveInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath)),
+                    CreateDeleteInputDto = CreateFile(new DeleteInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath)),
+                    CreateUpdateInputDto = CreateFile(new UpdateInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath)),
+                    CreateDomainDto = CreateFile(new DomainDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath)),
+                    CreateIAppService = CreateFile(new IAppServiceCodeBuilder(tableDto, generatorOptions.CreateContractsPath)),
 
-                    CreateIRepository = CreateFile(new IRepositoryCodeBuilder(tableDto)),
-                    CreateRepository = CreateFile(new RepositoryCodeBuilder(tableDto)),
+                    CreateIRepository = CreateFile(new IRepositoryCodeBuilder(tableDto, generatorOptions.CreateDomainPath)),
 
-                    CreateAppService = CreateFile(new AppServiceCodeBuilder(tableDto)),
-                    CreateProfile = CreateFile(new ProfileCodeBuilder(tableDto)),
+                    CreateRepository = CreateFile(new RepositoryCodeBuilder(tableDto, generatorOptions.CreateEfCorePath)),
+
+                    CreateAppService = CreateFile(new AppServiceCodeBuilder(tableDto, generatorOptions.CreateApplicationPath)),
+                    CreateProfile = CreateFile(new ProfileCodeBuilder(tableDto, generatorOptions.CreateApplicationPath)),
             
-                    CreateController = CreateFile(new ControllerCodeBuilder(tableDto)),
+                    CreateController = CreateFile(new ControllerCodeBuilder(tableDto, generatorOptions.CreateHttpApiPath)),
                 };
             }
         }
 
         public bool CreateFile(CodeBuilderAbs codeBuilder)
         {
-            var filePath = Path.Combine(@"E:\TEMP\ttt", codeBuilder.FileName + codeBuilder.Suffix);
+            new DirectoryInfo(codeBuilder.FilePath).CreateDirectoryInfo();
+            var filePath = Path.Combine(codeBuilder.FilePath, codeBuilder.FileName + codeBuilder.Suffix);
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
             File.WriteAllText(filePath, codeBuilder.ToString());
             return true;
         }

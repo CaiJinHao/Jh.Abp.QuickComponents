@@ -16,7 +16,7 @@ namespace Jh.SourceGenerator
                 foreach (var table in receiver.CandidateClassCollection)
                 {
                     var tableDto = receiver.GetTableDto(table);
-                    var code = new IRepositoryCodeBuilder(tableDto);
+                    var code = new IRepositoryCodeBuilder(tableDto,filePath:"");
                     // inject the created source into the users compilation
                     context.AddSource(tableDto.Name, SourceText.From(code.ToString(), Encoding.UTF8));
                 }

@@ -14,7 +14,19 @@ namespace Jh.Abp.QuickComponents.Tests.JhSourceGeneratorCommon
         public void TestGetTableClass()
         {
             var domainAssembly = typeof(MenuManagement.MenuManagementDomainModule).Assembly;
-            var service = new GeneratorService(domainAssembly);
+
+            var options = new SourceGenerator.Common.GeneratorDtos.GeneratorOptions()
+            {
+                DbContext = "MenuManagementDbContext",
+                Namespace = "Jh.Abp.MenuManagement",
+                ControllerBase = "MenuManagementController",
+                CreateContractsPath = @"E:\TEMP\Contracts",
+                CreateApplicationPath = @"E:\TEMP\Application",
+                CreateDomainPath = @"E:\TEMP\Domain",
+                CreateEfCorePath = @"E:\TEMP\EfCore",
+                CreateHttpApiPath = @"E:\TEMP\HttpApi",
+            };
+            var service = new GeneratorService(domainAssembly, options);
             var generatorResult = service.GeneratorCode().ToList();
             Assert.True(generatorResult.Count()>0);
         }

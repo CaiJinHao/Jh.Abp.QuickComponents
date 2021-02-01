@@ -7,7 +7,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
 {
     public class IRepositoryCodeBuilder:CodeBuilderAbs
     {
-        public IRepositoryCodeBuilder(TableDto tableDto) : base(tableDto)
+        public IRepositoryCodeBuilder(TableDto tableDto, string filePath) : base(tableDto, filePath)
         {
             this.FileName = $"I{table.Name}Repository";
         }

@@ -7,7 +7,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
 {
     public class ControllerCodeBuilder : CodeBuilderAbs
     {
-        public ControllerCodeBuilder(TableDto tableDto) : base(tableDto)
+        public ControllerCodeBuilder(TableDto tableDto, string filePath) : base(tableDto, filePath)
         {
             FileName = $"{table.Name}Controller";
         }
