@@ -7,6 +7,10 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
     public class GeneratorOptions
     {
         /// <summary>
+        /// domain 的dll文件路径用于加载该程序集
+        /// </summary>
+        public string DomainAssemblyDllFilePath { get; set; }
+        /// <summary>
         /// Ef数据上下文类名
         /// </summary>
         public string DbContext { get; set; } = "MenuManagementDbContext";
