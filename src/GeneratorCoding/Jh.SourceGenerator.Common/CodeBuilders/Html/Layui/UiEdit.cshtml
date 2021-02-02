@@ -120,7 +120,7 @@
                 },
                 loadData: function () {
 					if (vm.paramObj.@(primary_key_name)) {
-                        ajaxmod.authorizeAjax({
+                        ajaxmod.requestAuthorize({
                             url: '/@(table_name_lower)/' + vm.paramObj.@(primary_key_name),
                             type: 'Get',
                             success: function (_json) {
@@ -148,7 +148,7 @@
                     type = 'Put';
                 }
                 //阻止表单提交可以  return false;
-                ajaxmod.authorizeAjax({
+                ajaxmod.requestAuthorize({
                     url: url,
                     data: data,
                     type: type,
