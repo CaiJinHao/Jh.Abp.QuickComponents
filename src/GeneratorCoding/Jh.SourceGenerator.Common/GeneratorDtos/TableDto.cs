@@ -25,6 +25,10 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// </summary>
         public string Name { get; set; }
         /// <summary>
+        /// 表描述
+        /// </summary>
+        public string Comment { get; set; }
+        /// <summary>
         /// 要继承的类
         /// </summary>
         public string InheritClass { get; set; } = "FullAuditedEntityDto";

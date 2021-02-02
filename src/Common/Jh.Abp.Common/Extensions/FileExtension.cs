@@ -40,6 +40,14 @@ namespace Jh.Abp.Common
             }
         }
 
+        public static string ReadFile(this string path)
+        {
+            using (var sr = new StreamReader(path, Encoding.Default))
+            {
+                return sr.ReadToEnd();
+            }
+        }
+
         /// <summary>
         /// 创建目录 自动检测没有创建的目录
         /// </summary>

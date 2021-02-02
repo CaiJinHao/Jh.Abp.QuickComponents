@@ -5,10 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="CodeBuilders\Html\Layui\UiEdit.cshtml" />
+    <None Remove="CodeBuilders\Html\Layui\UiIndex.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="CodeBuilders\Html\Layui\UiEdit.cshtml" />
+    <Content Include="CodeBuilders\Html\Layui\UiIndex.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\RazorEngine\RazorEngine.NetCore\RazorEngine.NetCore.csproj" />
     <ProjectReference Include="..\..\Common\Jh.Abp.Common\Jh.Abp.Common.csproj" />
   </ItemGroup>
 

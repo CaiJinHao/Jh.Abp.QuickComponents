@@ -40,10 +40,10 @@ namespace Jh.SourceGenerator.Common
 
         public TableDto GetTableDto(Type classType)
         {
-            var tableName = GetTableName(classType);
             return new TableDto(GeneratorConsts.DbContext, GeneratorConsts.Namespace, GeneratorConsts.ControllerBase)
             {
-                Name = tableName,
+                Name = GetTableName(classType),
+                Comment= GetTableDescription(classType),
                 FieldsCreateOrUpdateInput = GetFieldDto(GetMembers<CreateOrUpdateInputDtoAttribute>(classType)).ToList(),
                 FieldsRetrieve = GetFieldDto(GetMembers<RetrieveDtoAttribute>(classType)).ToList()
             };
@@ -52,6 +52,20 @@ namespace Jh.SourceGenerator.Common
         public string GetTableName(Type classType)
         {
             return classType.Name;
+        }
+
+        public string GetTableDescription(Type classType)
+        {
+            var attr = classType.CustomAttributes.Where(a => a.AttributeType.Equals(typeof(DescriptionAttribute))).FirstOrDefault();
+            if (attr != null)
+            {
+                var args = attr.ConstructorArguments.FirstOrDefault();
+                if (args != null)
+                {
+                    return args.Value?.ToString();
+                }
+            }
+            return default;
         }
 
         public IEnumerable<PropertyInfo> GetMembers<TAttribute>(Type classType)
@@ -81,6 +95,7 @@ namespace Jh.SourceGenerator.Common
                 {
                     Name = GetFiledName(property),
                     Description = description,
+                    Type = property.PropertyType.Name,
                     IsRequired = required != null
                 };
             }
@@ -114,32 +129,35 @@ namespace Jh.SourceGenerator.Common
             return property.Name;
         }
 
-        public IEnumerable<dynamic> GeneratorCode()
+        public bool GeneratorCode()
         { 
             var tableClass = GetTableClass();
             foreach (var item in tableClass)
             {
                 var tableDto = GetTableDto(item);
-                yield return new
+                {//contracts
+                    var CreateRetrieveInputDto = CreateFile(new RetrieveInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                    var CreateDeleteInputDto = CreateFile(new DeleteInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                    var CreateUpdateInputDto = CreateFile(new UpdateInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                    var CreateDomainDto = CreateFile(new DomainDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                    var CreateIAppService = CreateFile(new IAppServiceCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
+                }
+                var CreateIRepository = CreateFile(new IRepositoryCodeBuilder(tableDto, generatorOptions.CreateDomainPath));
+                var CreateRepository = CreateFile(new RepositoryCodeBuilder(tableDto, generatorOptions.CreateEfCorePath));
+                var CreateAppService = CreateFile(new AppServiceCodeBuilder(tableDto, generatorOptions.CreateApplicationPath));
+                var CreateProfile = CreateFile(new ProfileCodeBuilder(tableDto, generatorOptions.CreateApplicationPath));
+                var CreateController = CreateFile(new ControllerCodeBuilder(tableDto, generatorOptions.CreateHttpApiPath));
+                //获取去模板列表
+                foreach (var file in new DirectoryInfo(generatorOptions.CreateHtmlTemplatePath).GetFiles())
                 {
-                    item,
-                    CreateCreateInputDto = CreateFile(new CreateInputDtoCodeBuilder(tableDto,generatorOptions.CreateContractsPath)),
-                    CreateRetrieveInputDto = CreateFile(new RetrieveInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath)),
-                    CreateDeleteInputDto = CreateFile(new DeleteInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath)),
-                    CreateUpdateInputDto = CreateFile(new UpdateInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath)),
-                    CreateDomainDto = CreateFile(new DomainDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath)),
-                    CreateIAppService = CreateFile(new IAppServiceCodeBuilder(tableDto, generatorOptions.CreateContractsPath)),
-
-                    CreateIRepository = CreateFile(new IRepositoryCodeBuilder(tableDto, generatorOptions.CreateDomainPath)),
-
-                    CreateRepository = CreateFile(new RepositoryCodeBuilder(tableDto, generatorOptions.CreateEfCorePath)),
-
-                    CreateAppService = CreateFile(new AppServiceCodeBuilder(tableDto, generatorOptions.CreateApplicationPath)),
-                    CreateProfile = CreateFile(new ProfileCodeBuilder(tableDto, generatorOptions.CreateApplicationPath)),
-            
-                    CreateController = CreateFile(new ControllerCodeBuilder(tableDto, generatorOptions.CreateHttpApiPath)),
-                };
+                    if (file.Extension.Equals(".cshtml"))
+                    {
+                        var _filePath = Path.Combine(generatorOptions.CreateHtmlTemplatePath, file.FullName);
+                        CreateFile(new HtmlTemplateCodeBuilder(_filePath, tableDto, generatorOptions.CreateHtmlPath));
+                    }
+                }
             }
+            return true;
         }
 
         public bool CreateFile(CodeBuilderAbs codeBuilder)

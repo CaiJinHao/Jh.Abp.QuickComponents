@@ -12,5 +12,9 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// domain 必须带Description特性
         /// </summary>
         public string Description { get; set; }
+        /// <summary>
+        /// 字段的类型
+        /// </summary>
+        public string Type { get; set; }
     }
 }

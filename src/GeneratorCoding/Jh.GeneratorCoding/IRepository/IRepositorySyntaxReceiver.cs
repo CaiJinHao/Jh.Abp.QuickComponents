@@ -69,7 +69,7 @@ namespace Jh.SourceGenerator
                 {
                     Name = GetFiledName(property),
                     Description = description.Trim('"'),
-                    IsRequired = required != null
+                    IsRequired = required != null,
                 };
             }
         }

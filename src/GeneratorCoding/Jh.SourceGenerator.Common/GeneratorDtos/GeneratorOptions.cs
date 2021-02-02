@@ -44,5 +44,13 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// HttpApi 上级文件夹v1  CreateController
         /// </summary>
         public string CreateHttpApiPath { get; set; }
+        /// <summary>
+        /// Html 模板路径
+        /// </summary>
+        public string CreateHtmlTemplatePath { get; set; }
+        /// <summary>
+        /// 创建Html路径
+        /// </summary>
+        public string CreateHtmlPath { get; set; }
     }
 }

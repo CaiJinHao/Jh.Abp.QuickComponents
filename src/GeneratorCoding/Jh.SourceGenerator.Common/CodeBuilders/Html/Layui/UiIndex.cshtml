@@ -1,0 +1,229 @@
+﻿@{
+    var table = Model;
+    var table_name = Model.Name;
+    var columns = Model.FieldsRetrieve;//列集合
+
+    var table_name_lower = Model.Name.ToLower();
+    var primary_key_name = "id";
+    var primary_key_data_type = "string";
+
+    var api_version = "1";
+}
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@Model.Comment</title>
+    <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="../../build/css/common.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="page-vm" class="layui-fluid iframe-top">
+        <div class="table_@(table_name_lower)_mg">
+            <fieldset class="layui-elem-field">
+                <div class="layui-field-box">
+                    <form class="layui-form">
+                        <div class="layui-row">
+                            @foreach (var col in columns)
+                            {
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">@(col.Description)：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" class="layui-input" name="@(col.Name)">
+                                    </div>
+                                </div>
+                            }
+                            <div class="layui-inline btngroup">
+                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_@(table_name_lower)_from" id="btn_@(table_name_lower)_from_query">查询</a>
+                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_@(table_name_lower)_from_export">导出</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+            <table id="table_@(table_name_lower)" class="layui-hide" lay-filter="table_@(table_name_lower)_list"></table>
+            <div id="table_@(table_name_lower)_page" class="laypage"></div>
+        </div>
+    </div>
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+            <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="delbatch">批量删除</button>
+        </div>
+    </script>
+    <script type="text/html" id="table_@(table_name_lower)_operator">
+        <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="edit" data-code="@(primary_key_name)">编辑</a>
+        <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="@(primary_key_name)">删除</a>
+    </script>
+    <script src="../../layui/layui.js"></script>
+    <script src="../../plugins/vue/vue.min.js"></script>
+    <!--公共函数库-->
+    <script src="../../modules/extend/common.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#page-vm',
+            data: {
+                currPage: 1
+            },
+            methods: {
+				RenderDom: function(form, callback){
+                    vm.$forceUpdate();//强制重新渲染 dom
+                    // DOM 还没有更新
+                    vm.$nextTick(function () {
+                        // DOM 现在更新了
+                        form.render();
+                        if (callback) {
+                            callback();
+                        }
+                    });
+                }
+            }
+        });
+        layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod',  'datatable'], function () {
+            var table = layui.table,
+                $ = layui.jquery,
+                layer = layui.layer,
+                form = layui.form,
+                laypage = layui.laypage,
+                ajaxmod = layui.ajaxmod,
+                datatable = layui.datatable;
+            var _context = $('.table_@(table_name_lower)_mg'),
+                _table_style = { align: 'center' };//公共样式
+
+            var @(table_name_lower)Obj = {
+                renderTable: function (_options) {
+                    var optDefault = {
+                        Page: vm.currPage,
+                        PageSize: PageSize,//common中定义的全局
+                    };
+                    $.extend(optDefault, _options);
+                    var _the = this;
+                    datatable.renderTable(optDefault, {
+                        url: '/@(table_name_lower)',
+                        tableElem: 'table_@(table_name_lower)',//laypage 自动加_page
+                        tableCols: [[
+                            { type: 'checkbox'},
+							@foreach (var col in columns) {
+                             
+                          @:$.extend({ field: '@(col.Name)', title: '@(col.Description)' }, _table_style),
+                             }
+                            $.extend({ field: '@(primary_key_name)', title: '操作', width: 190, templet: '#table_@(table_name_lower)_operator', fixed: 'right' }, _table_style)
+                        ]],
+                    });
+                },
+                edit: function (_data) {
+                    var _the = this;
+                    datatable.edit({
+                        title: '编辑@(Model.Comment)',
+                        area: ['850px', '500px'],
+                        content: 'view/@(table_name_lower)/edit.html?@(primary_key_name)=' + _data.@(primary_key_name),
+                    });
+                },
+                add: function () {
+                    var _the = this;
+                    datatable.add({
+                        title: '新增@(Model.Comment)',
+                        area: ['850px', '500px'],
+                        content: 'view/@(table_name_lower)/edit.html',
+                    });
+                },
+                del: function (_data) {
+                    var _the = this;
+                    datatable.del({
+                        url: '/@(table_name_lower)/' + _data.@(primary_key_name),
+                        type: 'Delete',
+                        success: function (_json) {
+                            top.tool.publish('edit_@(table_name_lower)_form_refresh');//触发事件刷新列表
+                        }
+                    });
+                },
+                delbatch: function (_data) {
+                    var checkStatus = table.checkStatus('table_@(table_name_lower)'),
+                        data = checkStatus.data;
+                   var delIdList = [];
+                    $.each(data, function (k, v) {
+                        delIdList.push(v._id);
+                    });
+                    datatable.delbatch({
+                        url: '/@(table_name_lower)',
+                        type: 'Delete',
+                        data: delIdList,
+                        success: function (_json) {
+                            top.tool.publish('edit_@(table_name_lower)_form_refresh');//触发事件刷新列表
+                        }
+                    });
+                },
+				patchObj: function (_data) {
+                    ajaxmod.authorizeAjax({
+                        url: '/@(table_name_lower)',
+                        type: 'Patch',
+                        data: _data,
+                        success: function (_json) {
+							top.tool.publish('edit_@(table_name_lower)_form_refresh');
+                        }
+                    });
+                },
+                exportExcel: function (data) {
+                    //跟表格显示的数据一样
+                    data = excel.filterExportData(data, [
+                       @foreach (var col in columns) {
+                       @:'@(col.Name)',
+                       }
+                    ]);
+
+                    data.unshift({
+                        @foreach (var col in columns) {
+                        @:@(col.Name):'@(col.Description)',
+						}
+                    });
+
+                    excel.exportExcel({
+                        @(table_name_lower): data
+                    }, '@(table_name_lower)' + new Date().toLocaleString() + '.xlsx', 'xlsx');
+                },
+                loadtable:function(){
+                    $('#btn_@(table_name_lower)_from_query').click();
+                }
+            };
+
+            @(table_name_lower)Obj.renderTable();//加载第一页
+
+            //绑定编辑也保存事件
+            top.tool.subscribe("edit_@(table_name_lower)_form_refresh", function () {
+                @(table_name_lower)Obj.renderTable();
+            });
+
+            table.on('tool(table_@(table_name_lower)_list)', function (obj) {
+                var data = obj.data;
+                @(table_name_lower)Obj[obj.event] ? @(table_name_lower)Obj[obj.event].call(@(table_name_lower)Obj, data) : '';
+            });
+
+            table.on('toolbar(table_@(table_name_lower)_list)', function (obj) {
+                var data = obj.data;
+                @(table_name_lower)Obj[obj.event] ? @(table_name_lower)Obj[obj.event].call(@(table_name_lower)Obj, data) : '';
+            });
+
+            form.on('submit(btn_@(table_name_lower)_from)', function (data) {
+                vm.currPage = 1;
+                @(table_name_lower)Obj.renderTable(data.field);
+                return false;
+            });
+
+            form.on('submit(btn_@(table_name_lower)_from_export)', function (data) {
+                ajaxmod.authorizeAjax({
+                    url: '/@(table_name_lower)?option=1',
+                    type: 'Get',
+                    data: data.field,
+                    success: function (_json) {
+                        @(table_name_lower)Obj.exportExcel(_json.Result);
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>

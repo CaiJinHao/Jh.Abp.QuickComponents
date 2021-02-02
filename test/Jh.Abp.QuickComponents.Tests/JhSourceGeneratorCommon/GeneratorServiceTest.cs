@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using RazorEngine;
+using RazorEngine.Templating; // For extension methods.
 
 namespace Jh.Abp.QuickComponents.Tests.JhSourceGeneratorCommon
 {
@@ -25,10 +27,19 @@ namespace Jh.Abp.QuickComponents.Tests.JhSourceGeneratorCommon
                 CreateDomainPath = @"E:\TEMP\Domain",
                 CreateEfCorePath = @"E:\TEMP\EfCore",
                 CreateHttpApiPath = @"E:\TEMP\HttpApi",
+                CreateHtmlPath = @"E:\TEMP\Html",
+                CreateHtmlTemplatePath = @"E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\GeneratorCoding\Jh.SourceGenerator.Common\CodeBuilders\Html\Layui",
             };
             var service = new GeneratorService(domainAssembly, options);
-            var generatorResult = service.GeneratorCode().ToList();
-            Assert.True(generatorResult.Count()>0);
+            Assert.True(service.GeneratorCode());
+        }
+
+        [Fact]
+        public void TestCshtml()
+        {
+            string template = "Hello @Model.Name, welcome to RazorEngine!";
+            var result = Engine.Razor.RunCompile(template, "templateKey", null, new { Name = "World" });
+            Assert.NotNull(result);
         }
     }
 }
