@@ -53,7 +53,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// </summary>
         public IEnumerable<FieldDto> GetIgnoreFieldsRetrieveInputDto()
         {
-            return FieldsAll.Where(a => !FieldsRetrieve.Contains(a));
+            return FieldsAll.Where(a => !(FieldsRetrieve.Select(b => b.Name).Contains(a.Name)));
         }
     }
 }

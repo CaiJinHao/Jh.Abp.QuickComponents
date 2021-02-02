@@ -9,7 +9,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
     {
         public AppServiceCodeBuilder(TableDto tableDto, string filePath) : base(tableDto, filePath)
         {
-            this.FileName = $"{table.Name}AndRoleMapAppService";
+            this.FileName = $"{table.Name}AppService";
         }
 
         public override string ToString()

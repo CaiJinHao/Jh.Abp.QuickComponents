@@ -30,7 +30,7 @@ using Volo.Abp.AutoMapper;");
                         builder.AppendLine($"\t\tCreateMap<{table.Name}CreateInputDto, {table.Name}>().IgnoreFullAuditedObjectProperties().Ignore(a => a.ConcurrencyStamp).Ignore(a => a.ExtraProperties).Ignore(a => a.Id);");
                         builder.AppendLine($"\t\tCreateMap<{table.Name}UpdateInputDto, {table.Name}>().IgnoreFullAuditedObjectProperties().Ignore(a => a.ConcurrencyStamp).Ignore(a => a.ExtraProperties).Ignore(a => a.Id);");
 
-                        builder.AppendLine($"\t\tCreateMap<{table.Name}DeleteInputDto, {table.Name}>().IgnoreFullAuditedObjectProperties().Ignore(a => a.ConcurrencyStamp).Ignore(a => a.ExtraProperties).Ignore(a => a.Id)");
+                        builder.AppendLine($"\t\tCreateMap<{table.Name}DeleteInputDto, {table.Name}>().IgnoreFullAuditedObjectProperties().Ignore(a => a.ConcurrencyStamp).Ignore(a => a.ExtraProperties).Ignore(a => a.Id).Ignore(a=>a.LastModificationTime).Ignore(a=>a.LastModifierId)");
                         foreach (var item in table.GetIgnoreFieldsRetrieveInputDto())
                         {
                             builder.AppendLine($".Ignore(a => a.{item.Name})");

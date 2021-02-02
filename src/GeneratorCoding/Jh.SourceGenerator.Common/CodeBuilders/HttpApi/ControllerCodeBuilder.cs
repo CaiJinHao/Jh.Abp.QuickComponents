@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Data;");
-            builder.AppendLine($"namespace {table.Namespace}");
+            builder.AppendLine($"namespace {table.Namespace}.v1");
             builder.AppendLine("{");
             {
                 builder.AppendLine("\t[RemoteService]");
@@ -138,7 +138,7 @@ using Volo.Abp.Data;");
                         builder.AppendLine("\t\t\t\t\t{");
                         builder.AppendLine("\t\t\t\t\t\tUpdateEntityAction = (entity) => entity.IsDeleted = isDeleted");
                         builder.AppendLine("\t\t\t\t\t}");
-                        builder.AppendLine("\t\t\t\t}");
+                        builder.AppendLine("\t\t\t\t});");
                         builder.AppendLine("\t\t\t}");
                         builder.AppendLine("\t\t}");
                     }

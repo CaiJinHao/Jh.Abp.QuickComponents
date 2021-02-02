@@ -35,10 +35,13 @@ namespace Jh.Abp.MenuManagement.Menus
         }
 
         [UnitOfWork]
-        public override async Task<Menu> CreateAsync(MenuCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
+        public override async Task<Menu> CreateAsync(MenuCreateInputDto inputDto, bool autoSave = true, CancellationToken cancellationToken = default)
         {
-            var entity = await base.CreateAsync(inputDto, autoSave, cancellationToken);
-            await menuAndRoleMapDomainService.CreateAsync(inputDto.RoleIds, entity.Id, autoSave, cancellationToken);
+            var entity = await base.CreateAsync(inputDto, true, cancellationToken);
+            if (inputDto.RoleIds != null && inputDto.RoleIds.Length > 0)
+            {
+                await menuAndRoleMapDomainService.CreateAsync(inputDto.RoleIds, entity.Id, autoSave, cancellationToken);
+            }
             return entity;
         }
 

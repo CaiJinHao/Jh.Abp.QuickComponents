@@ -21,7 +21,7 @@ using Volo.Abp.Application.Dtos;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
-                builder.AppendLine($"\tpublic class {FileName}: PagedAndSortedResultRequestDto, IFullRetrieveDto<{table.KeyType}>");
+                builder.AppendLine($"\tpublic class {FileName}: PagedAndSortedResultRequestDto, IFullRetrieveDto<{table.Name}>");
                 builder.AppendLine("\t{");
                 {
                     foreach (var _field in table.FieldsRetrieve)
@@ -35,12 +35,12 @@ using Volo.Abp.Application.Dtos;");
                     builder.AppendLine("\t\t/// <summary>");
                     builder.AppendLine("\t\t/// 是否软删除");
                     builder.AppendLine("\t\t/// <summary>");
-                    builder.AppendLine("\t\tpublic string Deleted " + "{ get; set; }");
+                    builder.AppendLine("\t\tpublic int Deleted " + "{ get; set; }");
 
                     builder.AppendLine("\t\t/// <summary>");
                     builder.AppendLine("\t\t/// 方法参数回调");
                     builder.AppendLine("\t\t/// <summary>");
-                    builder.AppendLine("\t\tpublic string MethodInput " + "{ get; set; }");
+                    builder.AppendLine($"\t\tpublic MethodDto<{table.Name}> MethodInput " + "{ get; set; }");
                 }
                 builder.AppendLine("\t}");
             }

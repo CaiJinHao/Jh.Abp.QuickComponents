@@ -10,11 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="CodeBuilders\Html\Layui\UiEdit.cshtml" />
-    <Content Include="CodeBuilders\Html\Layui\UiIndex.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
 

@@ -15,7 +15,9 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
         public HtmlTemplateCodeBuilder(string templateFilePath, TableDto tableDto, string filePath) : base(tableDto, filePath)
         {
             TemplateFilePath = templateFilePath;
-            this.FileName = new FileInfo(templateFilePath).Name;
+            var file = new FileInfo(templateFilePath);
+            this.FileName = file.Name.Replace(file.Extension,"");
+            this.Suffix = ".html";
         }
 
         public override string ToString()
