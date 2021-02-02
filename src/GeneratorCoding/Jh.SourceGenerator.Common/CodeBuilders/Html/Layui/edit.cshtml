@@ -8,6 +8,11 @@
     var primary_key_data_type = "string";
 
     var api_version = "1";
+
+    foreach (var item in columns)
+    {
+        item.Name = item.Name.Substring(0, 1).ToLower() + item.Name.Substring(1, item.Name.Length - 1);
+    }
 }
 
 <!DOCTYPE html>
@@ -123,8 +128,8 @@
                         ajaxmod.requestAuthorize({
                             url: '/@(table_name_lower)/' + vm.paramObj.@(primary_key_name),
                             type: 'Get',
-                            success: function (_json) {
-							    vm.$set(vm, '@(table_name_lower)', _json.Result);
+                            success: function (response) {
+							    vm.$set(vm, '@(table_name_lower)', response);
 							    vm.RenderDom(form);
                             }
                         });
@@ -152,7 +157,7 @@
                     url: url,
                     data: data,
                     type: type,
-                    success: function (_json) {
+                    success: function (response) {
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                         top.tool.publish('edit_@(table_name_lower)_form_refresh');

@@ -1,13 +1,23 @@
 ﻿@{
     var table = Model;
     var table_name = Model.Name;
-    var columns = Model.FieldsRetrieve;//列集合
+    var columnsRetrieve = Model.FieldsRetrieve;//列集合
+    var columns = Model.FieldsAll;//列集合
 
     var table_name_lower = Model.Name.ToLower();
     var primary_key_name = "id";
     var primary_key_data_type = "string";
 
     var api_version = "1";
+
+    foreach (var item in columns)
+    {
+        item.Name = item.Name.Substring(0, 1).ToLower() + item.Name.Substring(1, item.Name.Length - 1);
+    }
+    foreach (var item in columnsRetrieve)
+    {
+        item.Name = item.Name.Substring(0, 1).ToLower() + item.Name.Substring(1, item.Name.Length - 1);
+    }
 }
 
 <!DOCTYPE html>
@@ -27,7 +37,7 @@
                 <div class="layui-field-box">
                     <form class="layui-form">
                         <div class="layui-row">
-                            @foreach (var col in columns)
+                            @foreach (var col in columnsRetrieve)
                             {
                                 <div class="layui-inline">
                                     <label class="layui-form-label">@(col.Description)：</label>
@@ -36,6 +46,15 @@
                                     </div>
                                 </div>
                             }
+                            <div class="layui-inline">
+                                <label class="layui-form-label">已删除：</label>
+                                <div class="layui-input-inline">
+                                    <select lay-search name="deleted">
+                                        <option value="0">请选择</option>
+                                        <option v-for="option in deletedlist" v-bind:value="option.value">{{ option.text }}</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="layui-inline btngroup">
                                 <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_@(table_name_lower)_from" id="btn_@(table_name_lower)_from_query">查询</a>
                                 <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_@(table_name_lower)_from_export">导出</a>
@@ -51,7 +70,7 @@
     <script type="text/html" id="toolbarDemo">
         <div class="layui-btn-container">
             <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
-            <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="delbatch">批量禁用</button>
+            <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delbatch">批量删除</button>
         </div>
     </script>
     <script type="text/html" id="tpl_isDeleted">
@@ -60,10 +79,10 @@
     <script type="text/html" id="table_@(table_name_lower)_operator">
         {{# if(d.isDeleted){ }}
         <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-disabled" data-code="@(primary_key_name)">编辑</a>
-         <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="rollbackDel" data-code="@(primary_key_name)">恢复</a> 
+        <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="rollbackDel" data-code="@(primary_key_name)">恢复</a>
         {{# }else{ }}
         <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="edit" data-code="@(primary_key_name)">编辑</a>
-         <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="@(primary_key_name)">删除</a> 
+        <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="@(primary_key_name)">删除</a>
         {{# } }}
     </script>
     <script src="../../layui/layui.js"></script>
@@ -74,7 +93,8 @@
         var vm = new Vue({
             el: '#page-vm',
             data: {
-                currPage: 1
+                currPage: 1,
+                deletedlist: []
             },
             methods: {
 				RenderDom: function(form, callback){
@@ -100,7 +120,7 @@
                 excel = layui.excel,
                 datatable = layui.datatable;
             var _context = $('.table_@(table_name_lower)_mg'),
-                _table_style = { align: 'center' };//公共样式
+                _table_style = { align: 'center' };
 
             var @(table_name_lower)Obj = {
                 renderTable: function (_options) {
@@ -119,6 +139,9 @@
 
                           @:$.extend({ field: '@(col.Name)', title: '@(col.Description)' }, _table_style),
                              }
+                            //$.extend({ field: 'isDeleted', title: '数据状态', templet: '#tpl_isDeleted' }, _table_style),
+                            $.extend({ field: 'creationTime', title: '创建时间' }, _table_style),
+                            $.extend({ field: 'lastModificationTime', title: '最后一次修改时间' }, _table_style),
                             $.extend({ field: '@(primary_key_name)', title: '操作', width: 190, templet: '#table_@(table_name_lower)_operator', fixed: 'right' }, _table_style)
                         ]],
                     });
@@ -144,8 +167,8 @@
                     datatable.del({
                         url: '/@(table_name_lower)/' + _data.@(primary_key_name),
                         type: 'Delete',
-                        success: function (_json) {
-                            top.tool.publish('edit_@(table_name_lower)_form_refresh');//触发事件刷新列表
+                        success: function (response) {
+                            _the.renderTable();
                         }
                     });
                 },
@@ -161,10 +184,14 @@
                         url: '/@(table_name_lower)/keys',
                         type: 'Delete',
                         data: delIdList,
-                        success: function (_json) {
+                        success: function (response) {
                             _the.renderTable();
                         }
                     });
+                },
+                rollbackDel: function (data) {
+                    let _the = this;
+                    _the.patchObj(false, '/@(table_name_lower)/' + data.id + '/Deleted');
                 },
 				patchObj: function (data,url) {
                     let _the = this;
@@ -178,7 +205,6 @@
                     });
                 },
                 exportExcel: function (data) {
-                    //跟表格显示的数据一样
                     data = excel.filterExportData(data, [
                        @foreach (var col in columns) {
                        @:'@(col.Name)',
@@ -213,10 +239,9 @@
                     });
                 }
             };
-            //@(table_name_lower)Obj.loadList();
-            @(table_name_lower)Obj.renderTable();//加载第一页
+            @(table_name_lower)Obj.loadList();
+            @(table_name_lower)Obj.renderTable();
 
-            //绑定编辑也保存事件
             top.tool.subscribe("edit_@(table_name_lower)_form_refresh", function () {
                 @(table_name_lower)Obj.renderTable();
             });
@@ -242,8 +267,8 @@
                     url: '/@(table_name_lower)/all',
                     type: 'Get',
                     data: data.field,
-                    success: function (_json) {
-                        @(table_name_lower)Obj.exportExcel(_json.Result);
+                    success: function (response) {
+                        @(table_name_lower)Obj.exportExcel(response.items);
                     }
                 });
                 return false;
@@ -257,7 +282,7 @@
                 } else {
                     _value = true;//删除
                 }
-                menuObj.patchObj(_value,'/@(table_name_lower)/'+_id+'/Deleted');
+                @(table_name_lower)Obj.patchObj(_value,'/@(table_name_lower)/'+_id+'/Deleted');
             });
         });
     </script>
