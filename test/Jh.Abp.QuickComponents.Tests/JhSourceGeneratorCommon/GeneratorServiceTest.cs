@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Xunit;
 using RazorEngine;
 using RazorEngine.Templating; // For extension methods.
+using Jh.SourceGenerator.Common.GeneratorDtos;
 
 namespace Jh.Abp.QuickComponents.Tests.JhSourceGeneratorCommon
 {
@@ -17,11 +18,11 @@ namespace Jh.Abp.QuickComponents.Tests.JhSourceGeneratorCommon
         {
             var domainAssembly = typeof(MenuManagement.MenuManagementDomainModule).Assembly;
 
-            var options = new SourceGenerator.Common.GeneratorDtos.GeneratorOptions()
+            var options = new GeneratorOptions()
             {
-                DbContext = "MenuManagementDbContext",
-                Namespace = "Jh.Abp.MenuManagement",
-                ControllerBase = "MenuManagementController",
+                DbContext = "EquipmentQuotationAppDbContext",
+                Namespace = "EquipmentQuotationApp",
+                ControllerBase = "EquipmentQuotationAppController",
                 CreateContractsPath = @"E:\TEMP\Contracts",
                 CreateApplicationPath = @"E:\TEMP\Application",
                 CreateDomainPath = @"E:\TEMP\Domain",
