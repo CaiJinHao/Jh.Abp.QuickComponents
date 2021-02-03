@@ -1,24 +1,3 @@
-﻿@{
-    var table = Model;
-    var table_name = Model.Name;
-    var columnsRetrieve = Model.FieldsRetrieve;//列集合
-    var columns = Model.FieldsAll;//列集合
-
-    var table_name_lower = Model.Name.ToLower();
-    var primary_key_name = "id";
-    var primary_key_data_type = "string";
-
-    var api_version = "1";
-
-    foreach (var item in columns)
-    {
-        item.Name = item.Name.Substring(0, 1).ToLower() + item.Name.Substring(1, item.Name.Length - 1);
-    }
-    foreach (var item in columnsRetrieve)
-    {
-        item.Name = item.Name.Substring(0, 1).ToLower() + item.Name.Substring(1, item.Name.Length - 1);
-    }
-}
 
 <!DOCTYPE html>
 <html lang="zh-cn">
@@ -26,26 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@Model.Comment</title>
+    <title>设备组</title>
     <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
     <link href="../../build/css/common.css" rel="stylesheet" />
 </head>
 <body>
     <div id="page-vm" class="layui-fluid iframe-top">
-        <div class="table_@(table_name_lower)_mg">
+        <div class="table_equipmentgroup_mg">
             <fieldset class="layui-elem-field">
                 <div class="layui-field-box">
                     <form class="layui-form">
                         <div class="layui-row">
-                            @foreach (var col in columnsRetrieve)
-                            {
                                 <div class="layui-inline">
-                                    <label class="layui-form-label">@(col.Description)：</label>
+                                    <label class="layui-form-label">设备组名称：</label>
                                     <div class="layui-input-inline">
-                                        <input type="text" class="layui-input" name="@(col.Name)">
+                                        <input type="text" class="layui-input" name="name">
                                     </div>
                                 </div>
-                            }
                             <div class="layui-inline">
                                 <label class="layui-form-label">已删除：</label>
                                 <div class="layui-input-inline">
@@ -56,15 +32,15 @@
                                 </div>
                             </div>
                             <div class="layui-inline btngroup">
-                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_@(table_name_lower)_from" id="btn_@(table_name_lower)_from_query">查询</a>
-                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_@(table_name_lower)_from_export">导出</a>
+                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_equipmentgroup_from" id="btn_equipmentgroup_from_query">查询</a>
+                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_equipmentgroup_from_export">导出</a>
                             </div>
                         </div>
                     </form>
                 </div>
             </fieldset>
-            <table id="table_@(table_name_lower)" class="layui-hide" lay-filter="table_@(table_name_lower)_list"></table>
-            <div id="table_@(table_name_lower)_page" class="laypage"></div>
+            <table id="table_equipmentgroup" class="layui-hide" lay-filter="table_equipmentgroup_list"></table>
+            <div id="table_equipmentgroup_page" class="laypage"></div>
         </div>
     </div>
     <script type="text/html" id="toolbarDemo">
@@ -76,17 +52,18 @@
     <script type="text/html" id="tpl_isDeleted">
         <input type="checkbox" name="isDeleted" value="1" lay-skin="switch" data-code="{{d.id}}" lay-text="删除|恢复" lay-filter="table_tpl_isDeleted" {{d.isDeleted?'':'checked'}}>
     </script>
-    <script type="text/html" id="table_@(table_name_lower)_operator">
+    <script type="text/html" id="table_equipmentgroup_operator">
         {{# if(d.isDeleted){ }}
-        <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-disabled" data-code="@(primary_key_name)">编辑</a>
-        <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="rollbackDel" data-code="@(primary_key_name)">恢复</a>
+        <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-disabled" data-code="id">编辑</a>
+        <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="rollbackDel" data-code="id">恢复</a>
         {{# }else{ }}
-        <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="edit" data-code="@(primary_key_name)">编辑</a>
-        <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="@(primary_key_name)">删除</a>
+        <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="edit" data-code="id">编辑</a>
+        <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="id">删除</a>
         {{# } }}
     </script>
     <script src="../../layui/layui.js"></script>
     <script src="../../plugins/vue/vue.min.js"></script>
+    <!--公共函数库-->
     <script src="../../modules/extend/common.js"></script>
     <script>
         var vm = new Vue({
@@ -118,10 +95,10 @@
                 ajaxmod = layui.ajaxmod,
                 excel = layui.excel,
                 datatable = layui.datatable;
-            var _context = $('.table_@(table_name_lower)_mg'),
+            var _context = $('.table_equipmentgroup_mg'),
                 _table_style = { align: 'center' };
 
-            var @(table_name_lower)Obj = {
+            var equipmentgroupObj = {
                 renderTable: function (_options) {
                     var optDefault = {
                         Page: vm.currPage,
@@ -130,41 +107,39 @@
                     $.extend(optDefault, _options);
                     var _the = this;
                     datatable.renderTable(optDefault, {
-                        url: '/@(table_name_lower)',
-                        tableElem: 'table_@(table_name_lower)',
+                        url: '/equipmentgroup',
+                        tableElem: 'table_equipmentgroup',//laypage 自动加_page
                         tableCols: [[
                             { type: 'checkbox'},
-							@foreach (var col in columns) {
-
-                          @:$.extend({ field: '@(col.Name)', title: '@(col.Description)' }, _table_style),
-                             }
+                          $.extend({ field: 'name', title: '设备组名称' }, _table_style),
+                          $.extend({ field: 'sort', title: '设备组排序' }, _table_style),
                             //$.extend({ field: 'isDeleted', title: '数据状态', templet: '#tpl_isDeleted' }, _table_style),
                             $.extend({ field: 'creationTime', title: '创建时间' }, _table_style),
                             $.extend({ field: 'lastModificationTime', title: '最后一次修改时间' }, _table_style),
-                            $.extend({ field: '@(primary_key_name)', title: '操作', width: 190, templet: '#table_@(table_name_lower)_operator', fixed: 'right' }, _table_style)
+                            $.extend({ field: 'id', title: '操作', width: 190, templet: '#table_equipmentgroup_operator', fixed: 'right' }, _table_style)
                         ]],
                     });
                 },
                 edit: function (_data) {
                     var _the = this;
                     datatable.edit({
-                        title: '编辑@(Model.Comment)',
+                        title: '编辑设备组',
                         area: ['850px', '500px'],
-                        content: 'view/@(table_name_lower)/edit.html?@(primary_key_name)=' + _data.@(primary_key_name),
+                        content: 'view/equipmentgroup/edit.html?id=' + _data.id,
                     });
                 },
                 add: function () {
                     var _the = this;
                     datatable.add({
-                        title: '新增@(Model.Comment)',
+                        title: '新增设备组',
                         area: ['850px', '500px'],
-                        content: 'view/@(table_name_lower)/edit.html',
+                        content: 'view/equipmentgroup/edit.html',
                     });
                 },
                 del: function (_data) {
                     var _the = this;
                     datatable.del({
-                        url: '/@(table_name_lower)/' + _data.@(primary_key_name),
+                        url: '/equipmentgroup/' + _data.id,
                         type: 'Delete',
                         success: function (response) {
                             _the.renderTable();
@@ -173,14 +148,14 @@
                 },
                 delbatch: function (_data) {
                     let _the = this;
-                    var checkStatus = table.checkStatus('table_@(table_name_lower)'),
+                    var checkStatus = table.checkStatus('table_equipmentgroup'),
                         data = checkStatus.data;
                    var delIdList = [];
                     $.each(data, function (k, v) {
                         delIdList.push(v.id);
                     });
                     datatable.delbatch({
-                        url: '/@(table_name_lower)/keys',
+                        url: '/equipmentgroup/keys',
                         type: 'Delete',
                         data: delIdList,
                         success: function (response) {
@@ -190,7 +165,7 @@
                 },
                 rollbackDel: function (data) {
                     let _the = this;
-                    _the.patchObj(false, '/@(table_name_lower)/' + data.id + '/Deleted');
+                    _the.patchObj(false, '/equipmentgroup/' + data.id + '/Deleted');
                 },
 				patchObj: function (data,url) {
                     let _the = this;
@@ -205,23 +180,21 @@
                 },
                 exportExcel: function (data) {
                     data = excel.filterExportData(data, [
-                       @foreach (var col in columns) {
-                       @:'@(col.Name)',
-                       }
+                       'name',
+                       'sort',
                     ]);
 
                     data.unshift({
-                        @foreach (var col in columns) {
-                        @:@(col.Name):'@(col.Description)',
-						}
+                        name:'设备组名称',
+                        sort:'设备组排序',
                     });
 
                     excel.exportExcel({
-                        @(table_name_lower): data
-                    }, '@(table_name_lower)' + new Date().toLocaleString() + '.xlsx', 'xlsx');
+                        equipmentgroup: data
+                    }, 'equipmentgroup' + new Date().toLocaleString() + '.xlsx', 'xlsx');
                 },
                 loadtable:function(){
-                    $('#btn_@(table_name_lower)_from_query').click();
+                    $('#btn_equipmentgroup_from_query').click();
                 },
                 loadList: function () {
                     var _the = this;
@@ -238,36 +211,36 @@
                     });
                 }
             };
-            @(table_name_lower)Obj.loadList();
-            @(table_name_lower)Obj.renderTable();
+            equipmentgroupObj.loadList();
+            equipmentgroupObj.renderTable();
 
-            top.tool.subscribe("edit_@(table_name_lower)_form_refresh", function () {
-                @(table_name_lower)Obj.renderTable();
+            top.tool.subscribe("edit_equipmentgroup_form_refresh", function () {
+                equipmentgroupObj.renderTable();
             });
 
-            table.on('tool(table_@(table_name_lower)_list)', function (obj) {
+            table.on('tool(table_equipmentgroup_list)', function (obj) {
                 var data = obj.data;
-                @(table_name_lower)Obj[obj.event] ? @(table_name_lower)Obj[obj.event].call(@(table_name_lower)Obj, data) : '';
+                equipmentgroupObj[obj.event] ? equipmentgroupObj[obj.event].call(equipmentgroupObj, data) : '';
             });
 
-            table.on('toolbar(table_@(table_name_lower)_list)', function (obj) {
+            table.on('toolbar(table_equipmentgroup_list)', function (obj) {
                 var data = obj.data;
-                @(table_name_lower)Obj[obj.event] ? @(table_name_lower)Obj[obj.event].call(@(table_name_lower)Obj, data) : '';
+                equipmentgroupObj[obj.event] ? equipmentgroupObj[obj.event].call(equipmentgroupObj, data) : '';
             });
 
-            form.on('submit(btn_@(table_name_lower)_from)', function (data) {
+            form.on('submit(btn_equipmentgroup_from)', function (data) {
                 vm.currPage = 1;
-                @(table_name_lower)Obj.renderTable(data.field);
+                equipmentgroupObj.renderTable(data.field);
                 return false;
             });
 
-            form.on('submit(btn_@(table_name_lower)_from_export)', function (data) {
+            form.on('submit(btn_equipmentgroup_from_export)', function (data) {
                 ajaxmod.requestAuthorize({
-                    url: '/@(table_name_lower)/all',
+                    url: '/equipmentgroup/all',
                     type: 'Get',
                     data: data.field,
                     success: function (response) {
-                        @(table_name_lower)Obj.exportExcel(response.items);
+                        equipmentgroupObj.exportExcel(response.items);
                     }
                 });
                 return false;
@@ -281,7 +254,7 @@
                 } else {
                     _value = true;//删除
                 }
-                @(table_name_lower)Obj.patchObj(_value,'/@(table_name_lower)/'+_id+'/Deleted');
+                equipmentgroupObj.patchObj(_value,'/equipmentgroup/'+_id+'/Deleted');
             });
         });
     </script>

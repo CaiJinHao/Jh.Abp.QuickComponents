@@ -568,8 +568,9 @@
         request: function (opts) {
             let optDefault = {
                 error: function (responseData) {
-                    var _json = responseData.responseJSON;
-                    var error = _json.error;
+                    var response = responseData.responseJSON;
+                    console.log(response);
+                    var error = response.error;
                     top.layer.msg(error.message, { icon: 5, time: 5000 });
                 }
             };

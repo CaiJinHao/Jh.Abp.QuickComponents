@@ -259,7 +259,7 @@
                     type: 'Get',
                     data: data.field,
                     success: function (response) {
-                        menuObj.exportExcel(response);
+                        menuObj.exportExcel(response.items);
                     }
                 });
                 return false;
