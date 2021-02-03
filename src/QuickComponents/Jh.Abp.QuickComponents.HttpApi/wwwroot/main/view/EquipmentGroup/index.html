@@ -17,7 +17,7 @@
                     <form class="layui-form">
                         <div class="layui-row">
                                 <div class="layui-inline">
-                                    <label class="layui-form-label">设备组名称：</label>
+                                    <label class="layui-form-label">名称：</label>
                                     <div class="layui-input-inline">
                                         <input type="text" class="layui-input" name="name">
                                     </div>
@@ -111,8 +111,8 @@
                         tableElem: 'table_equipmentgroup',//laypage 自动加_page
                         tableCols: [[
                             { type: 'checkbox'},
-                          $.extend({ field: 'name', title: '设备组名称' }, _table_style),
-                          $.extend({ field: 'sort', title: '设备组排序' }, _table_style),
+                          $.extend({ field: 'name', title: '名称' }, _table_style),
+                          $.extend({ field: 'sort', title: '排序' }, _table_style),
                             //$.extend({ field: 'isDeleted', title: '数据状态', templet: '#tpl_isDeleted' }, _table_style),
                             $.extend({ field: 'creationTime', title: '创建时间' }, _table_style),
                             $.extend({ field: 'lastModificationTime', title: '最后一次修改时间' }, _table_style),

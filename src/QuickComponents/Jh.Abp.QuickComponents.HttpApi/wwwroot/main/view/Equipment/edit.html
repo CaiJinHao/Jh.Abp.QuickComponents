@@ -172,6 +172,7 @@
                     });
                 },
                 loadData: function () {
+                    let _the=this;
                     if (vm.paramObj.id) {
                         ajaxmod.requestAuthorize({
                             url: '/equipment/' + vm.paramObj.id,
@@ -181,9 +182,10 @@
                                 vm.RenderDom(form);
                             }
                         });
+                        _the.setSelectEquipmentGroupsValue();
                     }
                 },
-                setRoleNamesValue: function () {
+                setSelectEquipmentGroupsValue: function () {
                     let _the = this;
                     ajaxmod.requestAuthorize({
                         url: '/equipment/' + vm.paramObj.id + '/equipmentgroups',

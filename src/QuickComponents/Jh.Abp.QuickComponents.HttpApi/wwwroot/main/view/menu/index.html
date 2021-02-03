@@ -158,9 +158,9 @@
                     });
                 },
                 delbatch: function (_data) {
+                    var _the = this;
                     var checkStatus = table.checkStatus('table_menu'),
                         data = checkStatus.data;
-                        console.log(data);
                     var delIdList = [];
                     for (const item of data) {
                         delIdList.push(item.id);
