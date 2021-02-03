@@ -15,24 +15,5 @@ namespace Jh.Abp.MenuManagement.Menus
         {
             menuAndRoleMapRepository = repository;
         }
-
-        private IEnumerable<MenuAndRoleMap> GetEntitys(Guid[] RoleIds, Guid MenuId)
-        {
-            foreach (var roleid in RoleIds)
-            {
-                yield return new MenuAndRoleMap(MenuId, roleid);
-            }
-        }
-
-        public virtual async Task<MenuAndRoleMap[]> CreateAsync(Guid[] RoleIds, Guid MenuId, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (RoleIds == null)
-            {
-                return default;
-            }
-            var entitys = GetEntitys(RoleIds, MenuId).ToArray();
-            await menuAndRoleMapRepository.CreateAsync(entitys, autoSave, cancellationToken).ConfigureAwait(false);
-            return entitys;
-        }
     }
 }

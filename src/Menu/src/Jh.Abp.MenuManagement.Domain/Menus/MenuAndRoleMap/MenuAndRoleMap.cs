@@ -21,14 +21,15 @@ namespace Jh.Abp.MenuManagement.Menus
         [ForeignKey("Menu")]
         public Guid MenuId { get; set; }
 
+        //[NotMapped]
         [RetrieveDto]
         [CreateOrUpdateInputDto]
         [Description("角色外键")]
         [Required]
         public Guid RoleId { get; set; }
 
-        [NotMapped]
-        public Menu Menu { get; set; }
+        [ProfileIgnore]
+        public virtual Menu Menu { get; set; }
 
         public MenuAndRoleMap() { }
         public MenuAndRoleMap(Guid menuid,Guid roleid) {

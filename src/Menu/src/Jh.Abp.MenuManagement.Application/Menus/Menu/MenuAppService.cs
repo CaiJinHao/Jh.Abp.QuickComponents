@@ -64,8 +64,7 @@ namespace Jh.Abp.MenuManagement.Menus
         public override async Task<Menu> DeleteAsync(Guid id, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             var entity = await base.DeleteAsync(id, autoSave, cancellationToken);
-            entity.RemoveMenuRoleMap();
-            //await menuAndRoleMapRepository.DeleteListAsync(a => a.MenuId == entity.Id).ConfigureAwait(false);
+            await menuAndRoleMapRepository.DeleteListAsync(a => a.MenuId == entity.Id).ConfigureAwait(false);
             return entity;
         }
 

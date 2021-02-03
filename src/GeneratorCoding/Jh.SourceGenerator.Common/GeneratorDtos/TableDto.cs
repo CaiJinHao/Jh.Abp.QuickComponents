@@ -44,16 +44,19 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// 查询字段
         /// </summary>
         public List<FieldDto> FieldsRetrieve { get; set; }
+        /// <summary>
+        /// Dot映射排除的字段
+        /// </summary>
+        public List<FieldDto> FieldsIgnore { get; set; }
 
-        //ProfileDto
-        //暂时只有一个Id
-        //public IEnumerable<FieldDto> CreateOrUpdateInputDtoIgnoreFields { get; set; }
         /// <summary>
         /// 要忽略的字段 去FieldsAll中不包含的RetrieveInputDto
         /// </summary>
         public IEnumerable<FieldDto> GetIgnoreFieldsRetrieveInputDto()
         {
-            return FieldsAll.Where(a => !(FieldsRetrieve.Select(b => b.Name).Contains(a.Name)));
+            var fields= FieldsAll.Where(a => !(FieldsRetrieve.Select(b => b.Name).Contains(a.Name)));
+            var result = fields.Concat(FieldsIgnore);
+            return result.Distinct();
         }
     }
 }

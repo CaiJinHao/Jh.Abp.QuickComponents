@@ -45,7 +45,8 @@ namespace Jh.SourceGenerator.Common
                 Name = GetTableName(classType),
                 Comment= GetTableDescription(classType),
                 FieldsCreateOrUpdateInput = GetFieldDto(GetMembers<CreateOrUpdateInputDtoAttribute>(classType)).ToList(),
-                FieldsRetrieve = GetFieldDto(GetMembers<RetrieveDtoAttribute>(classType)).ToList()
+                FieldsRetrieve = GetFieldDto(GetMembers<RetrieveDtoAttribute>(classType)).ToList(),
+                FieldsIgnore= GetFieldDto(GetMembers<ProfileIgnoreAttribute>(classType)).ToList(),
             };
         }
 

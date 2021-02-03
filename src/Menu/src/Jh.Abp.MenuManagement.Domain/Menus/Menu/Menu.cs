@@ -52,6 +52,7 @@ namespace Jh.Abp.MenuManagement.Menus
         [Description("菜单描述")]
         public string Description { get; set; }
 
+        [ProfileIgnore]
         public virtual IList<MenuAndRoleMap> MenuRoleMaps { get; protected set; }
 
         public Menu()
@@ -62,12 +63,8 @@ namespace Jh.Abp.MenuManagement.Menus
         public virtual void AddMenuRoleMap([NotNull]Guid roleid)
         {
             Check.NotNull(roleid, nameof(roleid));
+            //可以添加到数据库数据，不可以从数据库删除数据
             MenuRoleMaps.Add(new MenuAndRoleMap(Id, roleid));
-        }
-
-        public virtual void RemoveMenuRoleMap()
-        {
-            MenuRoleMaps.RemoveAll(r => r.MenuId == Id);
         }
     }
 }
