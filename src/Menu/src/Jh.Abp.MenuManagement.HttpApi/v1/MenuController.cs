@@ -27,9 +27,9 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<Menu> CreateAsync(MenuCreateInputDto input)
+        public async Task CreateAsync(MenuCreateInputDto input)
         {
-            return await menuAppService.CreateAsync(input,true);
+            await menuAppService.CreateAsync(input,true);
         }
 
         /// <summary>
@@ -39,9 +39,9 @@ namespace Jh.Abp.MenuManagement.v1
         /// <returns></returns>
         [Route("items")]
         [HttpPost]
-        public async Task<Menu[]> CreateAsync(MenuCreateInputDto[] input)
+        public async Task CreateAsync(MenuCreateInputDto[] input)
         {
-            return await menuAppService.CreateAsync(input);
+            await menuAppService.CreateAsync(input);
         }
 
         /// <summary>
@@ -50,9 +50,9 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="deleteInputDto"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<Menu[]> DeleteAsync(MenuDeleteInputDto deleteInputDto)
+        public async Task DeleteAsync(MenuDeleteInputDto deleteInputDto)
         {
-            return await menuAppService.DeleteAsync(deleteInputDto);
+            await menuAppService.DeleteAsync(deleteInputDto);
         }
 
         /// <summary>
@@ -62,9 +62,9 @@ namespace Jh.Abp.MenuManagement.v1
         /// <returns></returns>
         [Route("keys")]
         [HttpDelete]
-        public async Task<Menu[]> DeleteAsync([FromBody]Guid[] keys)
+        public async Task DeleteAsync([FromBody]Guid[] keys)
         {
-            return await menuAppService.DeleteAsync(keys);
+            await menuAppService.DeleteAsync(keys);
         }
 
         /// <summary>
@@ -86,9 +86,9 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="inputDto"></param>
         /// <returns></returns>
         [HttpPatch("{id}")]
-        public async Task<Menu> UpdatePortionAsync(Guid id, MenuUpdateInputDto inputDto)
+        public async Task UpdatePortionAsync(Guid id, MenuUpdateInputDto inputDto)
         {
-            return await menuAppService.UpdatePortionAsync(id, inputDto);
+            await menuAppService.UpdatePortionAsync(id, inputDto);
         }
 
         /// <summary>
@@ -123,9 +123,9 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<Menu> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            return await menuAppService.DeleteAsync(id);
+            await menuAppService.DeleteAsync(id);
         }
 
         /// <summary>

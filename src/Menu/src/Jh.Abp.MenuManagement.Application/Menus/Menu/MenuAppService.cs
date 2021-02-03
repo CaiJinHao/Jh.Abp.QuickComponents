@@ -21,7 +21,6 @@ namespace Jh.Abp.MenuManagement.Menus
     {
         private readonly IMenuRepository menuRepository;
 
-        private readonly IMenuAndRoleMapDomainService menuAndRoleMapDomainService;
         private readonly IMenuAndRoleMapRepository menuAndRoleMapRepository;
 
         private IMenuAndRoleMapAppService _menuAndRoleMapAppService;
@@ -30,7 +29,6 @@ namespace Jh.Abp.MenuManagement.Menus
         public MenuAppService(IMenuRepository repository, IMenuAndRoleMapRepository _menuAndRoleMapRepository, IMenuAndRoleMapDomainService _menuAndRoleMapDomainService) : base(repository)
         {
             menuRepository = repository;
-            menuAndRoleMapDomainService = _menuAndRoleMapDomainService;
             menuAndRoleMapRepository = _menuAndRoleMapRepository;
         }
 
@@ -40,7 +38,10 @@ namespace Jh.Abp.MenuManagement.Menus
             var entity = await base.CreateAsync(inputDto, true, cancellationToken);
             if (inputDto.RoleIds != null && inputDto.RoleIds.Length > 0)
             {
-                await menuAndRoleMapDomainService.CreateAsync(inputDto.RoleIds, entity.Id, autoSave, cancellationToken);
+                foreach (var roleid in inputDto.RoleIds)
+                {
+                    entity.AddMenuRoleMap(roleid);
+                }
             }
             return entity;
         }
@@ -63,7 +64,8 @@ namespace Jh.Abp.MenuManagement.Menus
         public override async Task<Menu> DeleteAsync(Guid id, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             var entity = await base.DeleteAsync(id, autoSave, cancellationToken);
-            await menuAndRoleMapRepository.DeleteListAsync(a => a.MenuId == entity.Id).ConfigureAwait(false);
+            entity.RemoveMenuRoleMap();
+            //await menuAndRoleMapRepository.DeleteListAsync(a => a.MenuId == entity.Id).ConfigureAwait(false);
             return entity;
         }
 

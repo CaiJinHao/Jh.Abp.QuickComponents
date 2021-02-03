@@ -6,6 +6,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Volo.Abp.Domain.Entities.Auditing;
 using Jh.SourceGenerator.Common.GeneratorAttributes;
+using Volo.Abp;
+using JetBrains.Annotations;
+using System.Linq;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
@@ -48,5 +51,23 @@ namespace Jh.Abp.MenuManagement.Menus
         [CreateOrUpdateInputDto]
         [Description("菜单描述")]
         public string Description { get; set; }
+
+        public virtual IList<MenuAndRoleMap> MenuRoleMaps { get; protected set; }
+
+        public Menu()
+        {
+            MenuRoleMaps = new List<MenuAndRoleMap>();
+        }
+
+        public virtual void AddMenuRoleMap([NotNull]Guid roleid)
+        {
+            Check.NotNull(roleid, nameof(roleid));
+            MenuRoleMaps.Add(new MenuAndRoleMap(Id, roleid));
+        }
+
+        public virtual void RemoveMenuRoleMap()
+        {
+            MenuRoleMaps.RemoveAll(r => r.MenuId == Id);
+        }
     }
 }

@@ -32,10 +32,6 @@ using Volo.Abp.Application.Dtos;");
                         builder.AppendLine($"\t\t/// <summary>");
                         builder.AppendLine($"\t\t/// {_field.Description}");
                         builder.AppendLine($"\t\t/// <summary>");
-                        if (_field.IsRequired)
-                        {
-                            builder.AppendLine($"\t\t[Required]");
-                        }
                         builder.AppendLine($"\t\tpublic string {_field.Name} " + "{ get; set; }");
                     }
                 }
