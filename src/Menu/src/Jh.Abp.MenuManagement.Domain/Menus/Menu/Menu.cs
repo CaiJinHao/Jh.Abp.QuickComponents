@@ -60,11 +60,11 @@ namespace Jh.Abp.MenuManagement.Menus
             MenuRoleMaps = new List<MenuAndRoleMap>();
         }
 
-        public virtual void AddMenuRoleMap([NotNull]Guid roleid)
+        public virtual void AddMenuRoleMap(Guid roleid, Guid guidGeneratorId)
         {
             Check.NotNull(roleid, nameof(roleid));
             //可以添加到数据库数据，不可以从数据库删除数据
-            MenuRoleMaps.Add(new MenuAndRoleMap(Id, roleid));
+            MenuRoleMaps.Add(new MenuAndRoleMap(Id, roleid, guidGeneratorId));
         }
     }
 }

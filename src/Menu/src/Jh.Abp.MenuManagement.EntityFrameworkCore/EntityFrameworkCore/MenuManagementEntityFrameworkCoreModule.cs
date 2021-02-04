@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Jh.Abp.MenuManagement.Menus;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Modularity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Jh.Abp.MenuManagement.EntityFrameworkCore
 {
@@ -18,6 +20,12 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
                  * options.AddRepository<Question, EfCoreQuestionRepository>();
                  */
                 options.AddDefaultRepositories<IMenuManagementDbContext>(true);
+
+                //get的时候加载detail
+                //options.Entity<Menu>(opt =>
+                //{
+                //    opt.DefaultWithDetailsFunc = q => q.Include(a => a.MenuRoleMaps);
+                //});
             });
         }
     }

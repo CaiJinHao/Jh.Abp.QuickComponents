@@ -54,9 +54,9 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// </summary>
         public IEnumerable<FieldDto> GetIgnoreFieldsRetrieveInputDto()
         {
-            var fields= FieldsAll.Where(a => !(FieldsRetrieve.Select(b => b.Name).Contains(a.Name)));
-            var result = fields.Concat(FieldsIgnore);
-            return result.Distinct();
+            //在两个里面都不包含的才返回
+            var fields = FieldsAll.Where(a => !(FieldsRetrieve.Select(b => b.Name).Contains(a.Name)) && !(FieldsIgnore.Select(b => b.Name).Contains(a.Name)));
+            return FieldsIgnore.Concat(fields);
         }
     }
 }

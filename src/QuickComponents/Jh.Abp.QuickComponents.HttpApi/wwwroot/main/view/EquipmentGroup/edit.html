@@ -35,6 +35,16 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="layui-col-sm12">
+                            <div class="layui-row">
+                                <div class="layui-inline" style="width: 100%;">
+                                    <label class="layui-form-label">设备：</label>
+                                    <div class="layui-input-inline" style="width: 80%;">
+                                        <div id="equipments" style="width: 575px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
                 <br />
                 <div class="layui-row" style="text-align:center;">
@@ -48,17 +58,17 @@
     </div>
     <script src="../../layui/layui.js"></script>
     <script src="../../plugins/vue/vue.min.js"></script>
-    <!--公共函数库-->
     <script src="../../modules/extend/common.js"></script>
+    <script src="../../plugins/xm-select/xm-select.js"></script>
     <script>
         var vm = new Vue({
             el: '#page-vm',
             data: {
-                paramObj: {},//querystirng 参数对象
-				//默认值
+                paramObj: {},
                equipmentgroup:{
                     name:'',
-					sort:0,
+                    sort:0,
+                    EquipmentIds: []
                }
             },
             watch:{
@@ -92,16 +102,19 @@
                 formvalidate = layui.formvalidate,
                 laydate = layui.laydate;
             var _context = $('.edit_equipmentgroup_form');
-            var _table_style = { align: 'center' };//公共样式
+            var _table_style = { align: 'center' };
 
             var equipmentgroupObj = {
-                //初始化页面 layui样式
+                equipmentsSelect: {},
                 initPage: function () {
                     var _the = this;
                     vm.paramObj = geturlparam();
-                    _the.loadData();
+                    _the.loadSelectEquipments(function(){
+                        _the.loadData();
+                    });
                 },
                 loadData: function () {
+                    var _the = this;
 					if (vm.paramObj.id) {
                         ajaxmod.requestAuthorize({
                             url: '/equipmentgroup/' + vm.paramObj.id,
@@ -111,8 +124,34 @@
 							    vm.RenderDom(form);
                             }
                         });
+                        _the.setSelectEquipmentsValue();
 					}
-                }
+                },
+                setSelectEquipmentsValue: function () {
+                    let _the = this;
+                    ajaxmod.requestAuthorize({
+                        url: '/equipmentgroup/' + vm.paramObj.id + '/equipments',
+                        type: 'Get',
+                        success: function (response) {
+                            _the.equipmentsSelect.setValue(response.items);
+                        }
+                    });
+                },
+                loadSelectEquipments: function (_fn) {
+                    let _the = this;
+                    ajaxmod.requestAuthorize({
+                        url: '/equipment/select',
+                        type: 'Get',
+                        success: function (response) {
+                            _the.equipmentsSelect = xmSelect.render({
+                                el: '#equipments',
+                                language: 'zn',
+                                data: response.items
+                            });
+                            _fn();
+                        }
+                    });
+                },
             };
             equipmentgroupObj.initPage();
 
@@ -124,6 +163,7 @@
 
             form.on('submit(btn_submit_equipmentgroup_form)', function (_from_data) {
                 var data = vm.equipmentgroup;
+                data.EquipmentIds = equipmentgroupObj.equipmentsSelect.getValue('value');
                 var url = '/equipmentgroup';
                 var type = 'Post';
                 if (vm.paramObj.id) {

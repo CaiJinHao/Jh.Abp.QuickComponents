@@ -40,36 +40,36 @@ using Volo.Abp.Data;");
                     }
 
                     builder.AppendLine("\t\t[HttpPost]");
-                    builder.AppendLine($"\t\tpublic async Task<{table.Name}> CreateAsync({table.Name}CreateInputDto input)");
+                    builder.AppendLine($"\t\tpublic async Task CreateAsync({table.Name}CreateInputDto input)");
                     {
                         builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\treturn await {table.Name}AppService.CreateAsync(input,true);");
+                        builder.AppendLine($"\t\t\t await {table.Name}AppService.CreateAsync(input,true);");
                         builder.AppendLine("\t\t}");
                     }
 
                     builder.AppendLine("\t\t[Route(\"items\")]");
                     builder.AppendLine("\t\t[HttpPost]");
-                    builder.AppendLine($"\t\tpublic async Task<{table.Name}[]> CreateAsync({table.Name}CreateInputDto[] input)");
+                    builder.AppendLine($"\t\tpublic async Task CreateAsync({table.Name}CreateInputDto[] input)");
                     {
                         builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\treturn await {table.Name}AppService.CreateAsync(input);");
+                        builder.AppendLine($"\t\t\t await {table.Name}AppService.CreateAsync(input);");
                         builder.AppendLine("\t\t}");
                     }
 
                     builder.AppendLine("\t\t[HttpDelete]");
-                    builder.AppendLine($"\t\tpublic async Task<{table.Name}[]> DeleteAsync({table.Name}DeleteInputDto deleteInputDto)");
+                    builder.AppendLine($"\t\tpublic async Task DeleteAsync({table.Name}DeleteInputDto deleteInputDto)");
                     {
                         builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\treturn await {table.Name}AppService.DeleteAsync(deleteInputDto);");
+                        builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(deleteInputDto);");
                         builder.AppendLine("\t\t}");
                     }
 
                     builder.AppendLine("\t\t[Route(\"keys\")]");
                     builder.AppendLine("\t\t[HttpDelete]");
-                    builder.AppendLine($"\t\tpublic async Task<{table.Name}[]> DeleteAsync([FromBody]{table.KeyType}[] keys)");
+                    builder.AppendLine($"\t\tpublic async Task DeleteAsync([FromBody]{table.KeyType}[] keys)");
                     {
                         builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\treturn await {table.Name}AppService.DeleteAsync(keys);");
+                        builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(keys);");
                         builder.AppendLine("\t\t}");
                     }
 
@@ -83,10 +83,10 @@ using Volo.Abp.Data;");
                     }
 
                     builder.AppendLine("\t\t[HttpPatch(\"{id}\")]");
-                    builder.AppendLine($"\t\tpublic async Task<{table.Name}> UpdatePortionAsync({table.KeyType} id, {table.Name}UpdateInputDto inputDto)");
+                    builder.AppendLine($"\t\tpublic async Task UpdatePortionAsync({table.KeyType} id, {table.Name}UpdateInputDto inputDto)");
                     {
                         builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\treturn await {table.Name}AppService.UpdatePortionAsync(id, inputDto);");
+                        builder.AppendLine($"\t\t\t await {table.Name}AppService.UpdatePortionAsync(id, inputDto);");
                         builder.AppendLine("\t\t}");
                     }
 
@@ -110,10 +110,10 @@ using Volo.Abp.Data;");
                     }
 
                     builder.AppendLine("\t\t[HttpDelete(\"{id}\")]");
-                    builder.AppendLine($"\t\tpublic async Task<{table.Name}> DeleteAsync({table.KeyType} id)");
+                    builder.AppendLine($"\t\tpublic async Task DeleteAsync({table.KeyType} id)");
                     {
                         builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\treturn await {table.Name}AppService.DeleteAsync(id);");
+                        builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(id);");
                         builder.AppendLine("\t\t}");
                     }
 

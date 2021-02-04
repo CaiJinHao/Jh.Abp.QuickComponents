@@ -18,7 +18,6 @@ namespace Jh.Abp.MenuManagement.Menus
         [CreateOrUpdateInputDto]
         [Description("菜单外键")]
         [Required]
-        [ForeignKey("Menu")]
         public Guid MenuId { get; set; }
 
         //[NotMapped]
@@ -32,12 +31,10 @@ namespace Jh.Abp.MenuManagement.Menus
         public virtual Menu Menu { get; set; }
 
         public MenuAndRoleMap() { }
-        public MenuAndRoleMap(Guid menuid,Guid roleid) {
-            this.MenuId = menuid;
-            this.RoleId = roleid;
-        }
+
         public MenuAndRoleMap(Guid menuid, Guid roleid, Guid id) : base(id)
         {
+            //批量添加时 应该显示给主键id
             this.MenuId = menuid;
             this.RoleId = roleid;
         }

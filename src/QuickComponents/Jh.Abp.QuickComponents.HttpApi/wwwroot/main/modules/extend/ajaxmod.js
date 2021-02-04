@@ -556,12 +556,13 @@
                     console.log('done');
                 })
                 .fail(function (response) { 
+                    optDefault.error(response);
                     console.log('fail');
                 })
                 .always(function (response) {
                     console.log('always');
                     layer.close(loading);
-                    optDefault.always();
+                    optDefault.always(response);
                 });
         },
         //不携带token信息
@@ -569,7 +570,6 @@
             let optDefault = {
                 error: function (responseData) {
                     var response = responseData.responseJSON;
-                    console.log(response);
                     var error = response.error;
                     top.layer.msg(error.message, { icon: 5, time: 5000 });
                 }
@@ -582,12 +582,10 @@
             let myToken = userobj.validateLogin();
             let optDefault = {
                 headers: myToken.headers, //默认值 不需要赋值
-                error: function (response) {
-                    if (response.status === 200) {
-                        layer.msg(response.statusText, { icon: 5, time: 5000 });
-                    } else {
-                        layer.msg(response.statusText, { icon: 5, time: 5000 });
-                    }
+                error: function (responseData) {
+                    var response = responseData.responseJSON;
+                    var error = response.error;
+                    top.layer.msg(error.message, { icon: 5, time: 5000 });
                 }
             };
             Object.assign(optDefault, opts);

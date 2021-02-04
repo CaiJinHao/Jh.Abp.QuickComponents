@@ -29,6 +29,7 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
             builder.Entity<MenuAndRoleMap>(b => {
                 b.ConfigureByConvention();
 
+                b.HasOne(mrm => mrm.Menu).WithMany(menu => menu.MenuRoleMaps).HasForeignKey(menu => menu.MenuId);
                 b.HasIndex(c => c.RoleId).IncludeProperties(p => p.MenuId);//mysql不能使用包含列
             });
         }

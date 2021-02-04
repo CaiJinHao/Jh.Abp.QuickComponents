@@ -17,7 +17,6 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
         public MenuManagementDbContext(DbContextOptions<MenuManagementDbContext> options) 
             : base(options)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
