@@ -103,6 +103,26 @@ namespace Jh.Abp.Extensions
             return await crudRepository.UpdateAsync(entity, autoSave, cancellationToken).ConfigureAwait(false);
         }
 
+        public override async Task<TEntityDto> UpdateAsync(TKey id, TUpdateInputDto updateInput)
+        {
+            await CheckUpdatePolicyAsync();
+            var entity = await GetEntityByIdAsync(id);
+            await MapToEntityAsync(updateInput, entity);
+            var methodDto = updateInput as IMethodDto<TEntity>;
+            if (methodDto != null)
+            {
+                if (methodDto.MethodInput != null)
+                {
+                    if (methodDto.MethodInput.UpdateEntityAction != null)
+                    {
+                        methodDto.MethodInput.UpdateEntityAction(entity);
+                    }
+                }
+            }
+            await Repository.UpdateAsync(entity, autoSave: true);
+            return await MapToGetOutputDtoAsync(entity);
+        }
+   
         protected override IQueryable<TEntity> CreateFilteredQuery(TRetrieveInputDto inputDto)
         {
             return CreateFilteredQuery(inputDto, ObjectMethodConsts.Contains);

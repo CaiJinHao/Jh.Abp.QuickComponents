@@ -48,7 +48,7 @@ namespace Jh.Abp.MenuManagement.Menus
                 DeleteAsync(new MenuAndRoleMapDeleteInputDto() { RoleId = roleid }).Wait();
                 foreach (var menuid in inputDtos.MenuIds)
                 {
-                    yield return new MenuAndRoleMap(menuid, roleid, GuidGenerator.Create());
+                    yield return new MenuAndRoleMap(menuid, roleid);
                 }
             }
         }

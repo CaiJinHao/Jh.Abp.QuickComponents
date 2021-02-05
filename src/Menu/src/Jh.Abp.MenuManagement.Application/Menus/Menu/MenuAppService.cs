@@ -40,7 +40,7 @@ namespace Jh.Abp.MenuManagement.Menus
             {
                 foreach (var roleid in inputDto.RoleIds)
                 {
-                    entity.AddMenuRoleMap(roleid, GuidGenerator.Create());
+                    entity.AddMenuRoleMap(roleid);
                 }
             }
             return entity;

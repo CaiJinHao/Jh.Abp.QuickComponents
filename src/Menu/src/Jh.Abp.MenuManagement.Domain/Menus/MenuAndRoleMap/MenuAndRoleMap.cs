@@ -32,9 +32,8 @@ namespace Jh.Abp.MenuManagement.Menus
 
         public MenuAndRoleMap() { }
 
-        public MenuAndRoleMap(Guid menuid, Guid roleid, Guid id) : base(id)
+        public MenuAndRoleMap(Guid menuid, Guid roleid)
         {
-            //批量添加时 应该显示给主键id
             this.MenuId = menuid;
             this.RoleId = roleid;
         }
