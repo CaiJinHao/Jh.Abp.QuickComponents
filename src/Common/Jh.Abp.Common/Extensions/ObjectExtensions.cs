@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jh.Abp.Common.Objects
+namespace Jh.Abp.Common
 {
     public class ObjectExtensions
     {

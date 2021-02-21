@@ -1,8 +1,5 @@
-﻿using Jh.Abp.Common.Objects;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
 
 namespace Jh.Abp.Common.Entity
 {
