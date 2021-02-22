@@ -19,7 +19,15 @@ namespace Jh.Abp.MenuManagement
 #endif
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
-                .WriteTo.Async(c => c.File("Logs/logs.txt"))
+                .WriteTo.Async(c =>
+                {
+                    c.File(path: $"Logs/logs-.log",
+                    outputTemplate: AbpConsts.SerilogOutputTemplate,
+                    fileSizeLimitBytes: 1024000,
+                    rollOnFileSizeLimit: true,
+                    rollingInterval: RollingInterval.Day,
+                    retainedFileCountLimit: 31);
+                })
 #if DEBUG
                 .WriteTo.Async(c => c.Console())
 #endif
