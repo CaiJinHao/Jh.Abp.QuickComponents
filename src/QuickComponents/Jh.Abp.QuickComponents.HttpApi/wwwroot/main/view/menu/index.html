@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>系统_菜单</title>
+    <title>系统菜单</title>
     <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
     <link href="../../build/css/common.css" rel="stylesheet" />
 </head>
@@ -110,7 +110,8 @@
                     var optDefault = {
                         Page: vm.currPage,
                         PageSize: PageSize,//common中定义的全局
-                        Sorting:'code'
+                        Sorting:'code',
+                        deleted:2
                     };
                     $.extend(optDefault, _options);
                     var _the = this;
