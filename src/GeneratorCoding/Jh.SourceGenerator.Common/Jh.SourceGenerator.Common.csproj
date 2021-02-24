@@ -2,8 +2,26 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>KimHo</Authors>
+    <Company>KimHo</Company>
+    <Copyright>KimHo</Copyright>
+    <PackageProjectUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</RepositoryUrl>
+    <PackageIcon>nugeticon.png</PackageIcon>
+    <PackageTags>Jh.SourceGenerator</PackageTags>
+    <PackageReleaseNotes>Jh.SourceGenerator libs</PackageReleaseNotes>
+    <Version>1.0.9</Version>
+    <Description>Jh.AbpExtensions libs</Description>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="..\..\..\document\images\nugeticon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+  
   <ItemGroup>
     <None Remove="CodeBuilders\Html\Layui\UiEdit.cshtml" />
     <None Remove="CodeBuilders\Html\Layui\UiIndex.cshtml" />

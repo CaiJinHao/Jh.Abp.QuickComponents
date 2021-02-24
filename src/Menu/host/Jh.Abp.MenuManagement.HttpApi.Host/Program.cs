@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Jh.Abp.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;

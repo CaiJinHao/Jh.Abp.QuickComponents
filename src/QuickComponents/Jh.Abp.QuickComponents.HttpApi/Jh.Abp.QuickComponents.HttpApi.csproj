@@ -7,12 +7,12 @@
     <Authors>KimHo</Authors>
     <Company>KimHo</Company>
     <Copyright>KimHo</Copyright>
-    <PackageProjectUrl>https://github.com/CaiJinHao/QuickComponents/Jh.Abp.QuickComponents.HttpApi</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/CaiJinHao/QuickComponents/Jh.Abp.QuickComponents.HttpApi</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</RepositoryUrl>
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Abp QuickComponents</PackageReleaseNotes>
-    <Version>1.1.6</Version>
+    <Version>1.1.7</Version>
     <Description>AccessToken</Description>
   </PropertyGroup>
 

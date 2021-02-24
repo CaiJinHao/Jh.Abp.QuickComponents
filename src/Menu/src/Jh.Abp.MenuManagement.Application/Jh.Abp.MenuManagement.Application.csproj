@@ -9,12 +9,12 @@
     <Authors>KimHo</Authors>
     <Company>KimHo</Company>
     <Copyright>KimHo</Copyright>
-    <PackageProjectUrl>https://github.com/CaiJinHao/Menu/src/Jh.Abp.MenuManagement.Application</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/CaiJinHao/Menu/src/Jh.Abp.MenuManagement.Application</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</RepositoryUrl>
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Jh.Abp.MenuManagement</PackageReleaseNotes>
-    <Version>0.0.7</Version>
+    <Version>0.0.8</Version>
     <Description>Jh.Abp.MenuManagement</Description>
   </PropertyGroup>
 
