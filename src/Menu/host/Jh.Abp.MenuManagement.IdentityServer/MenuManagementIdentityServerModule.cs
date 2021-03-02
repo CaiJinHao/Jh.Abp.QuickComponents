@@ -220,9 +220,12 @@ namespace Jh.Abp.MenuManagement
             {
                 using (var scope = context.ServiceProvider.CreateScope())
                 {
-                    await scope.ServiceProvider
-                        .GetRequiredService<IDataSeeder>()
-                        .SeedAsync();
+                    var data = scope.ServiceProvider
+                        .GetRequiredService<IDataSeeder>();
+                    var context = new DataSeedContext();
+                    context["AdminEmail"] = "531003539@qq.com";
+                    context["AdminPassword"] = "KimHo@123";
+                    await data.SeedAsync(context);
                 }
             });
         }

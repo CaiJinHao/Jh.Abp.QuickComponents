@@ -19,6 +19,7 @@ using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.Autofac;
 using Volo.Abp.Caching;
 using Volo.Abp.Caching.StackExchangeRedis;
+using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.SqlServer;
 using Volo.Abp.Localization;
@@ -27,6 +28,7 @@ using Volo.Abp.MultiTenancy;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.Swashbuckle;
+using Volo.Abp.Threading;
 using Volo.Abp.VirtualFileSystem;
 
 namespace Jh.Abp.MenuManagement
@@ -188,6 +190,22 @@ namespace Jh.Abp.MenuManagement
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();
+            SeedData(context);
+        }
+
+        private void SeedData(ApplicationInitializationContext context)
+        {
+            AsyncHelper.RunSync(async () =>
+            {
+                using (var scope = context.ServiceProvider.CreateScope())
+                {
+                    var data = scope.ServiceProvider
+                        .GetRequiredService<IDataSeeder>();
+                    var context = new DataSeedContext();
+                    context["RoleId"] = "39fa7415-a1f6-fcd2-6f1a-77fe36c984cc";//IdentityServerHost创建的角色ID
+                    await data.SeedAsync(context);
+                }
+            });
         }
     }
 }
