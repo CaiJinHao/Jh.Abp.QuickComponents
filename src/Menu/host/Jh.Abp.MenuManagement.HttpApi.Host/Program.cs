@@ -2,6 +2,7 @@
 using System.IO;
 using Jh.Abp.Common;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
@@ -55,7 +56,14 @@ namespace Jh.Abp.MenuManagement
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseUrls("https://*:6101");
+                    var _path = Directory.GetCurrentDirectory();
+                    var config = new ConfigurationBuilder()
+                                    .SetBasePath(_path)
+                                    .AddJsonFile("hostsettings.json", optional: true)
+                                    .AddCommandLine(args)
+                                    .Build();
+                    webBuilder.UseConfiguration(config);
+                    //webBuilder.UseUrls("https://*:6101");
                     webBuilder.UseStartup<Startup>();
                 })
                 .UseAutofac()

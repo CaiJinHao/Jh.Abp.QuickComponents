@@ -2,20 +2,6 @@
     var $ = layui.jquery,
         layer = layui.layer;
 
-    //url, data, success, alone, type, dataType, error
-    /* layui ajax 封装
-     * url 接口地址
-     * data 数据
-     * success 成功回调函数
-     * cache 浏览器缓存
-     * alone
-     * async 异步请求
-     * type 请求的类型
-     * dataType 接收数据类型
-     * error ： 请求失败后执行的函数
-     */
-
-
     var ajaxobjold = {
         ajaxArray:function(_opts,callback){
             var _the=this;
@@ -472,7 +458,7 @@
         getUserInfo: function (callback) {
             var _the = this;
             ajaxobj.requestAuthorize({
-                url: '/User',
+                url: '/User/info',
                 type: 'Get',
                 success: function (response) {
                     callback(response);
@@ -570,20 +556,21 @@
                     console.log('done');
                 })
                 .fail(function (response) { 
+                    optDefault.error(response);
                     console.log('fail');
                 })
                 .always(function (response) {
                     console.log('always');
                     layer.close(loading);
-                    optDefault.always();
+                    optDefault.always(response);
                 });
         },
         //不携带token信息
         request: function (opts) {
             let optDefault = {
                 error: function (responseData) {
-                    var _json = responseData.responseJSON;
-                    var error = _json.error;
+                    var response = responseData.responseJSON;
+                    var error = response.error;
                     top.layer.msg(error.message, { icon: 5, time: 5000 });
                 }
             };
@@ -595,12 +582,10 @@
             let myToken = userobj.validateLogin();
             let optDefault = {
                 headers: myToken.headers, //默认值 不需要赋值
-                error: function (response) {
-                    if (response.status === 200) {
-                        layer.msg(response.statusText, { icon: 5, time: 5000 });
-                    } else {
-                        layer.msg(response.statusText, { icon: 5, time: 5000 });
-                    }
+                error: function (responseData) {
+                    var response = responseData.responseJSON;
+                    var error = response.error;
+                    top.layer.msg(error.message, { icon: 5, time: 5000 });
                 }
             };
             Object.assign(optDefault, opts);

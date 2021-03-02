@@ -11,7 +11,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Jh.Abp.MenuManagement.Migrations
 {
     [DbContext(typeof(IdentityServerHostMigrationsDbContext))]
-    [Migration("20210106085627_init")]
+    [Migration("20210302100113_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

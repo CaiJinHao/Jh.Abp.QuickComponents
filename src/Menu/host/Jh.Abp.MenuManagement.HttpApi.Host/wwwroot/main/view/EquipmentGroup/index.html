@@ -1,4 +1,3 @@
-﻿
 
 <!DOCTYPE html>
 <html lang="zh-cn">
@@ -6,31 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>系统菜单</title>
+    <title>设备组</title>
     <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
     <link href="../../build/css/common.css" rel="stylesheet" />
 </head>
 <body>
     <div id="page-vm" class="layui-fluid iframe-top">
-        <div class="table_menu_mg">
+        <div class="table_equipmentgroup_mg">
             <fieldset class="layui-elem-field">
                 <div class="layui-field-box">
                     <form class="layui-form">
                         <div class="layui-row">
-                            <div class="layui-inline">
-                                <label class="layui-form-label">菜单名称：</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" id="name" name="name">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">名称：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" class="layui-input" name="name">
+                                    </div>
                                 </div>
-                            </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">上级菜单：</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" id="parentCode" name="parentCode">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">是否禁用：</label>
+                                <label class="layui-form-label">已删除：</label>
                                 <div class="layui-input-inline">
                                     <select lay-search name="deleted">
                                         <option value="0">请选择</option>
@@ -39,34 +32,34 @@
                                 </div>
                             </div>
                             <div class="layui-inline btngroup">
-                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_menu_from" id="btn_menu_from_query">查询</a>
-                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_menu_from_export">导出</a>
+                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_equipmentgroup_from" id="btn_equipmentgroup_from_query">查询</a>
+                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_equipmentgroup_from_export">导出</a>
                             </div>
                         </div>
                     </form>
                 </div>
             </fieldset>
-            <table id="table_menu" class="layui-hide" lay-filter="table_menu_list"></table>
-            <div id="table_menu_page" class="laypage"></div>
+            <table id="table_equipmentgroup" class="layui-hide" lay-filter="table_equipmentgroup_list"></table>
+            <div id="table_equipmentgroup_page" class="laypage"></div>
         </div>
     </div>
     <script type="text/html" id="toolbarDemo">
         <div class="layui-btn-container">
             <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
-            <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="delbatch">批量禁用</button>
+            <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delbatch">批量删除</button>
         </div>
     </script>
-    <script type="text/html" id="table_menu_operator">
+    <script type="text/html" id="tpl_isDeleted">
+        <input type="checkbox" name="isDeleted" value="1" lay-skin="switch" data-code="{{d.id}}" lay-text="删除|恢复" lay-filter="table_tpl_isDeleted" {{d.isDeleted?'':'checked'}}>
+    </script>
+    <script type="text/html" id="table_equipmentgroup_operator">
         {{# if(d.isDeleted){ }}
         <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-disabled" data-code="id">编辑</a>
-        <!-- <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="rollbackDel" data-code="id">启用</a> -->
+        <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="rollbackDel" data-code="id">恢复</a>
         {{# }else{ }}
         <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="edit" data-code="id">编辑</a>
-        <!-- <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="id">禁用</a> -->
+        <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="id">删除</a>
         {{# } }}
-    </script>
-    <script type="text/html" id="tpl_isDeleted">
-        <input type="checkbox" name="isDeleted" value="1" lay-skin="switch" data-code="{{d.id}}" lay-text="已启用|已禁用" lay-filter="table_tpl_isDeleted" {{d.isDeleted?'':'checked'}}>
     </script>
     <script src="../../layui/layui.js"></script>
     <script src="../../plugins/vue/vue.min.js"></script>
@@ -80,7 +73,7 @@
                 deletedlist: []
             },
             methods: {
-                RenderDom: function (form, callback) {
+				RenderDom: function(form, callback){
                     vm.$forceUpdate();//强制重新渲染 dom
                     // DOM 还没有更新
                     vm.$nextTick(function () {
@@ -93,65 +86,61 @@
                 }
             }
         });
-        layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod', 'datatable','excel'], function () {
+        layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod', 'datatable', 'excel'], function () {
             var table = layui.table,
                 $ = layui.jquery,
                 layer = layui.layer,
                 form = layui.form,
                 laypage = layui.laypage,
                 ajaxmod = layui.ajaxmod,
-                excel=layui.excel,
+                excel = layui.excel,
                 datatable = layui.datatable;
-            var _context = $('.table_menu_mg'),
-                _table_style = { align: 'center' };//公共样式
+            var _context = $('.table_equipmentgroup_mg'),
+                _table_style = { align: 'center' };
 
-            var menuObj = {
+            var equipmentgroupObj = {
                 renderTable: function (_options) {
                     var optDefault = {
                         Page: vm.currPage,
                         PageSize: PageSize,//common中定义的全局
-                        Sorting:'code',
                         deleted:2
                     };
                     $.extend(optDefault, _options);
                     var _the = this;
                     datatable.renderTable(optDefault, {
-                        url: '/menu',
-                        tableElem: 'table_menu',//laypage 自动加_page
+                        url: '/equipmentgroup',
+                        tableElem: 'table_equipmentgroup',//laypage 自动加_page
                         tableCols: [[
-                            { type: 'checkbox' },
-                            $.extend({ field: 'code', title: '菜单ID' }, _table_style),
-                            $.extend({ field: 'name', title: '菜单名称' }, _table_style),
-                            $.extend({ field: 'parentCode', title: '父级菜单ID' }, _table_style),
-                            $.extend({ field: 'icon', title: '菜单图标' }, _table_style),
-                            $.extend({ field: 'url', title: '菜单URL' }, _table_style),
-                            $.extend({ field: 'sort', title: '菜单排序' }, _table_style),
-                            $.extend({ field: 'description', title: '菜单描述' }, _table_style),
-                            $.extend({ field: 'isDeleted', title: '状态', templet: '#tpl_isDeleted' }, _table_style),
-                            $.extend({ field: 'id', title: '操作', width: 100, templet: '#table_menu_operator', fixed: 'right' }, _table_style)
+                            { type: 'checkbox'},
+                          $.extend({ field: 'name', title: '名称' }, _table_style),
+                          $.extend({ field: 'sort', title: '排序' }, _table_style),
+                            //$.extend({ field: 'isDeleted', title: '数据状态', templet: '#tpl_isDeleted' }, _table_style),
+                            $.extend({ field: 'creationTime', title: '创建时间' }, _table_style),
+                            $.extend({ field: 'lastModificationTime', title: '最后一次修改时间' }, _table_style),
+                            $.extend({ field: 'id', title: '操作', width: 190, templet: '#table_equipmentgroup_operator', fixed: 'right' }, _table_style)
                         ]],
                     });
                 },
                 edit: function (_data) {
                     var _the = this;
                     datatable.edit({
-                        title: '编辑系统_菜单',
+                        title: '编辑设备组',
                         area: ['850px', '500px'],
-                        content: 'view/menu/edit.html?id=' + _data.id,
+                        content: 'view/equipmentgroup/edit.html?id=' + _data.id,
                     });
                 },
                 add: function () {
                     var _the = this;
                     datatable.add({
-                        title: '新增系统_菜单',
+                        title: '新增设备组',
                         area: ['850px', '500px'],
-                        content: 'view/menu/edit.html',
+                        content: 'view/equipmentgroup/edit.html',
                     });
                 },
                 del: function (_data) {
                     var _the = this;
                     datatable.del({
-                        url: '/menu/' + _data.id,
+                        url: '/equipmentgroup/' + _data.id,
                         type: 'Delete',
                         success: function (response) {
                             _the.renderTable();
@@ -159,15 +148,15 @@
                     });
                 },
                 delbatch: function (_data) {
-                    var _the = this;
-                    var checkStatus = table.checkStatus('table_menu'),
+                    let _the = this;
+                    var checkStatus = table.checkStatus('table_equipmentgroup'),
                         data = checkStatus.data;
-                    var delIdList = [];
-                    for (const item of data) {
-                        delIdList.push(item.id);
-                    }
+                   var delIdList = [];
+                    $.each(data, function (k, v) {
+                        delIdList.push(v.id);
+                    });
                     datatable.delbatch({
-                        url: '/menu/keys',
+                        url: '/equipmentgroup/keys',
                         type: 'Delete',
                         data: delIdList,
                         success: function (response) {
@@ -175,7 +164,11 @@
                         }
                     });
                 },
-                patchObj: function (data,url) {
+                rollbackDel: function (data) {
+                    let _the = this;
+                    _the.patchObj(false, '/equipmentgroup/' + data.id + '/Deleted');
+                },
+				patchObj: function (data,url) {
                     let _the = this;
                     ajaxmod.requestAuthorize({
                         url:url,
@@ -187,33 +180,22 @@
                     });
                 },
                 exportExcel: function (data) {
-                    //跟表格显示的数据一样
                     data = excel.filterExportData(data, [
-                        'id',
-                        'name',
-                        'icon',
-                        'sort',
-                        'parentCode',
-                        'url',
-                        'description',
+                       'name',
+                       'sort',
                     ]);
 
                     data.unshift({
-                        id: 'id',
-                        name: '菜单名称',
-                        icon: '菜单图标',
-                        sort: '菜单排序',
-                        parentCode: '父级菜单',
-                        url: '菜单URL',
-                        description: '菜单描述',
+                        name:'设备组名称',
+                        sort:'设备组排序',
                     });
 
                     excel.exportExcel({
-                        menu: data
-                    }, 'menu' + new Date().toLocaleString() + '.xlsx', 'xlsx');
+                        equipmentgroup: data
+                    }, 'equipmentgroup' + new Date().toLocaleString() + '.xlsx', 'xlsx');
                 },
-                loadtable: function () {
-                    $('#btn_menu_from_query').click();
+                loadtable:function(){
+                    $('#btn_equipmentgroup_from_query').click();
                 },
                 loadList: function () {
                     var _the = this;
@@ -230,37 +212,36 @@
                     });
                 }
             };
-            menuObj.loadList();
-            menuObj.renderTable();//加载第一页
+            equipmentgroupObj.loadList();
+            equipmentgroupObj.renderTable();
 
-            //绑定编辑也保存事件
-            top.tool.subscribe("edit_menu_form_refresh", function () {
-                menuObj.renderTable();
+            top.tool.subscribe("edit_equipmentgroup_form_refresh", function () {
+                equipmentgroupObj.renderTable();
             });
 
-            table.on('tool(table_menu_list)', function (obj) {
+            table.on('tool(table_equipmentgroup_list)', function (obj) {
                 var data = obj.data;
-                menuObj[obj.event] ? menuObj[obj.event].call(menuObj, data) : '';
+                equipmentgroupObj[obj.event] ? equipmentgroupObj[obj.event].call(equipmentgroupObj, data) : '';
             });
 
-            table.on('toolbar(table_menu_list)', function (obj) {
+            table.on('toolbar(table_equipmentgroup_list)', function (obj) {
                 var data = obj.data;
-                menuObj[obj.event] ? menuObj[obj.event].call(menuObj, data) : '';
+                equipmentgroupObj[obj.event] ? equipmentgroupObj[obj.event].call(equipmentgroupObj, data) : '';
             });
 
-            form.on('submit(btn_menu_from)', function (data) {
+            form.on('submit(btn_equipmentgroup_from)', function (data) {
                 vm.currPage = 1;
-                menuObj.renderTable(data.field);
+                equipmentgroupObj.renderTable(data.field);
                 return false;
             });
 
-            form.on('submit(btn_menu_from_export)', function (data) {
+            form.on('submit(btn_equipmentgroup_from_export)', function (data) {
                 ajaxmod.requestAuthorize({
-                    url: '/menu/all',
+                    url: '/equipmentgroup/all',
                     type: 'Get',
                     data: data.field,
                     success: function (response) {
-                        menuObj.exportExcel(response.items);
+                        equipmentgroupObj.exportExcel(response.items);
                     }
                 });
                 return false;
@@ -274,7 +255,7 @@
                 } else {
                     _value = true;//删除
                 }
-                menuObj.patchObj(_value,'/menu/'+_id+'/Deleted');
+                equipmentgroupObj.patchObj(_value,'/equipmentgroup/'+_id+'/Deleted');
             });
         });
     </script>

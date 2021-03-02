@@ -45,6 +45,14 @@ namespace Jh.Abp.MenuManagement.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatorId");
 
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -55,6 +63,12 @@ namespace Jh.Abp.MenuManagement.Migrations
                     b.Property<string>("Icon")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2")
@@ -76,9 +90,6 @@ namespace Jh.Abp.MenuManagement.Migrations
 
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Use")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -107,7 +118,28 @@ namespace Jh.Abp.MenuManagement.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MenuId");
+
+                    b.HasIndex("RoleId")
+                        .IncludeProperties(new[] { "MenuId" });
+
                     b.ToTable("SysMenuAndRoleMap");
+                });
+
+            modelBuilder.Entity("Jh.Abp.MenuManagement.Menus.MenuAndRoleMap", b =>
+                {
+                    b.HasOne("Jh.Abp.MenuManagement.Menus.Menu", "Menu")
+                        .WithMany("MenuRoleMaps")
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Menu");
+                });
+
+            modelBuilder.Entity("Jh.Abp.MenuManagement.Menus.Menu", b =>
+                {
+                    b.Navigation("MenuRoleMaps");
                 });
 #pragma warning restore 612, 618
         }
