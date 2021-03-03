@@ -31,7 +31,6 @@
     <ProjectReference Include="..\..\..\Jh.AbpExtensions\Jh.Abp.Application\Jh.Abp.Application.csproj" />
     <ProjectReference Include="..\Jh.Abp.MenuManagement.Application.Contracts\Jh.Abp.MenuManagement.Application.Contracts.csproj" />
     <ProjectReference Include="..\Jh.Abp.MenuManagement.Domain\Jh.Abp.MenuManagement.Domain.csproj" />
-    <ProjectReference Include="..\Jh.Abp.MenuManagement.EntityFrameworkCore\Jh.Abp.MenuManagement.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>

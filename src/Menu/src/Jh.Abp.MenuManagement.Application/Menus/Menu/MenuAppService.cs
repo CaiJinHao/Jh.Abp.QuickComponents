@@ -20,17 +20,18 @@ namespace Jh.Abp.MenuManagement.Menus
         , IMenuAppService
     {
         private readonly IMenuRepository menuRepository;
-        public IMenuDapperRepository menuDapperRepository { get; set; }
+        private readonly IMenuDapperRepository MenuDapperRepository;
 
         private readonly IMenuAndRoleMapRepository menuAndRoleMapRepository;
 
         private IMenuAndRoleMapAppService _menuAndRoleMapAppService;
         public IMenuAndRoleMapAppService menuAndRoleMapAppService => LazyGetRequiredService(ref _menuAndRoleMapAppService);
 
-        public MenuAppService(IMenuRepository repository, IMenuAndRoleMapRepository _menuAndRoleMapRepository, IMenuAndRoleMapDomainService _menuAndRoleMapDomainService) : base(repository)
+        public MenuAppService(IMenuRepository repository, IMenuDapperRepository menuDapperRepository, IMenuAndRoleMapRepository _menuAndRoleMapRepository, IMenuAndRoleMapDomainService _menuAndRoleMapDomainService) : base(repository)
         {
             menuRepository = repository;
             menuAndRoleMapRepository = _menuAndRoleMapRepository;
+            MenuDapperRepository = menuDapperRepository;
         }
 
         [UnitOfWork]
@@ -64,11 +65,11 @@ namespace Jh.Abp.MenuManagement.Menus
         [UnitOfWork]
         public override async Task<Menu> DeleteAsync(Guid id, bool autoSave = false, CancellationToken cancellationToken = default)
         {
-            var data = menuDapperRepository.GetDapperListAsync().Result;
+            /*var data = MenuDapperRepository.GetDapperListAsync().Result;
             if (data != null)
             {
                 var c = menuRepository.GetDapperListAsync().Result;
-            }
+            }*/
             var entity = await base.DeleteAsync(id, autoSave, cancellationToken);
             await menuAndRoleMapRepository.DeleteListAsync(a => a.MenuId == entity.Id).ConfigureAwait(false);
             return entity;

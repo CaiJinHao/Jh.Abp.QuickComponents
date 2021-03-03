@@ -10,15 +10,17 @@ namespace Jh.Abp.MenuManagement.Menus
 {
     public class MenuRepository : CrudRepository<MenuManagementDbContext, Menu, Guid>, IMenuRepository
     {
-        public IMenuDapperRepository menuDapperRepository { get; set; }
+        private readonly IMenuDapperRepository MenuDapperRepository;
 
-        public MenuRepository(IDbContextProvider<MenuManagementDbContext> dbContextProvider) : base(dbContextProvider)
+        public MenuRepository(IDbContextProvider<MenuManagementDbContext> dbContextProvider
+            , IMenuDapperRepository menuDapperRepository) : base(dbContextProvider)
         {
+            MenuDapperRepository = menuDapperRepository;
         }
 
         public async Task<IEnumerable<Menu>> GetDapperListAsync()
         {
-            return await menuDapperRepository.GetDapperListAsync();
+            return await MenuDapperRepository.GetDapperListAsync();
         }
     }
 }

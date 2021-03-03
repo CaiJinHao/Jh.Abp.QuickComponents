@@ -22,7 +22,7 @@ using Volo.Abp.EntityFrameworkCore;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
-                builder.AppendLine($"\tpublic class {FileName} : DapperRepository<{table.DbContext}>,ITransientDependency");
+                builder.AppendLine($"\tpublic class {FileName} : DapperRepository<{table.DbContext}>, I{table.Name}DapperRepository, ITransientDependency");
                 builder.AppendLine("\t{");
                 builder.AppendLine($"\t\tpublic {FileName}(IDbContextProvider<{table.DbContext}> dbContextProvider) : base(dbContextProvider)");
                 builder.AppendLine("\t\t{");
