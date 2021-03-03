@@ -3,12 +3,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Modularity;
 using Microsoft.EntityFrameworkCore;
+using Volo.Abp.Dapper;
 
 namespace Jh.Abp.MenuManagement.EntityFrameworkCore
 {
     [DependsOn(
         typeof(MenuManagementDomainModule),
-        typeof(AbpEntityFrameworkCoreModule)
+        typeof(AbpEntityFrameworkCoreModule),
+        typeof(AbpDapperModule)
     )]
     public class MenuManagementEntityFrameworkCoreModule : AbpModule
     {

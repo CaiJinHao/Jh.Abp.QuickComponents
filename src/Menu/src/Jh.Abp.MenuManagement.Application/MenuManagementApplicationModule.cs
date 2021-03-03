@@ -2,6 +2,8 @@
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
 using Volo.Abp.Application;
+using Volo.Abp.Dapper;
+using Jh.Abp.MenuManagement.EntityFrameworkCore;
 
 namespace Jh.Abp.MenuManagement
 {
@@ -9,7 +11,9 @@ namespace Jh.Abp.MenuManagement
         typeof(MenuManagementDomainModule),
         typeof(MenuManagementApplicationContractsModule),
         typeof(AbpDddApplicationModule),
-        typeof(AbpAutoMapperModule)
+        typeof(AbpAutoMapperModule),
+        typeof(AbpDapperModule),
+        typeof(MenuManagementEntityFrameworkCoreModule)
         )]
     public class MenuManagementApplicationModule : AbpModule
     {
