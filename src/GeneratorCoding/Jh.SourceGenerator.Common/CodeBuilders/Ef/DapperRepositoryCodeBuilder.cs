@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Jh.SourceGenerator.Common.CodeBuilders
 {
-    public class RepositoryCodeBuilder : CodeBuilderAbs
+    public class DapperRepositoryCodeBuilder : CodeBuilderAbs
     {
-        public RepositoryCodeBuilder(TableDto tableDto, string filePath) : base(tableDto, filePath)
+        public DapperRepositoryCodeBuilder(TableDto tableDto, string filePath) : base(tableDto, filePath)
         {
-            this.FileName = $"{table.Name}Repository";
+            this.FileName = $"{table.Name}DapperRepository";
         }
 
         public override string ToString()
@@ -22,12 +22,10 @@ using Volo.Abp.EntityFrameworkCore;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
-                builder.AppendLine($"\tpublic class {FileName} : CrudRepository<{table.DbContext}, {table.Name}, {table.KeyType}>, I{table.Name}Repository");
+                builder.AppendLine($"\tpublic class {FileName} : DapperRepository<{table.DbContext}>, I{table.Name}DapperRepository, ITransientDependency");
                 builder.AppendLine("\t{");
-                builder.AppendLine($"\t\tprivate readonly I{table.Name}DapperRepository {table.Name}DapperRepository;");
-                builder.AppendLine($"\t\tpublic {FileName}(IDbContextProvider<{table.DbContext}> dbContextProvider, I{table.Name}DapperRepository {table.Name.ToLower()}DapperRepository) : base(dbContextProvider)");
+                builder.AppendLine($"\t\tpublic {FileName}(IDbContextProvider<{table.DbContext}> dbContextProvider) : base(dbContextProvider)");
                 builder.AppendLine("\t\t{");
-                builder.AppendLine($"\t\t\t{table.Name}DapperRepository={table.Name.ToLower()}DapperRepository;");
                 builder.AppendLine("\t\t}");
                 builder.AppendLine("\t}");
             }

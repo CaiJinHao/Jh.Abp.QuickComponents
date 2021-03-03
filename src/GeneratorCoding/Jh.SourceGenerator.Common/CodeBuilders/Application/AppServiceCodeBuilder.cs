@@ -26,9 +26,11 @@ using System;");
                 builder.AppendLine("\t{");
                 {
                     builder.AppendLine($"\t\tprivate readonly I{table.Name}Repository {table.Name}Repository;");
-                    builder.AppendLine($"\t\tpublic {FileName}(I{table.Name}Repository repository) : base(repository)");
+                    builder.AppendLine($"\t\tprivate readonly I{table.Name}DapperRepository {table.Name}DapperRepository;");
+                    builder.AppendLine($"\t\tpublic {FileName}(I{table.Name}Repository repository, I{table.Name}DapperRepository {table.Name.ToLower()}DapperRepository) : base(repository)");
                     builder.AppendLine("\t\t{");
                     builder.AppendLine($"\t\t{table.Name}Repository = repository;");
+                    builder.AppendLine($"\t\t{table.Name}DapperRepository = {table.Name.ToLower()}DapperRepository;");
                     builder.AppendLine("\t\t}");
                 }
                 builder.AppendLine("\t}");

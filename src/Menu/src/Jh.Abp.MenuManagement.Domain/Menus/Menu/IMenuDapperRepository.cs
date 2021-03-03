@@ -1,11 +1,11 @@
-﻿using Jh.Abp.Domain.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
-    public interface IMenuRepository : ICrudRepository<Menu, Guid>
+    public interface IMenuDapperRepository
     {
         Task<IEnumerable<Menu>> GetDapperListAsync();
     }
