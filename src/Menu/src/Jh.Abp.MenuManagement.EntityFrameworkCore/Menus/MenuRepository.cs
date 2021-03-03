@@ -10,7 +10,7 @@ namespace Jh.Abp.MenuManagement.Menus
 {
     public class MenuRepository : CrudRepository<MenuManagementDbContext, Menu, Guid>, IMenuRepository
     {
-        public MenuDapperRepository menuDapperRepository { get; set; }
+        public IMenuDapperRepository menuDapperRepository { get; set; }
 
         public MenuRepository(IDbContextProvider<MenuManagementDbContext> dbContextProvider) : base(dbContextProvider)
         {

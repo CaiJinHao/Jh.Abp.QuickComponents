@@ -7,13 +7,14 @@ using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories.Dapper;
 using Volo.Abp.EntityFrameworkCore;
 using Dapper;
+using Jh.Abp.MenuManagement.Menus;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
     /*
      使用该类的模块需要引用typeof(AbpDapperModule)
      */
-    public class MenuDapperRepository : DapperRepository<MenuManagementDbContext>, ITransientDependency
+    public class MenuDapperRepository : DapperRepository<MenuManagementDbContext>, IMenuDapperRepository, ITransientDependency
     {
         public MenuDapperRepository(IDbContextProvider<MenuManagementDbContext> dbContextProvider) : base(dbContextProvider)
         {
