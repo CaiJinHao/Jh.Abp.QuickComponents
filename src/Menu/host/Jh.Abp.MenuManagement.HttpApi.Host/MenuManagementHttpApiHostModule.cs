@@ -147,7 +147,7 @@ namespace Jh.Abp.MenuManagement
                 options.SendExceptionsDetailsToClients = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
             });
 
-            context.Services.AddAuthorizeFilter();
+            context.Services.AddAuthorizeFilter(configuration);
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)

@@ -3,130 +3,58 @@
 Abp webapi项目需要使用的基础组件。Swagger、MiniProfiler、IdentityServer.
 提供AccessToken自动验证控制器，请求地址：api/v1/AccessToken
 
-## Swagger
+## 修改IdentityServer & Host
 
-### 在appsetings.json添加Swagger配置
-`"SwaggerApi": {
-    "User": {
-      "UserNameOrEmailAddress": "admin",
-      "Password": "123456"
-    },
-    "OpenApiInfo": {
-      "Title": "YourProjectName Title",
-      "Version": "v1",
-      "Description": "YourProjectName Description"
-    },
-    "DocumentTitle": "XXX平台 RESTfull Api",
-    "RoutePrefix": "swagger",
-    "SwaggerEndpoint": {
-      "Name": "Support APP API"
-    }
- }`
-### 在ConfigureServices中删除掉或者注释掉以下代码段
-`/*
- context.Services.AddSwaggerGen(
-                options =>
-                {
-                    options.SwaggerDoc("v1", new OpenApiInfo { Title = "YourProjectName API", Version = "v1" });
-                    options.DocInclusionPredicate((docName, description) => true);
-                    options.CustomSchemaIds(type => type.FullName);
-                });
-*/`
-### 在OnApplicationInitialization中这么用
-`//app.UseAbpRequestLocalization();
-app.UseJhRequestLocalization();
-/*
-app.UseSwagger();
-                app.UseSwaggerUI(options =>
-                {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
-                });
-*/
-app.UseSwaggerComponent(configuration,this.GetType());`
+修改install_package.bat中的项目名称为你的项目名称，之后执行install_package.bat
+Program
+hostsettings.json
+UseMySQL
+	删除掉SQLServer依赖，安装Install-Package Volo.Abp.EntityFrameworkCore.MySQL，更改为依赖AbpEntityFrameworkCoreMySQLModule
+	修改IdentityServerHostMigrationsDbContextFactory中的CreateDbContext
+            var connectionString = configuration.GetConnectionString("Default");
+            var builder = new DbContextOptionsBuilder<IdentityServerHostMigrationsDbContext>()
+                  .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), optionsBuilder =>
+                  {
+                      optionsBuilder.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                      //mySQLOptionsAction?.Invoke(optionsBuilder);
+                  })
+                  .EnableSensitiveDataLogging();
+            return new IdentityServerHostMigrationsDbContext(builder.Options);
+			
+## IdentityServer 
 
-## IdentityServer
+	typeof(JhAbpIdentityServerModule)
+	SeedData
+	IdentityServerDataSeedContributor
+	1q2w3e*(批量替换)
+	add-migration(先删掉原有的)
+	update-database
+	执行程序开始数据迁移，完成之后复制RoleId到Host
+	IdentityServer启动报缺少js文件问题,使用命令行在IdentityServer文件夹下依次运行 yarn 、gulp。执行完成之后即可。如果还不行， 有可能是cli版本更新的问题，需要替换最新的js文件
+	
+## HttpApi.Host
 
-### 在appsetings.json添加IdentityServer配置
-`"AuthServer": {
-    "Authority": "https://localhost:6002/",
-    "ApiName": "YourProjectName",
-    "RequireHttps": false
-},
-"IdentityServer": {
-    "Clients": {
-      "Web": {
-        "Authority": "https://localhost:6002/",
-        "ClientId": "YourProjectName_Web",
-        "ClientSecret": "1q2w3e*",
-        "Scope": "role email YourProjectName offline_access",
-        "RequireHttps": false
-      },
-      "WebApi": {
-        "Authority": "https://localhost:6002/",
-        "ClientId": "YourProjectName_ConsoleTestApp",
-        "ClientSecret": "1q2w3e*",
-        "Scope": "role email YourProjectName offline_access",
-        "RequireHttps": false
-      }
-    }
-  }`
-### 在ConfigureServices中删除掉或者注释掉以下代码段
-`/*
-context.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = configuration["AuthServer:Authority"];
-                    options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
-                    options.Audience = "YourProjectName";
-                });
-*/
-/*
-context.Services.AddCors(options =>
-            {
-                options.AddPolicy(DefaultCorsPolicyName, builder =>
-                {
-                    builder
-                        .WithOrigins(
-                            configuration["App:CorsOrigins"]
-                                .Split(",", StringSplitOptions.RemoveEmptyEntries)
-                                .Select(o => o.RemovePostFix("/"))
-                                .ToArray()
-                        )
-                        .WithAbpExposedHeaders()
-                        .SetIsOriginAllowedToAllowWildcardSubdomains()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials();
-                });
-            });
-*/`
-
-## 引用模块
-
-typeof(AbpQuickComponentsModule),
-
-## 其他扩展修改
-
-`
-context.Services.Configure<AbpExceptionHandlingOptions>(options =>
+	Module
+		typeof(AbpQuickComponentsModule),
+		注释掉AddAbpSwaggerGenWithOAuth,AddAuthentication,AddCors
+		底部添加：
+		context.Services.Configure<AbpExceptionHandlingOptions>(options =>
             {
                 options.SendExceptionsDetailsToClients = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
             });
-`
 
-## 完整配置
-
-`
-"AppSettings": {
-    "SendExceptionsDetailsToClients": true
-  },
-  "AuthServer": {
-    "Authority": "https://localhost:44381/",
-    "ApiName": "DemoApp",
-    "RequireHttps": false
+            context.Services.AddAuthorizeFilter();
+		注释掉UseCors，UseSwagger，UseAbpSwaggerUI
+		添加app.UseJhSwagger(context.GetConfiguration(), this.GetType());
+	appsettings.json配置
+	添加：
+  "App": {
+    "CorsOrigins": "https://*.MenuManagement.com,http://localhost:4200,http://localhost:66001,https://localhost:6101",
+    "AllowAnonymousArea": "abp",
+    "AllowAnonymousController": "AbpApiDefinition"
   },
   "DistributedCache": {
-    "KeyPrefix": "DemoApp:"
+    "KeyPrefix": "SupplyDemandPlatform:"
   },
   "SwaggerApi": {
     "User": {
@@ -134,11 +62,11 @@ context.Services.Configure<AbpExceptionHandlingOptions>(options =>
       "Password": "123456"
     },
     "OpenApiInfo": {
-      "Title": "设备报价系统",
+      "Title": "忻州供求信息平台",
       "Version": "v1",
-      "Description": "设备报价系统"
+      "Description": "忻州供求信息平台"
     },
-    "DocumentTitle": "设备报价平台 RESTfull Api",
+    "DocumentTitle": "忻州供求信息平台 RESTfull Api",
     "RoutePrefix": "swagger",
     "SwaggerEndpoint": {
       "Name": "Support APP API"
@@ -146,23 +74,17 @@ context.Services.Configure<AbpExceptionHandlingOptions>(options =>
   },
   "IdentityServer": {
     "Clients": {
-      "Web": {
-        "Authority": "https://localhost:44381/",
-        "ClientId": "DemoApp_Web",
-        "ClientSecret": "kimho",
-        "Scope": "role email DemoApp offline_access",
-        "RequireHttps": false
-      },
       "WebApi": {
-        "Authority": "https://localhost:44381/",
-        "ClientId": "DemoApp_App",
-        "ClientSecret": "kimho",
-        "Scope": "role email DemoApp offline_access",
+        "Authority": "https://localhost:44361/",
+        "ClientId": "SupplyDemandPlatform_App",
+        "ClientSecret": "Cngrain@123",
+        "Scope": "role email SupplyDemandPlatform offline_access",
         "RequireHttps": false
       }
     }
   }
-`
+  
+
 ## Use
 
 最后打开包所在路径将C:\Users\Administrator\.nuget\packages\jh.abp.quickcomponents.httpapi\x.x.x\content\wwwroot文件夹copy到项目根路径即可
@@ -170,7 +92,3 @@ context.Services.Configure<AbpExceptionHandlingOptions>(options =>
 ## Use Demo 
 
 具体使用可参考Menu模块
-
-## IdentityServer
-
-依赖模块：JhAbpIdentityServerModule
