@@ -48,7 +48,12 @@ UseMySQL
 		添加app.UseJhSwagger(context.GetConfiguration(), this.GetType());
 	appsettings.json配置
 	添加：
-	"DistributedCache": {
+  "App": {
+    "CorsOrigins": "https://*.MenuManagement.com,http://localhost:4200,http://localhost:66001,https://localhost:6101",
+    "AllowAnonymousArea": "abp",
+    "AllowAnonymousController": "AbpApiDefinition"
+  },
+  "DistributedCache": {
     "KeyPrefix": "SupplyDemandPlatform:"
   },
   "SwaggerApi": {
@@ -78,7 +83,8 @@ UseMySQL
       }
     }
   }
-`
+  
+
 ## Use
 
 最后打开包所在路径将C:\Users\Administrator\.nuget\packages\jh.abp.quickcomponents.httpapi\x.x.x\content\wwwroot文件夹copy到项目根路径即可

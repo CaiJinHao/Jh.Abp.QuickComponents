@@ -28,13 +28,14 @@ namespace Jh.Abp.QuickComponents.JwtAuthentication
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static IServiceCollection AddAuthorizeFilter(this IServiceCollection services)
+        public static IServiceCollection AddAuthorizeFilter(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers(options => {
                 var policy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder()
                          .RequireAuthenticatedUser()
                          .Build();
-                options.Filters.Add(new AuthorizeFilter(policy));//添加权限过滤器
+                //options.Filters.Add(new AuthorizeFilter(policy));//添加权限过滤器
+                options.Filters.Add(new JhAuthorizationFilter(policy,configuration));
             });
             return services;
         }
