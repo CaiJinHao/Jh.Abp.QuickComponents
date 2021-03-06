@@ -62,11 +62,11 @@ UseMySQL
       "Password": "123456"
     },
     "OpenApiInfo": {
-      "Title": "忻州供求信息平台",
+      "Title": "你的项目名称",
       "Version": "v1",
-      "Description": "忻州供求信息平台"
+      "Description": "你的项目名称"
     },
-    "DocumentTitle": "忻州供求信息平台 RESTfull Api",
+    "DocumentTitle": "你的项目名称 RESTfull Api",
     "RoutePrefix": "swagger",
     "SwaggerEndpoint": {
       "Name": "Support APP API"
