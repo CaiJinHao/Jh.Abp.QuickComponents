@@ -28,11 +28,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="RazorEngine.NeCore.Jh" Version="3.1.1" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\RazorEngine\RazorEngine.NetCore\RazorEngine.NetCore.csproj" />
     <ProjectReference Include="..\..\Common\Jh.Abp.Common\Jh.Abp.Common.csproj" />
   </ItemGroup>
 
