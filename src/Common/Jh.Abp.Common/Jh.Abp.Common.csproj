@@ -12,7 +12,7 @@
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Common</PackageTags>
     <PackageReleaseNotes>Common libs</PackageReleaseNotes>
-    <Version>1.0.9</Version>
+    <Version>1.1.0</Version>
     <Description>Common libs</Description>
   </PropertyGroup>
   <ItemGroup>

@@ -15,7 +15,7 @@
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Jh.Abp.MenuManagement</PackageReleaseNotes>
-    <Version>0.0.9</Version>
+    <Version>0.1.1</Version>
     <Description>Jh.Abp.MenuManagement</Description>
   </PropertyGroup>
 
