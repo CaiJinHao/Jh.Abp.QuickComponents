@@ -14,14 +14,13 @@ namespace Jh.Abp.MenuManagement.Menus
         : CrudApplicationService<MenuAndRoleMap, MenuAndRoleMapDto, MenuAndRoleMapDto, Guid, MenuAndRoleMapRetrieveInputDto, MenuAndRoleMapCreateInputDto, MenuAndRoleMapUpdateInputDto, MenuAndRoleMapDeleteInputDto>,
         IMenuAndRoleMapAppService
     {
-        private IMenuRepository _menuRepository;
-        protected IMenuRepository MenuRepository => LazyGetRequiredService(ref _menuRepository);
+        private readonly IMenuRepository MenuRepository;
 
         private readonly IMenuAndRoleMapRepository MenuAndRoleMapRepository;
-        public MenuAndRoleMapAppService(IMenuAndRoleMapRepository repository) : base(repository)
+        public MenuAndRoleMapAppService(IMenuAndRoleMapRepository repository, IMenuRepository menuRepository) : base(repository)
         {
             MenuAndRoleMapRepository = repository;
-
+            MenuRepository = menuRepository;
         }
 
         public override Task<MenuAndRoleMap> CreateAsync(MenuAndRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
