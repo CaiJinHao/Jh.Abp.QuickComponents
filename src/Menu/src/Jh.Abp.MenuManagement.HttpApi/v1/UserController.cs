@@ -8,34 +8,32 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Data;
+using Volo.Abp.DependencyInjection;
 using Volo.Abp.Identity;
 
 namespace Jh.Abp.MenuManagement.v1
 {
     [RemoteService]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
-    public class UserController : MenuManagementController
+    public class UserController : IdentityUserController
     {
         public IDataFilter<ISoftDelete> dataFilter { get; set; }
-        protected IIdentityUserAppService UserAppService { get; }
         protected IProfileAppService ProfileAppService { get; }
         protected IdentityUserManager UserManager { get; }
         protected IIdentityUserRepository UserRepository { get; }
 
-        public UserController(
+        public UserController(IIdentityUserAppService userAppService,
             IProfileAppService profileAppService,
-            IIdentityUserAppService userAppService,
             IIdentityUserRepository userRepository,
-            IdentityUserManager userManager)
+            IdentityUserManager userManager) : base(userAppService)
         {
-            UserAppService = userAppService;
             ProfileAppService = profileAppService;
             UserRepository = userRepository;
             UserManager = userManager;
         }
 
         [HttpGet]
-        [Route("{id}/roles")]
+        [Route("{id}/selectroles")]
         public virtual async Task<dynamic> GetRolesToSelectAsync(Guid id)
         {
             var datas = await UserRepository.GetRolesAsync(id);
@@ -46,7 +44,7 @@ namespace Jh.Abp.MenuManagement.v1
         }
 
         [HttpGet]
-        public async Task<PagedResultDto<IdentityUserDto>> GetListAsync(GetIdentityUsersInput input)
+        public override async Task<PagedResultDto<IdentityUserDto>> GetListAsync(GetIdentityUsersInput input)
         {
             using (dataFilter.Disable())
             {
@@ -97,17 +95,6 @@ namespace Jh.Abp.MenuManagement.v1
         }
 
         /// <summary>
-        /// 根据ID删除
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpDelete("{id}")]
-        public Task DeleteAsync(Guid id)
-        {
-            return UserAppService.DeleteAsync(id);
-        }
-
-        /// <summary>
         /// 根据主键删除多条
         /// </summary>
         /// <param name="keys"></param>
@@ -121,5 +108,6 @@ namespace Jh.Abp.MenuManagement.v1
                 await UserAppService.DeleteAsync(item);
             }
         }
+
     }
 }
