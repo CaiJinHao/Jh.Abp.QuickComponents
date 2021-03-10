@@ -11,6 +11,7 @@ using Volo.Abp.Identity;
 namespace Jh.Abp.MenuManagement.v1
 {
     //Using Identity requires references to Identity dependent components
+    [ApiController]
     [RemoteService]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
     public class RoleController : Volo.Abp.Identity.IdentityRoleController

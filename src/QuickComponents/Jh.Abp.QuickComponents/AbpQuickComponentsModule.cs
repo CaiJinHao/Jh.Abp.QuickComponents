@@ -71,8 +71,9 @@ namespace Jh.Abp.QuickComponents
         {
             var app = context.GetApplicationBuilder();
 
-            app.UseMiniProfiler();
-            app.UseCors(CorsExtensions.DefaultCorsPolicyName);
+            // 在前面控制
+            //app.UseMiniProfiler();
+            //app.UseCors(CorsExtensions.DefaultCorsPolicyName);
         }
     }
 }

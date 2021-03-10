@@ -13,6 +13,7 @@ using Volo.Abp.Identity;
 
 namespace Jh.Abp.MenuManagement.v1
 {
+    [ApiController]
     [RemoteService]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
     public class UserController : IdentityUserController
