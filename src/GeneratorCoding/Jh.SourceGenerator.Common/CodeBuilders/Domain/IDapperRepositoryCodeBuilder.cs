@@ -20,7 +20,7 @@ using System;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
-                builder.AppendLine($"\tpublic interface {FileName}: ICrudRepository<{table.Name}, {table.KeyType}>");
+                builder.AppendLine($"\tpublic interface {FileName}");
                 builder.AppendLine("\t{");
                 builder.AppendLine("\t}");
             }

@@ -17,8 +17,11 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
             var builder = new StringBuilder();
             builder.AppendLine($@"using Jh.Abp.EntityFrameworkCore.Extensions;
 using {table.Namespace}.EntityFrameworkCore;
-using System;
-using Volo.Abp.EntityFrameworkCore;");
+using System.Threading.Tasks;
+using Volo.Abp.DependencyInjection;
+using Volo.Abp.Domain.Repositories.Dapper;
+using Volo.Abp.EntityFrameworkCore;
+using Dapper;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
