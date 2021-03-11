@@ -92,6 +92,7 @@ namespace Jh.SourceGenerator.Common
                     description = descriptionAttr?.Value?.ToString();
                 }
                 var required = GetAttr<RequiredAttribute>(property);
+                //时间类型有问题
                 yield return new FieldDto()
                 {
                     Name = GetFiledName(property),

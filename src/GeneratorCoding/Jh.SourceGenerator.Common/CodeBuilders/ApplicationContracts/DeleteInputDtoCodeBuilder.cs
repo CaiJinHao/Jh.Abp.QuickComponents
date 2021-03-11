@@ -15,6 +15,8 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
         public override string ToString()
         {
             var builder = new StringBuilder();
+            builder.AppendLine(@"using System;
+using System.Text;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
