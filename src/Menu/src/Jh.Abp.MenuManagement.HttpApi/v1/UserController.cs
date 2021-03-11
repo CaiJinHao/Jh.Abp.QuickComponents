@@ -45,7 +45,7 @@ namespace Jh.Abp.MenuManagement.v1
         }
 
         [HttpGet]
-        public override async Task<PagedResultDto<IdentityUserDto>> GetListAsync(GetIdentityUsersInput input)
+        public override async Task<PagedResultDto<IdentityUserDto>> GetListAsync([FromQuery] GetIdentityUsersInput input)
         {
             using (dataFilter.Disable())
             {

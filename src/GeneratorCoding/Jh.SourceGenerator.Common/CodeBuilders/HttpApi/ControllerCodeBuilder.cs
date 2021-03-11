@@ -75,7 +75,7 @@ using Volo.Abp.Data;");
 
                     builder.AppendLine("\t\t[Route(\"all\")]");
                     builder.AppendLine("\t\t[HttpGet]");
-                    builder.AppendLine($"\t\tpublic async Task<ListResultDto<{table.Name}Dto>> GetEntitysAsync({table.Name}RetrieveInputDto inputDto)");
+                    builder.AppendLine($"\t\tpublic async Task<ListResultDto<{table.Name}Dto>> GetEntitysAsync([FromQuery] {table.Name}RetrieveInputDto inputDto)");
                     {
                         builder.AppendLine("\t\t{");
                         builder.AppendLine($"\t\t\treturn await {table.Name}AppService.GetEntitysAsync(inputDto);");
@@ -99,7 +99,7 @@ using Volo.Abp.Data;");
                     }
 
                     builder.AppendLine("\t\t[HttpGet]");
-                    builder.AppendLine($"\t\tpublic async Task<PagedResultDto<{table.Name}Dto>> GetListAsync({table.Name}RetrieveInputDto input)");
+                    builder.AppendLine($"\t\tpublic async Task<PagedResultDto<{table.Name}Dto>> GetListAsync([FromQuery] {table.Name}RetrieveInputDto input)");
                     {
                         builder.AppendLine("\t\t{");
                         builder.AppendLine("\t\t\tusing (dataFilter.Disable())");

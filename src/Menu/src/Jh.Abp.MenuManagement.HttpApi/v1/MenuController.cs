@@ -74,7 +74,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <returns></returns>
         [Route("all")]
         [HttpGet]
-        public async Task<ListResultDto<MenuDto>> GetEntitysAsync(MenuRetrieveInputDto inputDto)
+        public async Task<ListResultDto<MenuDto>> GetEntitysAsync([FromQuery] MenuRetrieveInputDto inputDto)
         {
             return await menuAppService.GetEntitysAsync(inputDto);
         }
@@ -109,7 +109,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<PagedResultDto<MenuDto>> GetListAsync(MenuRetrieveInputDto input)
+        public async Task<PagedResultDto<MenuDto>> GetListAsync([FromQuery] MenuRetrieveInputDto input)
         {
             using (dataFilter.Disable())
             {

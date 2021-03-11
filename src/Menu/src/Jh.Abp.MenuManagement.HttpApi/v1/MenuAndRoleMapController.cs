@@ -60,7 +60,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <returns></returns>
         [Route("list")]
         [HttpGet]
-        public async Task<ListResultDto<MenuAndRoleMapDto>> GetEntitysAsync(MenuAndRoleMapRetrieveInputDto inputDto)
+        public async Task<ListResultDto<MenuAndRoleMapDto>> GetEntitysAsync([FromQuery] MenuAndRoleMapRetrieveInputDto inputDto)
         {
             return await menuAndRoleMapAppService.GetEntitysAsync(inputDto);
         }
@@ -95,7 +95,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<PagedResultDto<MenuAndRoleMapDto>> GetListAsync(MenuAndRoleMapRetrieveInputDto input)
+        public async Task<PagedResultDto<MenuAndRoleMapDto>> GetListAsync([FromQuery] MenuAndRoleMapRetrieveInputDto input)
         {
             return await menuAndRoleMapAppService.GetListAsync(input);
         }
