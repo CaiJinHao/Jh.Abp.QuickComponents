@@ -144,7 +144,9 @@ namespace Jh.SourceGenerator.Common
                     var CreateDomainDto = CreateFile(new DomainDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
                     var CreateIAppService = CreateFile(new IAppServiceCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
                 }
+                var CreateIDapperRepository = CreateFile(new IDapperRepositoryCodeBuilder(tableDto, generatorOptions.CreateDomainPath));
                 var CreateIRepository = CreateFile(new IRepositoryCodeBuilder(tableDto, generatorOptions.CreateDomainPath));
+                var CreateDapperRepository = CreateFile(new DapperRepositoryCodeBuilder(tableDto, generatorOptions.CreateEfCorePath));
                 var CreateRepository = CreateFile(new RepositoryCodeBuilder(tableDto, generatorOptions.CreateEfCorePath));
                 var CreateAppService = CreateFile(new AppServiceCodeBuilder(tableDto, generatorOptions.CreateApplicationPath));
                 var CreateProfile = CreateFile(new ProfileCodeBuilder(tableDto, generatorOptions.CreateApplicationPath));

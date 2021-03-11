@@ -23,8 +23,19 @@
   </ItemGroup>
   
   <ItemGroup>
+    <None Remove="CodeBuilders\Html\Layui\edit.cshtml" />
+    <None Remove="CodeBuilders\Html\Layui\index.cshtml" />
     <None Remove="CodeBuilders\Html\Layui\UiEdit.cshtml" />
     <None Remove="CodeBuilders\Html\Layui\UiIndex.cshtml" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include="CodeBuilders\Html\Layui\edit.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CodeBuilders\Html\Layui\index.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
