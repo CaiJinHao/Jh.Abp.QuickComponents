@@ -11,7 +11,7 @@
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Jh.SourceGenerator</PackageTags>
     <PackageReleaseNotes>Jh.SourceGenerator libs</PackageReleaseNotes>
-    <Version>1.1.3</Version>
+    <Version>1.1.4</Version>
     <Description>Jh.AbpExtensions libs</Description>
   </PropertyGroup>
 

@@ -85,11 +85,11 @@ namespace Jh.SourceGenerator.Common
         {
             foreach (var property in properties)
             {
-                var descriptionAttr = GetAttrArgs<DescriptionAttribute>(property).FirstOrDefault();
+                var descriptionAttr = GetAttrArgs<DescriptionAttribute>(property)?.FirstOrDefault();
                 var description = string.Empty;
-                if (description != null)
+                if (descriptionAttr != null)
                 {
-                    description = descriptionAttr.Value?.ToString();
+                    description = descriptionAttr?.Value?.ToString();
                 }
                 var required = GetAttr<RequiredAttribute>(property);
                 yield return new FieldDto()
