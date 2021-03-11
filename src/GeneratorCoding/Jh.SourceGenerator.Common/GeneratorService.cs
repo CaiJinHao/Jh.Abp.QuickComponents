@@ -15,9 +15,9 @@ namespace Jh.SourceGenerator.Common
 {
     public class GeneratorService
     {
-        public GeneratorOptions generatorOptions { get; set; }
-        public Assembly LoadAssembly { get; }
-        public GeneratorService(Assembly assembly, GeneratorOptions options)
+        public  GeneratorOptions generatorOptions { get; set; }
+        public  Assembly LoadAssembly { get; }
+        public  GeneratorService(Assembly assembly, GeneratorOptions options)
         {
             LoadAssembly = assembly;
             generatorOptions = options;
@@ -26,36 +26,42 @@ namespace Jh.SourceGenerator.Common
             GeneratorConsts.ControllerBase = options.ControllerBase;
         }
 
-        public IEnumerable<Type> GetLoadableTypes()
+        public virtual IEnumerable<Type> GetLoadableTypes()
         { 
             return LoadAssembly.DefinedTypes.Select((TypeInfo t) => t.AsType());
         }
 
-        public IEnumerable<Type> GetTableClass()
+        public virtual IEnumerable<Type> GetTableClass()
         {
             var classCollection = GetLoadableTypes().Where(cla=>cla.IsClass);
             var tableClass = classCollection.Where(tab=>tab.CustomAttributes.Any(a=>a.AttributeType.Equals(typeof(GeneratorClassAttribute))));
             return tableClass;
         }
 
-        public TableDto GetTableDto(Type classType)
+        public virtual TableDto GetTableDto(Type classType)
         {
             return new TableDto(GeneratorConsts.DbContext, GeneratorConsts.Namespace, GeneratorConsts.ControllerBase)
             {
                 Name = GetTableName(classType),
-                Comment= GetTableDescription(classType),
+                InheritClass= GetTableInheritClass(classType),
+                Comment = GetTableDescription(classType),
                 FieldsCreateOrUpdateInput = GetFieldDto(GetMembers<CreateOrUpdateInputDtoAttribute>(classType)).ToList(),
                 FieldsRetrieve = GetFieldDto(GetMembers<RetrieveDtoAttribute>(classType)).ToList(),
                 FieldsIgnore= GetFieldDto(GetMembers<ProfileIgnoreAttribute>(classType)).ToList(),
             };
         }
 
-        public string GetTableName(Type classType)
+        public virtual string GetTableName(Type classType)
         {
             return classType.Name;
         }
 
-        public string GetTableDescription(Type classType)
+        public virtual string GetTableInheritClass(Type classType)
+        {
+            return classType.BaseType.Name.Replace("`1","Dto");
+        }
+
+        public virtual string GetTableDescription(Type classType)
         {
             var attr = classType.CustomAttributes.Where(a => a.AttributeType.Equals(typeof(DescriptionAttribute))).FirstOrDefault();
             if (attr != null)
@@ -69,7 +75,8 @@ namespace Jh.SourceGenerator.Common
             return default;
         }
 
-        public IEnumerable<PropertyInfo> GetMembers<TAttribute>(Type classType)
+
+        public virtual IEnumerable<PropertyInfo> GetMembers<TAttribute>(Type classType)
         {
             foreach (var property in classType.GetProperties())
             {
@@ -81,7 +88,7 @@ namespace Jh.SourceGenerator.Common
             }
         }
 
-        public IEnumerable<FieldDto> GetFieldDto(IEnumerable<PropertyInfo> properties)
+        public virtual IEnumerable<FieldDto> GetFieldDto(IEnumerable<PropertyInfo> properties)
         {
             foreach (var property in properties)
             {
@@ -117,13 +124,13 @@ namespace Jh.SourceGenerator.Common
         /// <typeparam name="TAttribute"></typeparam>
         /// <param name="property"></param>
         /// <returns></returns>
-        public CustomAttributeData GetAttr<TAttribute>(PropertyInfo property)
+        public virtual CustomAttributeData GetAttr<TAttribute>(PropertyInfo property)
         {
             return property.CustomAttributes
                 .Where(a => a.AttributeType.Equals(typeof(TAttribute))).FirstOrDefault();
         }
 
-        public IEnumerable<CustomAttributeTypedArgument> GetAttrArgs<TAttribute>(PropertyInfo property)
+        public virtual IEnumerable<CustomAttributeTypedArgument> GetAttrArgs<TAttribute>(PropertyInfo property)
         {
             var attr = property.CustomAttributes
                 .Where(a => a.AttributeType.Equals(typeof(TAttribute))).FirstOrDefault();
@@ -134,12 +141,12 @@ namespace Jh.SourceGenerator.Common
             return attr.ConstructorArguments.AsEnumerable();
         }
 
-        public string GetFiledName(PropertyInfo property)
+        public virtual string GetFiledName(PropertyInfo property)
         {
             return property.Name;
         }
 
-        public bool GeneratorCode()
+        public virtual bool GeneratorCode()
         { 
             var tableClass = GetTableClass();
             foreach (var item in tableClass)
@@ -173,7 +180,7 @@ namespace Jh.SourceGenerator.Common
             return true;
         }
 
-        public bool CreateFile(CodeBuilderAbs codeBuilder)
+        public virtual bool CreateFile(CodeBuilderAbs codeBuilder)
         {
             new DirectoryInfo(codeBuilder.FilePath).CreateDirectoryInfo();
             var filePath = Path.Combine(codeBuilder.FilePath, codeBuilder.FileName + codeBuilder.Suffix);
