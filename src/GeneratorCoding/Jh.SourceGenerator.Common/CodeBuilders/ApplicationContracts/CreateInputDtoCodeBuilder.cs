@@ -34,7 +34,7 @@ using System.Text;");
                         {
                             builder.AppendLine($"\t\t[Required]");
                         }
-                        builder.AppendLine($"\t\tpublic string {_field.Name} " + "{ get; set; }");
+                        builder.AppendLine($"\t\tpublic {_field.Type} {_field.Name} " + "{ get; set; }");
                     }
                 }
                 builder.AppendLine("\t}");

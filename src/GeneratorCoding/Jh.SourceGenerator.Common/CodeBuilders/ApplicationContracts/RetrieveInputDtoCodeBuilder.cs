@@ -29,7 +29,7 @@ using Volo.Abp.Application.Dtos;");
                         builder.AppendLine($"\t\t/// <summary>");
                         builder.AppendLine($"\t\t/// {_field.Description}");
                         builder.AppendLine($"\t\t/// <summary>");
-                        builder.AppendLine($"\t\tpublic string {_field.Name} " + "{ get; set; }");
+                        builder.AppendLine($"\t\tpublic {_field.Type} {_field.Name} " + "{ get; set; }");
                     }
                     //IFullRetrieveDto
                     builder.AppendLine("\t\t/// <summary>");
