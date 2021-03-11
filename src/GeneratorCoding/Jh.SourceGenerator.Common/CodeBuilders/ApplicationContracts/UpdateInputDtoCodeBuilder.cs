@@ -29,7 +29,8 @@ using Jh.Abp.Application.Contracts.Extensions;");
                         builder.AppendLine($"\t\t/// <summary>");
                         builder.AppendLine($"\t\t/// {_field.Description}");
                         builder.AppendLine($"\t\t/// <summary>");
-                        builder.AppendLine($"\t\tpublic {_field.Type} {_field.Name} " + "{ get; set; }");
+                        var nullable = _field.IsNullable ? "?" : "";//可空类型
+                        builder.AppendLine($"\t\tpublic {_field.Type}{nullable} {_field.Name} " + "{ get; set; }");
                     }
                     //IFullRetrieveDto
                     builder.AppendLine("\t\t/// <summary>");

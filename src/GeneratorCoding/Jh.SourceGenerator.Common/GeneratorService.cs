@@ -92,14 +92,22 @@ namespace Jh.SourceGenerator.Common
                     description = descriptionAttr?.Value?.ToString();
                 }
                 var required = GetAttr<RequiredAttribute>(property);
-                //时间类型有问题
-                yield return new FieldDto()
+                var theType = property.PropertyType;
+                var fieldDto = new FieldDto()
                 {
                     Name = GetFiledName(property),
                     Description = description,
-                    Type = property.PropertyType.Name,
+                    Type = theType.Name,
                     IsRequired = required != null
                 };
+                if (theType.IsGenericType && theType.
+                      GetGenericTypeDefinition().Equals
+                      (typeof(Nullable<>)))
+                {
+                    fieldDto.IsNullable = true;
+                    fieldDto.Type = theType.GetGenericArguments().FirstOrDefault().Name;
+                }
+                yield return fieldDto;
             }
         }
 

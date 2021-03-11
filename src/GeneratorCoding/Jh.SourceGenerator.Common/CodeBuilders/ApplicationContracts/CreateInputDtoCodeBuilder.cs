@@ -34,7 +34,8 @@ using System.Text;");
                         {
                             builder.AppendLine($"\t\t[Required]");
                         }
-                        builder.AppendLine($"\t\tpublic {_field.Type} {_field.Name} " + "{ get; set; }");
+                        var nullable = _field.IsNullable ? "?" : "";//可空类型
+                        builder.AppendLine($"\t\tpublic {_field.Type}{nullable} {_field.Name} " + "{ get; set; }");
                     }
                 }
                 builder.AppendLine("\t}");

@@ -16,5 +16,9 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// 字段的类型
         /// </summary>
         public string Type { get; set; }
+        /// <summary>
+        /// 是否为可控类型 ?
+        /// </summary>
+        public bool IsNullable { get; set; }
     }
 }
