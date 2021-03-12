@@ -28,10 +28,33 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// 表描述
         /// </summary>
         public string Comment { get; set; }
+        private string _inheritClass = "EntityDto";
         /// <summary>
         /// 要继承的类
         /// </summary>
-        public string InheritClass { get; set; } = "FullAuditedEntityDto";
+        public string InheritClass
+        {
+            get { return _inheritClass; }
+            set
+            {
+                if (InheritClass.Contains("FullAuditedAggregateRoot"))
+                {
+                    _inheritClass = "FullAuditedEntityDto";
+                }
+                else if (InheritClass.Contains("CreationAuditedEntity"))
+                {
+                    _inheritClass = "CreationAuditedEntityDto";
+                }
+                else if (InheritClass.Contains("AuditedAggregateRoot"))
+                {
+                    _inheritClass = "AuditedEntityDto";
+                }
+                else
+                {
+                    _inheritClass = "EntityDto";
+                }
+            }
+        }
         /// <summary>
         /// 所有自定义的字段
         /// </summary>
