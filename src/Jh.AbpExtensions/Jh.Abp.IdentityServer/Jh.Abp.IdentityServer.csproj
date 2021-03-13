@@ -11,7 +11,7 @@
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Jh.AbpExtensions</PackageTags>
     <PackageReleaseNotes>Jh.AbpExtensions libs</PackageReleaseNotes>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <Description>Jh.AbpExtensions libs</Description>
   </PropertyGroup>
   

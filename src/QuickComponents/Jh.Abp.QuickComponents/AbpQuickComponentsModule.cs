@@ -60,7 +60,8 @@ namespace Jh.Abp.QuickComponents
                 options.SerializerSettings.ContractResolver = new JhMvcJsonContractResolver(context.Services);
             });
 
-            context.Services.AddMiniProfilerComponent();
+            // 在前面控制
+            //context.Services.AddMiniProfilerComponent();
             context.Services.AddSwaggerComponent(configuration);
             context.Services.AddLocalizationComponent();
             context.Services.AddJwtAuthenticationComponent(configuration);

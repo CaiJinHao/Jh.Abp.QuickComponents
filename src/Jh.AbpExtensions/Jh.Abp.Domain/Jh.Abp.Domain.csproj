@@ -11,7 +11,7 @@
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Abp Extension</PackageReleaseNotes>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <Description>AccessToken</Description>
   </PropertyGroup>
 

@@ -12,7 +12,7 @@
     <PackageReleaseNotes>Abp webapi项目需要使用的基础组件。Swagger、MIniProfiler、IdentityServer.</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/CaiJinHao/QuickComponents</PackageProjectUrl>
-    <Version>1.1.9</Version>
+    <Version>1.2.2</Version>
     <RootNamespace>Jh.Abp.QuickComponents</RootNamespace>
   </PropertyGroup>
 
