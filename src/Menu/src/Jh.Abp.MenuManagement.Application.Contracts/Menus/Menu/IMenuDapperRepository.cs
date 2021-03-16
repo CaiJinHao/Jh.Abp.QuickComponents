@@ -7,6 +7,6 @@ namespace Jh.Abp.MenuManagement.Menus
 {
     public interface IMenuDapperRepository
     {
-        Task<IEnumerable<Menu>> GetDapperListAsync();
+        Task<IEnumerable<MenuDto>> GetDapperListAsync();
     }
 }
