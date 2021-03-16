@@ -128,7 +128,7 @@ namespace Jh.Abp.Extensions
             return CreateFilteredQuery(inputDto, ObjectMethodConsts.Contains);
         }
 
-        protected  IQueryable<TEntity> CreateFilteredQuery<TWhere>(TWhere inputDto, string methodStringType)
+        protected virtual IQueryable<TEntity> CreateFilteredQuery<TWhere>(TWhere inputDto, string methodStringType)
         {
             var lambda = LinqExpression.ConvetToExpression<TWhere, TEntity>(inputDto, methodStringType);
             var query = ReadOnlyRepository.Where(lambda);
