@@ -27,6 +27,9 @@ namespace Jh.Abp.MenuManagement.Menus
         }
     }
 
+    /// <summary>
+    /// 将带Dto的接口放到Contracts，如果已经有了一个Dto的接口，直接用就可以
+    /// </summary>
     public class MenuDtoRepository : IMenuDtoRepository, ITransientDependency
     {
         public IMenuDapperRepository MenuDapperRepository { get; set; }
