@@ -83,6 +83,26 @@ namespace Jh.Abp.Extensions
             );
         }
 
+        public virtual async Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, string methodStringType = ObjectMethodConsts.Contains, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await CheckGetListPolicyAsync();
+
+            var query = CreateFilteredQuery(input, methodStringType);
+
+            var totalCount = await AsyncExecuter.CountAsync(query);
+
+            query = ApplySorting(query, input);
+            query = ApplyPaging(query, input);
+
+            var entities = await AsyncExecuter.ToListAsync(query);
+            var entityDtos = await MapToGetListOutputDtosAsync(entities);
+
+            return new PagedResultDto<TPagedRetrieveOutputDto>(
+                totalCount,
+                entityDtos
+            );
+        }
+
         [UnitOfWork]
         public virtual async Task<TEntity> UpdatePortionAsync(TKey key, TUpdateInputDto updateInput, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {

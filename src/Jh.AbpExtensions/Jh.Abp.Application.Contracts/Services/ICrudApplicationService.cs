@@ -86,5 +86,14 @@ namespace Jh.Abp.Extensions
         /// <param name="inputDto"></param>
         /// <returns></returns>
         Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.Contains, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// 重写分页列表 methodStringType
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="methodStringType"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, string methodStringType = ObjectMethodConsts.Contains, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
