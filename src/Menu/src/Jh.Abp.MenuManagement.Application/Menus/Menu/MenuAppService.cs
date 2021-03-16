@@ -25,6 +25,7 @@ namespace Jh.Abp.MenuManagement.Menus
         private readonly IMenuAndRoleMapRepository menuAndRoleMapRepository;
 
         private readonly IMenuAndRoleMapAppService menuAndRoleMapAppService;
+        public IMenuDtoRepository menuDtoRepository { get; set; }
 
         public MenuAppService(IMenuRepository repository,
             IMenuDapperRepository menuDapperRepository, 
@@ -72,7 +73,7 @@ namespace Jh.Abp.MenuManagement.Menus
             /*var data = MenuDapperRepository.GetDapperListAsync().Result;
             if (data != null)
             {
-                var c = menuRepository.GetDapperListAsync().Result;
+                var c = menuDtoRepository.GetDtoDapperListAsync().Result;
             }*/
             var entity = await base.DeleteAsync(id, autoSave, cancellationToken);
             await menuAndRoleMapRepository.DeleteListAsync(a => a.MenuId == entity.Id).ConfigureAwait(false);

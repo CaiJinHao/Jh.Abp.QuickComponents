@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.EntityFrameworkCore;
 using Dapper;
+using Volo.Abp.DependencyInjection;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
@@ -20,8 +23,23 @@ namespace Jh.Abp.MenuManagement.Menus
 
         public async Task<IEnumerable<Menu>> GetDapperListAsync()
         {
-            //return await MenuDapperRepository.GetDapperListAsync();
             throw new Exception("not use dto");
+        }
+    }
+
+    public class MenuDtoRepository : IMenuDtoRepository, ITransientDependency
+    {
+        public IMenuDapperRepository MenuDapperRepository { get; set; }
+        public IMenuRepository menusRepository { get; set; }
+        public async Task<IEnumerable<MenuDto>> GetDtoDapperListAsync()
+        {
+            var data = await menusRepository.ToListAsync();
+            return data.Select(a => new MenuDto()
+            {
+                Code = a.Code,
+                Id = a.Id
+            });
+            //return await MenuDapperRepository.GetDapperListAsync();
         }
     }
 }
