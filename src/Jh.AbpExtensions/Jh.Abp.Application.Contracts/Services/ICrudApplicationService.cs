@@ -50,7 +50,7 @@ namespace Jh.Abp.Extensions
         /// <param name="autoSave"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.Equals, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 根据主键删除多条[Route("keys")][HttpDelete]
@@ -85,7 +85,7 @@ namespace Jh.Abp.Extensions
         /// </summary>
         /// <param name="inputDto"></param>
         /// <returns></returns>
-        Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.Contains, CancellationToken cancellationToken = default(CancellationToken));
+        Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.ContainsMethod, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 重写分页列表 methodStringType
@@ -94,6 +94,6 @@ namespace Jh.Abp.Extensions
         /// <param name="methodStringType"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, string methodStringType = ObjectMethodConsts.Contains, CancellationToken cancellationToken = default(CancellationToken));
+        Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, string methodStringType = ObjectMethodConsts.ContainsMethod, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

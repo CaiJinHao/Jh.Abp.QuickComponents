@@ -52,7 +52,7 @@ namespace Jh.Abp.Extensions
         }
 
         [UnitOfWork]
-        public virtual async Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.Equals, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckDeletePolicyAsync().ConfigureAwait(false);
             var query = CreateFilteredQuery(deleteInputDto, methodStringType);
@@ -73,7 +73,7 @@ namespace Jh.Abp.Extensions
             return (await crudRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, cancellationToken).ConfigureAwait(false)).FirstOrDefault();
         }
 
-        public virtual async Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.Contains, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.ContainsMethod, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckGetListPolicyAsync().ConfigureAwait(false);
             var query = CreateFilteredQuery(inputDto, methodStringType);
@@ -83,7 +83,7 @@ namespace Jh.Abp.Extensions
             );
         }
 
-        public virtual async Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, string methodStringType = ObjectMethodConsts.Contains, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, string methodStringType = ObjectMethodConsts.ContainsMethod, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckGetListPolicyAsync();
 
@@ -145,7 +145,7 @@ namespace Jh.Abp.Extensions
    
         protected override IQueryable<TEntity> CreateFilteredQuery(TRetrieveInputDto inputDto)
         {
-            return CreateFilteredQuery(inputDto, ObjectMethodConsts.Contains);
+            return CreateFilteredQuery(inputDto, ObjectMethodConsts.ContainsMethod);
         }
 
         protected virtual IQueryable<TEntity> CreateFilteredQuery<TWhere>(TWhere inputDto, string methodStringType)

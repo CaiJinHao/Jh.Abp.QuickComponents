@@ -90,7 +90,7 @@ namespace Jh.Abp.MenuManagement.Menus
         }
 
         [UnitOfWork]
-        public override async Task<Menu[]> DeleteAsync(MenuDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.Equals, bool autoSave = false, CancellationToken cancellationToken = default)
+        public override async Task<Menu[]> DeleteAsync(MenuDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             var entitys = await base.DeleteAsync(deleteInputDto, autoSave:autoSave, cancellationToken:cancellationToken);
             await menuAndRoleMapRepository.DeleteListAsync(a => entitys.Select(b => b.Id).Contains(a.MenuId)).ConfigureAwait(false);

@@ -6,7 +6,14 @@ namespace Jh.Abp.Application.Contracts.Extensions
 {
     public class ObjectMethodConsts
     {
-        public const string Contains = "Contains";
-        public const string Equals = "Equals";
+        /// <summary>
+        /// 查询方式为包含
+        /// </summary>
+        public const string ContainsMethod = "Contains";
+
+        /// <summary>
+        /// 查询方式为等于
+        /// </summary>
+        public const string EqualsMethod = "Equals";
     }
 }
