@@ -5,6 +5,7 @@ using IdentityServer4.Models;
 using Jh.Abp.Common.Extensions;
 using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -27,13 +28,19 @@ namespace Jh.Abp.IdentityServer.Jh.Abp.AspNetIdentity
         protected override async Task<ClaimsPrincipal> GetUserClaimsAsync(IdentityUser user)
         {
             var claimsPrincipal = await base.GetUserClaimsAsync(user);
-            claimsPrincipal.Identities.First().AddClaim(new Claim(Volo.Abp.Security.Claims.AbpClaimTypes.PhoneNumber, user.PhoneNumber ?? ""));
-            foreach (var item in user.Roles)
+            var claims = new List<Claim>();
+            claims.Add(new Claim(Volo.Abp.Security.Claims.AbpClaimTypes.PhoneNumber, user.PhoneNumber ?? ""));
+            if (user.Roles != null)
             {
-                claimsPrincipal.Identities.First().AddClaim(new Claim(JhJwtClaimTypes.RoleId, item.RoleId.ToString()));
+                foreach (var item in user.Roles)
+                {
+                    claims.Add(new Claim(JhJwtClaimTypes.RoleId, item.RoleId.ToString()));
+                }
             }
-            claimsPrincipal.Identities.First().AddClaim(new Claim(Volo.Abp.Security.Claims.AbpClaimTypes.Name, user.Name ?? ""));
-            claimsPrincipal.Identities.First().AddClaim(new Claim(Volo.Abp.Security.Claims.AbpClaimTypes.SurName, user.Surname ?? ""));
+            claims.Add(new Claim(Volo.Abp.Security.Claims.AbpClaimTypes.Name, user.Name ?? ""));
+            claims.Add(new Claim(Volo.Abp.Security.Claims.AbpClaimTypes.SurName, user.Surname ?? ""));
+
+            claimsPrincipal.Identities.First().AddClaims(claims);
             return claimsPrincipal;
         }
     }
