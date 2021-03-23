@@ -6,12 +6,12 @@ namespace Jh.Abp.QuickComponents.Tests
 		/// <summary>
 		/// 货物数量
 		/// <summary>
-		public Decimal Num { get; set; }
+		public Decimal? Num { get; set; }
 		
 		/// <summary>
 		/// 点击量
 		/// <summary>
-		public Int64 ClickNum { get; set; }
-		
+		public Int64? ClickNum { get; set; }
+        public DateTime? DateTime { get; set; }
 	}
 }

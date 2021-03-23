@@ -83,7 +83,8 @@ namespace Jh.Abp.Common.Linq
                     case Enums.ObjectType.Double:
                     case Enums.ObjectType.Decimal:
                         {
-                            if (propertyVal.Equals(0))
+                            var t = propertyVal.ToString();
+                            if (t.Equals("0"))
                             {
                                 continue;
                             }
