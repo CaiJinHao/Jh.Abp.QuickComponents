@@ -89,6 +89,7 @@ namespace Jh.Abp.Common.Linq
                                 continue;
                             }
                             method = propertyType.GetMethod("Equals", new Type[] { propertyType });
+                            proerty = Expression.Convert(proerty, propertyType);
                         }
                         break;
                     case Enums.ObjectType.Guid:
@@ -116,7 +117,6 @@ namespace Jh.Abp.Common.Linq
                         //其他不添加查询条件
                         continue;
                 }
-   
                 //3.创建常数表达式
                 ConstantExpression constantExpression = Expression.Constant(propertyVal, propertyType);
                 //4.创建方法调用表达式

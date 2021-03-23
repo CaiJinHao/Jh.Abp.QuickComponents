@@ -1,5 +1,6 @@
 using Jh.Abp.Common;
 using Jh.Abp.Common.Entity;
+using Jh.Abp.Common.Linq;
 using System;
 using Xunit;
 
@@ -10,9 +11,9 @@ namespace Jh.Abp.QuickComponents.Tests
         [Fact]
         public void Test1()
         {
-            var t1 = new TradeLeadUpdateInputDto() { ClickNum = 1, DateTime=DateTime.Now, Num=1 };
+            var t1 = new TradeLeadUpdateInputDto() { ClickNum = 1, DateTime=DateTime.Now, Num=1,ClickNum2=2 };
             var t2 = new TradeLead() { Num = 2 };
-            EntityOperator.UpdatePortionToEntity(t1, t2);
+            var t= LinqExpression.ConvetToExpression<TradeLeadUpdateInputDto, TradeLead>(t1);
             Assert.True(t2.Num == 2);
         }
 
