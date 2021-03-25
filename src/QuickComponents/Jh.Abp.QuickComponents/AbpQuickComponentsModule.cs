@@ -51,7 +51,7 @@ namespace Jh.Abp.QuickComponents
 
             Configure<AbpJsonOptions>(options =>
             {
-                options.DefaultDateTimeFormat = "yyyy-MM-dd HH:mm:ss:fff";
+                options.DefaultDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
             });
 
             Configure<MvcNewtonsoftJsonOptions>(options =>

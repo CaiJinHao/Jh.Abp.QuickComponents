@@ -13,8 +13,9 @@ namespace Jh.Abp.QuickComponents.Tests
         {
             var t1 = new TradeLeadUpdateInputDto() { ClickNum = 1, DateTime=DateTime.Now, Num=1,ClickNum2=2 };
             var t2 = new TradeLead() { Num = 2 };
-            var t= LinqExpression.ConvetToExpression<TradeLeadUpdateInputDto, TradeLead>(t1);
-            Assert.True(t2.Num == 2);
+            //var t= LinqExpression.ConvetToExpression<TradeLeadUpdateInputDto, TradeLead>(t1);
+            EntityOperator.UpdatePortionToEntity(t1,t2);
+            Assert.True(t2.DateTime !=null);
         }
 
        
