@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jh.Abp.Common.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -20,5 +21,9 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// 是否为可控类型 ?
         /// </summary>
         public bool IsNullable { get; set; }
+        /// <summary>
+        /// 字段类型
+        /// </summary>
+        public ObjectType FieldType { get; set; }
     }
 }
