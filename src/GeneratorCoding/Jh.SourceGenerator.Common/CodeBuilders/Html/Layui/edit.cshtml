@@ -38,7 +38,14 @@
                                 <div class="layui-inline">
                                     <label class="layui-form-label">@(col.Description)：</label>
                                     <div class="layui-input-inline">
-                                        <input type="text" class="layui-input" lay-verify="required" placeholder="请输入@(col.Description)" v-model="@(table_name_lower).@(col.Name)">
+                                        @if (col.IsRequired)
+                                        {
+                                            <input type="text" class="layui-input" lay-verify="required" placeholder="请输入@(col.Description)" v-model="@(table_name_lower).@(col.Name)">
+                                        }
+                                        else
+                                        {
+                                            <input type="text" class="layui-input" placeholder="请输入@(col.Description)" v-model="@(table_name_lower).@(col.Name)">
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -64,14 +71,24 @@
             data: {
                 paramObj: {},
                @(table_name_lower):{
-         @foreach (var col in columns)
-                {
-                    if (col.Type.ToLower() == "string") {
-                    @:@(col.Name):'',
-                    }else {
-					@:@(col.Name):0,
-                    }
-				}
+                    @foreach (var col in columns)
+                    {
+                        switch (col.FieldType.ToString())
+                        {
+                            case "Guid":
+                            case "DateTime":
+                            case "String":
+                            {
+                          @:@(col.Name):'',
+                            }
+                            break;
+                            default:
+                            {
+                             @:@(col.Name): 0,
+                            }
+                            break;
+                        }
+				    }
                }
             },
             watch:{

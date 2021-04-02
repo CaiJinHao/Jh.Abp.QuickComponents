@@ -29,9 +29,13 @@ using Volo.Abp.Application.Dtos;");
                     {
                         if (!_field.IsNullable)
                         {
-                            if (_field.FieldType != Abp.Common.Enums.ObjectType.String)
+                            switch (_field.FieldType)
                             {
-                                _field.IsNullable = true;
+                                case Abp.Common.Enums.ObjectType.String:
+                                    break;
+                                default:
+                                    _field.IsNullable = true;
+                                    break;
                             }
                         }
                         builder.AppendLine($"\t\t/// <summary>");
