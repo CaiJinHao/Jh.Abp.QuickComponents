@@ -36,7 +36,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="deleteInputDto"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<MenuAndRoleMap[]> DeleteAsync(MenuAndRoleMapDeleteInputDto deleteInputDto)
+        public async Task<MenuAndRoleMap[]> DeleteAsync([FromQuery] MenuAndRoleMapDeleteInputDto deleteInputDto)
         {
             return await menuAndRoleMapAppService.DeleteAsync(deleteInputDto);
         }

@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Volo.Abp.Auditing;
 using Volo.Abp.AuditLogging;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.DependencyInjection;

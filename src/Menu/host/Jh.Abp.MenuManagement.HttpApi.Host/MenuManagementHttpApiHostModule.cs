@@ -19,6 +19,7 @@ using Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Auditing;
+using Volo.Abp.AuditLogging;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Autofac;
@@ -162,6 +163,8 @@ namespace Jh.Abp.MenuManagement
                 options.ApplicationName = "MunuManagement";
                 options.IsEnabledForGetRequests = true;
                 options.IsEnabledForAnonymousUsers = false;
+                options.AlwaysLogOnException = false;
+                options.IgnoredTypes.Add(typeof(AuditLog));
                 //options.EntityHistorySelectors.AddAllEntities();
             });
         }

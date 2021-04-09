@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Auditing;
 using Volo.Abp.AuditLogging;
 
 namespace Jh.Abp.MenuManagement

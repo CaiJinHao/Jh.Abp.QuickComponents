@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Auditing;
 using Volo.Abp.AuditLogging;
 using Volo.Abp.Data;
 namespace Jh.Abp.MenuManagement.v1
@@ -20,7 +21,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="deleteInputDto"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task DeleteAsync(AuditLoggingDeleteInputDto deleteInputDto)
+        public async Task DeleteAsync([FromQuery]AuditLoggingDeleteInputDto deleteInputDto)
         {
             await auditLoggingAppService.DeleteAsync(deleteInputDto);
         }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Jh.Abp.MenuManagement
 {
-    public class AuditLoggingDeleteInputDto: AuditLoggingRetrieveInputDto
+    public class AuditLoggingDeleteInputDto : AuditLoggingRetrieveInputDto
     {
     }
 }
