@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Volo.Abp.AuditLogging.Domain" Version="4.0.2" />
     <PackageReference Include="Volo.Abp.Identity.Domain" Version="4.0.2" />
   </ItemGroup>
 
