@@ -4,6 +4,7 @@ using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Modularity;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Dapper;
+using Volo.Abp.AuditLogging;
 
 namespace Jh.Abp.MenuManagement.EntityFrameworkCore
 {

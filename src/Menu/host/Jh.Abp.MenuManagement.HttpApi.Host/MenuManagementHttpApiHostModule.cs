@@ -215,7 +215,7 @@ namespace Jh.Abp.MenuManagement
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();
-            SeedData(context);
+            //SeedData(context);
         }
 
         private void SeedData(ApplicationInitializationContext context)

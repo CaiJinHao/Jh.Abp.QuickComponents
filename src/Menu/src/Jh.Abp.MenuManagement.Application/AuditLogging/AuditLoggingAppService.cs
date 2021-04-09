@@ -40,7 +40,7 @@ namespace Jh.Abp.MenuManagement
                 , retrieveInputDto.hasException, retrieveInputDto.httpStatusCode, includeDetails, cancellationToken);
             var totalCount = await auditLogsRepository.GetCountAsync(retrieveInputDto.startTime, retrieveInputDto.endTime, retrieveInputDto.httpMethod, retrieveInputDto.url, retrieveInputDto.userName
                 , retrieveInputDto.applicationName, retrieveInputDto.correlationId, retrieveInputDto.maxExecutionDuration, retrieveInputDto.minExecutionDuration
-                , retrieveInputDto.hasException, retrieveInputDto.httpStatusCode, cancellationToken);
+                , retrieveInputDto.hasException, retrieveInputDto.httpStatusCode,  cancellationToken);
 
             return new PagedResultDto<AuditLog>()
             {
@@ -57,6 +57,17 @@ namespace Jh.Abp.MenuManagement
         public virtual async Task<AuditLog> DeleteAsync(Guid id, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             return (await auditLogsRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, cancellationToken).ConfigureAwait(false)).FirstOrDefault();
+        }
+
+        public async Task<ListResultDto<AuditLog>> GetEntitysAsync(AuditLoggingRetrieveInputDto retrieveInputDto, bool includeDetails = false, CancellationToken cancellationToken = default)
+        {
+            var datas = await auditLogsRepository.GetListAsync(retrieveInputDto.Sorting, retrieveInputDto.MaxResultCount, retrieveInputDto.SkipCount
+              , retrieveInputDto.startTime, retrieveInputDto.endTime, retrieveInputDto.httpMethod, retrieveInputDto.url, retrieveInputDto.userName
+              , retrieveInputDto.applicationName, retrieveInputDto.correlationId, retrieveInputDto.maxExecutionDuration, retrieveInputDto.minExecutionDuration
+              , retrieveInputDto.hasException, retrieveInputDto.httpStatusCode,  includeDetails, cancellationToken);
+            return new ListResultDto<AuditLog>() {
+                Items = datas
+            };
         }
     }
 }

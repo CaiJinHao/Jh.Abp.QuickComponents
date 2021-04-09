@@ -46,7 +46,19 @@ namespace Jh.Abp.MenuManagement.v1
         [HttpGet]
         public async Task<PagedResultDto<AuditLog>> GetListAsync([FromQuery] AuditLoggingRetrieveInputDto input)
         {
-            return await auditLoggingAppService.GetListAsync(input);
+            return await auditLoggingAppService.GetListAsync(input,true);
+        }
+
+        /// <summary>
+        /// 根据条件查询(不分页)
+        /// </summary>
+        /// <param name="inputDto"></param>
+        /// <returns></returns>
+        [Route("all")]
+        [HttpGet]
+        public async Task<ListResultDto<AuditLog>> GetEntitysAsync([FromQuery] AuditLoggingRetrieveInputDto inputDto)
+        {
+            return await auditLoggingAppService.GetEntitysAsync(inputDto, true);
         }
 
         /// <summary>
