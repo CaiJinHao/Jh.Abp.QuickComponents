@@ -19,7 +19,6 @@ namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
     //[ApiVersion("3.0")]
     [RemoteService(Name = JhAbpQuickComponentsRemoteServiceConsts.RemoteServiceName)]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
-    [DisableAuditing]
     public class AccessTokenController : JhAbpQuickComponentsController
     {
         private readonly IAccessTokenAppService _accessTokenAppService;
