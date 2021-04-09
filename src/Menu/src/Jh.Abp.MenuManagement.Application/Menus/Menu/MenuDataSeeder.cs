@@ -77,6 +77,16 @@ namespace Jh.Abp.MenuManagement
                     Url = "/main/view/user/index.html",
                     RoleIds = new Guid[] { roleid }
                 });
+                await menuAppService.CreateAsync(new MenuCreateInputDto()
+                {
+                    Code = "A0204",
+                    Name = "系统审计日志",
+                    Icon = "fa fa-bars",
+                    Sort = 4,
+                    ParentCode = "A02",
+                    Url = "/main/view/auditLogging/index.html",
+                    RoleIds = new Guid[] { roleid }
+                });
             }
         }
     }
