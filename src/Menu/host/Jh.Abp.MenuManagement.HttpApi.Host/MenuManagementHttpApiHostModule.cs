@@ -150,6 +150,7 @@ namespace Jh.Abp.MenuManagement
             });
 
             context.Services.AddAuthorizeFilter(configuration);
+            //context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
 #if DEBUG
             context.Services.AddMiniProfilerComponent();
 #endif
@@ -195,7 +196,9 @@ namespace Jh.Abp.MenuManagement
             //    options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
             //    options.OAuthClientSecret(configuration["AuthServer:SwaggerClientSecret"]);
             //});
+#if DEBUG
             app.UseJhSwagger(context.GetConfiguration(),this.GetType());
+#endif
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();

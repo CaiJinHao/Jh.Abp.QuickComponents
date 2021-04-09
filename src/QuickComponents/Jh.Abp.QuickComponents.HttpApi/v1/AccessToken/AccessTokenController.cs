@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using System.Linq;
 using Volo.Abp.Users;
+using Volo.Abp.Auditing;
 
 namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
 {
@@ -18,6 +19,7 @@ namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
     //[ApiVersion("3.0")]
     [RemoteService(Name = JhAbpQuickComponentsRemoteServiceConsts.RemoteServiceName)]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
+    [DisableAuditing]
     public class AccessTokenController : JhAbpQuickComponentsController
     {
         private readonly IAccessTokenAppService _accessTokenAppService;

@@ -14,26 +14,24 @@ namespace Jh.Abp.MenuManagement
         public static int Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
-#if DEBUG
-                .MinimumLevel.Debug()
-#else
                 .MinimumLevel.Information()
+#if RELEASE
+                       .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
 #endif
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-                .Enrich.FromLogContext()
-                .WriteTo.Async(c =>
-                {
-                    c.File(path: $"Logs/logs-.log",
-                    outputTemplate: AbpConsts.SerilogOutputTemplate,
-                    fileSizeLimitBytes: 1024000,
-                    rollOnFileSizeLimit: true,
-                    rollingInterval: RollingInterval.Day,
-                    retainedFileCountLimit: 31);
-                })
+                       .Enrich.FromLogContext()
+                       .WriteTo.Async(c =>
+                       {
+                           c.File(path: $"Logs/logs-.log",
+                           outputTemplate: AbpConsts.SerilogOutputTemplate,
+                           fileSizeLimitBytes: 1024000,
+                           rollOnFileSizeLimit: true,
+                           rollingInterval: RollingInterval.Day,
+                           retainedFileCountLimit: 31);
+                       })
 #if DEBUG
                 .WriteTo.Async(c => c.Console())
 #endif
-                .CreateLogger();
+                 .CreateLogger();
 
             try
             {
