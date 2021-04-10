@@ -4,7 +4,6 @@ using Volo.Abp.Auditing;
 
 namespace Jh.Abp.MenuManagement
 {
-    [DisableAuditing]
     public abstract class MenuManagementAppService : ApplicationService
     {
         protected MenuManagementAppService()

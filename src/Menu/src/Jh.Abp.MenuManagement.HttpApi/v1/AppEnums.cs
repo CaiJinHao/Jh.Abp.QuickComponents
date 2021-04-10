@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp;
+using Volo.Abp.Auditing;
 
 namespace Jh.Abp.MenuManagement.v1
 {
+    [DisableAuditing]
     [RemoteService]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
     public class AppEnums : MenuManagementController

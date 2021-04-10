@@ -18,6 +18,7 @@ using Volo.Abp.Auditing;
 
 namespace Jh.Abp.MenuManagement
 {
+    [DisableAuditing]
     public class AuditLoggingAppService : MenuManagementAppService,IAuditLoggingAppService, ITransientDependency
     {
         public IAuditLoggingRepository auditLogsRepository { get; set; }
