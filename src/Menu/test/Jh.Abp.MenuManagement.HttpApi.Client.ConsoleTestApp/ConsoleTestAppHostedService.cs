@@ -8,7 +8,7 @@ namespace Jh.Abp.MenuManagement.HttpApi.Client.ConsoleTestApp
 {
     public class ConsoleTestAppHostedService : IHostedService
     {
-        public async Task StartAsync(CancellationToken cancellationToken)
+        public  Task StartAsync(CancellationToken cancellationToken)
         {
             using (var application = AbpApplicationFactory.Create<MenuManagementConsoleApiClientModule>())
             {
@@ -19,6 +19,7 @@ namespace Jh.Abp.MenuManagement.HttpApi.Client.ConsoleTestApp
 
                 application.Shutdown();
             }
+            return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;

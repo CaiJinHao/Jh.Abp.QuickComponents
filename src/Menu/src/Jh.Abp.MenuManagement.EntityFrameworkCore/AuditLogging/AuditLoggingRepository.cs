@@ -23,21 +23,22 @@ namespace Jh.Abp.MenuManagement
         public virtual async Task<AuditLog[]> DeleteEntitysAsync(IQueryable<AuditLog> query, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             var entitys = query.ToArray();
-            DbSet.RemoveRange(entitys);
+            (await GetDbSetAsync()).RemoveRange(entitys);
             if (autoSave)
             {
-                await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
+                await (await GetDbContextAsync()).SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
             }
             return entitys;
         }
 
         public virtual async Task<AuditLog[]> DeleteListAsync(Expression<Func<AuditLog, bool>> predicate, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var entitys = DbSet.Where(predicate).ToArray();
-            DbSet.RemoveRange(entitys);
+            var _dbSet = await GetDbSetAsync();
+            var entitys = _dbSet.Where(predicate).ToArray();
+            _dbSet.RemoveRange(entitys);
             if (autoSave)
             {
-                await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
+                await (await GetDbContextAsync()).SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
             }
             return entitys;
         }

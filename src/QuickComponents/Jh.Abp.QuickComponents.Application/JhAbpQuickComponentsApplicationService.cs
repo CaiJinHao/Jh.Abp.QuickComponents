@@ -10,7 +10,7 @@ namespace Jh.Abp.QuickComponents.Application
     [DisableAuditing]
     public class JhAbpQuickComponentsApplicationService : ApplicationService
     {
-        protected JhAbpQuickComponentsApplicationService()
+        public JhAbpQuickComponentsApplicationService()
         {
             LocalizationResource = typeof(JhAbpQuickComponentsResource);
             ObjectMapperContext = typeof(JhAbpQuickComponentsApplicationModule);

@@ -4,6 +4,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>8.0</LangVersion>
+    
     <RootNamespace>Jh.Abp.MenuManagement</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>KimHo</Authors>
@@ -14,7 +16,7 @@
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Jh.Abp.MenuManagement</PackageReleaseNotes>
-    <Version>0.1.8.2</Version>
+    <Version>0.1.8.3</Version>
     <Description>Jh.Abp.MenuManagement</Description>
   </PropertyGroup>
 

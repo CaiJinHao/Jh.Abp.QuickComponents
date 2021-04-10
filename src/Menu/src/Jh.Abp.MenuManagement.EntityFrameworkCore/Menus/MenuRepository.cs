@@ -21,7 +21,7 @@ namespace Jh.Abp.MenuManagement.Menus
             MenuDapperRepository = menuDapperRepository;
         }
 
-        public async Task<IEnumerable<Menu>> GetDapperListAsync()
+        public Task<IEnumerable<Menu>> GetDapperListAsync()
         {
             throw new Exception("not use dto");
         }

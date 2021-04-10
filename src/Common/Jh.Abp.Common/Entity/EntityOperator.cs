@@ -14,6 +14,14 @@ namespace Jh.Abp.Common.Entity
         /// <param name="entity">更新目标</param>
         public static void UpdatePortionToEntity<TTarget, TEntity>(TTarget target, TEntity entity)
         {
+            if (entity==null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             var toFields = entity.GetType().GetProperties();
             var formFields = target.GetType().GetProperties();
             foreach (var item in formFields)
@@ -96,6 +104,14 @@ namespace Jh.Abp.Common.Entity
         /// <param name="entity">更新目标</param>
         public static void UpdateToEntity<TTarget, TEntity>(TTarget target, TEntity entity)
         {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
             var toFields = entity.GetType().GetProperties();
             var formFields = target.GetType().GetProperties();
             foreach (var item in formFields)

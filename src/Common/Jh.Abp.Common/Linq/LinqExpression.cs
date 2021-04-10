@@ -40,7 +40,11 @@ namespace Jh.Abp.Common.Linq
         /// <returns></returns>
         public static Expression<Func<TSource, bool>> ConvetToExpression<TWhere, TSource>(TWhere inputDto,string methodStringType= "Equals")
         {
-            Expression resultFilters = null;
+            if (inputDto == null)
+            {
+                throw new ArgumentNullException(nameof(inputDto));
+            }
+            Expression? resultFilters = null;
             //1.创建参数表达式
             ParameterExpression parameterExpression = Expression.Parameter(typeof(TSource), "a");
             var sourcePropertyInfosNames = typeof(TSource).GetProperties().Select(a => a.Name);
@@ -61,7 +65,7 @@ namespace Jh.Abp.Common.Linq
                 Expression proerty = Expression.Property(parameterExpression, item.Name);
                 var propertyType = propertyVal.GetType();
                 var valueType = ObjectExtensions.GetObjectType(propertyType);
-                MethodInfo method = null;
+                MethodInfo? method = null;
                 switch (valueType)
                 {
                     case Enums.ObjectType.Enum:

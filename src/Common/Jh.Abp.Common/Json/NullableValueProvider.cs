@@ -20,7 +20,7 @@ namespace Jh.Abp.Common.Json
         {
             if (memberInfo == null)
             {
-                throw new ArgumentNullException(memberInfo.Name);
+                throw new ArgumentNullException(nameof(memberInfo));
             }
             _memberInfo = memberInfo;
         }
@@ -31,7 +31,7 @@ namespace Jh.Abp.Common.Json
             {
                 if (_setter == null)
                 {
-                    _setter = CreateSet<object>(_memberInfo as PropertyInfo);
+                    _setter = CreateSet<object>((PropertyInfo)_memberInfo);
                 }
                 _setter!(target, value);
             }
@@ -49,7 +49,7 @@ namespace Jh.Abp.Common.Json
                 {
                     _getter = CreateGet<object>(_memberInfo);
                 }
-                return GetTypeValue(_memberInfo as PropertyInfo, _getter!(target));
+                return GetTypeValue((PropertyInfo)_memberInfo, _getter!(target));
             }
             catch (Exception innerException)
             {
@@ -59,8 +59,12 @@ namespace Jh.Abp.Common.Json
 
         public Func<T, object?> CreateGet<T>(MemberInfo memberInfo)
         {
-            PropertyInfo propertyInfo = memberInfo as PropertyInfo;
-            if ((object)propertyInfo != null)
+            if (memberInfo==null)
+            {
+                throw new ArgumentNullException(nameof(memberInfo));
+            }
+            PropertyInfo propertyInfo = (PropertyInfo)memberInfo;
+            if (propertyInfo != null)
             {
                 if (propertyInfo.PropertyType.IsByRef)
                 {
@@ -68,8 +72,8 @@ namespace Jh.Abp.Common.Json
                 }
                 return CreateGet<T>(propertyInfo);
             }
-            FieldInfo fieldInfo = memberInfo as FieldInfo;
-            if ((object)fieldInfo != null)
+            FieldInfo fieldInfo = (FieldInfo)memberInfo;
+            if (fieldInfo != null)
             {
                 return CreateGet<T>(fieldInfo);
             }
@@ -80,7 +84,7 @@ namespace Jh.Abp.Common.Json
         {
             if (propertyInfo == null)
             {
-                throw new ArgumentNullException(propertyInfo.Name);
+                throw new ArgumentNullException(nameof(propertyInfo));
             }
             PropertyInfo propertyInfo2 = propertyInfo;
             return (T o) => propertyInfo2.GetValue(o, null);
@@ -90,7 +94,7 @@ namespace Jh.Abp.Common.Json
         {
             if (fieldInfo == null)
             {
-                throw new ArgumentNullException(fieldInfo.Name);
+                throw new ArgumentNullException(nameof(fieldInfo));
             }
             FieldInfo fieldInfo2 = fieldInfo;
             return (T o) => fieldInfo2.GetValue(o);
@@ -100,7 +104,7 @@ namespace Jh.Abp.Common.Json
         {
             if (fieldInfo == null)
             {
-                throw new ArgumentNullException(fieldInfo.Name);
+                throw new ArgumentNullException(nameof(fieldInfo));
             }
             FieldInfo fieldInfo2 = fieldInfo;
             return delegate (T o, object? v)
@@ -113,7 +117,7 @@ namespace Jh.Abp.Common.Json
         {
             if (propertyInfo == null)
             {
-                throw new ArgumentNullException(propertyInfo.Name);
+                throw new ArgumentNullException(nameof(propertyInfo));
             }
             PropertyInfo propertyInfo2 = propertyInfo;
             return delegate (T o, object? v)
