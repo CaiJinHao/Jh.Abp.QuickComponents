@@ -12,7 +12,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.0" />
     <ProjectReference Include="..\..\src\Jh.Abp.MenuManagement.EntityFrameworkCore\Jh.Abp.MenuManagement.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Jh.Abp.MenuManagement.TestBase\Jh.Abp.MenuManagement.TestBase.csproj" />
-    <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="4.0.0" />
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="4.2.2" />
   </ItemGroup>
 
 </Project>

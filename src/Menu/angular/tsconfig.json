@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.prod.json",
+  "compilerOptions": {
+    "paths": {
+      "@my-company-name/menu-management": [
+        "projects/menu-management/src/public-api.ts"
+      ],
+      "@my-company-name/menu-management/config": [
+        "projects/menu-management/config/src/public-api.ts"
+      ],
+      "@proxy": ["projects/menu-management/src/lib/proxy/index.ts"],
+      "@proxy/*": ["projects/menu-management/src/lib/proxy/*"]
+    }
+  }
+}
