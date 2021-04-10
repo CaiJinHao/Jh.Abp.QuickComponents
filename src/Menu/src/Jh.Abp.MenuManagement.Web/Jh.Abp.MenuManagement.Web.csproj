@@ -22,7 +22,7 @@
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Jh.Abp.MenuManagement</PackageReleaseNotes>
-    <Version>0.1.8.3</Version>
+    <Version>0.1.8.4</Version>
     <Description>Jh.Abp.MenuManagement</Description>
   </PropertyGroup>
 
