@@ -10,6 +10,7 @@ using Volo.Abp.AuditLogging;
 using Volo.Abp.Data;
 namespace Jh.Abp.MenuManagement.v1
 {
+    [DisableAuditing]
     [RemoteService]
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
     public class AuditLoggingController : MenuManagementController

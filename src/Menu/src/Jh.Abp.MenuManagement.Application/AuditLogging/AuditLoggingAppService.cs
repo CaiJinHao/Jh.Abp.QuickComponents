@@ -18,7 +18,7 @@ using Volo.Abp.Auditing;
 
 namespace Jh.Abp.MenuManagement
 {
-    public class AuditLoggingAppService : IAuditLoggingAppService, ITransientDependency
+    public class AuditLoggingAppService : MenuManagementAppService,IAuditLoggingAppService, ITransientDependency
     {
         public IAuditLoggingRepository auditLogsRepository { get; set; }
         protected IReadOnlyRepository<AuditLog> ReadOnlyRepository

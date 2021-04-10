@@ -1,8 +1,10 @@
 ﻿using Jh.Abp.MenuManagement.Localization;
 using Volo.Abp.Application.Services;
+using Volo.Abp.Auditing;
 
 namespace Jh.Abp.MenuManagement
 {
+    [DisableAuditing]
     public abstract class MenuManagementAppService : ApplicationService
     {
         protected MenuManagementAppService()

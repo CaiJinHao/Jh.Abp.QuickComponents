@@ -5,7 +5,6 @@ using Volo.Abp.Auditing;
 
 namespace Jh.Abp.MenuManagement
 {
-    [DisableAuditing]
     [ApiController]
     public abstract class MenuManagementController : AbpController
     {
