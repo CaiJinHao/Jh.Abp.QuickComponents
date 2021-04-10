@@ -111,7 +111,7 @@ namespace Jh.Abp.MenuManagement.Menus
             }
 
             //找到根节点
-            var roots = menus.Where(a => a.parent_id == null).ToList();
+            var roots = menus.Where(a => a.parent_id == null || a.parent_id == "").ToList();
             foreach (var item in roots)
             {
                 if (_type == typeof(MenusNavDto))
