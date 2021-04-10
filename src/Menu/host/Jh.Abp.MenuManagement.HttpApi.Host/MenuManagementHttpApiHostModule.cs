@@ -164,7 +164,6 @@ namespace Jh.Abp.MenuManagement
                 options.IsEnabledForGetRequests = true;
                 options.IsEnabledForAnonymousUsers = false;
                 options.AlwaysLogOnException = false;
-                options.IgnoredTypes.Add(typeof(AuditLog));
                 //options.EntityHistorySelectors.AddAllEntities();
             });
         }
