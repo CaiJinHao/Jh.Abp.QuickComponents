@@ -22,12 +22,13 @@ namespace Jh.Abp.MenuManagement
 
         protected async override Task SaveLogAsync(AuditLogInfo auditInfo)
         {
+            //去除DisableAuditing的请求，带DisableAuditing的Actionos都是空的
             if (auditInfo.Actions.Count == 0)
             {
                 return;
             }
-
-            if (auditInfo.Url.StartsWith("/api/"))
+            //去除没有必要的数据存储
+            if (auditInfo.Url.StartsWith("/api/") && auditInfo.Actions.Where(a => a.Parameters != "{}").Any())
             {
                 await base.SaveLogAsync(auditInfo);
             }
