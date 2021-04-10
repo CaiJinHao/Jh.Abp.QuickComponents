@@ -73,6 +73,7 @@ namespace Jh.Abp.Extensions
             await CheckGetListPolicyAsync().ConfigureAwait(false);
             var query = CreateFilteredQuery(inputDto, methodStringType);
             query = ApplySorting(query, inputDto);
+            query = ApplyPaging(query, inputDto);
             var entities = await AsyncExecuter.ToListAsync(query, cancellationToken).ConfigureAwait(false);
             return new ListResultDto<TEntityDto>(
                  ObjectMapper.Map<List<TEntity>, List<TEntityDto>>(entities)
