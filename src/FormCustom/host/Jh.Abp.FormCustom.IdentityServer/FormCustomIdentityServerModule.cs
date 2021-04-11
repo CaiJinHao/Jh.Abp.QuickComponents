@@ -45,10 +45,12 @@ using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.Threading;
 using Volo.Abp.UI.Navigation.Urls;
+using Jh.Abp.IdentityServer;
 
 namespace Jh.Abp.FormCustom
 {
     [DependsOn(
+        typeof(JhAbpIdentityServerModule),
         typeof(AbpAccountWebIdentityServerModule),
         typeof(AbpAccountApplicationModule),
         typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
@@ -220,9 +222,12 @@ namespace Jh.Abp.FormCustom
             {
                 using (var scope = context.ServiceProvider.CreateScope())
                 {
-                    await scope.ServiceProvider
-                        .GetRequiredService<IDataSeeder>()
-                        .SeedAsync();
+                    var data = scope.ServiceProvider
+                        .GetRequiredService<IDataSeeder>();
+                    var context = new DataSeedContext();
+                    context["AdminEmail"] = "531003539@qq.com";
+                    context["AdminPassword"] = "KimHo@123";
+                    await data.SeedAsync(context);
                 }
             });
         }

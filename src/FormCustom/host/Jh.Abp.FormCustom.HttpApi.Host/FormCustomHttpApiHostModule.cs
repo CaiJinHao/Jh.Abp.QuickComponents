@@ -32,10 +32,23 @@ using Volo.Abp.Security.Claims;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.VirtualFileSystem;
+using Jh.Abp.QuickComponents;
+using Volo.Abp.AspNetCore.ExceptionHandling;
+using Jh.Abp.QuickComponents.JwtAuthentication;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Volo.Abp.Authorization.Permissions;
+using Jh.Abp.QuickComponents.MiniProfiler;
+using Volo.Abp.Auditing;
+using Jh.Abp.QuickComponents.Cors;
+using Jh.Abp.QuickComponents.Localization;
+using Jh.Abp.QuickComponents.Swagger;
+using Volo.Abp.Threading;
+using Volo.Abp.Data;
 
 namespace Jh.Abp.FormCustom
 {
     [DependsOn(
+        typeof(AbpQuickComponentsModule),
         typeof(FormCustomApplicationModule),
         typeof(FormCustomEntityFrameworkCoreModule),
         typeof(FormCustomHttpApiModule),
@@ -79,18 +92,18 @@ namespace Jh.Abp.FormCustom
                 });
             }
 
-            context.Services.AddAbpSwaggerGenWithOAuth(
-                configuration["AuthServer:Authority"],
-                new Dictionary<string, string>
-                {
-                    {"FormCustom", "FormCustom API"}
-                },
-                options =>
-                {
-                    options.SwaggerDoc("v1", new OpenApiInfo {Title = "FormCustom API", Version = "v1"});
-                    options.DocInclusionPredicate((docName, description) => true);
-                    options.CustomSchemaIds(type => type.FullName);
-                });
+            //context.Services.AddAbpSwaggerGenWithOAuth(
+            //    configuration["AuthServer:Authority"],
+            //    new Dictionary<string, string>
+            //    {
+            //        {"FormCustom", "FormCustom API"}
+            //    },
+            //    options =>
+            //    {
+            //        options.SwaggerDoc("v1", new OpenApiInfo {Title = "FormCustom API", Version = "v1"});
+            //        options.DocInclusionPredicate((docName, description) => true);
+            //        options.CustomSchemaIds(type => type.FullName);
+            //    });
 
             Configure<AbpLocalizationOptions>(options =>
             {
@@ -106,13 +119,13 @@ namespace Jh.Abp.FormCustom
                 options.Languages.Add(new LanguageInfo("zh-Hant", "zh-Hant", "繁體中文"));
             });
 
-            context.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = configuration["AuthServer:Authority"];
-                    options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
-                    options.Audience = "FormCustom";
-                });
+            //context.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddJwtBearer(options =>
+            //    {
+            //        options.Authority = configuration["AuthServer:Authority"];
+            //        options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
+            //        options.Audience = "FormCustom";
+            //    });
 
             Configure<AbpDistributedCacheOptions>(options =>
             {
@@ -127,23 +140,42 @@ namespace Jh.Abp.FormCustom
                     .PersistKeysToStackExchangeRedis(redis, "FormCustom-Protection-Keys");
             }
 
-            context.Services.AddCors(options =>
+            //context.Services.AddCors(options =>
+            //{
+            //    options.AddPolicy(DefaultCorsPolicyName, builder =>
+            //    {
+            //        builder
+            //            .WithOrigins(
+            //                configuration["App:CorsOrigins"]
+            //                    .Split(",", StringSplitOptions.RemoveEmptyEntries)
+            //                    .Select(o => o.RemovePostFix("/"))
+            //                    .ToArray()
+            //            )
+            //            .WithAbpExposedHeaders()
+            //            .SetIsOriginAllowedToAllowWildcardSubdomains()
+            //            .AllowAnyHeader()
+            //            .AllowAnyMethod()
+            //            .AllowCredentials();
+            //    });
+            //});
+
+            context.Services.Configure<AbpExceptionHandlingOptions>(options =>
             {
-                options.AddPolicy(DefaultCorsPolicyName, builder =>
-                {
-                    builder
-                        .WithOrigins(
-                            configuration["App:CorsOrigins"]
-                                .Split(",", StringSplitOptions.RemoveEmptyEntries)
-                                .Select(o => o.RemovePostFix("/"))
-                                .ToArray()
-                        )
-                        .WithAbpExposedHeaders()
-                        .SetIsOriginAllowedToAllowWildcardSubdomains()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials();
-                });
+                options.SendExceptionsDetailsToClients = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
+            });
+
+            context.Services.AddAuthorizeFilter(configuration);
+            context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
+#if DEBUG
+            context.Services.AddMiniProfilerComponent();
+#endif
+            Configure<AbpAuditingOptions>(options =>
+            {
+                options.ApplicationName = "MunuManagement";
+                options.IsEnabledForGetRequests = true;
+                options.IsEnabledForAnonymousUsers = false;
+                options.AlwaysLogOnException = false;
+                //options.EntityHistorySelectors.AddAllEntities();
             });
         }
 
@@ -161,31 +193,54 @@ namespace Jh.Abp.FormCustom
                 app.UseErrorPage();
                 app.UseHsts();
             }
-
+#if DEBUG
+            app.UseMiniProfiler();
+#endif
             app.UseHttpsRedirection();
             app.UseCorrelationId();
             app.UseVirtualFiles();
             app.UseRouting();
-            app.UseCors(DefaultCorsPolicyName);
+            app.UseCors(CorsExtensions.DefaultCorsPolicyName);
+            //app.UseCors(DefaultCorsPolicyName);
             app.UseAuthentication();
             if (MultiTenancyConsts.IsEnabled)
             {
                 app.UseMultiTenancy();
             }
-            app.UseAbpRequestLocalization();
+            app.UseJhRequestLocalization();
+            //app.UseAbpRequestLocalization();
             app.UseAuthorization();
-            app.UseSwagger();
-            app.UseAbpSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
+#if DEBUG
+            app.UseJhSwagger(context.GetConfiguration(), this.GetType());
+#endif
+            //app.UseSwagger();
+            //app.UseAbpSwaggerUI(options =>
+            //{
+            //    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
 
-                var configuration = context.GetConfiguration();
-                options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
-                options.OAuthClientSecret(configuration["AuthServer:SwaggerClientSecret"]);
-            });
+            //    var configuration = context.GetConfiguration();
+            //    options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
+            //    options.OAuthClientSecret(configuration["AuthServer:SwaggerClientSecret"]);
+            //});
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();
+            //SeedData(context);
+        }
+
+        private void SeedData(ApplicationInitializationContext context)
+        {
+            AsyncHelper.RunSync(async () =>
+            {
+                using (var scope = context.ServiceProvider.CreateScope())
+                {
+                    var data = scope.ServiceProvider
+                        .GetRequiredService<IDataSeeder>();
+                    var context = new DataSeedContext();
+                    context["RoleId"] = "696C5678-881A-5AA5-4A28-39FB0497B688";//IdentityServerHost创建的角色ID
+                    await data.SeedAsync(context);
+                }
+            });
         }
     }
 }
