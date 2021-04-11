@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.prod.json",
+  "compilerOptions": {
+    "paths": {
+      "@my-company-name/form-custom": [
+        "projects/form-custom/src/public-api.ts"
+      ],
+      "@my-company-name/form-custom/config": [
+        "projects/form-custom/config/src/public-api.ts"
+      ],
+      "@proxy": ["projects/form-custom/src/lib/proxy/index.ts"],
+      "@proxy/*": ["projects/form-custom/src/lib/proxy/*"]
+    }
+  }
+}

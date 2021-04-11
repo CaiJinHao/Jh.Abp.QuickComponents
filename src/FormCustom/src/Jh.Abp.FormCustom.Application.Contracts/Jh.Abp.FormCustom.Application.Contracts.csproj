@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Jh.Abp.FormCustom</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="4.2.2" />
+    <PackageReference Include="Volo.Abp.Authorization" Version="4.2.2" />
+    <ProjectReference Include="..\..\..\Jh.AbpExtensions\Jh.Abp.Application.Contracts\Jh.Abp.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Jh.Abp.FormCustom.Domain.Shared\Jh.Abp.FormCustom.Domain.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

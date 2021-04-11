@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Jh.Abp.FormCustom</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Ddd.Domain" Version="4.2.2" />
+    <ProjectReference Include="..\..\..\GeneratorCoding\Jh.SourceGenerator.Common\Jh.SourceGenerator.Common.csproj" />
+    <ProjectReference Include="..\..\..\Jh.AbpExtensions\Jh.Abp.Domain\Jh.Abp.Domain.csproj" />
+    <ProjectReference Include="..\Jh.Abp.FormCustom.Domain.Shared\Jh.Abp.FormCustom.Domain.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

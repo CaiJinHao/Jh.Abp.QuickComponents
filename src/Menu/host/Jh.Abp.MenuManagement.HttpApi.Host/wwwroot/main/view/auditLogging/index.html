@@ -58,10 +58,25 @@
     <script type="text/html" id="table_auditLogging_action_data">
         {{# if(d.actions){ }}
         {{# d.actions.forEach(element => { }}
-        <div>{{ element.parameters }}</div>
+        <div>服务名称：{{element.serviceName}} 方法名称：{{ element.methodName }} 传递参数：{{ element.parameters }} 方法执行时长：{{element.executionDuration}}（毫秒）</div>
         {{# }); }}
         {{# } }}
     </script>
+    <script type="text/html" id="table_auditLogging_action_data">
+        {{# if(d.actions){ }}
+        {{# d.actions.forEach(element => { }}
+        <div>服务名称：{{element.serviceName}} 方法名称：{{ element.methodName }} 传递参数：{{ element.parameters }} 方法执行时长：{{element.executionDuration}}（毫秒）</div>
+        {{# }); }}
+        {{# } }}
+    </script>
+    <script type="text/html" id="table_auditLogging_entity_change_data">
+        {{# if(d.actions){ }}
+        {{# d.actions.forEach(element => { }}
+        <div>服务名称：{{element.serviceName}} 方法名称：{{ element.methodName }} 传递参数：{{ element.parameters }} 方法执行时长：{{element.executionDuration}}（毫秒）</div>
+        {{# }); }}
+        {{# } }}
+    </script>
+    
     <script src="../../layui/layui.js"></script>
     <script src="../../plugins/vue/vue.min.js"></script>
     <!--公共函数库-->
@@ -115,10 +130,11 @@
                             { type: 'checkbox' },
                             $.extend({ field: 'applicationName', title: '应用名称' }, _table_style),
                             $.extend({ field: 'userName', title: '操作人' }, _table_style),
-                            $.extend({ field: 'executionTime', title: '操作时间' }, _table_style),
+                            $.extend({ field: 'executionTime', title: '执行时间' }, _table_style),
                             $.extend({ field: 'httpMethod', title: '请求类型' }, _table_style),
-                            $.extend({ field: 'url', title: '请求地址' }, _table_style),
-                            $.extend({ title: '请求内容', templet:'#table_auditLogging_action_data' }, _table_style),
+                            $.extend({ field: 'url', title: '请求地址', width: 300 }, _table_style),
+                            $.extend({ title: '执行服务', templet:'#table_auditLogging_action_data', width: 400 }, _table_style),
+                            // $.extend({ title: '执行改变数据', templet:'#table_auditLogging_entity_change_data' }, _table_style),
                             $.extend({ field: 'id', title: '操作', width: 100, templet: '#table_auditLogging_operator', fixed: 'right' }, _table_style)
                         ]],
                     });
