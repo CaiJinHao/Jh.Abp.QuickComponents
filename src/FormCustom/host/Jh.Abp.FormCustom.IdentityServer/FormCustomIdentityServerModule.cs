@@ -120,6 +120,8 @@ namespace Jh.Abp.FormCustom
             {
                 //options.IsEnabledForGetRequests = true;
                 options.ApplicationName = "AuthServer";
+                options.IsEnabledForAnonymousUsers = false;
+                //options.EntityHistorySelectors.AddAllEntities();
             });
 
             Configure<AppUrlOptions>(options =>

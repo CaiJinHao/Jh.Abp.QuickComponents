@@ -37,6 +37,16 @@ using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.Web;
 using Volo.Abp.Threading;
 using Volo.Abp.VirtualFileSystem;
+using Volo.Abp.Json;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Volo.Abp.Authorization.Permissions;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Volo.Abp.AspNetCore.Mvc.AntiForgery;
+using Volo.Abp.AspNetCore.ExceptionHandling;
+using Microsoft.Extensions.Configuration;
+using Volo.Abp.Auditing;
 
 namespace Jh.Abp.FormCustom
 {
@@ -116,6 +126,60 @@ namespace Jh.Abp.FormCustom
             {
                 options.IsEnabled = MultiTenancyConsts.IsEnabled;
             });
+
+            Configure<AbpJsonOptions>(options =>
+            {
+                options.DefaultDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+            });
+
+            context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
+
+            Configure<MvcOptions>(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                         .RequireAuthenticatedUser()
+                         .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));//添加权限过滤器
+            });
+
+            /*
+             * 配置指定权限过滤
+             * Configure<AuthorizationOptions>(options =>
+            {
+                options.AddPolicy(RoleConsts.OpenAccountpPolicy, policy => policy.RequireAssertion(context =>
+                    context.User.HasClaim(c => (c.Type == JhJwtClaimTypes.RoleId && !RoleConsts.OpenAccountpPolicyRoles.Contains(c.Value)))));
+
+                options.AddPolicy(RoleConsts.AuthenticationPolicy, policy => policy.RequireAssertion(context =>
+                    context.User.HasClaim(c => (c.Type == JhJwtClaimTypes.RoleId && !RoleConsts.AuthenticationPolicyRoles.Contains(c.Value)))));
+            });*/
+
+            //配置不验证https cookies
+            Configure<AbpAntiForgeryOptions>(options => {
+                options.AutoValidate = false;
+            });
+
+            //配置授权失败跳转
+            context.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Login";
+                options.AccessDeniedPath = "/AccessDenied";
+            });
+
+            //配置是否发送错误详细到客户端
+            context.Services.Configure<AbpExceptionHandlingOptions>(options =>
+            {
+                options.SendExceptionsDetailsToClients = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
+            });
+
+            //配置审计日志记录 结合MyAuditingStore 使用
+            Configure<AbpAuditingOptions>(options =>
+            {
+                options.ApplicationName = "FormCustomApplication";
+                options.IsEnabledForGetRequests = true;
+                options.IsEnabledForAnonymousUsers = false;
+                options.AlwaysLogOnException = false;
+                //options.EntityHistorySelectors.AddAllEntities();
+            });
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -154,17 +218,29 @@ namespace Jh.Abp.FormCustom
 
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
-            app.UseConfiguredEndpoints();
-
-            using (var scope = context.ServiceProvider.CreateScope())
-            {
-                AsyncHelper.RunSync(async () =>
+            app.UseConfiguredEndpoints()
+                .UseEndpoints(endpoints =>
                 {
-                    await scope.ServiceProvider
-                        .GetRequiredService<IDataSeeder>()
-                        .SeedAsync();
+                    endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Home}/{action=Index}/{id?}");
                 });
-            }
+            //SeedData(context);
+        }
+
+        private void SeedData(ApplicationInitializationContext context)
+        {
+            AsyncHelper.RunSync(async () =>
+            {
+                using (var scope = context.ServiceProvider.CreateScope())
+                {
+                    var data = scope.ServiceProvider
+                        .GetRequiredService<IDataSeeder>();
+                    var context = new DataSeedContext();
+                    context["RoleId"] = "696C5678-881A-5AA5-4A28-39FB0497B688";//IdentityServerHost创建的角色ID
+                    await data.SeedAsync(context);
+                }
+            });
         }
     }
 }

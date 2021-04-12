@@ -44,6 +44,7 @@ using Jh.Abp.QuickComponents.Localization;
 using Jh.Abp.QuickComponents.Swagger;
 using Volo.Abp.Threading;
 using Volo.Abp.Data;
+using Volo.Abp.Json;
 
 namespace Jh.Abp.FormCustom
 {
@@ -130,6 +131,11 @@ namespace Jh.Abp.FormCustom
             Configure<AbpDistributedCacheOptions>(options =>
             {
                 options.KeyPrefix = "FormCustom:";
+            });
+
+            Configure<AbpJsonOptions>(options =>
+            {
+                options.DefaultDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
             });
 
             if (!hostingEnvironment.IsDevelopment())
