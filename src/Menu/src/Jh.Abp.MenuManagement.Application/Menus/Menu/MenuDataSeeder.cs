@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.DependencyInjection;
 using System.Linq;
+using Volo.Abp.Application.Dtos;
 
 namespace Jh.Abp.MenuManagement
 {
@@ -18,7 +19,7 @@ namespace Jh.Abp.MenuManagement
 
         public async Task SeedAsync(Guid roleid)
         {
-            var entitys = await menuAppService.GetEntitysAsync(new MenuRetrieveInputDto());
+            var entitys = await menuAppService.GetEntitysAsync(new MenuRetrieveInputDto() { MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount });
             if (!entitys.Items.Any())
             {
                 await menuAppService.CreateAsync(new MenuCreateInputDto()

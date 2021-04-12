@@ -58,10 +58,11 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="inputDto"></param>
         /// <returns></returns>
-        [Route("list")]
+        [Route("all")]
         [HttpGet]
         public async Task<ListResultDto<MenuAndRoleMapDto>> GetEntitysAsync([FromQuery] MenuAndRoleMapRetrieveInputDto inputDto)
         {
+            inputDto.MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount;
             return await menuAndRoleMapAppService.GetEntitysAsync(inputDto);
         }
 

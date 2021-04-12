@@ -23,7 +23,10 @@ namespace Jh.Abp.MenuManagement.Menus
         /// 上级菜单编号，顶级可为null
         /// </summary>
         public string ParentCode { get; set; }
+
         public int Deleted { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
         public MethodDto<Menu> MethodInput { get; set; }
     }
 }

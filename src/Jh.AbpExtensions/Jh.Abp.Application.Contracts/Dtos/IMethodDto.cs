@@ -10,6 +10,7 @@ namespace Jh.Abp.Application.Contracts.Dtos
         /// <summary>
         /// app service method query dto
         /// </summary>
+        [Newtonsoft.Json.JsonIgnore]
         MethodDto<TEntity> MethodInput { get; set; }
     }
 }

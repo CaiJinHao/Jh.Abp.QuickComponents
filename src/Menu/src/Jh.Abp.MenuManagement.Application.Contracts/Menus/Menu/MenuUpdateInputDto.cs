@@ -41,6 +41,8 @@ namespace Jh.Abp.MenuManagement.Menus
         public string Description { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
         public MethodDto<Menu> MethodInput { get; set; }
     }
 }
