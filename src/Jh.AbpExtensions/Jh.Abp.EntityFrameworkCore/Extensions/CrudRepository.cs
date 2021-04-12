@@ -24,31 +24,32 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
         public virtual async Task<TEntity[]> CreateAsync(TEntity[] entitys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             //使用SqlBulk
-            await DbSet.AddRangeAsync(entitys).ConfigureAwait(false);
+            await (await GetDbSetAsync()).AddRangeAsync(entitys).ConfigureAwait(false);
             if (autoSave)
             {
-                await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
+                await (await GetDbContextAsync()).SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
             }
             return entitys;
         }
 
         public virtual async Task<TEntity> CreateAsync(TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await DbSet.AddAsync(entity).ConfigureAwait(false);
+            await (await GetDbSetAsync()).AddAsync(entity).ConfigureAwait(false);
             if (autoSave)
             {
-                await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
+                await (await GetDbContextAsync()).SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
             }
             return entity;
         }
 
         public virtual async Task<TEntity[]> DeleteListAsync(Expression<Func<TEntity, bool>> predicate, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var entitys = DbSet.Where(predicate).ToArray();
-            DbSet.RemoveRange(entitys);
+            var _dbSet = await GetDbSetAsync();
+            var entitys = _dbSet.Where(predicate).ToArray();
+            _dbSet.RemoveRange(entitys);
             if (autoSave)
             {
-                await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
+                await (await GetDbContextAsync()).SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
             }
             return entitys;
         }
@@ -56,10 +57,10 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
         public virtual async Task<TEntity[]> DeleteEntitysAsync(IQueryable<TEntity> query, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             var entitys = query.ToArray();
-            DbSet.RemoveRange(entitys);
+            (await GetDbSetAsync()).RemoveRange(entitys);
             if (autoSave)
             {
-                await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
+                await (await GetDbContextAsync()).SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
             }
             return entitys;
         }

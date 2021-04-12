@@ -11,11 +11,5 @@ namespace Jh.Abp.FormCustom.Samples
         {
             //_sampleManager = GetRequiredService<SampleManager>();
         }
-
-        [Fact]
-        public async Task Method1Async()
-        {
-
-        }
     }
 }

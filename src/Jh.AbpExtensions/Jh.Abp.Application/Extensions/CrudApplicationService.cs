@@ -52,7 +52,7 @@ namespace Jh.Abp.Extensions
         public virtual async Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckDeletePolicyAsync().ConfigureAwait(false);
-            var query = CreateFilteredQuery(deleteInputDto, methodStringType);
+            var query = await CreateFilteredQueryAsync(deleteInputDto, methodStringType);
             return await crudRepository.DeleteEntitysAsync(query, autoSave, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,7 +71,7 @@ namespace Jh.Abp.Extensions
         public virtual async Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.ContainsMethod, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckGetListPolicyAsync().ConfigureAwait(false);
-            var query = CreateFilteredQuery(inputDto, methodStringType);
+            var query = await CreateFilteredQueryAsync(inputDto, methodStringType);
             query = ApplySorting(query, inputDto);
             query = ApplyPaging(query, inputDto);
             var entities = await AsyncExecuter.ToListAsync(query, cancellationToken).ConfigureAwait(false);
@@ -84,7 +84,7 @@ namespace Jh.Abp.Extensions
         {
             await CheckGetListPolicyAsync();
 
-            var query = CreateFilteredQuery(input, methodStringType);
+            var query = await CreateFilteredQueryAsync(input, methodStringType);
 
             var totalCount = await AsyncExecuter.CountAsync(query);
 
@@ -138,16 +138,16 @@ namespace Jh.Abp.Extensions
             await Repository.UpdateAsync(entity, autoSave: true);
             return await MapToGetOutputDtoAsync(entity);
         }
-   
-        protected override IQueryable<TEntity> CreateFilteredQuery(TRetrieveInputDto inputDto)
+
+        protected override async Task<IQueryable<TEntity>> CreateFilteredQueryAsync(TRetrieveInputDto inputDto)
         {
-            return CreateFilteredQuery(inputDto, ObjectMethodConsts.ContainsMethod);
+            return await CreateFilteredQueryAsync(inputDto, ObjectMethodConsts.ContainsMethod);
         }
 
-        protected virtual IQueryable<TEntity> CreateFilteredQuery<TWhere>(TWhere inputDto, string methodStringType)
+        protected virtual async Task<IQueryable<TEntity>> CreateFilteredQueryAsync<TWhere>(TWhere inputDto, string methodStringType)
         {
             var lambda = LinqExpression.ConvetToExpression<TWhere, TEntity>(inputDto, methodStringType);
-            var query = ReadOnlyRepository.Where(lambda);
+            var query = (await ReadOnlyRepository.GetQueryableAsync()).Where(lambda);
             var methodDto = inputDto as IMethodDto<TEntity>;
             if (methodDto != null)
             {

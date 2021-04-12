@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@abp/aspnetcore.mvc.ui.theme.basic@^4.2.2":
+"@abp/aspnetcore.mvc.ui.theme.basic@~4.2.2":
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/@abp/aspnetcore.mvc.ui.theme.basic/-/aspnetcore.mvc.ui.theme.basic-4.2.2.tgz#7de6a36c8e6d0a60b8dbd13d1fd15e31b4ea91c3"
   integrity sha512-LpxRorrFZFb1RGdb5uuMhp9Vn8wqgwYK6eAKf9SgLKf19+8oOLLoC6DMz/DwscOicukSSMngNdLZ/iiIofEEWA==
