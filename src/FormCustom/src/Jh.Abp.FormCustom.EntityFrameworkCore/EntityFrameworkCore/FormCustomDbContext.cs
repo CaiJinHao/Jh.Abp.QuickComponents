@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FormCustom;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -10,7 +11,8 @@ namespace Jh.Abp.FormCustom.EntityFrameworkCore
         /* Add DbSet for each Aggregate Root here. Example:
          * public DbSet<Question> Questions { get; set; }
          */
-
+        public DbSet<Form> Forms { get; set; }
+        public DbSet<FormField> FormFields { get; set; }
         public FormCustomDbContext(DbContextOptions<FormCustomDbContext> options) 
             : base(options)
         {

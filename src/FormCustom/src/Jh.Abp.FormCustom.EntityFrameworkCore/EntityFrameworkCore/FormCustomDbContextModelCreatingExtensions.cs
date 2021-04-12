@@ -1,6 +1,8 @@
 ﻿using System;
+using FormCustom;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 
 namespace Jh.Abp.FormCustom.EntityFrameworkCore
 {
@@ -38,6 +40,16 @@ namespace Jh.Abp.FormCustom.EntityFrameworkCore
                 b.HasIndex(q => q.CreationTime);
             });
             */
+
+            builder.Entity<Form>(b =>
+            {
+                b.ToTable(options.TablePrefix + "Form", options.Schema);
+                b.ConfigureByConvention();
+                b.Property(p => p.Id).ValueGeneratedOnAdd();
+
+                b.HasIndex(q => q.DisplayName).IsUnique();
+                b.HasIndex(q => q.TableName).IsUnique();
+            });
         }
     }
 }

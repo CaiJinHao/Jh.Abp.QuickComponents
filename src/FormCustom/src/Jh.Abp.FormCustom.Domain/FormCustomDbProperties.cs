@@ -2,7 +2,7 @@
 {
     public static class FormCustomDbProperties
     {
-        public static string DbTablePrefix { get; set; } = "FormCustom";
+        public static string DbTablePrefix { get; set; } = "Fc";
 
         public static string DbSchema { get; set; } = null;
 
