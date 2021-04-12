@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
     <Import Project="..\..\common.props" />
 
@@ -17,7 +17,7 @@
       <PackageIcon>nugeticon.png</PackageIcon>
       <PackageTags>Abp</PackageTags>
       <PackageReleaseNotes>Jh.Abp.MenuManagement</PackageReleaseNotes>
-      <Version>0.1.8.4</Version>
+      <Version>0.1.8.5</Version>
       <Description>Jh.Abp.MenuManagement</Description>
     </PropertyGroup>
 

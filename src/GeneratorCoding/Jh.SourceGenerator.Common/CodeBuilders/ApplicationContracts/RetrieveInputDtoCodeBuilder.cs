@@ -53,6 +53,7 @@ using Volo.Abp.Application.Dtos;");
                     builder.AppendLine("\t\t/// <summary>");
                     builder.AppendLine("\t\t/// 方法参数回调");
                     builder.AppendLine("\t\t/// <summary>");
+                    builder.AppendLine("\t\t[Newtonsoft.Json.JsonIgnore]");
                     builder.AppendLine($"\t\tpublic MethodDto<{table.Name}> MethodInput " + "{ get; set; }");
                 }
                 builder.AppendLine("\t}");

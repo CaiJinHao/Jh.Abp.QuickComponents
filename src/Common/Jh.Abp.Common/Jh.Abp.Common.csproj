@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <LangVersion>8.0</LangVersion>
@@ -13,7 +13,7 @@
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Common</PackageTags>
     <PackageReleaseNotes>Common libs</PackageReleaseNotes>
-    <Version>2.0.0.2</Version>
+    <Version>2.0.0.3</Version>
     <Description>Common libs</Description>
   </PropertyGroup>
   <ItemGroup>
