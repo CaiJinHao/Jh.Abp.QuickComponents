@@ -61,7 +61,7 @@
                             <div class="layui-inline">
                                 <label class="layui-form-label">手机号：</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入手机号" v-model="user.phoneNumber">
+                                    <input type="text" class="layui-input" lay-verify="required|MyPhone" placeholder="请输入手机号" v-model="user.phoneNumber">
                                 </div>
                             </div>
                         </div>
@@ -71,7 +71,7 @@
                             <div class="layui-inline">
                                 <label class="layui-form-label">邮箱：</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入邮箱" v-model="user.email">
+                                    <input type="text" class="layui-input" lay-verify="required|myemail" placeholder="请输入邮箱" v-model="user.email">
                                 </div>
                             </div>
                         </div>

@@ -112,6 +112,7 @@ layui.define(['table', 'layer', 'form', 'laypage', 'ajaxmod', 'jquery'], functio
             var optDefault = {
                 url: '/userinfo/0',
                 type: 'Delete',
+                confimMsg:'确认删除吗？',
                 confirm:true,
                 success: function (response) {
                     console.log("没有触发事件刷新列表")//触发事件刷新列表
@@ -119,7 +120,7 @@ layui.define(['table', 'layer', 'form', 'laypage', 'ajaxmod', 'jquery'], functio
             };
             $.extend(optDefault, _options);
             if(optDefault.confirm){
-                top.layer.confirm('确认删除吗？', { icon: 3, title: '提示' }, function (index, layero) {
+                top.layer.confirm(optDefault.confimMsg, { icon: 3, title: '提示' }, function (index, layero) {
                     ajaxmod.requestAuthorize(optDefault);
                     top.layer.close(index);
                 }, function () { });
@@ -132,6 +133,7 @@ layui.define(['table', 'layer', 'form', 'laypage', 'ajaxmod', 'jquery'], functio
             var optDefault = {
                 url: '/userinfo',
                 type: 'Delete',
+                confimMsg:'确认删除选中项吗？',
                 data: {
                     idlist: ['', '']
                 },
@@ -140,7 +142,7 @@ layui.define(['table', 'layer', 'form', 'laypage', 'ajaxmod', 'jquery'], functio
                 }
             };
             $.extend(optDefault, _options);
-            top.layer.confirm('确认删除选中项吗？', { icon: 3, title: '提示' }, function (index, layero) {
+            top.layer.confirm(optDefault.confimMsg, { icon: 3, title: '提示' }, function (index, layero) {
                 ajaxmod.requestAuthorize(optDefault);
                 top.layer.close(index);
             }, function () { });

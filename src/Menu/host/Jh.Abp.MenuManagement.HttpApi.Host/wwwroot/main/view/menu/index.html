@@ -153,6 +153,7 @@
                     datatable.del({
                         url: '/menu/' + _data.id,
                         type: 'Delete',
+                        confimMsg:'确定禁用吗？',
                         success: function (response) {
                             _the.renderTable();
                         }
@@ -170,6 +171,7 @@
                         url: '/menu/keys',
                         type: 'Delete',
                         data: delIdList,
+                        confimMsg:'确定禁用选中项吗？',
                         success: function (response) {
                             _the.renderTable();
                         }
