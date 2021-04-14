@@ -52,10 +52,12 @@ namespace Jh.Abp.MenuManagement.Menus
             }
         }
 
-        public async Task<IEnumerable<MenusNavDto>> GetMenusNavTreesAsync(Guid roleid)
+        public async Task<IEnumerable<MenusNavDto>> GetMenusNavTreesAsync()
         {
             //查看CurrentUser.Roles 是的值是否为guid ,只能用一个角色的权限渲染菜单
-            var auth_menus_id = crudRepository.Where(a => a.RoleId == roleid).Select(a=>a.MenuId);
+            var roles = CurrentUser.FindClaims(Common.Extensions.JhJwtClaimTypes.RoleId).Select(a => new Guid(a.Value)).ToList();
+            //查看CurrentUser.Roles 是的值是否为guid ,只能用一个角色的权限渲染菜单
+            var auth_menus_id = crudRepository.Where(a => roles.Contains(a.RoleId)).Select(a => a.MenuId).ToList();
 
             //按照前端要求字段返回
             var auth_menus = await MenuRepository.Where(m => auth_menus_id.Contains(m.Id))

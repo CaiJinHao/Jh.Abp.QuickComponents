@@ -126,8 +126,7 @@ namespace Jh.Abp.MenuManagement.v1
         [HttpGet("Trees")]
         public async Task<dynamic> GetMenusNavTreesAsync()
         {
-            var roleid = CurrentUser.FindClaim(Common.Extensions.JhJwtClaimTypes.RoleId);
-            var items = await menuAndRoleMapAppService.GetMenusNavTreesAsync(new Guid(roleid.Value));
+            var items = await menuAndRoleMapAppService.GetMenusNavTreesAsync();
             return new { items };
         }
 
