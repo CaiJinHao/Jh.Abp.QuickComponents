@@ -24,7 +24,7 @@ namespace Jh.Abp.QuickComponents.JwtAuthentication
         }
 
         /// <summary>
-        /// 为所有Action添加权限验证
+        /// 为所有Action添加权限验证，使用之后页面都会进行验证
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>

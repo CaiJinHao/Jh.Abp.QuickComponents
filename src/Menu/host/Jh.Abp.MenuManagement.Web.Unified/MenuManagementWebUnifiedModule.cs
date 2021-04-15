@@ -46,10 +46,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Volo.Abp.AspNetCore.Mvc.AntiForgery;
 using Volo.Abp.Auditing;
+using Jh.Abp.QuickComponents;
+using Jh.Abp.QuickComponents.Swagger;
+using Volo.Abp.AspNetCore.ExceptionHandling;
+using Jh.Abp.QuickComponents.Cors;
+using Jh.Abp.QuickComponents.Localization;
+using Jh.Abp.QuickComponents.JwtAuthentication;
+using Microsoft.Extensions.Configuration;
 
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
+        typeof(AbpQuickComponentsModule),
         typeof(MenuManagementWebModule),
         typeof(MenuManagementApplicationModule),
         typeof(MenuManagementEntityFrameworkCoreModule),
@@ -99,6 +107,7 @@ namespace Jh.Abp.MenuManagement
                 });
             }
 
+            context.Services.AddApiVersion();
             context.Services.AddSwaggerGen(
                 options =>
                 {
@@ -106,6 +115,7 @@ namespace Jh.Abp.MenuManagement
                     options.DocInclusionPredicate((docName, description) => true);
                     options.CustomSchemaIds(type => type.FullName);
                 });
+
 
             Configure<AbpLocalizationOptions>(options =>
             {
@@ -134,16 +144,6 @@ namespace Jh.Abp.MenuManagement
             context.Services.AddSession(o =>
             {
                 o.IdleTimeout = TimeSpan.FromSeconds(60 * 60);
-            });
-
-           
-
-            Configure<MvcOptions>(options =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                         .RequireAuthenticatedUser()
-                         .Build();
-                options.Filters.Add(new AuthorizeFilter(policy));//添加默认权限过滤器
             });
 
             /*Configure<AuthorizationOptions>(options =>
@@ -178,15 +178,15 @@ namespace Jh.Abp.MenuManagement
             });*/
 
             //禁用http验证cookies xsf
-            Configure<AbpAntiForgeryOptions>(options => {
+          /*  Configure<AbpAntiForgeryOptions>(options => {
                 options.AutoValidate = false;
-            });
+            });*/
 
-            context.Services.ConfigureApplicationCookie(options =>
+           /* context.Services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Login";
                 options.AccessDeniedPath = "/AccessDenied";
-            });
+            });*/
 
             //禁用审计日志
             Configure<AbpAuditingOptions>(options =>
@@ -198,11 +198,14 @@ namespace Jh.Abp.MenuManagement
 
             context.Services.AddAbpIdentity().AddClaimsPrincipalFactory<JhUserClaimsPrincipalFactory>();
 
+            context.Services.AddLocalizationComponent();
+
+            //context.Services.AddAuthorizeFilter(configuration);
             //是否将错误发送到客户端
 #if DEBUG
             context.Services.Configure<AbpExceptionHandlingOptions>(options =>
             {
-                options.SendExceptionsDetailsToClients = true;
+                options.SendExceptionsDetailsToClients = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
             });
 #endif
         }

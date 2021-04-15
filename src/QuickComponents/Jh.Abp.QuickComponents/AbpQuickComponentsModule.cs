@@ -62,10 +62,10 @@ namespace Jh.Abp.QuickComponents
 
             // 在前面控制
             //context.Services.AddMiniProfilerComponent();
-            context.Services.AddSwaggerComponent(configuration);
-            context.Services.AddLocalizationComponent();
-            context.Services.AddJwtAuthenticationComponent(configuration);
-            context.Services.AddCorsPolicy(configuration);
+            //context.Services.AddSwaggerComponent(configuration);
+            //context.Services.AddCorsPolicy(configuration);
+            //context.Services.AddLocalizationComponent();
+            //context.Services.AddJwtAuthenticationComponent(configuration);
         }
 
         public override void OnApplicationInitialization(Volo.Abp.ApplicationInitializationContext context)

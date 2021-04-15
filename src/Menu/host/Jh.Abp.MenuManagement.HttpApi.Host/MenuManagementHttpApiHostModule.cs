@@ -152,7 +152,12 @@ namespace Jh.Abp.MenuManagement
             {
                 options.SendExceptionsDetailsToClients = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
             });
-
+            
+            context.Services.AddApiVersion();
+            context.Services.AddSwaggerComponent(configuration);
+            context.Services.AddCorsPolicy(configuration);
+            context.Services.AddLocalizationComponent();
+            context.Services.AddJwtAuthenticationComponent(configuration);
             context.Services.AddAuthorizeFilter(configuration);
             context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
 #if DEBUG
