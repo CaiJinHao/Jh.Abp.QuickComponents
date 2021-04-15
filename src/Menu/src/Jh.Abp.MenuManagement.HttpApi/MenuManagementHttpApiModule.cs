@@ -7,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Jh.Abp.MenuManagement.EntityFrameworkCore;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.Identity;
+using Volo.Abp;
+using Volo.Abp.Settings;
+using Volo.Abp.Identity.Settings;
 
 namespace Jh.Abp.MenuManagement
 {
@@ -39,6 +42,17 @@ namespace Jh.Abp.MenuManagement
                     .Get<MenuManagementResource>()
                     .AddBaseTypes(typeof(AbpUiResource));
             });
+        }
+
+        public override void OnApplicationInitialization(ApplicationInitializationContext context)
+        {
+            var app = context.GetApplicationBuilder();
+
+            //查询单个表所有数据最大值
+            //LimitedResultRequestDto.MaxMaxResultCount = 2000;//默认1000
+
+            //设置密码格式不是用特殊字符
+            //app.ApplicationServices.GetService<ISettingDefinitionManager>().Get(IdentitySettingNames.Password.RequireNonAlphanumeric).DefaultValue = false.ToString();
         }
     }
 }
