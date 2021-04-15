@@ -16,7 +16,7 @@
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Jh.Abp.MenuManagement</PackageReleaseNotes>
-    <Version>0.1.8.5</Version>
+    <Version>0.1.8.6</Version>
     <Description>Jh.Abp.MenuManagement</Description>
   </PropertyGroup>
 
@@ -30,6 +30,7 @@
   <ItemGroup>
     <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="4.2.2" />
     <PackageReference Include="Volo.Abp.Identity.Application" Version="4.2.2" />
+    <PackageReference Include="Volo.Abp.Identity.Domain.Shared" Version="4.2.2" />
     <PackageReference Include="Volo.Abp.Identity.EntityFrameworkCore" Version="4.2.2" />
     <PackageReference Include="Volo.Abp.Identity.HttpApi" Version="4.2.2" />
     <ProjectReference Include="..\Jh.Abp.MenuManagement.Application.Contracts\Jh.Abp.MenuManagement.Application.Contracts.csproj" />
