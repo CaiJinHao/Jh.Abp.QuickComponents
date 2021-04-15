@@ -200,7 +200,7 @@ namespace Jh.Abp.MenuManagement
 
             context.Services.AddLocalizationComponent();
 
-            //context.Services.AddAuthorizeFilter(configuration);
+            context.Services.AddAuthorizeFilter(configuration);
             //是否将错误发送到客户端
 #if DEBUG
             context.Services.Configure<AbpExceptionHandlingOptions>(options =>
