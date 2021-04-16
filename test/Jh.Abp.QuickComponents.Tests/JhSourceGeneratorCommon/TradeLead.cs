@@ -17,15 +17,15 @@ namespace Jh.Abp.QuickComponents.Tests
         [CreateOrUpdateInputDto]
         [Description("货物数量")]
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal? Num { get; set; }
+        public decimal Num { get; set; }
 
 
         [CreateOrUpdateInputDto]
         [Description("点击量")]
-        public long? ClickNum { get; set; }
+        public long ClickNum { get; set; }
 
-		public Int32? ClickNum2 { get; set; }
-        public DateTime? DateTime { get; set; }
+		public Int32 ClickNum2 { get; set; }
+        public DateTime DateTime { get; set; }
 
     }
 }

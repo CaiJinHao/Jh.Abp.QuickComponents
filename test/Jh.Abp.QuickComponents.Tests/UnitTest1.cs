@@ -15,7 +15,7 @@ namespace Jh.Abp.QuickComponents.Tests
             var t2 = new TradeLead() { Num = 2 };
             //var t= LinqExpression.ConvetToExpression<TradeLeadUpdateInputDto, TradeLead>(t1);
             EntityOperator.UpdatePortionToEntity(t1,t2);
-            Assert.True(t2.DateTime !=null);
+            Assert.True(t2.ClickNum2 > 0);
         }
 
        

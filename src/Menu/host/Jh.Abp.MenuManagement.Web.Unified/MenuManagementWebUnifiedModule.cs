@@ -178,28 +178,30 @@ namespace Jh.Abp.MenuManagement
             });*/
 
             //禁用http验证cookies xsf
-          /*  Configure<AbpAntiForgeryOptions>(options => {
-                options.AutoValidate = false;
-            });*/
+            /*  Configure<AbpAntiForgeryOptions>(options => {
+                  options.AutoValidate = false;
+              });*/
 
-           /* context.Services.ConfigureApplicationCookie(options =>
-            {
-                options.LoginPath = "/Login";
-                options.AccessDeniedPath = "/AccessDenied";
-            });*/
+            /* context.Services.ConfigureApplicationCookie(options =>
+             {
+                 options.LoginPath = "/Login";
+                 options.AccessDeniedPath = "/AccessDenied";
+             });*/
 
             //禁用审计日志
             Configure<AbpAuditingOptions>(options =>
             {
                 options.IsEnabled = false;
+                options.ApplicationName = "MenuManagementApplication";
+                options.IsEnabledForAnonymousUsers = false;
+                options.IsEnabledForGetRequests = true;
+                options.AlwaysLogOnException = false;
+                //options.EntityHistorySelectors.AddAllEntities();
             });
 
             context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
-
             context.Services.AddAbpIdentity().AddClaimsPrincipalFactory<JhUserClaimsPrincipalFactory>();
-
             context.Services.AddLocalizationComponent();
-
             context.Services.AddAuthorizeFilter(configuration);
             //是否将错误发送到客户端
 #if DEBUG
@@ -237,7 +239,7 @@ namespace Jh.Abp.MenuManagement
                 app.UseMultiTenancy();
             }
 
-            app.UseAbpRequestLocalization();
+            app.UseJhRequestLocalization();
             app.UseAuthorization();
 
 #if DEBUG

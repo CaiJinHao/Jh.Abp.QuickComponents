@@ -148,6 +148,15 @@ namespace Jh.Abp.MenuManagement
             //    });
             //});
 
+            Configure<AbpAuditingOptions>(options =>
+            {
+                options.ApplicationName = "MunuManagement";
+                options.IsEnabledForGetRequests = true;
+                options.IsEnabledForAnonymousUsers = false;
+                options.AlwaysLogOnException = false;
+                //options.EntityHistorySelectors.AddAllEntities();
+            });
+
             context.Services.Configure<AbpExceptionHandlingOptions>(options =>
             {
                 options.SendExceptionsDetailsToClients = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
@@ -163,14 +172,6 @@ namespace Jh.Abp.MenuManagement
 #if DEBUG
             context.Services.AddMiniProfilerComponent();
 #endif
-            Configure<AbpAuditingOptions>(options =>
-            {
-                options.ApplicationName = "MunuManagement";
-                options.IsEnabledForGetRequests = true;
-                options.IsEnabledForAnonymousUsers = false;
-                options.AlwaysLogOnException = false;
-                //options.EntityHistorySelectors.AddAllEntities();
-            });
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)

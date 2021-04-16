@@ -62,10 +62,10 @@ namespace Jh.Abp.Common.Linq
                 }
                 //a(1)=>a.Name(2).Equals(4)("val")(3);(5)
                 //2.创建属性表达式
+                MethodInfo? method = null;
                 Expression proerty = Expression.Property(parameterExpression, item.Name);
                 var propertyType = propertyVal.GetType();
                 var valueType = ObjectExtensions.GetObjectType(propertyType);
-                MethodInfo? method = null;
                 switch (valueType)
                 {
                     case Enums.ObjectType.Enum:
@@ -87,6 +87,7 @@ namespace Jh.Abp.Common.Linq
                     case Enums.ObjectType.Double:
                     case Enums.ObjectType.Decimal:
                         {
+                            //TODO: 可修改为可空类型，这样就可以查询为0的值了，需要修改代码生成器，也可以查询bool值
                             var t = propertyVal.ToString();
                             if (t.Equals("0"))
                             {

@@ -27,17 +27,6 @@ using Volo.Abp.Application.Dtos;");
                 {
                     foreach (var _field in table.FieldsRetrieve)
                     {
-                        if (!_field.IsNullable)
-                        {
-                            switch (_field.FieldType)
-                            {
-                                case Abp.Common.Enums.ObjectType.String:
-                                    break;
-                                default:
-                                    _field.IsNullable = true;
-                                    break;
-                            }
-                        }
                         builder.AppendLine($"\t\t/// <summary>");
                         builder.AppendLine($"\t\t/// {_field.Description}");
                         builder.AppendLine($"\t\t/// <summary>");

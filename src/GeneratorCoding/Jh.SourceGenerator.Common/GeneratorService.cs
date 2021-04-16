@@ -116,6 +116,7 @@ namespace Jh.SourceGenerator.Common
                     fieldDto.IsNullable = true;
                     fieldDto.Type = theType.GetGenericArguments().FirstOrDefault().Name;
                 }
+                fieldDto.IsNullable = fieldDto.GetIsNullable();
                 yield return fieldDto;
             }
         }
