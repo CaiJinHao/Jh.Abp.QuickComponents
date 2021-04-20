@@ -67,5 +67,22 @@ namespace Jh.Abp.Common
             }
             return true;
         }
+
+        /// <summary>
+        /// 将字符串保存到文件
+        /// </summary>
+        /// <param name="fileFullName"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public static string SaveFile(this string fileFullName, string content)
+        {
+            string dir = Path.GetDirectoryName(fileFullName);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+            File.WriteAllText(fileFullName, content);
+            return fileFullName;
+        }
     }
 }
