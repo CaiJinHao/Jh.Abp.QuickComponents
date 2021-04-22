@@ -9,6 +9,6 @@ namespace Jh.Abp.Application.Contracts.Dtos
         /// <summary>
         /// 0:all,1:true,2:false
         /// </summary>
-        int Deleted { get; set; }
+        int? Deleted { get; set; }
     }
 }

@@ -164,20 +164,23 @@ namespace Jh.Abp.Extensions
                 var retrieveDelete = inputDto as IRetrieveDelete;
                 if (retrieveDelete != null)
                 {
-                    switch (retrieveDelete.Deleted)
+                    if (retrieveDelete.Deleted != null)
                     {
-                        case 1:
-                            {
-                                query = query.Where(e => ((ISoftDelete)e).IsDeleted == true);
-                            }
-                            break;
-                        case 2:
-                            {
-                                query = query.Where(e => ((ISoftDelete)e).IsDeleted == false);
-                            }
-                            break;
-                        default:
-                            break;
+                        switch (retrieveDelete.Deleted)
+                        {
+                            case 1:
+                                {
+                                    query = query.Where(e => ((ISoftDelete)e).IsDeleted == true);
+                                }
+                                break;
+                            case 2:
+                                {
+                                    query = query.Where(e => ((ISoftDelete)e).IsDeleted == false);
+                                }
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
             }
