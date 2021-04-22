@@ -30,7 +30,7 @@ namespace Jh.Abp.Common.Entity
                 if (toField != null)
                 {
                     var propertyVal = item.GetValue(target);
-                    if (IsContinue(propertyVal))
+                    if (!IsContinue(propertyVal))
                     {
                         continue;
                     }

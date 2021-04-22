@@ -24,7 +24,7 @@ namespace Jh.Abp.MenuManagement.Menus
         /// </summary>
         public string ParentCode { get; set; }
 
-        public int Deleted { get; set; }
+        public int? Deleted { get; set; }
 
         [Newtonsoft.Json.JsonIgnore]
         public MethodDto<Menu> MethodInput { get; set; }

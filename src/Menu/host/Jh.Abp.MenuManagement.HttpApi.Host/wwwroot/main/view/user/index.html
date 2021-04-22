@@ -15,7 +15,7 @@
         <div class="table_user_mg">
             <fieldset class="layui-elem-field">
                 <div class="layui-field-box">
-                    <div class="layui-form">
+                    <form class="layui-form" lay-filter="form_user">
                         <div class="layui-row">
                             <div class="layui-inline">
                                 <label class="layui-form-label">过滤值：</label>
@@ -25,13 +25,13 @@
                             </div>
                             <div class="layui-inline btngroup">
                                 <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_user_from"
-                                   id="btn_user_from_query">查询</a>
+                                    id="btn_user_from_query">查询</a>
                                 <!-- <a href="javascript:;" class="layui-btn" lay-submit
-                                   lay-filter="btn_user_from_export">导出</a> -->
+                                               lay-filter="btn_user_from_export">导出</a> -->
                             </div>
                         </div>
-                        </form>
-                    </div>
+                    </form>
+                </div>
             </fieldset>
             <table id="table_user" class="layui-hide" lay-filter="table_user_list"></table>
             <div id="table_user_page" class="laypage"></div>
@@ -102,6 +102,8 @@
                         Page: vm.currPage,
                         PageSize: PageSize,//common中定义的全局
                     };
+                    var formfield = form.val("form_user");
+                    $.extend(optDefault, formfield);
                     $.extend(optDefault, _options);
                     var _the = this;
                     datatable.renderTable(optDefault, {

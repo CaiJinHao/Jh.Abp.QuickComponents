@@ -15,7 +15,7 @@
         <div class="table_menu_mg">
             <fieldset class="layui-elem-field">
                 <div class="layui-field-box">
-                    <form class="layui-form">
+                    <form class="layui-form" lay-filter="form_menu">
                         <div class="layui-row">
                             <div class="layui-inline">
                                 <label class="layui-form-label">菜单名称：</label>
@@ -113,6 +113,8 @@
                         Sorting:'code',
                         deleted:2
                     };
+                    var formfield = form.val("form_menu");
+                    $.extend(optDefault, formfield);
                     $.extend(optDefault, _options);
                     var _the = this;
                     datatable.renderTable(optDefault, {

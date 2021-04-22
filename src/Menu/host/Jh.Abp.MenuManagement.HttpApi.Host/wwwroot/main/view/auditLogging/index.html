@@ -15,7 +15,7 @@
         <div class="table_auditLogging_mg">
             <fieldset class="layui-elem-field">
                 <div class="layui-field-box">
-                    <form class="layui-form">
+                    <form class="layui-form" lay-filter="form_auditLogging">
                         <div class="layui-row">
                             <div class="layui-inline">
                                 <label class="layui-form-label">应用名称：</label>
@@ -121,6 +121,8 @@
                         PageSize: PageSize,//common中定义的全局
                         Sorting: 'id',
                     };
+                    var formfield = form.val("form_auditLogging");
+                    $.extend(optDefault, formfield);
                     $.extend(optDefault, _options);
                     var _the = this;
                     datatable.renderTable(optDefault, {

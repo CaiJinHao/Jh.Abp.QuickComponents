@@ -220,7 +220,7 @@ namespace Jh.Abp.MenuManagement
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();
-            //SeedData(context);
+            SeedData(context);
         }
 
         private void SeedData(ApplicationInitializationContext context)
@@ -232,7 +232,7 @@ namespace Jh.Abp.MenuManagement
                     var data = scope.ServiceProvider
                         .GetRequiredService<IDataSeeder>();
                     var context = new DataSeedContext();
-                    context["RoleId"] = "696C5678-881A-5AA5-4A28-39FB0497B688";//IdentityServerHost创建的角色ID
+                    context["RoleId"] = "6ABCE55B-7504-3AC3-1E69-39FC0B2D6D7E";//IdentityServerHost创建的角色ID
                     await data.SeedAsync(context);
                 }
             });
