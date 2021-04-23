@@ -21,17 +21,20 @@ namespace Jh.Abp.MenuManagement.Menus
         [CreateOrUpdateInputDto]
         [Description("菜单编号")]
         [Required]
+        [MaxLength(64)]
         public string Code { get; set; }
 
         [RetrieveDto]
         [CreateOrUpdateInputDto]
         [Description("菜单名称")]
         [Required]
+        [MaxLength(200)]
         public string Name { get; set; }
 
         [CreateOrUpdateInputDto]
         [Description("菜单图标")]
         [Required]
+        [MaxLength(200)]
         public string Icon { get; set; }
 
         [CreateOrUpdateInputDto]
@@ -42,14 +45,17 @@ namespace Jh.Abp.MenuManagement.Menus
         [RetrieveDto]
         [CreateOrUpdateInputDto]
         [Description("上级菜单编号，顶级可为null")]
+        [MaxLength(64)]
         public string ParentCode { get; set; }
 
         [CreateOrUpdateInputDto]
         [Description("导航路径")]
+        [MaxLength(500)]
         public string Url { get; set; }
 
         [CreateOrUpdateInputDto]
         [Description("菜单描述")]
+        [MaxLength(500)]
         public string Description { get; set; }
 
         [ProfileIgnore]
