@@ -37,7 +37,7 @@ using Volo.Abp.Application.Dtos;");
                     builder.AppendLine("\t\t/// <summary>");
                     builder.AppendLine("\t\t/// 是否软删除");
                     builder.AppendLine("\t\t/// <summary>");
-                    builder.AppendLine("\t\tpublic int Deleted " + "{ get; set; }");
+                    builder.AppendLine("\t\tpublic int? Deleted " + "{ get; set; }");
 
                     builder.AppendLine("\t\t/// <summary>");
                     builder.AppendLine("\t\t/// 方法参数回调");
