@@ -97,14 +97,13 @@
                 _table_style = { align: 'center' };//公共样式
 
             var userObj = {
-                renderTable: function (_options) {
+                renderTable: function () {
                     var optDefault = {
                         Page: vm.currPage,
                         PageSize: PageSize,//common中定义的全局
                     };
                     var formfield = form.val("form_user");
                     $.extend(optDefault, formfield);
-                    $.extend(optDefault, _options);
                     var _the = this;
                     datatable.renderTable(optDefault, {
                         url: '/user',
@@ -244,7 +243,7 @@
 
             form.on('submit(btn_user_from)', function (data) {
                 vm.currPage = 1;
-                userObj.renderTable(data.field);
+                userObj.renderTable();
                 return false;
             });
 

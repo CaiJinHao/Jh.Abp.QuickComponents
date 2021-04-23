@@ -106,7 +106,7 @@
                 _table_style = { align: 'center' };//公共样式
 
             var menuObj = {
-                renderTable: function (_options) {
+                renderTable: function () {
                     var optDefault = {
                         Page: vm.currPage,
                         PageSize: PageSize,//common中定义的全局
@@ -115,7 +115,6 @@
                     };
                     var formfield = form.val("form_menu");
                     $.extend(optDefault, formfield);
-                    $.extend(optDefault, _options);
                     var _the = this;
                     datatable.renderTable(optDefault, {
                         url: '/menu',
@@ -254,7 +253,7 @@
 
             form.on('submit(btn_menu_from)', function (data) {
                 vm.currPage = 1;
-                menuObj.renderTable(data.field);
+                menuObj.renderTable();
                 return false;
             });
 

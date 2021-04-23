@@ -115,7 +115,7 @@
                 _table_style = { align: 'center' };//公共样式
 
             var auditLoggingObj = {
-                renderTable: function (_options) {
+                renderTable: function () {
                     var optDefault = {
                         Page: vm.currPage,
                         PageSize: PageSize,//common中定义的全局
@@ -123,7 +123,6 @@
                     };
                     var formfield = form.val("form_auditLogging");
                     $.extend(optDefault, formfield);
-                    $.extend(optDefault, _options);
                     var _the = this;
                     datatable.renderTable(optDefault, {
                         url: '/auditLogging',
@@ -273,7 +272,7 @@
 
             form.on('submit(btn_auditLogging_from)', function (data) {
                 vm.currPage = 1;
-                auditLoggingObj.renderTable(data.field);
+                auditLoggingObj.renderTable();
                 return false;
             });
 

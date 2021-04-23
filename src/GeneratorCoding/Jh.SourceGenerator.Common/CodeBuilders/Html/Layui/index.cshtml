@@ -122,14 +122,13 @@
                 _table_style = { align: 'center' };
 
             var @(table_name_lower)Obj = {
-                renderTable: function (_options) {
+                renderTable: function () {
                     var optDefault = {
                         Page: vm.currPage,
                         PageSize: PageSize,//common中定义的全局
                     };
                     var formfield = form.val('form_@(table_name_lower)');
                     $.extend(optDefault, formfield);
-                    $.extend(optDefault, _options);
                     var _the = this;
                     datatable.renderTable(optDefault, {
                         url: '/@(table_name_lower)',
@@ -259,7 +258,7 @@
 
             form.on('submit(btn_@(table_name_lower)_from)', function (data) {
                 vm.currPage = 1;
-                @(table_name_lower)Obj.renderTable(data.field);
+                @(table_name_lower)Obj.renderTable();
                 return false;
             });
 
