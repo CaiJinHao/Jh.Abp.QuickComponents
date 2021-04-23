@@ -13,7 +13,7 @@
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Abp QuickComponents</PackageReleaseNotes>
-    <Version>1.2.4.6</Version>
+    <Version>1.2.4.7</Version>
     <Description>AccessToken</Description>
   </PropertyGroup>
 
