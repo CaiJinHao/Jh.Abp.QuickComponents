@@ -5,9 +5,9 @@
     <LangVersion>8.0</LangVersion>
     
     <Description>Abp webapi项目需要使用的基础组件。Swagger、MIniProfiler、IdentityServer.</Description>
-    <Authors>KimHo</Authors>
-    <Company>KimHo</Company>
-    <Copyright>KimHo</Copyright>
+    <Authors>CaiJinHao</Authors>
+    <Company>CaiJinHao</Company>
+    <Copyright>CaiJinHao</Copyright>
     <PackageIcon>nugeticon.png</PackageIcon>
     <RepositoryUrl>https://github.com/CaiJinHao/QuickComponents</RepositoryUrl>
     <PackageTags>Abp</PackageTags>
