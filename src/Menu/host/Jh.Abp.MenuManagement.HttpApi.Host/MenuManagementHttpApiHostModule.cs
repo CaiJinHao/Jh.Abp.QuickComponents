@@ -169,7 +169,7 @@ namespace Jh.Abp.MenuManagement
             context.Services.AddJwtAuthenticationComponent(configuration);
             context.Services.AddAuthorizeFilter(configuration);
             context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
-#if DEBUG
+#if !DEBUG
             context.Services.AddMiniProfilerComponent();
 #endif
         }
@@ -189,7 +189,7 @@ namespace Jh.Abp.MenuManagement
                 app.UseHsts();
             }
 
-#if DEBUG
+#if !DEBUG
             app.UseMiniProfiler();
 #endif
             app.UseHttpsRedirection();
@@ -214,7 +214,7 @@ namespace Jh.Abp.MenuManagement
             //    options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
             //    options.OAuthClientSecret(configuration["AuthServer:SwaggerClientSecret"]);
             //});
-#if DEBUG
+#if !DEBUG
             app.UseJhSwagger(context.GetConfiguration(),this.GetType());
 #endif
             app.UseAuditing();
