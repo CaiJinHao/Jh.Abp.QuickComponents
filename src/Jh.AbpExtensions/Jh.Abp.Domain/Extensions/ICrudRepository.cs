@@ -46,5 +46,9 @@ namespace Jh.Abp.Domain.Extensions
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<TEntity[]> DeleteEntitysAsync(IQueryable<TEntity> query, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> propertyQuerys,
+            int maxResultCount = int.MaxValue,
+            int skipCount = 0, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -12,6 +12,7 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Uow;
 using Jh.Abp.Application.Contracts.Extensions;
+using Jh.Abp.Common.Linq;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
@@ -76,6 +77,8 @@ namespace Jh.Abp.MenuManagement.Menus
                 var c = await menuDtoRepository.GetDtoDapperListAsync();
                 var d = await MenuDapperRepository.GetDtoListAsync();
             }*/
+          /*  var lambda = LinqExpression.ConvetToExpression<MenuDeleteInputDto, Menu>(new MenuDeleteInputDto() { ParentCode="A01" }, ObjectMethodConsts.EqualsMethod);
+            var datas= await menuRepository.GetListAsync(lambda);*/
             var entity = await base.DeleteAsync(id, autoSave, cancellationToken);
             await menuAndRoleMapRepository.DeleteListAsync(a => a.MenuId == entity.Id).ConfigureAwait(false);
             return entity;

@@ -64,5 +64,18 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
             }
             return entitys;
         }
+
+        public virtual async Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> propertyQuerys, 
+            int maxResultCount = int.MaxValue,
+            int skipCount = 0, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var queryable = includeDetails
+                 ? await WithDetailsAsync()
+                 : await GetDbSetAsync();
+
+            return await queryable
+                .PageBy(skipCount, maxResultCount)
+                .ToListAsync(cancellationToken);
+        }
     }
 }
