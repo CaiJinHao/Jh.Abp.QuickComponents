@@ -77,8 +77,9 @@ namespace Jh.Abp.MenuManagement.Menus
                 var c = await menuDtoRepository.GetDtoDapperListAsync();
                 var d = await MenuDapperRepository.GetDtoListAsync();
             }*/
-          /*  var lambda = LinqExpression.ConvetToExpression<MenuDeleteInputDto, Menu>(new MenuDeleteInputDto() { ParentCode="A01" }, ObjectMethodConsts.EqualsMethod);
-            var datas= await menuRepository.GetListAsync(lambda);*/
+            var lambda = LinqExpression.ConvetToExpression<MenuDeleteInputDto, Menu>(new MenuDeleteInputDto() { ParentCode = "A01" }, ObjectMethodConsts.EqualsMethod);
+            var datas = await menuRepository.GetListAsync(lambda);
+            var count = await menuRepository.GetCountAsync(lambda);
             var entity = await base.DeleteAsync(id, autoSave, cancellationToken);
             await menuAndRoleMapRepository.DeleteListAsync(a => a.MenuId == entity.Id).ConfigureAwait(false);
             return entity;

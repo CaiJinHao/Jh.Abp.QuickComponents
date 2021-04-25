@@ -73,9 +73,17 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
                  ? await WithDetailsAsync()
                  : await GetDbSetAsync();
 
-            return await queryable
+            return await queryable.WhereIf(propertyQuerys!=null, propertyQuerys)
                 .PageBy(skipCount, maxResultCount)
                 .ToListAsync(cancellationToken);
+        }
+
+        public virtual async Task<long> GetCountAsync(Expression<Func<TEntity, bool>> propertyQuerys, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var queryable = await GetDbSetAsync();
+            //TODO:会抛出异常 测试完成之后更新CrudAppService
+            return await queryable.WhereIf(propertyQuerys != null, propertyQuerys)
+                .LongCountAsync(cancellationToken);
         }
     }
 }

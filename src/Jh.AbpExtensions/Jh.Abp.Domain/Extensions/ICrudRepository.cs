@@ -47,8 +47,25 @@ namespace Jh.Abp.Domain.Extensions
         /// <returns></returns>
         Task<TEntity[]> DeleteEntitysAsync(IQueryable<TEntity> query, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// 获取分页数据
+        /// </summary>
+        /// <param name="propertyQuerys"></param>
+        /// <param name="maxResultCount"></param>
+        /// <param name="skipCount"></param>
+        /// <param name="includeDetails"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> propertyQuerys,
             int maxResultCount = int.MaxValue,
             int skipCount = 0, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// 获取总数量
+        /// </summary>
+        /// <param name="propertyQuerys"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<long> GetCountAsync(Expression<Func<TEntity, bool>> propertyQuerys, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
