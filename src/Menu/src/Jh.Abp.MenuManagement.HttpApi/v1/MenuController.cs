@@ -137,7 +137,7 @@ namespace Jh.Abp.MenuManagement.v1
         [HttpGet("{id}")]
         public async Task<MenuDto> GetAsync(Guid id)
         {
-            return await menuAppService.GetAsync(id);
+            return await menuAppService.GetAsync(id, true);
         }
 
         [HttpPatch]

@@ -95,5 +95,14 @@ namespace Jh.Abp.Extensions
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, string methodStringType = ObjectMethodConsts.ContainsMethod, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// 获取entity
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="includeDetails"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<TEntityDto> GetAsync(TKey id, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

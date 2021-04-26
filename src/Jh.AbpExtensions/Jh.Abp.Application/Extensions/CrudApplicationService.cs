@@ -81,6 +81,15 @@ namespace Jh.Abp.Extensions
             );
         }
 
+        public virtual async Task<TEntityDto> GetAsync(TKey id, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await CheckGetPolicyAsync();
+
+            var entity = await crudRepository.GetAsync(id, includeDetails, cancellationToken);
+
+            return await MapToGetOutputDtoAsync(entity);
+        }
+
         [Obsolete("请使用 GetEntitysAsync includeDetails")]
         public virtual async Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.ContainsMethod, CancellationToken cancellationToken = default(CancellationToken))
         {
