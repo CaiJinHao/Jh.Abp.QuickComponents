@@ -10,6 +10,9 @@ using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Jh.Abp.Common.Linq;
+using System.Linq.Dynamic.Core;
+
 
 namespace Jh.Abp.EntityFrameworkCore.Extensions
 {
@@ -65,23 +68,9 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
             return entitys;
         }
 
-        public virtual async Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> propertyQuerys, 
-            int maxResultCount = int.MaxValue,
-            int skipCount = 0, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var queryable = includeDetails
-                 ? await WithDetailsAsync()
-                 : await GetDbSetAsync();
-
-            return await queryable.WhereIf(propertyQuerys!=null, propertyQuerys)
-                .PageBy(skipCount, maxResultCount)
-                .ToListAsync(cancellationToken);
-        }
-
-        public virtual async Task<long> GetCountAsync(Expression<Func<TEntity, bool>> propertyQuerys, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var queryable = await GetDbSetAsync();
-            return propertyQuerys != null ? await queryable.LongCountAsync(propertyQuerys, cancellationToken) : await queryable.LongCountAsync(cancellationToken);
+        public virtual async Task<IQueryable<TEntity>> GetQueryableAsync(bool includeDetails = false)
+        { 
+            return includeDetails ? await WithDetailsAsync(): await GetDbSetAsync();
         }
     }
 }

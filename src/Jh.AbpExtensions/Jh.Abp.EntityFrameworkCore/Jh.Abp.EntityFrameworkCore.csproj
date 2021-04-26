@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="4.2.2" />
+    <ProjectReference Include="..\..\Common\Jh.Abp.Common\Jh.Abp.Common.csproj" />
     <ProjectReference Include="..\Jh.Abp.Domain\Jh.Abp.Domain.csproj" />
   </ItemGroup>
 

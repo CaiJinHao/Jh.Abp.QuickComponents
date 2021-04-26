@@ -148,13 +148,29 @@ namespace Jh.Abp.Common.Linq
         /// 将IQueryable转为Expression<Func<TSource, bool>>
         /// </summary>
         /// <typeparam name="TSource"></typeparam>
-        /// <param name="inputQuery"></param>
+        /// <param name="inputQuery">不支持分页和排序</param>
         /// <returns></returns>
         public static Expression<Func<TSource, bool>> ToExpression<TSource>(this IQueryable<TSource> inputQuery)
         {
-            var unary = inputQuery.Expression != null && inputQuery.Expression is MethodCallExpression expression ? expression.Arguments.LastOrDefault(a => a.NodeType == ExpressionType.Quote) : null;
-            var exp = unary != null && unary is UnaryExpression unaryExpression ? unaryExpression.Operand : null;
-            return exp != null && exp is Expression<Func<TSource, bool>> _exp ? _exp : f => true;
+            return inputQuery.Expression != null && inputQuery.Expression is MethodCallExpression methodCallExpression ? GetMethodCallExpression<TSource>(methodCallExpression) : f => true;
+        }
+
+        /// <summary>
+        /// 获取查询表达式
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <param name="methodCallExpression"></param>
+        /// <returns></returns>
+        private static Expression<Func<TSource, bool>> GetMethodCallExpression<TSource>(MethodCallExpression methodCallExpression)
+        {
+            if (methodCallExpression.Arguments.Any(a => a.NodeType == ExpressionType.Extension))
+            {
+                var unary = methodCallExpression.Arguments.LastOrDefault(a => a.NodeType == ExpressionType.Quote);
+                var exp = unary != null && unary is UnaryExpression unaryExpression ? unaryExpression.Operand : null;
+                return exp != null && exp is Expression<Func<TSource, bool>> _exp ? _exp : f => true;
+            }
+            var _methodExpression = methodCallExpression.Arguments.FirstOrDefault(a => a.NodeType == ExpressionType.Call);
+            return _methodExpression != null && _methodExpression is MethodCallExpression _mexp ? GetMethodCallExpression<TSource>(_mexp) : f => true;
         }
 
 
