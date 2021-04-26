@@ -144,6 +144,19 @@ namespace Jh.Abp.Common.Linq
             return lambda;
         }
 
+        /// <summary>
+        /// 将IQueryable转为Expression<Func<TSource, bool>>
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <param name="inputQuery"></param>
+        /// <returns></returns>
+        public static Expression<Func<TSource, bool>> ToExpression<TSource>(this IQueryable<TSource> inputQuery)
+        {
+            var unary = inputQuery.Expression != null && inputQuery.Expression is MethodCallExpression expression ? expression.Arguments.LastOrDefault(a => a.NodeType == ExpressionType.Quote) : null;
+            var exp = unary != null && unary is UnaryExpression unaryExpression ? unaryExpression.Operand : null;
+            return exp != null && exp is Expression<Func<TSource, bool>> _exp ? _exp : f => true;
+        }
+
 
         public static Expression<Func<T, bool>> True<T>() { return f => true; }
         public static Expression<Func<T, bool>> False<T>() { return f => false; }

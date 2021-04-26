@@ -26,7 +26,7 @@ namespace Jh.Abp.MenuManagement
             (await GetDbSetAsync()).RemoveRange(entitys);
             if (autoSave)
             {
-                await (await GetDbContextAsync()).SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
+                await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             }
             return entitys;
         }
@@ -38,7 +38,7 @@ namespace Jh.Abp.MenuManagement
             _dbSet.RemoveRange(entitys);
             if (autoSave)
             {
-                await (await GetDbContextAsync()).SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
+                await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             }
             return entitys;
         }

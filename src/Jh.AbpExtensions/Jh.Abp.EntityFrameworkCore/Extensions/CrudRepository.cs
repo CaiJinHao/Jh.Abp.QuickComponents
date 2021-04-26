@@ -27,7 +27,7 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
             await (await GetDbSetAsync()).AddRangeAsync(entitys).ConfigureAwait(false);
             if (autoSave)
             {
-                await (await GetDbContextAsync()).SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
+                await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             }
             return entitys;
         }
@@ -37,7 +37,7 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
             await (await GetDbSetAsync()).AddAsync(entity).ConfigureAwait(false);
             if (autoSave)
             {
-                await (await GetDbContextAsync()).SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
+                await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             }
             return entity;
         }
@@ -45,11 +45,11 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
         public virtual async Task<TEntity[]> DeleteListAsync(Expression<Func<TEntity, bool>> predicate, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             var _dbSet = await GetDbSetAsync();
-            var entitys = _dbSet.Where(predicate).ToArray();
+            var entitys = _dbSet.WhereIf(predicate != null, predicate).ToArray();
             _dbSet.RemoveRange(entitys);
             if (autoSave)
             {
-                await (await GetDbContextAsync()).SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
+                await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             }
             return entitys;
         }
@@ -60,7 +60,7 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
             (await GetDbSetAsync()).RemoveRange(entitys);
             if (autoSave)
             {
-                await (await GetDbContextAsync()).SaveChangesAsync(GetCancellationToken(cancellationToken)).ConfigureAwait(false);
+                await (await GetDbContextAsync()).SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             }
             return entitys;
         }
@@ -81,9 +81,7 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
         public virtual async Task<long> GetCountAsync(Expression<Func<TEntity, bool>> propertyQuerys, CancellationToken cancellationToken = default(CancellationToken))
         {
             var queryable = await GetDbSetAsync();
-            //TODO:会抛出异常 测试完成之后更新CrudAppService
-            return await queryable.WhereIf(propertyQuerys != null, propertyQuerys)
-                .LongCountAsync(cancellationToken);
+            return propertyQuerys != null ? await queryable.LongCountAsync(propertyQuerys, cancellationToken) : await queryable.LongCountAsync(cancellationToken);
         }
     }
 }
