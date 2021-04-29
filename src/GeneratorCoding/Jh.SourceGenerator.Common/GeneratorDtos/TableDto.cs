@@ -10,7 +10,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         public string DbContext { get; }
         public string Namespace { get; }
         public string ControllerBase { get; }
-        public TableDto(string dbContext,string namespa,string controllerBase)
+        public TableDto(string dbContext, string namespa, string controllerBase)
         {
             DbContext = dbContext;
             Namespace = namespa;
@@ -28,6 +28,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// 表描述
         /// </summary>
         public string Comment { get; set; }
+
         private string _inheritClass = "EntityDto";
         /// <summary>
         /// 要继承的类
@@ -37,23 +38,115 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
             get { return _inheritClass; }
             set
             {
-                if (InheritClass.Contains("FullAuditedAggregateRoot"))
+                switch (value)
                 {
-                    _inheritClass = "FullAuditedEntityDto";
+                    case "AuditedAggregateRootWithUser":
+                    case "AuditedEntityWithUser":
+                        {
+                            _inheritClass = "AuditedEntityWithUserDto";
+                        }
+                        break;
+                    case "AuditedAggregateRoot":
+                    case "AuditedEntity":
+                        {
+                            _inheritClass = "AuditedEntityDto";
+                        }
+                        break;
+                    case "CreationAuditedAggregateRootWithUser":
+                    case "CreationAuditedEntityWithUser":
+                        {
+                            _inheritClass = "CreationAuditedEntityWithUserDto";
+                        }
+                        break;
+                    case "CreationAuditedAggregateRoot":
+                    case "CreationAuditedEntity":
+                        {
+                            _inheritClass = "CreationAuditedEntityDto";
+                        }
+                        break;
+                    case "FullAuditedAggregateRootWithUser":
+                    case "FullAuditedEntityWithUser":
+                        {
+                            _inheritClass = "FullAuditedEntityWithUserDto";
+                        }
+                        break;
+                    case "FullAuditedAggregateRoot":
+                    case "FullAuditedEntity":
+                        {
+                            _inheritClass = "FullAuditedEntityDto";
+                        }
+                        break;
+                    case "AggregateRoot":
+                        {
+                            _inheritClass = "ExtensibleEntityDto";
+                        }
+                        break;
+                    case "BasicAggregateRoot":
+                    case "Entity":
+                    default:
+                        {
+                            _inheritClass = "EntityDto";
+                        }
+                        break;
                 }
-                else if (InheritClass.Contains("CreationAuditedEntity"))
-                {
-                    _inheritClass = "CreationAuditedEntityDto";
-                }
-                else if (InheritClass.Contains("AuditedAggregateRoot"))
-                {
-                    _inheritClass = "AuditedEntityDto";
-                }
-                else
-                {
-                    _inheritClass = "EntityDto";
-                }
+                SetIgnoreObjectProperties(value);
             }
+        }
+        public string IgnoreObjectProperties { get; set; }
+        private void SetIgnoreObjectProperties(string tempclass)
+        {
+            var result = string.Empty;
+            switch (tempclass)
+            {
+                case "AuditedAggregateRootWithUser":
+                case "AuditedAggregateRoot":
+                    {
+                        result = ".IgnoreAuditedObjectProperties().Ignore(a => a.ConcurrencyStamp)";
+                    }
+                    break;
+                case "AuditedEntityWithUser":
+                case "AuditedEntity":
+                    {
+                        result = ".IgnoreAuditedObjectProperties()";
+                    }
+                    break;
+                case "CreationAuditedAggregateRootWithUser":
+                case "CreationAuditedAggregateRoot":
+                    {
+                        result = ".IgnoreCreationAuditedObjectProperties().Ignore(a => a.ConcurrencyStamp)";
+                    }
+                    break;
+                case "CreationAuditedEntityWithUser":
+                case "CreationAuditedEntity":
+                    {
+                        result = ".IgnoreCreationAuditedObjectProperties()";
+                    }
+                    break;
+                case "FullAuditedAggregateRootWithUser":
+                case "FullAuditedAggregateRoot":
+                    {
+                        result = ".IgnoreFullAuditedObjectProperties().Ignore(a => a.ConcurrencyStamp)";
+                    }
+                    break;
+                case "FullAuditedEntityWithUser":
+                case "FullAuditedEntity":
+                    {
+                        result = ".IgnoreFullAuditedObjectProperties()";
+                    }
+                    break;
+                case "AggregateRoot":
+                    {
+                        result = ".Ignore(a => a.ConcurrencyStamp)";
+                    }
+                    break;
+                case "Entity":
+                default:
+                    {
+                        //配置为自动生成的都需要在这忽略掉
+                    }
+                    break;
+            }
+            IgnoreObjectProperties = result + ".Ignore(a => a.Id)";
         }
         /// <summary>
         /// 所有自定义的字段
