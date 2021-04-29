@@ -41,36 +41,60 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                 switch (value)
                 {
                     case "AuditedAggregateRootWithUser":
+                        {
+                            _inheritClass = "ExtensibleAuditedEntityWithUserDto";
+                        }
+                        break;
                     case "AuditedEntityWithUser":
                         {
                             _inheritClass = "AuditedEntityWithUserDto";
                         }
                         break;
                     case "AuditedAggregateRoot":
+                        {
+                            _inheritClass = "ExtensibleAuditedEntityDto";
+                        }
+                        break;
                     case "AuditedEntity":
                         {
                             _inheritClass = "AuditedEntityDto";
                         }
                         break;
                     case "CreationAuditedAggregateRootWithUser":
+                        {
+                            _inheritClass = "ExtensibleCreationAuditedEntityWithUserDto";
+                        }
+                        break;
                     case "CreationAuditedEntityWithUser":
                         {
                             _inheritClass = "CreationAuditedEntityWithUserDto";
                         }
                         break;
                     case "CreationAuditedAggregateRoot":
+                        {
+                            _inheritClass = "ExtensibleCreationAuditedEntityDto";
+                        }
+                        break;
                     case "CreationAuditedEntity":
                         {
                             _inheritClass = "CreationAuditedEntityDto";
                         }
                         break;
                     case "FullAuditedAggregateRootWithUser":
+                        {
+                            _inheritClass = "ExtensibleFullAuditedEntityWithUserDto";
+                        }
+                        break;
                     case "FullAuditedEntityWithUser":
                         {
                             _inheritClass = "FullAuditedEntityWithUserDto";
                         }
                         break;
                     case "FullAuditedAggregateRoot":
+                        {
+                            _inheritClass = "ExtensibleFullAuditedEntityDto";
+                        }
+                        break;
                     case "FullAuditedEntity":
                         {
                             _inheritClass = "FullAuditedEntityDto";
@@ -101,7 +125,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                 case "AuditedAggregateRootWithUser":
                 case "AuditedAggregateRoot":
                     {
-                        result = ".IgnoreAuditedObjectProperties().Ignore(a => a.ConcurrencyStamp)";
+                        result = ".IgnoreAuditedObjectProperties()";
                     }
                     break;
                 case "AuditedEntityWithUser":
@@ -113,7 +137,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                 case "CreationAuditedAggregateRootWithUser":
                 case "CreationAuditedAggregateRoot":
                     {
-                        result = ".IgnoreCreationAuditedObjectProperties().Ignore(a => a.ConcurrencyStamp)";
+                        result = ".IgnoreCreationAuditedObjectProperties()";
                     }
                     break;
                 case "CreationAuditedEntityWithUser":
@@ -125,7 +149,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                 case "FullAuditedAggregateRootWithUser":
                 case "FullAuditedAggregateRoot":
                     {
-                        result = ".IgnoreFullAuditedObjectProperties().Ignore(a => a.ConcurrencyStamp)";
+                        result = ".IgnoreFullAuditedObjectProperties()";
                     }
                     break;
                 case "FullAuditedEntityWithUser":
@@ -135,10 +159,6 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                     }
                     break;
                 case "AggregateRoot":
-                    {
-                        result = ".Ignore(a => a.ConcurrencyStamp)";
-                    }
-                    break;
                 case "Entity":
                 default:
                     {
