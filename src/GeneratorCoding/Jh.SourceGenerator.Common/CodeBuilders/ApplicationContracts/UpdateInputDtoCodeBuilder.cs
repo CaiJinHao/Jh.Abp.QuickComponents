@@ -16,12 +16,17 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
         {
             var builder = new StringBuilder();
             builder.AppendLine(@"using Jh.Abp.Application.Contracts.Dtos;
-using System;
-using Jh.Abp.Application.Contracts.Extensions;");
+using Jh.Abp.Application.Contracts.Extensions;
+using Volo.Abp.Domain.Entities;
+using Volo.Abp.ObjectExtending;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
                 builder.AppendLine($"\tpublic class {FileName}: IMethodDto<{table.Name}>");
+                if (table.IsConcurrencyStamp)
+                { 
+                    builder.AppendLine($",ExtensibleObject, IHasConcurrencyStamp");
+                }
                 builder.AppendLine("\t{");
                 {
                     foreach (var _field in table.FieldsCreateOrUpdateInput)
@@ -32,11 +37,22 @@ using Jh.Abp.Application.Contracts.Extensions;");
                         var nullable = _field.IsNullable ? "?" : "";//可空类型
                         builder.AppendLine($"\t\tpublic {_field.Type}{nullable} {_field.Name} " + "{ get; set; }");
                     }
-                    //IFullRetrieveDto
-                    builder.AppendLine("\t\t/// <summary>");
-                    builder.AppendLine("\t\t/// 是否软删除");
-                    builder.AppendLine("\t\t/// <summary>");
-                    builder.AppendLine("\t\tpublic int Deleted " + "{ get; set; }");
+
+                    if (table.IsDelete)
+                    {
+                        builder.AppendLine("\t\t/// <summary>");
+                        builder.AppendLine("\t\t/// 是否删除");
+                        builder.AppendLine("\t\t/// <summary>");
+                        builder.AppendLine("\t\tpublic  bool IsDeleted { get; set; }");
+                    }
+
+                    if (table.IsConcurrencyStamp)
+                    {
+                        builder.AppendLine("\t\t/// <summary>");
+                        builder.AppendLine("\t\t/// 并发检测字段 必须和数据库中的值一样才会允许更新");
+                        builder.AppendLine("\t\t/// <summary>");
+                        builder.AppendLine("\t\tpublic string ConcurrencyStamp { get; set; }");
+                    }
 
                     builder.AppendLine("\t\t/// <summary>");
                     builder.AppendLine("\t\t/// 方法参数回调");

@@ -27,7 +27,7 @@ using Volo.Abp.AutoMapper;");
                     builder.AppendLine("\t\t{");
                     {
                         builder.AppendLine($"\t\tCreateMap<{table.Name},{table.Name}Dto>().MapExtraProperties();");
-                        builder.AppendLine($"\t\tCreateMap<{table.Name}CreateInputDto, {table.Name}>(){table.IgnoreObjectProperties}");
+                        builder.AppendLine($"\t\tCreateMap<{table.Name}CreateInputDto, {table.Name}>(){table.IgnoreObjectPropertiesCreateInputDto}");
                         foreach (var item in table.FieldsIgnore)
                         {
                             builder.AppendLine($".Ignore(a => a.{item.Name})");
@@ -40,20 +40,21 @@ using Volo.Abp.AutoMapper;");
                             builder.AppendLine($".Ignore(a => a.{item.Name})");
                         }
                         builder.AppendLine(";");
+                        /*
+                         * 没有用到DeleteInputDto、RetrieveInputDto的数据映射
+                                                builder.AppendLine($"\t\tCreateMap<{table.Name}DeleteInputDto, {table.Name}>(){table.IgnoreObjectProperties}");
+                                                foreach (var item in table.GetIgnoreFieldsRetrieveInputDto())
+                                                {
+                                                    builder.AppendLine($".Ignore(a => a.{item.Name})");
+                                                }
+                                                builder.AppendLine(";");
 
-                        builder.AppendLine($"\t\tCreateMap<{table.Name}DeleteInputDto, {table.Name}>(){table.IgnoreObjectProperties}");
-                        foreach (var item in table.GetIgnoreFieldsRetrieveInputDto())
-                        {
-                            builder.AppendLine($".Ignore(a => a.{item.Name})");
-                        }
-                        builder.AppendLine(";");
-
-                        builder.AppendLine($"\t\tCreateMap<{table.Name}RetrieveInputDto, {table.Name}>(){table.IgnoreObjectProperties}");
-                        foreach (var item in table.GetIgnoreFieldsRetrieveInputDto())
-                        {
-                            builder.AppendLine($".Ignore(a => a.{item.Name})");
-                        }
-                        builder.AppendLine(";");
+                                                builder.AppendLine($"\t\tCreateMap<{table.Name}RetrieveInputDto, {table.Name}>(){table.IgnoreObjectProperties}");
+                                                foreach (var item in table.GetIgnoreFieldsRetrieveInputDto())
+                                                {
+                                                    builder.AppendLine($".Ignore(a => a.{item.Name})");
+                                                }
+                                                builder.AppendLine(";");*/
                     }
                     builder.AppendLine("\t\t}");
                 }

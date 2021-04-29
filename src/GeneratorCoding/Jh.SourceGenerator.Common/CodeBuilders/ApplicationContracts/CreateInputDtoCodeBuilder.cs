@@ -16,13 +16,16 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
         {
             var builder = new StringBuilder();
             builder.AppendLine(@"using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;");
+using Volo.Abp.ObjectExtending;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
                 builder.AppendLine($"\tpublic class {FileName}");
+                if (table.IsConcurrencyStamp)
+                {
+                    builder.AppendLine($":ExtensibleObject");
+                }
                 builder.AppendLine("\t{");
                 {
                     foreach (var _field in table.FieldsCreateOrUpdateInput)

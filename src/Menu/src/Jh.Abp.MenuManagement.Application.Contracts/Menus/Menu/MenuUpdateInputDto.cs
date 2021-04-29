@@ -1,13 +1,11 @@
 ﻿using Jh.Abp.Application.Contracts.Dtos;
 using Jh.Abp.Application.Contracts.Extensions;
-using System;
-using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.ObjectExtending;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
-    public class MenuUpdateInputDto : ExtensibleObject, IMethodDto<Menu>, IHasConcurrencyStamp
+    public class MenuUpdateInputDto : ExtensibleObject, IHasConcurrencyStamp, IMethodDto<Menu>
     {
         /// <summary>
         /// 菜单编号
@@ -43,6 +41,8 @@ namespace Jh.Abp.MenuManagement.Menus
         /// 菜单描述
         /// </summary>
         public string Description { get; set; }
+
+        public bool IsDeleted { get; set; }
 
         [Newtonsoft.Json.JsonIgnore]
         public MethodDto<Menu> MethodInput { get; set; }

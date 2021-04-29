@@ -7,7 +7,7 @@ namespace Jh.Abp.MenuManagement.Menus
     /// <summary>
     /// 只存放需要查询的字段
     /// </summary>
-    public class MenuRetrieveInputDto : PagedAndSortedResultRequestDto, IFullRetrieveDto<Menu>
+    public class MenuRetrieveInputDto : PagedAndSortedResultRequestDto, IMethodDto<Menu>, IRetrieveDelete
     {
         /// <summary>
         /// 菜单编号

@@ -29,6 +29,9 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// </summary>
         public string Comment { get; set; }
 
+        public bool IsDelete { get; set; }
+        public bool IsConcurrencyStamp { get; set; }
+
         private string _inheritClass = "EntityDto";
         /// <summary>
         /// 要继承的类
@@ -117,48 +120,63 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
             }
         }
         public string IgnoreObjectProperties { get; set; }
+        public string IgnoreObjectPropertiesCreateInputDto { get; set; }
         private void SetIgnoreObjectProperties(string tempclass)
         {
-            var result = string.Empty;
+            var ignoreObjectPropertiesDefault = string.Empty;
+            var ignoreObjectPropertiesCreateInputDto = string.Empty;
             switch (tempclass)
             {
                 case "AuditedAggregateRootWithUser":
                 case "AuditedAggregateRoot":
                     {
-                        result = ".IgnoreAuditedObjectProperties()";
+                        ignoreObjectPropertiesDefault = ".IgnoreAuditedObjectProperties()";
+                        ignoreObjectPropertiesCreateInputDto = ".IgnoreAuditedObjectProperties().Ignore(a=>a.ConcurrencyStamp)";
+                        IsConcurrencyStamp = true;
                     }
                     break;
                 case "AuditedEntityWithUser":
                 case "AuditedEntity":
                     {
-                        result = ".IgnoreAuditedObjectProperties()";
+                        ignoreObjectPropertiesDefault = ".IgnoreAuditedObjectProperties()";
                     }
                     break;
                 case "CreationAuditedAggregateRootWithUser":
                 case "CreationAuditedAggregateRoot":
                     {
-                        result = ".IgnoreCreationAuditedObjectProperties()";
+                        ignoreObjectPropertiesDefault = ".IgnoreCreationAuditedObjectProperties()";
+                        ignoreObjectPropertiesCreateInputDto = ".IgnoreCreationAuditedObjectProperties().Ignore(a=>a.ConcurrencyStamp)";
+                        IsConcurrencyStamp = true;
                     }
                     break;
                 case "CreationAuditedEntityWithUser":
                 case "CreationAuditedEntity":
                     {
-                        result = ".IgnoreCreationAuditedObjectProperties()";
+                        ignoreObjectPropertiesDefault = ".IgnoreCreationAuditedObjectProperties()";
                     }
                     break;
                 case "FullAuditedAggregateRootWithUser":
                 case "FullAuditedAggregateRoot":
                     {
-                        result = ".IgnoreFullAuditedObjectProperties()";
+                        ignoreObjectPropertiesDefault = ".IgnoreFullAuditedObjectProperties()";
+                        ignoreObjectPropertiesCreateInputDto = ".IgnoreFullAuditedObjectProperties().Ignore(a=>a.ConcurrencyStamp)";
+                        IsDelete = true;
+                        IsConcurrencyStamp = true;
                     }
                     break;
                 case "FullAuditedEntityWithUser":
                 case "FullAuditedEntity":
                     {
-                        result = ".IgnoreFullAuditedObjectProperties()";
+                        ignoreObjectPropertiesDefault = ".IgnoreFullAuditedObjectProperties()";
+                        IsDelete = true;
                     }
                     break;
                 case "AggregateRoot":
+                    { 
+                        ignoreObjectPropertiesCreateInputDto = ".Ignore(a=>a.ConcurrencyStamp)";
+                        IsConcurrencyStamp = true;
+                    }
+                    break;
                 case "Entity":
                 default:
                     {
@@ -166,7 +184,11 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                     }
                     break;
             }
-            IgnoreObjectProperties = result + ".Ignore(a => a.Id)";
+            ignoreObjectPropertiesDefault += ".Ignore(a => a.Id)";
+
+
+            IgnoreObjectProperties = ignoreObjectPropertiesDefault;
+            IgnoreObjectPropertiesCreateInputDto = ignoreObjectPropertiesCreateInputDto;
         }
         /// <summary>
         /// 所有自定义的字段
