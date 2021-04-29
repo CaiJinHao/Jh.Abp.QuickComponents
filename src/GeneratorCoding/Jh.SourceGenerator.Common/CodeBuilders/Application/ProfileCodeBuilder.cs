@@ -26,7 +26,7 @@ using Volo.Abp.AutoMapper;");
                     builder.AppendLine($"\t\tpublic {FileName}()");
                     builder.AppendLine("\t\t{");
                     {
-                        builder.AppendLine($"\t\tCreateMap<{table.Name},{table.Name}Dto>();");
+                        builder.AppendLine($"\t\tCreateMap<{table.Name},{table.Name}Dto>().MapExtraProperties();");
                         builder.AppendLine($"\t\tCreateMap<{table.Name}CreateInputDto, {table.Name}>(){table.IgnoreObjectProperties}");
                         foreach (var item in table.FieldsIgnore)
                         {

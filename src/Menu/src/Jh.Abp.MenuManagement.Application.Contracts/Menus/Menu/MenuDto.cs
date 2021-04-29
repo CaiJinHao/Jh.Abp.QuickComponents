@@ -3,7 +3,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
-    public class MenuDto: FullAuditedEntityDto<Guid>
+    public class MenuDto: ExtensibleFullAuditedEntityDto<Guid>
     {
         /// <summary>
         /// 菜单编号
