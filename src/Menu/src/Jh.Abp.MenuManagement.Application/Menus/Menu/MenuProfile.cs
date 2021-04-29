@@ -11,7 +11,7 @@ namespace Jh.Abp.MenuManagement.Menus
             CreateMap<MenuCreateInputDto, Menu>().IgnoreFullAuditedObjectProperties().Ignore(a=>a.ConcurrencyStamp).Ignore(a => a.Id)
     .Ignore(a => a.MenuRoleMaps)
     ;
-            CreateMap<MenuUpdateInputDto, Menu>().IgnoreFullAuditedObjectProperties().Ignore(a => a.ConcurrencyStamp).Ignore(a => a.Id)
+            CreateMap<MenuUpdateInputDto, Menu>().IgnoreFullAuditedObjectProperties().Ignore(a => a.Id)
     .Ignore(a => a.MenuRoleMaps)
     ;
         }
