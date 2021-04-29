@@ -26,22 +26,35 @@ using Volo.Abp.AutoMapper;");
                     builder.AppendLine($"\t\tpublic {FileName}()");
                     builder.AppendLine("\t\t{");
                     {
-                        builder.AppendLine($"\t\tCreateMap<{table.Name},{table.Name}Dto>();");
-                        builder.AppendLine($"\t\tCreateMap<{table.Name}CreateInputDto, {table.Name}>().IgnoreFullAuditedObjectProperties().Ignore(a => a.ConcurrencyStamp).Ignore(a => a.ExtraProperties).Ignore(a => a.Id);");
-                        builder.AppendLine($"\t\tCreateMap<{table.Name}UpdateInputDto, {table.Name}>().IgnoreFullAuditedObjectProperties().Ignore(a => a.ConcurrencyStamp).Ignore(a => a.ExtraProperties).Ignore(a => a.Id);");
+                        builder.AppendLine($"\t\tCreateMap<{table.Name},{table.Name}Dto>().MapExtraProperties();");
+                        builder.AppendLine($"\t\tCreateMap<{table.Name}CreateInputDto, {table.Name}>(){table.IgnoreObjectPropertiesCreateInputDto}");
+                        foreach (var item in table.FieldsIgnore)
+                        {
+                            builder.AppendLine($".Ignore(a => a.{item.Name})");
+                        }
+                        builder.AppendLine(";");
 
-                        builder.AppendLine($"\t\tCreateMap<{table.Name}DeleteInputDto, {table.Name}>().IgnoreFullAuditedObjectProperties().Ignore(a => a.ConcurrencyStamp).Ignore(a => a.ExtraProperties).Ignore(a => a.Id).Ignore(a=>a.LastModificationTime).Ignore(a=>a.LastModifierId)");
-                        foreach (var item in table.GetIgnoreFieldsRetrieveInputDto())
+                        builder.AppendLine($"\t\tCreateMap<{table.Name}UpdateInputDto, {table.Name}>(){table.IgnoreObjectProperties}");
+                        foreach (var item in table.FieldsIgnore)
                         {
                             builder.AppendLine($".Ignore(a => a.{item.Name})");
                         }
                         builder.AppendLine(";");
-                        builder.AppendLine($"\t\tCreateMap<{table.Name}RetrieveInputDto, {table.Name}>().IgnoreFullAuditedObjectProperties().Ignore(a => a.ConcurrencyStamp).Ignore(a => a.ExtraProperties).Ignore(a => a.Id).Ignore(a=>a.LastModificationTime).Ignore(a=>a.LastModifierId)");
-                        foreach (var item in table.GetIgnoreFieldsRetrieveInputDto())
-                        {
-                            builder.AppendLine($".Ignore(a => a.{item.Name})");
-                        }
-                        builder.AppendLine(";");
+                        /*
+                         * 没有用到DeleteInputDto、RetrieveInputDto的数据映射
+                                                builder.AppendLine($"\t\tCreateMap<{table.Name}DeleteInputDto, {table.Name}>(){table.IgnoreObjectProperties}");
+                                                foreach (var item in table.GetIgnoreFieldsRetrieveInputDto())
+                                                {
+                                                    builder.AppendLine($".Ignore(a => a.{item.Name})");
+                                                }
+                                                builder.AppendLine(";");
+
+                                                builder.AppendLine($"\t\tCreateMap<{table.Name}RetrieveInputDto, {table.Name}>(){table.IgnoreObjectProperties}");
+                                                foreach (var item in table.GetIgnoreFieldsRetrieveInputDto())
+                                                {
+                                                    builder.AppendLine($".Ignore(a => a.{item.Name})");
+                                                }
+                                                builder.AppendLine(";");*/
                     }
                     builder.AppendLine("\t\t}");
                 }

@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+using Volo.Abp.ObjectExtending;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
     /// <summary>
     /// 只存放需要传值的
     /// </summary>
-    public class MenuCreateInputDto
+    public class MenuCreateInputDto: ExtensibleObject
     {
         /// <summary>
         /// 菜单编号

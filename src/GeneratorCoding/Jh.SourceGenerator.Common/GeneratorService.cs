@@ -43,11 +43,12 @@ namespace Jh.SourceGenerator.Common
             return new TableDto(GeneratorConsts.DbContext, GeneratorConsts.Namespace, GeneratorConsts.ControllerBase)
             {
                 Name = GetTableName(classType),
-                InheritClass= GetTableInheritClass(classType),
+                KeyType = GetKeyType(classType),
+                InheritClass = GetTableInheritClass(classType),
                 Comment = GetTableDescription(classType),
                 FieldsCreateOrUpdateInput = GetFieldDto(GetMembers<CreateOrUpdateInputDtoAttribute>(classType)).ToList(),
                 FieldsRetrieve = GetFieldDto(GetMembers<RetrieveDtoAttribute>(classType)).ToList(),
-                FieldsIgnore= GetFieldDto(GetMembers<ProfileIgnoreAttribute>(classType)).ToList(),
+                FieldsIgnore = GetFieldDto(GetMembers<ProfileIgnoreAttribute>(classType)).ToList(),
             };
         }
 
@@ -56,9 +57,16 @@ namespace Jh.SourceGenerator.Common
             return classType.Name;
         }
 
+        public virtual string GetKeyType(Type classType)
+        {
+            var baseType = classType.BaseType;
+            var genericTypeArgs = baseType.GenericTypeArguments;
+            return genericTypeArgs.FirstOrDefault()?.ToString();
+        }
+
         public virtual string GetTableInheritClass(Type classType)
         {
-            return classType.BaseType.Name.Replace("`1","Dto");
+            return classType.BaseType.Name.Replace("`1","");
         }
 
         public virtual string GetTableDescription(Type classType)

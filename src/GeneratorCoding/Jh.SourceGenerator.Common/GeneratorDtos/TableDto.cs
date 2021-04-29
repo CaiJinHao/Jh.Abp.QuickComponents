@@ -10,7 +10,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         public string DbContext { get; }
         public string Namespace { get; }
         public string ControllerBase { get; }
-        public TableDto(string dbContext,string namespa,string controllerBase)
+        public TableDto(string dbContext, string namespa, string controllerBase)
         {
             DbContext = dbContext;
             Namespace = namespa;
@@ -28,6 +28,10 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// 表描述
         /// </summary>
         public string Comment { get; set; }
+
+        public bool IsDelete { get; set; }
+        public bool IsConcurrencyStamp { get; set; }
+
         private string _inheritClass = "EntityDto";
         /// <summary>
         /// 要继承的类
@@ -37,23 +41,155 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
             get { return _inheritClass; }
             set
             {
-                if (InheritClass.Contains("FullAuditedAggregateRoot"))
+                switch (value)
                 {
-                    _inheritClass = "FullAuditedEntityDto";
+                    case "AuditedAggregateRootWithUser":
+                        {
+                            _inheritClass = "ExtensibleAuditedEntityWithUserDto";
+                        }
+                        break;
+                    case "AuditedEntityWithUser":
+                        {
+                            _inheritClass = "AuditedEntityWithUserDto";
+                        }
+                        break;
+                    case "AuditedAggregateRoot":
+                        {
+                            _inheritClass = "ExtensibleAuditedEntityDto";
+                        }
+                        break;
+                    case "AuditedEntity":
+                        {
+                            _inheritClass = "AuditedEntityDto";
+                        }
+                        break;
+                    case "CreationAuditedAggregateRootWithUser":
+                        {
+                            _inheritClass = "ExtensibleCreationAuditedEntityWithUserDto";
+                        }
+                        break;
+                    case "CreationAuditedEntityWithUser":
+                        {
+                            _inheritClass = "CreationAuditedEntityWithUserDto";
+                        }
+                        break;
+                    case "CreationAuditedAggregateRoot":
+                        {
+                            _inheritClass = "ExtensibleCreationAuditedEntityDto";
+                        }
+                        break;
+                    case "CreationAuditedEntity":
+                        {
+                            _inheritClass = "CreationAuditedEntityDto";
+                        }
+                        break;
+                    case "FullAuditedAggregateRootWithUser":
+                        {
+                            _inheritClass = "ExtensibleFullAuditedEntityWithUserDto";
+                        }
+                        break;
+                    case "FullAuditedEntityWithUser":
+                        {
+                            _inheritClass = "FullAuditedEntityWithUserDto";
+                        }
+                        break;
+                    case "FullAuditedAggregateRoot":
+                        {
+                            _inheritClass = "ExtensibleFullAuditedEntityDto";
+                        }
+                        break;
+                    case "FullAuditedEntity":
+                        {
+                            _inheritClass = "FullAuditedEntityDto";
+                        }
+                        break;
+                    case "AggregateRoot":
+                        {
+                            _inheritClass = "ExtensibleEntityDto";
+                        }
+                        break;
+                    case "BasicAggregateRoot":
+                    case "Entity":
+                    default:
+                        {
+                            _inheritClass = "EntityDto";
+                        }
+                        break;
                 }
-                else if (InheritClass.Contains("CreationAuditedEntity"))
-                {
-                    _inheritClass = "CreationAuditedEntityDto";
-                }
-                else if (InheritClass.Contains("AuditedAggregateRoot"))
-                {
-                    _inheritClass = "AuditedEntityDto";
-                }
-                else
-                {
-                    _inheritClass = "EntityDto";
-                }
+                SetIgnoreObjectProperties(value);
             }
+        }
+        public string IgnoreObjectProperties { get; set; }
+        public string IgnoreObjectPropertiesCreateInputDto { get; set; }
+        private void SetIgnoreObjectProperties(string tempclass)
+        {
+            var ignoreObjectPropertiesDefault = string.Empty;
+            var ignoreObjectPropertiesCreateInputDto = string.Empty;
+            switch (tempclass)
+            {
+                case "AuditedAggregateRootWithUser":
+                case "AuditedAggregateRoot":
+                    {
+                        ignoreObjectPropertiesDefault = ".IgnoreAuditedObjectProperties()";
+                        ignoreObjectPropertiesCreateInputDto = ".IgnoreAuditedObjectProperties().Ignore(a=>a.ConcurrencyStamp)";
+                        IsConcurrencyStamp = true;
+                    }
+                    break;
+                case "AuditedEntityWithUser":
+                case "AuditedEntity":
+                    {
+                        ignoreObjectPropertiesDefault = ".IgnoreAuditedObjectProperties()";
+                    }
+                    break;
+                case "CreationAuditedAggregateRootWithUser":
+                case "CreationAuditedAggregateRoot":
+                    {
+                        ignoreObjectPropertiesDefault = ".IgnoreCreationAuditedObjectProperties()";
+                        ignoreObjectPropertiesCreateInputDto = ".IgnoreCreationAuditedObjectProperties().Ignore(a=>a.ConcurrencyStamp)";
+                        IsConcurrencyStamp = true;
+                    }
+                    break;
+                case "CreationAuditedEntityWithUser":
+                case "CreationAuditedEntity":
+                    {
+                        ignoreObjectPropertiesDefault = ".IgnoreCreationAuditedObjectProperties()";
+                    }
+                    break;
+                case "FullAuditedAggregateRootWithUser":
+                case "FullAuditedAggregateRoot":
+                    {
+                        ignoreObjectPropertiesDefault = ".IgnoreFullAuditedObjectProperties()";
+                        ignoreObjectPropertiesCreateInputDto = ".IgnoreFullAuditedObjectProperties().Ignore(a=>a.ConcurrencyStamp)";
+                        IsDelete = true;
+                        IsConcurrencyStamp = true;
+                    }
+                    break;
+                case "FullAuditedEntityWithUser":
+                case "FullAuditedEntity":
+                    {
+                        ignoreObjectPropertiesDefault = ".IgnoreFullAuditedObjectProperties()";
+                        IsDelete = true;
+                    }
+                    break;
+                case "AggregateRoot":
+                    { 
+                        ignoreObjectPropertiesCreateInputDto = ".Ignore(a=>a.ConcurrencyStamp)";
+                        IsConcurrencyStamp = true;
+                    }
+                    break;
+                case "Entity":
+                default:
+                    {
+                        //配置为自动生成的都需要在这忽略掉
+                    }
+                    break;
+            }
+            ignoreObjectPropertiesDefault += ".Ignore(a => a.Id)";
+            ignoreObjectPropertiesCreateInputDto += ".Ignore(a => a.Id)";
+
+
+            IgnoreObjectProperties = ignoreObjectPropertiesDefault;
+            IgnoreObjectPropertiesCreateInputDto = ignoreObjectPropertiesCreateInputDto;
         }
         /// <summary>
         /// 所有自定义的字段

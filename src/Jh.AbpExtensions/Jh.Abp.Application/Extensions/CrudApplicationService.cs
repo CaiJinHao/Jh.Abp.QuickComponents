@@ -83,7 +83,7 @@ namespace Jh.Abp.Extensions
 
         public virtual async Task<TEntityDto> GetAsync(TKey id, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await CheckGetPolicyAsync();
+            await CheckGetPolicyAsync().ConfigureAwait(false);
 
             var entity = await crudRepository.GetAsync(id, includeDetails, cancellationToken);
 
@@ -126,7 +126,7 @@ namespace Jh.Abp.Extensions
         [Obsolete("请使用 GetListAsync includeDetails")]
         public virtual async Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, string methodStringType = ObjectMethodConsts.ContainsMethod, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await CheckGetListPolicyAsync();
+            await CheckGetListPolicyAsync().ConfigureAwait(false);
 
             var query = await CreateFilteredQueryAsync(input, methodStringType);
 
@@ -165,7 +165,7 @@ namespace Jh.Abp.Extensions
 
         public override async Task<TEntityDto> UpdateAsync(TKey id, TUpdateInputDto updateInput)
         {
-            await CheckUpdatePolicyAsync();
+            await CheckUpdatePolicyAsync().ConfigureAwait(false);
             var entity = await GetEntityByIdAsync(id);
             await MapToEntityAsync(updateInput, entity);
             var methodDto = updateInput as IMethodDto<TEntity>;

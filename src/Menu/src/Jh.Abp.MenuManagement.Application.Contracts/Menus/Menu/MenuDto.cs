@@ -1,9 +1,10 @@
 ﻿using System;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Domain.Entities;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
-    public class MenuDto: FullAuditedEntityDto<Guid>
+    public class MenuDto: ExtensibleFullAuditedEntityDto<Guid>, IHasConcurrencyStamp
     {
         /// <summary>
         /// 菜单编号
@@ -39,5 +40,9 @@ namespace Jh.Abp.MenuManagement.Menus
         /// 菜单描述
         /// </summary>
         public string Description { get; set; }
+        /// <summary>
+        /// 并发标识
+        /// </summary>
+        public string ConcurrencyStamp { get; set; }
     }
 }

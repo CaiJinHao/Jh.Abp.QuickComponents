@@ -19,12 +19,16 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
         {
             var builder = new StringBuilder();
             builder.AppendLine(@"using System;
-using System.ComponentModel.DataAnnotations;
-using Volo.Abp.Application.Dtos;");
+using Volo.Abp.Application.Dtos;
+using Volo.Abp.Domain.Entities;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
                 builder.AppendLine($"\tpublic class {FileName}: {table.InheritClass}<{table.KeyType}>");
+                if (table.IsConcurrencyStamp)
+                {
+                    builder.AppendLine($",IHasConcurrencyStamp");
+                }
                 builder.AppendLine("\t{");
                 {
                     foreach (var _field in table.FieldsCreateOrUpdateInput)
@@ -34,6 +38,14 @@ using Volo.Abp.Application.Dtos;");
                         builder.AppendLine($"\t\t/// <summary>");
                         var nullable = _field.IsNullable ? "?" : "";//可空类型
                         builder.AppendLine($"\t\tpublic {_field.Type}{nullable} {_field.Name} " + "{ get; set; }");
+                    }
+
+                    if (table.IsConcurrencyStamp)
+                    {
+                        builder.AppendLine("\t\t/// <summary>");
+                        builder.AppendLine("\t\t/// 并发标识");
+                        builder.AppendLine("\t\t/// <summary>");
+                        builder.AppendLine("\t\tpublic string ConcurrencyStamp { get; set; }");
                     }
                 }
                 builder.AppendLine("\t}");
