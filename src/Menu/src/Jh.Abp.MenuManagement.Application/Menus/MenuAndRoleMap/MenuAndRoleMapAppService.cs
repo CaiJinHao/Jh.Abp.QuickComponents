@@ -64,7 +64,7 @@ namespace Jh.Abp.MenuManagement.Menus
                 .Select(a => new MenusNavDto() { id = a.Code, icon = a.Icon, parent_id = a.ParentCode, sort = a.Sort, title = a.Name, url = a.Url}).ToListAsync();
 
             //返回多个根节点
-            return GetMenusTreeAsync(auth_menus).OrderBy(a => a.id).ThenBy(a => a.sort);
+            return GetMenusTreeAsync(auth_menus);
         }
 
         public async Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(Guid roleid)
@@ -87,7 +87,7 @@ namespace Jh.Abp.MenuManagement.Menus
             ).ToListAsync();
 
             //返回多个根节点
-            return GetMenusTreeAsync(resutlMenus).OrderBy(a=>a.id).ThenBy(a=>a.sort);
+            return GetMenusTreeAsync(resutlMenus);
         }
 
         
@@ -113,16 +113,16 @@ namespace Jh.Abp.MenuManagement.Menus
             }
 
             //找到根节点
-            var roots = menus.Where(a => a.parent_id == null || a.parent_id == "").ToList();
+            var roots = menus.Where(a => a.parent_id == null || a.parent_id == "").OrderBy(a=>a.sort).ToList();
             foreach (var item in roots)
             {
                 if (_type == typeof(MenusNavDto))
                 {
-                    (item as MenusNavDto).children = GetChildNodes(item.id) as IEnumerable<MenusNavDto>;
+                    (item as MenusNavDto).children = (GetChildNodes(item.id) as IEnumerable<MenusNavDto>).OrderBy(a=>a.sort);
                 }
                 else
                 {
-                    (item as MenusTreeDto).data = GetChildNodes(item.id) as IEnumerable<MenusTreeDto>;
+                    (item as MenusTreeDto).data = (GetChildNodes(item.id) as IEnumerable<MenusTreeDto>).OrderBy(a=>a.sort);
                 }
             }
             return roots;
