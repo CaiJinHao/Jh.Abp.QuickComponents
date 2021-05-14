@@ -219,18 +219,25 @@
                         url: '/role/select',
                         type: 'Get',
                         success: function (response) {
-                            _the.setRoleNamesValue(function (roles) {
-                                let _rolesValue=[];
-                                roles.items.forEach(element => {
-                                    _rolesValue.push(element.id);
-                                });
+                            let _rolesValue = [];
+                            function _render() {
                                 _the.roleNamesSelects = xmSelect.render({
                                     el: '#roleNames',
                                     language: 'zn',
                                     initValue: _rolesValue,
                                     data: response.items
                                 });
-                            });
+                            }
+                            if (vm.paramObj.id) {
+                                _the.setRoleNamesValue(function (roles) {
+                                    roles.items.forEach(element => {
+                                        _rolesValue.push(element.id);
+                                    });
+                                    _render();
+                                });
+                            } else {
+                                _render();
+                            }
                             if (_fn) {
                                 _fn();
                             }
