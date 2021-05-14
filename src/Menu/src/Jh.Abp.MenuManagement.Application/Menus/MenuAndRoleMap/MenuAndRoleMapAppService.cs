@@ -39,7 +39,7 @@ namespace Jh.Abp.MenuManagement.Menus
             return await crudRepository.CreateAsync(GetCreateEnumerableAsync(inputDto).ToArray());
         }
 
-        private IEnumerable<MenuAndRoleMap> GetCreateEnumerableAsync(MenuAndRoleMapCreateInputDto inputDtos, bool autoSave = false, CancellationToken cancellationToken = default)
+        protected virtual IEnumerable<MenuAndRoleMap> GetCreateEnumerableAsync(MenuAndRoleMapCreateInputDto inputDtos, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             foreach (var roleid in inputDtos.RoleIds)
             {
@@ -52,7 +52,7 @@ namespace Jh.Abp.MenuManagement.Menus
             }
         }
 
-        public async Task<IEnumerable<MenusNavDto>> GetMenusNavTreesAsync()
+        public virtual async Task<IEnumerable<MenusNavDto>> GetMenusNavTreesAsync()
         {
             //查看CurrentUser.Roles 是的值是否为guid ,只能用一个角色的权限渲染菜单
             var roles = CurrentUser.FindClaims(Common.Extensions.JhJwtClaimTypes.RoleId).Select(a => new Guid(a.Value)).ToList();
@@ -67,7 +67,7 @@ namespace Jh.Abp.MenuManagement.Menus
             return GetMenusTreeAsync(auth_menus);
         }
 
-        public async Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(Guid roleid)
+        public virtual async Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(Guid roleid)
         {
             var auth_menus_id = crudRepository.Where(a => a.RoleId == roleid).Select(a => a.MenuId).ToList();
 
@@ -90,8 +90,7 @@ namespace Jh.Abp.MenuManagement.Menus
             return GetMenusTreeAsync(resutlMenus);
         }
 
-        
-        private List<T> GetMenusTreeAsync<T>(List<T> menus) where T:MenusTree
+        protected virtual List<T> GetMenusTreeAsync<T>(List<T> menus) where T:MenusTree
         {
             var _type = typeof(T);
             //组装树
