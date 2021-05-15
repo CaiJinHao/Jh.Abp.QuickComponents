@@ -14,5 +14,7 @@ namespace Jh.Abp.QuickComponents.Tests
 		public Int64? ClickNum { get; set; }
 		public Int32? ClickNum2 { get; set; }
 		public DateTime? DateTime { get; set; }
+
+		public bool? isDelete { get; set; }
 	}
 }

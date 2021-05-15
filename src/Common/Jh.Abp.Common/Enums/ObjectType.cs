@@ -19,7 +19,7 @@ namespace Jh.Abp.Common.Enums
         Decimal,
         Guid,
         String,
-        Bool,
+        Boolean,
         DateTime
     }
 }

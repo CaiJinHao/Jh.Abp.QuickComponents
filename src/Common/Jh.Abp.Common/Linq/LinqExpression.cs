@@ -32,6 +32,7 @@ namespace Jh.Abp.Common.Linq
     {
         /// <summary>
         /// 转换为表达式
+        /// 该查询值对表字段相同都会查询、否则使用自定义字段不能和表字段相投，自己添加查询条件
         /// </summary>
         /// <typeparam name="TWhere">要生成linq条件的类</typeparam>
         /// <typeparam name="TSource">要查询的类</typeparam>
@@ -86,15 +87,10 @@ namespace Jh.Abp.Common.Linq
                     case Enums.ObjectType.Float:
                     case Enums.ObjectType.Double:
                     case Enums.ObjectType.Decimal:
+                    case Enums.ObjectType.Boolean:
                         {
-                            //TODO: 可修改为可空类型，这样就可以查询为0的值了，需要修改代码生成器，也可以查询bool值
-                            var t = propertyVal.ToString();
-                            if (t.Equals("0"))
-                            {
-                                continue;
-                            }
+                            //只要不是null就添加查询条件
                             method = propertyType.GetMethod("Equals", new Type[] { propertyType });
-                            proerty = Expression.Convert(proerty, propertyType);
                         }
                         break;
                     case Enums.ObjectType.Guid:
@@ -112,11 +108,9 @@ namespace Jh.Abp.Common.Linq
                             {
                                 continue;
                             }
-                            //method = typeof(string).GetMethod(methodStringType, new Type[] { typeof(string) });
                             method = propertyType.GetMethod(methodStringType, new Type[] { propertyType });
                         }
                         break;
-                    case Enums.ObjectType.Bool:
                     case Enums.ObjectType.DateTime:
                     default:
                         //其他不添加查询条件

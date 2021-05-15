@@ -79,6 +79,16 @@ namespace Jh.Abp.Common.Entity
             var valueType = ObjectExtensions.GetObjectType(propertyType);
             switch (valueType)
             {
+                case Enums.ObjectType.Int16:
+                case Enums.ObjectType.Int32:
+                case Enums.ObjectType.Int64:
+                case Enums.ObjectType.Float:
+                case Enums.ObjectType.Double:
+                case Enums.ObjectType.Decimal:
+                case Enums.ObjectType.Boolean:
+                    {
+                        return true;
+                    }
                 case Enums.ObjectType.Enum:
                     {
                         if (((int)propertyVal).Equals(0))
@@ -87,21 +97,6 @@ namespace Jh.Abp.Common.Entity
                         }
                     }
                     break;
-                case Enums.ObjectType.Int16:
-                case Enums.ObjectType.Int32:
-                case Enums.ObjectType.Int64:
-                case Enums.ObjectType.Float:
-                case Enums.ObjectType.Double:
-                case Enums.ObjectType.Decimal:
-                    {
-                        //不等于空就有效
-                        //return true;
-                        var t = propertyVal.ToString();
-                        if (t.Equals("0"))
-                        {
-                            return false;
-                        }
-                    }break;
                 case Enums.ObjectType.Guid:
                     {
                         if (propertyVal.Equals(Guid.Empty))
@@ -121,13 +116,12 @@ namespace Jh.Abp.Common.Entity
                 case Enums.ObjectType.DateTime:
                     {
                         var _v = (DateTime)propertyVal;
-                        if (_v <= new DateTime(1900, 1, 1))
+                        if (_v < new DateTime(1911, 1, 1))
                         {
                             return false;
                         }
                     }
                     break;
-                case Enums.ObjectType.Bool:
                 case Enums.ObjectType.None:
                 default:
                     return false;

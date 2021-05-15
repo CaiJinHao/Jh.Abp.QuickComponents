@@ -47,7 +47,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                 case ObjectType.Double:
                 case ObjectType.Decimal:
                 case ObjectType.DateTime:
-                case ObjectType.Bool:
+                case ObjectType.Boolean:
                 case ObjectType.Guid:
                 case ObjectType.Enum:
                     {
