@@ -92,3 +92,6 @@ UseMySQL
 ## Use Demo 
 
 具体使用可参考Menu模块
+
+## version
+Jh.Abp.Application 2.0.0.5 Jh.Abp.QuickComponents 1.2.4.8 Jh.Abp.MenuManagement.Application 0.1.8.8 Jh.SourceGenerator.Common 3.0.0.3
