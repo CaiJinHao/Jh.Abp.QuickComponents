@@ -26,7 +26,7 @@ namespace Jh.Abp.MenuManagement.v1
 
         [HttpGet]
         [Route("tree")]
-        public async virtual Task<dynamic> GetTreeAsync(string name)
+        public virtual async Task<dynamic> GetTreeAsync(string name)
         {
             var datas = await RoleRepository.GetListAsync(filter: name);
             return new
@@ -37,7 +37,7 @@ namespace Jh.Abp.MenuManagement.v1
 
         [HttpGet]
         [Route("select")]
-        public async virtual Task<dynamic> GetSelectAsync(string name)
+        public virtual async Task<dynamic> GetSelectAsync(string name)
         {
             var datas = await RoleRepository.GetListAsync(filter: name);
             return new

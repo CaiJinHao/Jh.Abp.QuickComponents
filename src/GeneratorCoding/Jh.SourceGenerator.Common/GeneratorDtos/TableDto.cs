@@ -121,7 +121,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         }
         public string IgnoreObjectProperties { get; set; }
         public string IgnoreObjectPropertiesCreateInputDto { get; set; }
-        private void SetIgnoreObjectProperties(string tempclass)
+        protected virtual void SetIgnoreObjectProperties(string tempclass)
         {
             var ignoreObjectPropertiesDefault = string.Empty;
             var ignoreObjectPropertiesCreateInputDto = string.Empty;
@@ -211,7 +211,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// <summary>
         /// 要忽略的字段 去FieldsAll中不包含的RetrieveInputDto
         /// </summary>
-        public IEnumerable<FieldDto> GetIgnoreFieldsRetrieveInputDto()
+        public virtual IEnumerable<FieldDto> GetIgnoreFieldsRetrieveInputDto()
         {
             //在两个里面都不包含的才返回
             var fields = FieldsAll.Where(a => !(FieldsRetrieve.Select(b => b.Name).Contains(a.Name)) && !(FieldsIgnore.Select(b => b.Name).Contains(a.Name)));

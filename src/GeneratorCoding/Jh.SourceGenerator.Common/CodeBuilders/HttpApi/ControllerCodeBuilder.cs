@@ -40,7 +40,7 @@ using Volo.Abp.Data;");
                     }
 
                     builder.AppendLine("\t\t[HttpPost]");
-                    builder.AppendLine($"\t\tpublic async Task CreateAsync({table.Name}CreateInputDto input)");
+                    builder.AppendLine($"\t\tpublic virtual async Task CreateAsync({table.Name}CreateInputDto input)");
                     {
                         builder.AppendLine("\t\t{");
                         builder.AppendLine($"\t\t\t await {table.Name}AppService.CreateAsync(input,true);");
@@ -49,7 +49,7 @@ using Volo.Abp.Data;");
 
                     builder.AppendLine("\t\t[Route(\"items\")]");
                     builder.AppendLine("\t\t[HttpPost]");
-                    builder.AppendLine($"\t\tpublic async Task CreateAsync({table.Name}CreateInputDto[] input)");
+                    builder.AppendLine($"\t\tpublic virtual async Task CreateAsync({table.Name}CreateInputDto[] input)");
                     {
                         builder.AppendLine("\t\t{");
                         builder.AppendLine($"\t\t\t await {table.Name}AppService.CreateAsync(input);");
@@ -57,7 +57,7 @@ using Volo.Abp.Data;");
                     }
 
                     builder.AppendLine("\t\t[HttpDelete]");
-                    builder.AppendLine($"\t\tpublic async Task DeleteAsync({table.Name}DeleteInputDto deleteInputDto)");
+                    builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync({table.Name}DeleteInputDto deleteInputDto)");
                     {
                         builder.AppendLine("\t\t{");
                         builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(deleteInputDto);");
@@ -66,7 +66,7 @@ using Volo.Abp.Data;");
 
                     builder.AppendLine("\t\t[Route(\"keys\")]");
                     builder.AppendLine("\t\t[HttpDelete]");
-                    builder.AppendLine($"\t\tpublic async Task DeleteAsync([FromBody]{table.KeyType}[] keys)");
+                    builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync([FromBody]{table.KeyType}[] keys)");
                     {
                         builder.AppendLine("\t\t{");
                         builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(keys);");
@@ -75,7 +75,7 @@ using Volo.Abp.Data;");
 
                     builder.AppendLine("\t\t[Route(\"all\")]");
                     builder.AppendLine("\t\t[HttpGet]");
-                    builder.AppendLine($"\t\tpublic async Task<ListResultDto<{table.Name}Dto>> GetEntitysAsync([FromQuery] {table.Name}RetrieveInputDto inputDto)");
+                    builder.AppendLine($"\t\tpublic virtual async Task<ListResultDto<{table.Name}Dto>> GetEntitysAsync([FromQuery] {table.Name}RetrieveInputDto inputDto)");
                     {
                         builder.AppendLine("\t\t{");
                         builder.AppendLine($"\t\t\tinputDto.MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount;");
@@ -84,7 +84,7 @@ using Volo.Abp.Data;");
                     }
 
                     builder.AppendLine("\t\t[HttpPatch(\"{id}\")]");
-                    builder.AppendLine($"\t\tpublic async Task UpdatePortionAsync({table.KeyType} id, {table.Name}UpdateInputDto inputDto)");
+                    builder.AppendLine($"\t\tpublic virtual async Task UpdatePortionAsync({table.KeyType} id, {table.Name}UpdateInputDto inputDto)");
                     {
                         builder.AppendLine("\t\t{");
                         builder.AppendLine($"\t\t\t await {table.Name}AppService.UpdatePortionAsync(id, inputDto);");
@@ -92,7 +92,7 @@ using Volo.Abp.Data;");
                     }
 
                     builder.AppendLine("\t\t[HttpPut(\"{id}\")]");
-                    builder.AppendLine($"\t\tpublic async Task<{table.Name}Dto> UpdateAsync({table.KeyType} id, {table.Name}UpdateInputDto input)");
+                    builder.AppendLine($"\t\tpublic virtual async Task<{table.Name}Dto> UpdateAsync({table.KeyType} id, {table.Name}UpdateInputDto input)");
                     {
                         builder.AppendLine("\t\t{");
                         builder.AppendLine($"\t\t\treturn await {table.Name}AppService.UpdateAsync(id, input);");
@@ -100,7 +100,7 @@ using Volo.Abp.Data;");
                     }
 
                     builder.AppendLine("\t\t[HttpGet]");
-                    builder.AppendLine($"\t\tpublic async Task<PagedResultDto<{table.Name}Dto>> GetListAsync([FromQuery] {table.Name}RetrieveInputDto input)");
+                    builder.AppendLine($"\t\tpublic virtual async Task<PagedResultDto<{table.Name}Dto>> GetListAsync([FromQuery] {table.Name}RetrieveInputDto input)");
                     {
                         builder.AppendLine("\t\t{");
                         builder.AppendLine("\t\t\tusing (dataFilter.Disable())");
@@ -111,7 +111,7 @@ using Volo.Abp.Data;");
                     }
 
                     builder.AppendLine("\t\t[HttpDelete(\"{id}\")]");
-                    builder.AppendLine($"\t\tpublic async Task DeleteAsync({table.KeyType} id)");
+                    builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync({table.KeyType} id)");
                     {
                         builder.AppendLine("\t\t{");
                         builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(id);");
@@ -119,7 +119,7 @@ using Volo.Abp.Data;");
                     }
 
                     builder.AppendLine("\t\t[HttpGet(\"{id}\")]");
-                    builder.AppendLine($"\t\tpublic async Task<{table.Name}Dto> GetAsync({table.KeyType} id)");
+                    builder.AppendLine($"\t\tpublic virtual async Task<{table.Name}Dto> GetAsync({table.KeyType} id)");
                     {
                         builder.AppendLine("\t\t{");
                         builder.AppendLine($"\t\t\treturn await {table.Name}AppService.GetAsync(id);");
@@ -128,7 +128,7 @@ using Volo.Abp.Data;");
 
                     builder.AppendLine("\t\t[HttpPatch]");
                     builder.AppendLine("\t\t[Route(\"{id}/Deleted\")]");
-                    builder.AppendLine($"\t\tpublic async Task UpdateDeletedAsync({table.KeyType} id, [FromBody] bool isDeleted)");
+                    builder.AppendLine($"\t\tpublic virtual async Task UpdateDeletedAsync({table.KeyType} id, [FromBody] bool isDeleted)");
                     {
                         builder.AppendLine("\t\t{");
                         builder.AppendLine("\t\t\tusing (dataFilter.Disable())");

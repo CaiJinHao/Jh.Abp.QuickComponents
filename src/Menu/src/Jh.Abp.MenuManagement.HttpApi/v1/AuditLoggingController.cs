@@ -22,7 +22,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="deleteInputDto"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task DeleteAsync([FromQuery]AuditLoggingDeleteInputDto deleteInputDto)
+        public virtual async Task DeleteAsync([FromQuery]AuditLoggingDeleteInputDto deleteInputDto)
         {
             await auditLoggingAppService.DeleteAsync(deleteInputDto);
         }
@@ -34,7 +34,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <returns></returns>
         [Route("keys")]
         [HttpDelete]
-        public async Task DeleteAsync([FromBody] Guid[] keys)
+        public virtual async Task DeleteAsync([FromBody] Guid[] keys)
         {
             await auditLoggingAppService.DeleteAsync(keys);
         }
@@ -45,7 +45,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<PagedResultDto<AuditLog>> GetListAsync([FromQuery] AuditLoggingRetrieveInputDto input)
+        public virtual async Task<PagedResultDto<AuditLog>> GetListAsync([FromQuery] AuditLoggingRetrieveInputDto input)
         {
             return await auditLoggingAppService.GetListAsync(input,true);
         }
@@ -57,7 +57,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <returns></returns>
         [Route("all")]
         [HttpGet]
-        public async Task<ListResultDto<AuditLog>> GetEntitysAsync([FromQuery] AuditLoggingRetrieveInputDto inputDto)
+        public virtual async Task<ListResultDto<AuditLog>> GetEntitysAsync([FromQuery] AuditLoggingRetrieveInputDto inputDto)
         {
             return await auditLoggingAppService.GetEntitysAsync(inputDto, true);
         }
@@ -68,7 +68,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task DeleteAsync(Guid id)
+        public virtual async Task DeleteAsync(Guid id)
         {
             await auditLoggingAppService.DeleteAsync(id);
         }

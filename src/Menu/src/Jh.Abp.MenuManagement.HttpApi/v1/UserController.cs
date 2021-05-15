@@ -102,7 +102,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <returns></returns>
         [Route("keys")]
         [HttpDelete]
-        public async Task DeleteAsync([FromBody] Guid[] keys)
+        public virtual async Task DeleteAsync([FromBody] Guid[] keys)
         {
             foreach (var item in keys)
             {

@@ -54,7 +54,7 @@ namespace Jh.Abp.MenuManagement.Menus
             return entity;
         }
 
-        private IEnumerable<Menu> EnumerableCreateAsync(MenuCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default)
+        protected virtual IEnumerable<Menu> EnumerableCreateAsync(MenuCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             foreach (var item in inputDtos)
             {

@@ -26,14 +26,14 @@ namespace Jh.Abp.MenuManagement
         {
             get;
         }
-        public Task<AuditLog[]> DeleteAsync(AuditLoggingDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, CancellationToken cancellationToken = default)
+        public virtual Task<AuditLog[]> DeleteAsync(AuditLoggingDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             var lambda = LinqExpression.ConvetToExpression<AuditLoggingDeleteInputDto, AuditLog>(deleteInputDto, methodStringType);
             var query = ReadOnlyRepository.Where(lambda);
             return auditLogsRepository.DeleteEntitysAsync(query, autoSave, cancellationToken);
         }
 
-        public async Task<PagedResultDto<AuditLog>> GetListAsync(AuditLoggingRetrieveInputDto retrieveInputDto, bool includeDetails = false, CancellationToken cancellationToken = default)
+        public virtual async Task<PagedResultDto<AuditLog>> GetListAsync(AuditLoggingRetrieveInputDto retrieveInputDto, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             var datas = await auditLogsRepository.GetListAsync(retrieveInputDto.Sorting, retrieveInputDto.MaxResultCount, retrieveInputDto.SkipCount
                 , retrieveInputDto.startTime, retrieveInputDto.endTime, retrieveInputDto.httpMethod, retrieveInputDto.url, retrieveInputDto.userName
@@ -60,7 +60,7 @@ namespace Jh.Abp.MenuManagement
             return (await auditLogsRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, cancellationToken).ConfigureAwait(false)).FirstOrDefault();
         }
 
-        public async Task<ListResultDto<AuditLog>> GetEntitysAsync(AuditLoggingRetrieveInputDto retrieveInputDto, bool includeDetails = false, CancellationToken cancellationToken = default)
+        public virtual async Task<ListResultDto<AuditLog>> GetEntitysAsync(AuditLoggingRetrieveInputDto retrieveInputDto, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             var datas = await auditLogsRepository.GetListAsync(retrieveInputDto.Sorting, retrieveInputDto.MaxResultCount, retrieveInputDto.SkipCount
               , retrieveInputDto.startTime, retrieveInputDto.endTime, retrieveInputDto.httpMethod, retrieveInputDto.url, retrieveInputDto.userName

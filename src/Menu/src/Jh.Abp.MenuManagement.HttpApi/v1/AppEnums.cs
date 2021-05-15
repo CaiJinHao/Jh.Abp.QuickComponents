@@ -13,7 +13,7 @@ namespace Jh.Abp.MenuManagement.v1
     {
         [Route("Use")]
         [HttpGet]
-        public Task<IEnumerable<dynamic>> GetUseAsync()
+        public virtual Task<IEnumerable<dynamic>> GetUseAsync()
         {
             return Task.FromResult(Common.Utils.UtilEnums.GetEnumListByDescription<UseType>());
         }

@@ -34,7 +34,7 @@ namespace Jh.Abp.MenuManagement.Menus
         }
 
         [UnitOfWork]
-        public async Task<MenuAndRoleMap[]> CreateV2Async(MenuAndRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
+        public virtual async Task<MenuAndRoleMap[]> CreateV2Async(MenuAndRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             return await crudRepository.CreateAsync(GetCreateEnumerableAsync(inputDto).ToArray());
         }

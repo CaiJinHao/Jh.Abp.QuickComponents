@@ -27,7 +27,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task CreateAsync(MenuCreateInputDto input)
+        public virtual async Task CreateAsync(MenuCreateInputDto input)
         {
             await menuAppService.CreateAsync(input,true);
         }
@@ -39,7 +39,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <returns></returns>
         [Route("items")]
         [HttpPost]
-        public async Task CreateAsync(MenuCreateInputDto[] input)
+        public virtual async Task CreateAsync(MenuCreateInputDto[] input)
         {
             await menuAppService.CreateAsync(input);
         }
@@ -50,7 +50,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="deleteInputDto"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task DeleteAsync([FromQuery] MenuDeleteInputDto deleteInputDto)
+        public virtual async Task DeleteAsync([FromQuery] MenuDeleteInputDto deleteInputDto)
         {
             await menuAppService.DeleteAsync(deleteInputDto);
         }
@@ -62,7 +62,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <returns></returns>
         [Route("keys")]
         [HttpDelete]
-        public async Task DeleteAsync([FromBody]Guid[] keys)
+        public virtual async Task DeleteAsync([FromBody]Guid[] keys)
         {
             await menuAppService.DeleteAsync(keys);
         }
@@ -74,7 +74,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <returns></returns>
         [Route("all")]
         [HttpGet]
-        public async Task<ListResultDto<MenuDto>> GetEntitysAsync([FromQuery] MenuRetrieveInputDto inputDto)
+        public virtual async Task<ListResultDto<MenuDto>> GetEntitysAsync([FromQuery] MenuRetrieveInputDto inputDto)
         {
             inputDto.MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount;
             return await menuAppService.GetEntitysAsync(inputDto);
@@ -87,7 +87,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="inputDto"></param>
         /// <returns></returns>
         [HttpPatch("{id}")]
-        public async Task UpdatePortionAsync(Guid id, MenuUpdateInputDto inputDto)
+        public virtual async Task UpdatePortionAsync(Guid id, MenuUpdateInputDto inputDto)
         {
             await menuAppService.UpdatePortionAsync(id, inputDto);
         }
@@ -99,7 +99,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<MenuDto> UpdateAsync(Guid id, MenuUpdateInputDto input)
+        public virtual async Task<MenuDto> UpdateAsync(Guid id, MenuUpdateInputDto input)
         {
             return await menuAppService.UpdateAsync(id, input);
         }
@@ -110,7 +110,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<PagedResultDto<MenuDto>> GetListAsync([FromQuery] MenuRetrieveInputDto input)
+        public virtual async Task<PagedResultDto<MenuDto>> GetListAsync([FromQuery] MenuRetrieveInputDto input)
         {
             using (dataFilter.Disable())
             {
@@ -124,7 +124,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task DeleteAsync(Guid id)
+        public virtual async Task DeleteAsync(Guid id)
         {
             await menuAppService.DeleteAsync(id);
         }
@@ -135,7 +135,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<MenuDto> GetAsync(Guid id)
+        public virtual async Task<MenuDto> GetAsync(Guid id)
         {
             return await menuAppService.GetAsync(id, true);
         }

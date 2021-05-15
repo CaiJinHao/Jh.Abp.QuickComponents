@@ -25,7 +25,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<MenuAndRoleMap[]> CreateAsync(MenuAndRoleMapCreateInputDto input)
+        public virtual async Task<MenuAndRoleMap[]> CreateAsync(MenuAndRoleMapCreateInputDto input)
         {
             return await menuAndRoleMapAppService.CreateV2Async(input);
         }
@@ -36,7 +36,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="deleteInputDto"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<MenuAndRoleMap[]> DeleteAsync([FromQuery] MenuAndRoleMapDeleteInputDto deleteInputDto)
+        public virtual async Task<MenuAndRoleMap[]> DeleteAsync([FromQuery] MenuAndRoleMapDeleteInputDto deleteInputDto)
         {
             return await menuAndRoleMapAppService.DeleteAsync(deleteInputDto);
         }
@@ -48,7 +48,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <returns></returns>
         [Route("keys")]
         [HttpDelete]
-        public async Task<MenuAndRoleMap[]> DeleteAsync(Guid[] keys)
+        public virtual async Task<MenuAndRoleMap[]> DeleteAsync(Guid[] keys)
         {
             return await menuAndRoleMapAppService.DeleteAsync(keys);
         }
@@ -60,7 +60,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <returns></returns>
         [Route("all")]
         [HttpGet]
-        public async Task<ListResultDto<MenuAndRoleMapDto>> GetEntitysAsync([FromQuery] MenuAndRoleMapRetrieveInputDto inputDto)
+        public virtual async Task<ListResultDto<MenuAndRoleMapDto>> GetEntitysAsync([FromQuery] MenuAndRoleMapRetrieveInputDto inputDto)
         {
             inputDto.MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount;
             return await menuAndRoleMapAppService.GetEntitysAsync(inputDto);
@@ -73,7 +73,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="inputDto"></param>
         /// <returns></returns>
         [HttpPatch]
-        public async Task<MenuAndRoleMap> UpdatePortionAsync(Guid key, MenuAndRoleMapUpdateInputDto inputDto)
+        public virtual async Task<MenuAndRoleMap> UpdatePortionAsync(Guid key, MenuAndRoleMapUpdateInputDto inputDto)
         {
             return await menuAndRoleMapAppService.UpdatePortionAsync(key, inputDto);
         }
@@ -85,7 +85,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut("id")]
-        public async Task<MenuAndRoleMapDto> UpdateAsync(Guid id, MenuAndRoleMapUpdateInputDto input)
+        public virtual async Task<MenuAndRoleMapDto> UpdateAsync(Guid id, MenuAndRoleMapUpdateInputDto input)
         {
             return await menuAndRoleMapAppService.UpdateAsync(id, input);
         }
@@ -96,7 +96,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<PagedResultDto<MenuAndRoleMapDto>> GetListAsync([FromQuery] MenuAndRoleMapRetrieveInputDto input)
+        public virtual async Task<PagedResultDto<MenuAndRoleMapDto>> GetListAsync([FromQuery] MenuAndRoleMapRetrieveInputDto input)
         {
             return await menuAndRoleMapAppService.GetListAsync(input);
         }
@@ -107,7 +107,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("id")]
-        public async Task<MenuAndRoleMap> DeleteAsync(Guid id)
+        public virtual async Task<MenuAndRoleMap> DeleteAsync(Guid id)
         {
             return await menuAndRoleMapAppService.DeleteAsync(id);
         }
@@ -118,20 +118,20 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("id")]
-        public async Task<MenuAndRoleMapDto> GetAsync(Guid id)
+        public virtual async Task<MenuAndRoleMapDto> GetAsync(Guid id)
         {
             return await menuAndRoleMapAppService.GetAsync(id);
         }
 
         [HttpGet("Trees")]
-        public async Task<dynamic> GetMenusNavTreesAsync()
+        public virtual async Task<dynamic> GetMenusNavTreesAsync()
         {
             var items = await menuAndRoleMapAppService.GetMenusNavTreesAsync();
             return new { items };
         }
 
         [HttpGet("TreesAll")]
-        public async Task<dynamic> GetMenusTreesAsync(Guid roleId)
+        public virtual async Task<dynamic> GetMenusTreesAsync(Guid roleId)
         {
             var items = await menuAndRoleMapAppService.GetMenusTreesAsync(roleId);
             return new { items };

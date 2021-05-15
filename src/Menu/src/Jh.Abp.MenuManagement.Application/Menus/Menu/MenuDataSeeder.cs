@@ -17,7 +17,7 @@ namespace Jh.Abp.MenuManagement
             menuAppService = appService;
         }
 
-        public async Task SeedAsync(Guid roleid)
+        public virtual async Task SeedAsync(Guid roleid)
         {
             var entitys = await menuAppService.GetEntitysAsync(new MenuRetrieveInputDto() { MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount });
             if (!entitys.Items.Any())

@@ -32,7 +32,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// </summary>
         /// <param name="type"></param>
         /// <param name="fieldDefaultNullable"></param>
-        public bool GetIsNullable()
+        public virtual bool GetIsNullable()
         {
             if (IsNullable)
             {

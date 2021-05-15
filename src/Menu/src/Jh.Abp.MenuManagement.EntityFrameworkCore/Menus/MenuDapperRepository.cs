@@ -28,13 +28,13 @@ namespace Jh.Abp.MenuManagement.Menus
         {
         }
 
-        public async Task<IEnumerable<MenuDto>> GetDapperListAsync()
+        public virtual async Task<IEnumerable<MenuDto>> GetDapperListAsync()
         {
             var querySql = @"select a.Id,a.Code,a.Name,a.Icon,a.Sort,a.ParentCode,a.Url,a.Description,a.ConcurrencyStamp,a.CreationTime,a.CreatorId,a.LastModificationTime,a.LastModificationTime,a.LastModifierId,a.IsDeleted,a.DeleterId,a.DeletionTime from SysMenu a where a.Code = @Code";
             return await (await GetDbConnectionAsync()).QueryAsync<MenuDto>(querySql, param: new { Code = "A01" }, transaction: (await GetDbTransactionAsync()));
         }
 
-        public async Task<IEnumerable<MenuDto>> GetDtoListAsync()
+        public virtual async Task<IEnumerable<MenuDto>> GetDtoListAsync()
         {
             var menusRepository = ServiceProvider.GetRequiredService<IMenuRepository>();
             var data = await menusRepository.ToListAsync();
