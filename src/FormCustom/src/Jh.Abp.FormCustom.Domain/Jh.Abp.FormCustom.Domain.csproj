@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Ddd.Domain" Version="4.2.2" />
+    <PackageReference Include="Volo.Abp.Ddd.Domain" Version="4.3.0" />
     <ProjectReference Include="..\..\..\GeneratorCoding\Jh.SourceGenerator.Common\Jh.SourceGenerator.Common.csproj" />
     <ProjectReference Include="..\..\..\Jh.AbpExtensions\Jh.Abp.Domain\Jh.Abp.Domain.csproj" />
     <ProjectReference Include="..\Jh.Abp.FormCustom.Domain.Shared\Jh.Abp.FormCustom.Domain.Shared.csproj" />

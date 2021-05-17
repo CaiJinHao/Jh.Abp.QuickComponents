@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\common.props" />
 
@@ -21,7 +21,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Http.Client" Version="4.2.2" />
+    <PackageReference Include="Volo.Abp.Http.Client" Version="4.3.0" />
     <ProjectReference Include="..\Jh.Abp.MenuManagement.Application.Contracts\Jh.Abp.MenuManagement.Application.Contracts.csproj" />
   </ItemGroup>
 

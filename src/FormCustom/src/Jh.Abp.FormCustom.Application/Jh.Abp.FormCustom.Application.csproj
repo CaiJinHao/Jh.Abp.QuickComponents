@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.AutoMapper" Version="4.2.2" />
-    <PackageReference Include="Volo.Abp.Ddd.Application" Version="4.2.2" />
+    <PackageReference Include="Volo.Abp.AutoMapper" Version="4.3.0" />
+    <PackageReference Include="Volo.Abp.Ddd.Application" Version="4.3.0" />
     <ProjectReference Include="..\..\..\Jh.AbpExtensions\Jh.Abp.Application\Jh.Abp.Application.csproj" />
     <ProjectReference Include="..\Jh.Abp.FormCustom.Application.Contracts\Jh.Abp.FormCustom.Application.Contracts.csproj" />
     <ProjectReference Include="..\Jh.Abp.FormCustom.Domain\Jh.Abp.FormCustom.Domain.csproj" />
