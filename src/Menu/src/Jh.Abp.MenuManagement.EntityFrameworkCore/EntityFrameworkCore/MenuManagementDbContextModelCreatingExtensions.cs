@@ -24,6 +24,8 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
 
             builder.Entity<Menu>(b => {
                 b.ConfigureByConvention();
+
+                b.Property(p => p.Code).HasComment("菜单编号");
             });
 
             builder.Entity<MenuAndRoleMap>(b => {
