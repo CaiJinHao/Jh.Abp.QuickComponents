@@ -194,7 +194,7 @@ namespace Jh.Abp.MenuManagement
 #endif
             app.UseHttpsRedirection();
             app.UseCorrelationId();
-            app.UseVirtualFiles();
+            app.UseStaticFiles();
             app.UseRouting();
             app.UseCors(CorsExtensions.DefaultCorsPolicyName);
             //app.UseCors(DefaultCorsPolicyName);

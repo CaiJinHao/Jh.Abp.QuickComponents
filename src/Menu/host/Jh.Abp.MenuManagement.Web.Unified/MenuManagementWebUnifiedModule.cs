@@ -230,7 +230,7 @@ namespace Jh.Abp.MenuManagement
 
             app.UseSession();
             app.UseHttpsRedirection();
-            app.UseVirtualFiles();
+            app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
 
