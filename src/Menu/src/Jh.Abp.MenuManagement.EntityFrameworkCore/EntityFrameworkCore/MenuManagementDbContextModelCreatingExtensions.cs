@@ -26,6 +26,12 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
                 b.ConfigureByConvention();
 
                 b.Property(p => p.Code).HasComment("菜单编号");
+                b.Property(p => p.Name).HasComment("菜单名称");
+                b.Property(p => p.Icon).HasComment("菜单图标");
+                b.Property(p => p.Sort).HasComment("同一级别内排序");
+                b.Property(p => p.ParentCode).HasComment("上级菜单编号");
+                b.Property(p => p.Url).HasComment("导航路径");
+                b.Property(p => p.Description).HasComment("菜单描述");
             });
 
             builder.Entity<MenuAndRoleMap>(b => {
