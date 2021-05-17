@@ -12,8 +12,16 @@
 \[Description("%Name%")\]
 \[CreateOrUpdateInputDto\]\n
    .if (%Multiple% == false) and (%isIndexer% == false)
-[%visibility% ][%flags% ]%dataType% %fieldCode%[ = %InitialValue%] {get;set;}
+[%visibility% ][%flags% ]%dataType%
+        .if(%Mandatory%=="FALSE")
+?
+        .endif
+ %fieldCode%[ = %InitialValue%] {get;set;}
    .else
-[%visibility% ][%flags% ]%dataType%[%arraySize%] %fieldCode%[ = %InitialValue%]  {get;set;}
+[%visibility% ][%flags% ]%dataType%[%arraySize%]
+        .if(%Mandatory%=="FALSE")
+?
+        .endif
+ %fieldCode%[ = %InitialValue%]  {get;set;}
    .endif
 .endif
