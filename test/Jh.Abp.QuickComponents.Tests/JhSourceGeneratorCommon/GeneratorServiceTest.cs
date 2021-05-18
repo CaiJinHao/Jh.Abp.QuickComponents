@@ -23,14 +23,14 @@ namespace Jh.Abp.QuickComponents.Tests.JhSourceGeneratorCommon
                 DbContext = "EquipmentQuotationAppDbContext",
                 Namespace = "EquipmentQuotationApp",
                 ControllerBase = "EquipmentQuotationAppController",
-                CreateContractsPath = @$"E:\TEMP\trunk\src\SupplyDemandPlatform.Application.Contracts{domain}",
-                CreateApplicationPath = @$"E:\TEMP\trunk\src\SupplyDemandPlatform.Application{domain}",
-                CreateDomainPath = @$"E:\TEMP\trunk\src\SupplyDemandPlatform.Domain{domain}",
-                CreateEfCorePath = @$"E:\TEMP\trunk\src\SupplyDemandPlatform.EntityFrameworkCore{domain}",
-                CreateHttpApiPath = @$"E:\TEMP\trunk\src\SupplyDemandPlatform.HttpApi\v1{domain}",
+                CreateContractsPath = @$"G:\Temp\trunk\src\SupplyDemandPlatform.Application.Contracts{domain}",
+                CreateApplicationPath = @$"G:\Temp\trunk\src\SupplyDemandPlatform.Application{domain}",
+                CreateDomainPath = @$"G:\Temp\trunk\src\SupplyDemandPlatform.Domain{domain}",
+                CreateEfCorePath = @$"G:\Temp\trunk\src\SupplyDemandPlatform.EntityFrameworkCore{domain}",
+                CreateHttpApiPath = @$"G:\Temp\trunk\src\SupplyDemandPlatform.HttpApi\v1{domain}",
                 //不需要domain做文件夹
-                CreateHtmlPath = @$"E:\TEMP\trunk\host\SupplyDemandPlatform.Web.Unified\wwwroot\main\view",
-                CreateHtmlTemplatePath = @"E:\MyWork\GitHub\Jh.Abp.QuickComponents\src\GeneratorCoding\Jh.SourceGenerator.Common\CodeBuilders\Html\Layui",
+                CreateHtmlPath = @$"G:\Temp\trunk\host\SupplyDemandPlatform.Web.Unified\wwwroot\main\view",
+                CreateHtmlTemplatePath = @"G:\github\mygithub\Jh.Abp.QuickComponents\src\GeneratorCoding\Jh.SourceGenerator.Common\CodeBuilders\Html\Layui",
             };
             var service = new GeneratorService(domainAssembly, options);
             Assert.True(service.GeneratorCode());

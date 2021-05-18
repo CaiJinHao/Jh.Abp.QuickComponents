@@ -26,7 +26,13 @@ using Volo.Abp.AutoMapper;");
                     builder.AppendLine($"\t\tpublic {FileName}()");
                     builder.AppendLine("\t\t{");
                     {
-                        builder.AppendLine($"\t\tCreateMap<{table.Name},{table.Name}Dto>().MapExtraProperties();");
+                        builder.Append($"\t\tCreateMap<{table.Name},{table.Name}Dto>()");
+                        if (table.IsConcurrencyStamp)
+                        {
+                            builder.Append(".MapExtraProperties()");
+                        }
+                        builder.Append(";");
+                        builder.AppendLine();
                         builder.AppendLine($"\t\tCreateMap<{table.Name}CreateInputDto, {table.Name}>(){table.IgnoreObjectPropertiesCreateInputDto}");
                         foreach (var item in table.FieldsIgnore)
                         {

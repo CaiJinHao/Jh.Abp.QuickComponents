@@ -154,6 +154,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                 case "CreationAuditedEntity":
                     {
                         ignoreObjectPropertiesDefault = ".IgnoreCreationAuditedObjectProperties()";
+                        ignoreObjectPropertiesCreateInputDto = ".IgnoreCreationAuditedObjectProperties()";
                     }
                     break;
                 case "FullAuditedAggregateRootWithUser":
@@ -169,6 +170,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                 case "FullAuditedEntity":
                     {
                         ignoreObjectPropertiesDefault = ".IgnoreFullAuditedObjectProperties()";
+                        ignoreObjectPropertiesCreateInputDto = ".IgnoreFullAuditedObjectProperties()";
                         IsDelete = true;
                     }
                     break;
