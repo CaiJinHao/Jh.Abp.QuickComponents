@@ -17,6 +17,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
             var builder = new StringBuilder();
             builder.AppendLine(@"using Jh.Abp.Application.Contracts.Dtos;
 using Jh.Abp.Application.Contracts.Extensions;
+using System;
 using Volo.Abp.Application.Dtos;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
