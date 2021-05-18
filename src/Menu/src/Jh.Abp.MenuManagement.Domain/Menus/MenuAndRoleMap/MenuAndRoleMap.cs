@@ -9,9 +9,8 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
-    [GeneratorClass]
+    //[GeneratorClass]
     [Description("菜单和角色映射表")]
-    [Table(MenuManagementDbProperties.BaseDbTablePrefix + "MenuAndRoleMap")]
     public class MenuAndRoleMap : CreationAuditedEntity<Guid>
     {
         [RetrieveDto]

@@ -7,6 +7,14 @@ using Volo.Abp.EntityFrameworkCore.Modeling;
 
 namespace Jh.Abp.MenuManagement.EntityFrameworkCore
 {
+    /*
+     类型：
+        [MaxLength(200)]
+        [Column(TypeName = "decimal(18, 2)")]
+    [Column(TypeName = "char(1)")]
+    [Column(TypeName = "text")]
+     */
+
     public static class MenuManagementDbContextModelCreatingExtensions
     {
         public static void ConfigureMenuManagement(
@@ -23,7 +31,10 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
             optionsAction?.Invoke(options);
 
             builder.Entity<Menu>(b => {
+                b.HasComment("菜单");
+                b.ToTable(options.TablePrefix + "Menu", options.Schema);
                 b.ConfigureByConvention();
+                b.Property(p => p.Id).ValueGeneratedOnAdd();
 
                 b.Property(p => p.Code).HasComment("菜单编号");
                 b.Property(p => p.Name).HasComment("菜单名称");
@@ -35,6 +46,8 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
             });
 
             builder.Entity<MenuAndRoleMap>(b => {
+                b.HasComment("菜单和角色映射表");
+                b.ToTable(options.TablePrefix + "MenuAndRoleMap", options.Schema);
                 b.ConfigureByConvention();
                 b.Property(p => p.Id).ValueGeneratedOnAdd();
 

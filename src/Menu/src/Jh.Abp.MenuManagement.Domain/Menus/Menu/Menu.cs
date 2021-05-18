@@ -12,9 +12,8 @@ using System.Linq;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
-    [GeneratorClass]
+    //[GeneratorClass]
     [Description("菜单")]
-    [Table(MenuManagementDbProperties.BaseDbTablePrefix + "Menu")]
     public class Menu : FullAuditedAggregateRoot<Guid>
     {
         [RetrieveDto]

@@ -2,11 +2,7 @@
 {
     public static class MenuManagementDbProperties
     {
-        /// <summary>
-        /// 隶属于系统管理模块
-        /// </summary>
-        public const string BaseDbTablePrefix = "Sys";
-        public static string DbTablePrefix { get; set; } = BaseDbTablePrefix;
+        public static string DbTablePrefix { get; set; } = "Sys";
 
         public static string DbSchema { get; set; } = null;
         /// <summary>

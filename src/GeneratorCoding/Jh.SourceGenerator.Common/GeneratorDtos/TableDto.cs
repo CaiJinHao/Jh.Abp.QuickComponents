@@ -139,6 +139,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                 case "AuditedEntity":
                     {
                         ignoreObjectPropertiesDefault = ".IgnoreAuditedObjectProperties()";
+                        ignoreObjectPropertiesCreateInputDto = ".IgnoreAuditedObjectProperties()";
                     }
                     break;
                 case "CreationAuditedAggregateRootWithUser":
