@@ -1,6 +1,7 @@
 using Jh.Abp.MenuManagement.MultiTenancy;
 using Jh.Abp.QuickComponents;
 using Jh.Abp.QuickComponents.Cors;
+using Jh.Abp.QuickComponents.HttpApi;
 using Jh.Abp.QuickComponents.JwtAuthentication;
 using Jh.Abp.QuickComponents.Localization;
 using Jh.Abp.QuickComponents.MiniProfiler;
@@ -11,10 +12,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.ExceptionHandling;
+using Volo.Abp.AspNetCore.Mvc.AntiForgery;
 using Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
@@ -40,6 +45,7 @@ using Volo.Abp.VirtualFileSystem;
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
+        typeof(JhAbpQuickComponentsHttpApiModule),
         typeof(AbpQuickComponentsModule),
         typeof(MenuManagementHttpApiModule),
         typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
@@ -55,11 +61,11 @@ namespace Jh.Abp.MenuManagement
     public class MenuManagementHttpApiHostModule : AbpModule
     {
         private const string DefaultCorsPolicyName = "Default";
-
+        private IConfiguration configuration;
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             var hostingEnvironment = context.Services.GetHostingEnvironment();
-            var configuration = context.Services.GetConfiguration();
+            configuration = context.Services.GetConfiguration();
 
             Configure<AbpDbContextOptions>(options =>
             {
@@ -82,18 +88,29 @@ namespace Jh.Abp.MenuManagement
                 });
             }
 
-            //context.Services.AddAbpSwaggerGenWithOAuth(
-            //    configuration["AuthServer:Authority"],
-            //    new Dictionary<string, string>
-            //    {
-            //        {"MenuManagement", "MenuManagement API"}
-            //    },
-            //    options =>
-            //    {
-            //        options.SwaggerDoc("v1", new OpenApiInfo {Title = "MenuManagement API", Version = "v1"});
-            //        options.DocInclusionPredicate((docName, description) => true);
-            //        options.CustomSchemaIds(type => type.FullName);
-            //    });
+            context.Services.AddJhAbpSwagger(configuration,
+                new Dictionary<string, string>
+                {
+                    {"MenuManagement", "MenuManagement API"}
+                });
+            /*context.Services.AddAbpSwaggerGenWithOAuth(
+                configuration["AuthServer:Authority"],
+                new Dictionary<string, string>
+                {
+                    {"MenuManagement", "MenuManagement API"}
+                },
+                options =>
+                {
+                    options.SwaggerDoc("v1",
+                        new OpenApiInfo
+                        {
+                            Title = configuration["SwaggerApi:OpenApiInfo:Title"],
+                            Version = configuration["SwaggerApi:OpenApiInfo:Version"],
+                            Description = configuration["SwaggerApi:OpenApiInfo:Description"],
+                        });
+                    options.DocInclusionPredicate((docName, description) => true);
+                    options.CustomSchemaIds(type => type.FullName);
+                });*/
 
             Configure<AbpLocalizationOptions>(options =>
             {
@@ -108,13 +125,14 @@ namespace Jh.Abp.MenuManagement
                 options.Languages.Add(new LanguageInfo("zh-Hant", "zh-Hant", "繁體中文"));
             });
 
-            //context.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddJwtBearer(options =>
-            //    {
-            //        options.Authority = configuration["AuthServer:Authority"];
-            //        options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
-            //        options.Audience = "MenuManagement";
-            //    });
+            //context.Services.AddJwtAuthentication(configuration);
+            /*context.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = configuration["AuthServer:Authority"];
+                    options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
+                    options.Audience = "MenuManagement";
+                });*/
 
             Configure<AbpDistributedCacheOptions>(options =>
             {
@@ -129,24 +147,25 @@ namespace Jh.Abp.MenuManagement
                     .PersistKeysToStackExchangeRedis(redis, "MenuManagement-Protection-Keys");
             }
 
-            //context.Services.AddCors(options =>
-            //{
-            //    options.AddPolicy(DefaultCorsPolicyName, builder =>
-            //    {
-            //        builder
-            //            .WithOrigins(
-            //                configuration["App:CorsOrigins"]
-            //                    .Split(",", StringSplitOptions.RemoveEmptyEntries)
-            //                    .Select(o => o.RemovePostFix("/"))
-            //                    .ToArray()
-            //            )
-            //            .WithAbpExposedHeaders()
-            //            .SetIsOriginAllowedToAllowWildcardSubdomains()
-            //            .AllowAnyHeader()
-            //            .AllowAnyMethod()
-            //            .AllowCredentials();
-            //    });
-            //});
+            context.Services.AddCorsPolicy(configuration);
+            /*context.Services.AddCors(options =>
+            {
+                options.AddPolicy(DefaultCorsPolicyName, builder =>
+                {
+                    builder
+                        .WithOrigins(
+                            configuration["App:CorsOrigins"]
+                                .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                                .Select(o => o.RemovePostFix("/"))
+                                .ToArray()
+                        )
+                        .WithAbpExposedHeaders()
+                        .SetIsOriginAllowedToAllowWildcardSubdomains()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                });
+            });*/
 
             Configure<AbpAuditingOptions>(options =>
             {
@@ -157,18 +176,22 @@ namespace Jh.Abp.MenuManagement
                 //options.EntityHistorySelectors.AddAllEntities();
             });
 
+            //禁用http验证cookies xsf
+            Configure<AbpAntiForgeryOptions>(options =>
+            {
+                options.AutoValidate = false;
+            });
+
             context.Services.Configure<AbpExceptionHandlingOptions>(options =>
             {
                 options.SendExceptionsDetailsToClients = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
             });
             
             context.Services.AddApiVersion();
-            context.Services.AddSwaggerComponent(configuration);
-            context.Services.AddCorsPolicy(configuration);
             context.Services.AddLocalizationComponent();
             context.Services.AddOidcAuthentication(configuration);
-            //context.Services.AddJwtAuthenticationComponent(configuration);
-            context.Services.AddAuthorizeFilter(configuration);
+            //context.Services.AddAuthorizeFilter(configuration);
+            context.Services.AddAbpIdentity().AddClaimsPrincipalFactory<JhUserClaimsPrincipalFactory>();
             context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
 #if DEBUG
             context.Services.AddMiniProfilerComponent();
@@ -206,18 +229,8 @@ namespace Jh.Abp.MenuManagement
             }
             app.UseJhRequestLocalization();
             app.UseAuthorization();
-            //app.UseSwagger();
-            //app.UseSwaggerUI(options =>
-            //{
-            //    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Support APP API");
-
-            //    var configuration = context.GetConfiguration();
-            //    options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
-            //    options.OAuthClientSecret(configuration["AuthServer:SwaggerClientSecret"]);
-            //});
-#if DEBUG
-            app.UseJhSwagger(context.GetConfiguration(),this.GetType());
-#endif
+            app.UseSwagger();
+            app.UseJhAbpSwagger(configuration);
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();

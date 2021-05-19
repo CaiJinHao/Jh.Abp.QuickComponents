@@ -14,13 +14,5 @@ namespace Jh.Abp.MenuManagement.Controllers
         {
             return Redirect("~/swagger");
         }
-
-        public async Task Login()
-        {
-            if (!CurrentUser.IsAuthenticated)
-            {
-                await HttpContext.ChallengeAsync("oidc");
-            }
-        }
     }
 }

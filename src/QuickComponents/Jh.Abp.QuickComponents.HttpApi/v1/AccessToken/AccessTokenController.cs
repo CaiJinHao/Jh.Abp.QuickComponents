@@ -6,6 +6,9 @@ using Volo.Abp;
 using System.Linq;
 using Volo.Abp.Users;
 using Volo.Abp.Auditing;
+using Microsoft.Extensions.Configuration;
+using System.Net.Http;
+using IdentityModel.Client;
 
 namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
 {
@@ -21,26 +24,59 @@ namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
     public class AccessTokenController : JhAbpQuickComponentsController
     {
-        private readonly IAccessTokenAppService _accessTokenAppService;
+        private readonly IConfiguration _configuration;
+        //private readonly IAccessTokenAppService _accessTokenAppService;
         public AccessTokenController(
-            IAccessTokenAppService accessTokenAppService
+            IConfiguration configuration
+            //IAccessTokenAppService accessTokenAppService
             )
         {
-            _accessTokenAppService = accessTokenAppService;
+            _configuration = configuration;
+            //_accessTokenAppService = accessTokenAppService;
         }
 
         [AllowAnonymous]
         [HttpPost]
         public async Task<AccessTokenResponseDto> GetAccessTokenAsync(AccessTokenRequestDto requestDto)
         {
-            return await _accessTokenAppService.GetAccessTokenAsync(requestDto);
+            // discover endpoints from metadata
+            var client = new HttpClient();
+            var disco = await client.GetDiscoveryDocumentAsync(_configuration["AuthServer:Authority"]);
+            if (disco.IsError)
+            {
+                throw new System.Exception("Error");
+            }
+
+            // request token
+            var tokenResponse = await client.RequestPasswordTokenAsync(new PasswordTokenRequest
+            {
+                Address = disco.TokenEndpoint,
+                ClientId = _configuration["AuthServer:AppClientId"],
+                ClientSecret = _configuration["AuthServer:AppClientSecret"],
+                UserName = requestDto.UserNameOrEmailAddress,
+                Password = requestDto.Password,
+                Scope = _configuration["AuthServer:Scope"]
+            });
+            if (tokenResponse.IsError)
+            {
+                throw new System.Exception("Error");
+            }
+            return new AccessTokenResponseDto()
+            {
+                AccessToken = tokenResponse.AccessToken,
+                ExpiresIn = tokenResponse.ExpiresIn,
+                RefreshToken = tokenResponse.RefreshToken,
+                TokenType = tokenResponse.TokenType
+            };
+
+            //return await _accessTokenAppService.GetAccessTokenAsync(requestDto);
         }
 
-        [HttpPost("Refresh")]
-        public async Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(string refreshToken)
-        {
-            return await _accessTokenAppService.GetRefreshAccessTokenAsync(refreshToken);
-        }
+        //[HttpPost("Refresh")]
+        //public async Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(string refreshToken)
+        //{
+        //    return await _accessTokenAppService.GetRefreshAccessTokenAsync(refreshToken);
+        //}
 
         /*
          [HttpPost]

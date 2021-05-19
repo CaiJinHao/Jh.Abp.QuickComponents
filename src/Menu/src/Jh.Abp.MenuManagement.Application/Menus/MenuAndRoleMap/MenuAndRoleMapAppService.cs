@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Identity;
 using Volo.Abp.Uow;
 
 namespace Jh.Abp.MenuManagement.Menus
@@ -15,6 +16,7 @@ namespace Jh.Abp.MenuManagement.Menus
         IMenuAndRoleMapAppService
     {
         private readonly IMenuRepository MenuRepository;
+        public IdentityUserManager MyUserManager { get; set; }
 
         private readonly IMenuAndRoleMapRepository MenuAndRoleMapRepository;
         public MenuAndRoleMapAppService(IMenuAndRoleMapRepository repository, IMenuRepository menuRepository) : base(repository)
@@ -55,7 +57,8 @@ namespace Jh.Abp.MenuManagement.Menus
         public virtual async Task<IEnumerable<MenusNavDto>> GetMenusNavTreesAsync()
         {
             //查看CurrentUser.Roles 是的值是否为guid ,只能用一个角色的权限渲染菜单
-            var roles = CurrentUser.FindClaims(Common.Extensions.JhJwtClaimTypes.RoleId).Select(a => new Guid(a.Value)).ToList();
+            //var roles = CurrentUser.FindClaims(Common.Extensions.JhJwtClaimTypes.RoleId).Select(a => new Guid(a.Value)).ToList();
+            var roles = await GetRolesAsync();
             //查看CurrentUser.Roles 是的值是否为guid ,只能用一个角色的权限渲染菜单
             var auth_menus_id = crudRepository.Where(a => roles.Contains(a.RoleId)).Select(a => a.MenuId).ToList();
 
@@ -65,6 +68,13 @@ namespace Jh.Abp.MenuManagement.Menus
 
             //返回多个根节点
             return GetMenusTreeAsync(auth_menus);
+        }
+
+        protected virtual async Task<IEnumerable<Guid>> GetRolesAsync()
+        {
+            var userid = CurrentUser.Id;
+            var user = await MyUserManager.GetByIdAsync((Guid)userid);
+            return user.Roles.Select(a => a.RoleId);
         }
 
         public virtual async Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(Guid roleid)

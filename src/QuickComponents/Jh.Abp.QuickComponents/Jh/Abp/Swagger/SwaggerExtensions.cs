@@ -34,7 +34,8 @@ namespace Jh.Abp.QuickComponents.Swagger
             return services;
         }
 
-        public static IServiceCollection AddSwaggerComponent(this IServiceCollection services, IConfiguration configuration)
+        [Obsolete("Please use the AddJhAbpSwagger")]
+        public static IServiceCollection AddJhSwagger(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddApiVersion();
             return services.AddSwaggerGen(
@@ -115,13 +116,14 @@ namespace Jh.Abp.QuickComponents.Swagger
                 });
         }
 
-        public static IApplicationBuilder UseJhSwagger(this IApplicationBuilder app, IConfiguration configuration, Type StarupType)
+        [Obsolete("Please use the UseJhAbpSwagger")]
+        public static IApplicationBuilder UseJhSwagger(this IApplicationBuilder app, IConfiguration configuration)
         {
             //StarupType用于加载Swagger文档的类的程序集
-            if (StarupType == null)
-            {
-                throw new ArgumentNullException("Swagger Starup Type Is Null");
-            }
+            //if (StarupType == null)
+            //{
+            //    throw new ArgumentNullException("Swagger Starup Type Is Null");
+            //}
             app.UseSwagger();
             return app.UseSwaggerUI(options =>
             {
@@ -154,6 +156,91 @@ namespace Jh.Abp.QuickComponents.Swagger
                 options.InjectStylesheet("/ext/custom-stylesheet.css");
                 options.InjectJavascript("/ext/custom-javascript.js");
             });
+        }
+
+
+        public static IServiceCollection AddJhAbpSwagger(this IServiceCollection services, IConfiguration configuration, Dictionary<string, string> scopes)
+        {
+            services.AddAbpSwaggerGenWithOAuth(
+                configuration["AuthServer:Authority"],scopes,
+                options =>
+                {
+                    options.SwaggerDoc("v1",
+                        new OpenApiInfo
+                        {
+                            Title = configuration["SwaggerApi:OpenApiInfo:Title"],
+                            Version = configuration["SwaggerApi:OpenApiInfo:Version"],
+                            Description = configuration["SwaggerApi:OpenApiInfo:Description"],
+                        });
+                    options.DocInclusionPredicate((docName, description) => true);
+                    options.CustomSchemaIds(type => type.FullName);
+
+                    //Swagger添加授权验证服务
+                    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                    {
+                        Description = "授权Token：Bearer Token",
+                        Name = "Authorization",
+                        In = ParameterLocation.Header,
+                        Type = SecuritySchemeType.ApiKey,
+                        BearerFormat = "JWT",
+                        Scheme = "Bearer"
+                    });
+
+                    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            new string[] { }
+                        }
+                    });
+                });
+            return services;
+        }
+
+        public static IApplicationBuilder UseJhAbpSwagger(this IApplicationBuilder app, IConfiguration configuration)
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", configuration["SwaggerApi:SwaggerEndpoint:Name"]);
+                options.RoutePrefix = configuration["SwaggerApi:RoutePrefix"];
+                options.IndexStream = () => Assembly.GetExecutingAssembly().GetManifestResourceStream("Jh.Abp.QuickComponents.Jh.Abp.Swagger.index.html");//这个是用点连接的途径
+
+                /*
+                options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
+                options.OAuthClientSecret(configuration["AuthServer:SwaggerClientSecret"]);
+                var scopeStr = configuration["AuthServer:Scope"];
+                if (!string.IsNullOrWhiteSpace(scopeStr))
+                {
+                    var scopes = scopeStr.Split(" ");
+                    options.OAuthScopes(scopes);
+                }*/
+
+                // Display
+                options.DefaultModelExpandDepth(2);
+                options.DefaultModelRendering(ModelRendering.Model);
+                options.DefaultModelsExpandDepth(-1);
+                options.DisplayOperationId();
+                options.DisplayRequestDuration();
+                options.DocExpansion(DocExpansion.None);
+                options.EnableDeepLinking();
+                options.EnableFilter();
+                options.ShowExtensions();
+                // Network
+                options.EnableValidator();
+                // Other
+                options.DocumentTitle = configuration["SwaggerApi:DocumentTitle"];
+                //添加自定义css和js
+                //options.InjectStylesheet("/ext/custom-stylesheet.css");
+                //options.InjectJavascript("/ext/custom-javascript.js");
+            });
+            return app;
         }
     }
 }

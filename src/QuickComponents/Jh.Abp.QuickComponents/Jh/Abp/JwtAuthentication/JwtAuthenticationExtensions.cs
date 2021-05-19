@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,33 +12,30 @@ namespace Jh.Abp.QuickComponents.JwtAuthentication
 {
     public static class JwtAuthenticationExtensions
     {
-        public static IServiceCollection AddJwtAuthenticationComponent(this IServiceCollection services, IConfiguration configuration)
+        /*
+        //可直接请求IdentityServer
+        public static IServiceCollection AddIdentityServerJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddAuthentication("Bearer")
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                       .AddIdentityServerAuthentication(options =>
                       {
                           options.Authority = configuration["AuthServer:Authority"];
-                          options.RequireHttpsMetadata = configuration.GetValue<bool>("AuthServer:RequireHttps");
+                          options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
                           options.ApiName = configuration["AuthServer:ApiName"];
                       });
 
             return services;
-        }
+        }*/
 
-        /// <summary>
-        /// 为所有Action添加权限验证，使用之后页面都会进行验证
-        /// </summary>
-        /// <param name="services"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddAuthorizeFilter(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddControllers(options => {
-                var policy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder()
-                         .RequireAuthenticatedUser()
-                         .Build();
-                //options.Filters.Add(new AuthorizeFilter(policy));//添加权限过滤器
-                options.Filters.Add(new JhAuthorizationFilter(policy,configuration));
-            });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                 .AddJwtBearer(options =>
+                 {
+                     options.Authority = configuration["AuthServer:Authority"];
+                     options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
+                     options.Audience = configuration["AuthServer:Audience"];
+                 });
             return services;
         }
 
@@ -85,6 +83,23 @@ namespace Jh.Abp.QuickComponents.JwtAuthentication
                         }
                     }
                 });
+            return services;
+        }
+
+        /// <summary>
+        /// 为所有Action添加权限验证，使用之后页面都会进行验证
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddAuthorizeFilter(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddControllers(options => {
+                var policy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder()
+                         .RequireAuthenticatedUser()
+                         .Build();
+                //options.Filters.Add(new AuthorizeFilter(policy));//添加权限过滤器
+                options.Filters.Add(new JhAuthorizationFilter(policy, configuration));
+            });
             return services;
         }
     }

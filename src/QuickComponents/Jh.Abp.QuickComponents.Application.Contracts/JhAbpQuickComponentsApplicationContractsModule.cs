@@ -25,11 +25,11 @@ namespace Jh.Abp.QuickComponents
             var configuration = context.Services.GetConfiguration();
 
             Configure<IdentityClientOptions>(options => {
-                options.Authority = configuration["IdentityServer:Clients:WebApi:Authority"];
-                options.ClientId = configuration["IdentityServer:Clients:WebApi:ClientId"];
-                options.ClientSecret = configuration["IdentityServer:Clients:WebApi:ClientSecret"];
-                options.Scope = configuration["IdentityServer:Clients:WebApi:Scope"];
-                options.RequireHttps = configuration.GetValue<bool>("IdentityServer:Clients:WebApi:RequireHttps");
+                options.Authority = configuration["AuthServer:Authority"];
+                options.ClientId = configuration["AuthServer:AppClientId"];
+                options.ClientSecret = configuration["AuthServer:AppClientSecret"];
+                options.Scope = configuration["AuthServer:Scope"];
+                options.RequireHttps = configuration.GetValue<bool>("AuthServer:RequireHttpsMetadata");
             });
 
             Configure<SwaggerClientOptions>(options => {

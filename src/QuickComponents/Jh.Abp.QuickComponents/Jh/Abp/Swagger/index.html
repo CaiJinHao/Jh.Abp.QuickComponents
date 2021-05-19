@@ -42,15 +42,16 @@
                     location.href = "/apilogin.html";
                 }
             }
-            var api_result_str = sessionStorage.getItem('restapi_session_key');
-            if (api_result_str == null) {
-                page.redirect();
-            } else {
-                var api_result = JSON.parse(api_result_str);
-                if (!api_result.accessToken) {
-                    page.redirect();
-                }
-            }
+            // access token 登录
+            //var api_result_str = sessionStorage.getItem('restapi_session_key');
+            //if (api_result_str == null) {
+            //    page.redirect();
+            //} else {
+            //    var api_result = JSON.parse(api_result_str);
+            //    if (!api_result.accessToken) {
+            //        page.redirect();
+            //    }
+            //}
         }());
     </script>
     %(HeadContent)

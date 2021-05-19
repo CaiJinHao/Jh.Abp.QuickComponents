@@ -1,13 +1,13 @@
-﻿//oidc
+﻿//jwt
 layui.define(['layer'], function (exports) {
     var $ = layui.jquery,
         layer = layui.layer;
 
     var ajaxobjold = {
-        ajaxArray: function (_opts, callback) {
-            var _the = this;
-            var result_list = [];
-            _opts.forEach(function (_el) {
+        ajaxArray:function(_opts,callback){
+            var _the=this;
+            var result_list=[];
+            _opts.forEach(function(_el){
                 _the.authorizeAjax({
                     url: _el.url,
                     type: _el.type,
@@ -15,7 +15,7 @@ layui.define(['layer'], function (exports) {
                     success: function (_json) {
                         result_list.push(_json);
                         _el.success(_json);//调用回调并传递数据
-                        if (result_list.length == _opts.length) {
+                        if (result_list.length==_opts.length) {
                             if (callback) {
                                 callback(); //等待全部任务完成调用回调
                             }
@@ -40,14 +40,14 @@ layui.define(['layer'], function (exports) {
                 jsonpCallback: 'jsonp' + (new Date()).valueOf().toString().substr(-4),
                 headers: {}, //需要每次携带当前用户的信息 否则不知道权限
             };
-            Object.assign(optDefault, _options);
+            Object.assign(optDefault,_options);
             optDefault.url = baseUrl + _options.url;
             /*判断是否可以发送请求*/
             if (!optDefault.ajaxStatus) {
                 return false;
             }
             optDefault.ajaxStatus = false; //禁用掉  防止多次点击
-            if (optDefault.type !== 'Get' && optDefault.contentType !== false) { //post 必须要转为json字符串  get 必须不能转
+            if (optDefault.type !== 'Get' && optDefault.contentType!==false) { //post 必须要转为json字符串  get 必须不能转
                 optDefault.data = JSON.stringify(optDefault.data);
             }
             $.ajax(optDefault)
@@ -138,7 +138,7 @@ layui.define(['layer'], function (exports) {
                     optDefault.ajaxStatus = true;
                 }, 1000);
             }
-            if (optDefault.type !== 'Get' && optDefault.contentType !== false) { //post 必须要转为json字符串  get 必须不能转
+            if (optDefault.type !== 'Get'&& optDefault.contentType!==false) { //post 必须要转为json字符串  get 必须不能转
                 optDefault.data = JSON.stringify(optDefault.data);
             }
             var _ajaxUrl = "";
@@ -149,27 +149,27 @@ layui.define(['layer'], function (exports) {
             }
             var loading;
             $.ajax({
-                //async: async,
-                url: _ajaxUrl,
-                data: optDefault.data,
-                type: optDefault.type,
-                dataType: optDefault.dataType,
-                contentType: optDefault.contentType,
-                success: optDefault.optSuccess,
-                error: optDefault.error,
-                headers: optDefault.headers,
-                jsonpCallback: 'jsonp' + (new Date()).valueOf().toString().substr(-4),
-                beforeSend: function () {
-                    if (optDefault.isloading) {
-                        loading = layer.msg('加载数据中...', {
-                            time: 20000,
-                            icon: 16,
-                            shade: 0.06
-                        });
+                    //async: async,
+                    url: _ajaxUrl,
+                    data: optDefault.data,
+                    type: optDefault.type,
+                    dataType: optDefault.dataType,
+                    contentType: optDefault.contentType,
+                    success: optDefault.optSuccess,
+                    error: optDefault.error,
+                    headers: optDefault.headers,
+                    jsonpCallback: 'jsonp' + (new Date()).valueOf().toString().substr(-4),
+                    beforeSend: function () {
+                        if (optDefault.isloading) {
+                            loading = layer.msg('加载数据中...', {
+                                time: 20000,
+                                icon: 16,
+                                shade: 0.06
+                            });
+                        }
                     }
-                }
-            })
-                .done(function (data) { })
+                })
+                .done(function (data) {})
                 .fail(function (data) {
                     console.log(data);
                 })
@@ -288,7 +288,7 @@ layui.define(['layer'], function (exports) {
                 type: 'Post',
                 data: userinfo,
                 isDecrypt: false,
-                isShowError: false,
+                isShowError:false,
                 isStatic: true, //是否静默状态
                 success: function (_json) {
                     if (_json.Code === 0) {
@@ -424,7 +424,7 @@ layui.define(['layer'], function (exports) {
                 url: '/AccessToken',
                 type: 'Post',
                 data: login_info,
-                isloading: false,
+                isloading:false,
                 success: function (response) {
                     _the.setAuthorizeInfo(response);
                     if (callback) {
@@ -466,14 +466,38 @@ layui.define(['layer'], function (exports) {
                 }
             });
             return;
+/*
+            function getUserId(_fn) {
+                ajaxobj.requestAuthorize({
+                    url: '/AccessToken/User',
+                    data: {type:'sub'},
+                    type: 'Get',
+                    success: function (response) {
+                        _fn(response);
+                    }
+                });
+            };
+
+            getUserId(function (userid) {
+                ajaxobj.requestAuthorize({
+                    url: identityServerApi + '/identity/users/' + userid,
+                    type: 'Get',
+                    success: function (response) {
+                        if (callback) {
+                            callback(response);
+                        }
+                    }
+                });
+            });
+            */
         }
     };
 
     let ajaxobj = {
-        ajaxArray: function (_opts, callback) {
-            var _the = this;
-            var result_list = [];
-            _opts.forEach(function (_el) {
+        ajaxArray:function(_opts,callback){
+            var _the=this;
+            var result_list=[];
+            _opts.forEach(function(_el){
                 _the.requestAuthorize({
                     url: _el.url,
                     type: _el.type,
@@ -481,7 +505,7 @@ layui.define(['layer'], function (exports) {
                     success: function (response) {
                         result_list.push(response);
                         _el.success(response);//调用回调并传递数据
-                        if (result_list.length == _opts.length) {
+                        if (result_list.length==_opts.length) {
                             if (callback) {
                                 callback(); //等待全部任务完成调用回调
                             }
@@ -503,7 +527,7 @@ layui.define(['layer'], function (exports) {
                 beforeSend: function () {
                     let _the = this;
                     if (_the.isloading) {
-                        loading = layer.load(2, { time: 10 * 1000 });
+                        loading = layer.load(2, {time: 10 * 1000}); 
                         // loading = layer.msg('加载数据中...', {
                         //     time: 20000,
                         //     icon: 16,
@@ -516,23 +540,23 @@ layui.define(['layer'], function (exports) {
                 always: function () { },
                 jsonpCallback: 'jsonp' + (new Date()).valueOf().toString().substr(-4),
                 headers: {}, //需要每次携带当前用户的信息 否则不知道权限
-                identityServer: false
+                identityServer:false
             };
             Object.assign(optDefault, opts);
             if (optDefault.identityServer) {
                 optDefault.url = identityServerApi + optDefault.url;
             }
-            if (optDefault.url.indexOf('http') < 0 && optDefault.url.indexOf('/api/') < 0) {
+            if (optDefault.url.indexOf('http') <0&&optDefault.url.indexOf('/api/') <0) {
                 optDefault.url = baseUrl + optDefault.url;
             }
             if (optDefault.type !== 'Get' && optDefault.contentType !== false) { //post 必须要转为json字符串  get 必须不能转
                 optDefault.data = JSON.stringify(optDefault.data);
             }
             $.ajax(optDefault)
-                .done(function (response) {
+                .done(function (response) { 
                     console.log('done');
                 })
-                .fail(function (response) {
+                .fail(function (response) { 
                     optDefault.error(response);
                     console.log('fail');
                 })
@@ -556,9 +580,9 @@ layui.define(['layer'], function (exports) {
         },
         //自动携带token信息
         requestAuthorize: function (opts) {
-            //let myToken = userobj.validateLogin();
+            let myToken = userobj.validateLogin();
             let optDefault = {
-                //headers: myToken.headers, //默认值 不需要赋值
+                headers: myToken.headers, //默认值 不需要赋值
                 error: function (responseData) {
                     var response = responseData.responseJSON;
                     var error = response.error;
@@ -569,7 +593,7 @@ layui.define(['layer'], function (exports) {
             this.ajax(optDefault);
         },
         getAuthorizeToken: function (login_info, callback) {
-            userobj.getAuthorizeToken(login_info, callback);
+            userobj.getAuthorizeToken(login_info,callback);
         },
         getUserInfo: function (callback) {
             userobj.getUserInfo(callback);
