@@ -166,7 +166,8 @@ namespace Jh.Abp.MenuManagement
             context.Services.AddSwaggerComponent(configuration);
             context.Services.AddCorsPolicy(configuration);
             context.Services.AddLocalizationComponent();
-            context.Services.AddJwtAuthenticationComponent(configuration);
+            context.Services.AddOidcAuthentication(configuration);
+            //context.Services.AddJwtAuthenticationComponent(configuration);
             context.Services.AddAuthorizeFilter(configuration);
             context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
 #if DEBUG

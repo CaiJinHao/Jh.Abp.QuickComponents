@@ -48,6 +48,8 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
+using Jh.Abp.QuickComponents.Swagger;
+using Jh.Abp.QuickComponents.JwtAuthentication;
 
 namespace Jh.Abp.MenuManagement
 {
@@ -90,10 +92,12 @@ namespace Jh.Abp.MenuManagement
             var hostingEnvironment = context.Services.GetHostingEnvironment();
             var configuration = context.Services.GetConfiguration();
 
+            context.Services.AddApiVersion();
             ConfigureMenu(configuration);
             ConfigureCache(configuration);
             ConfigureUrls(configuration);
-            ConfigureAuthentication(context, configuration);
+            //ConfigureAuthentication(context, configuration);
+            context.Services.AddOidcAuthentication(configuration);
             ConfigureAutoMapper();
             ConfigureVirtualFileSystem(hostingEnvironment);
             ConfigureSwaggerServices(context.Services);

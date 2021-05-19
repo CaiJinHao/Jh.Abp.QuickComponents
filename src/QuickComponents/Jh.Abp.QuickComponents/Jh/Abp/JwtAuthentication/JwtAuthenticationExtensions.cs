@@ -41,8 +41,14 @@ namespace Jh.Abp.QuickComponents.JwtAuthentication
             return services;
         }
 
-        //web 需要去除AbpAccountWebModule依赖
-        public static IServiceCollection AddAuthorizeOidc(this IServiceCollection services, IConfiguration configuration)
+        /// <summary>
+        /// 混合模式
+        /// web 需要去除AbpAccountWebModule依赖
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddOidcAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthentication(options =>
             {
@@ -51,7 +57,8 @@ namespace Jh.Abp.QuickComponents.JwtAuthentication
             })
                 .AddCookie("Cookies", options =>
                 {
-                    options.ExpireTimeSpan = TimeSpan.FromDays(365);
+                    var Hours = configuration["AuthServer:CookieExpireTimeSpanHours"];
+                    options.ExpireTimeSpan = TimeSpan.FromHours(Convert.ToInt32(Hours));
                 })
                 .AddAbpOpenIdConnect("oidc", options =>
                 {
@@ -65,9 +72,18 @@ namespace Jh.Abp.QuickComponents.JwtAuthentication
                     options.SaveTokens = true;
                     options.GetClaimsFromUserInfoEndpoint = true;
 
-                    options.Scope.Add("role");
-                    options.Scope.Add("email");
-                    options.Scope.Add("phone");
+                    var scopeStr= configuration["AuthServer:Scope"];
+                    if (!string.IsNullOrWhiteSpace(scopeStr))
+                    {
+                        var scopes = scopeStr.Split(" ");
+                        foreach (var item in scopes)
+                        {
+                            if (!string.IsNullOrWhiteSpace(item))
+                            {
+                                options.Scope.Add(item);
+                            }
+                        }
+                    }
                 });
             return services;
         }

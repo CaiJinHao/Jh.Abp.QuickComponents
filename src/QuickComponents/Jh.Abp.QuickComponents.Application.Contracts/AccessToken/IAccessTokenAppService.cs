@@ -15,13 +15,6 @@ namespace Jh.Abp.QuickComponents.AccessToken
         Task<AccessTokenResponseDto> GetAccessTokenAsync(AccessTokenRequestDto requestDto);
 
         /// <summary>
-        /// Swagger验证
-        /// </summary>
-        /// <param name="requestDto"></param>
-        /// <returns></returns>
-        Task<AccessTokenResponseDto> GetSwaggerAccessTokenAsync(AccessTokenRequestDto requestDto);
-
-        /// <summary>
         /// 刷新访问令牌
         /// </summary>
         /// <param name="refreshToken"></param>

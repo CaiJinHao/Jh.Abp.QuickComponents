@@ -18,10 +18,8 @@ namespace JhAbpQuickComponents
     {
         private readonly IObjectMapper _objectMapper;
         private readonly IdentityClientOptions _identityClientOptions;
-        private readonly SwaggerClientOptions _swaggerClientOptions;
         public AccessTokenAppService(IObjectMapper objectMapper,
             IOptions<IdentityClientOptions> identityClientOptions,
-            IOptions<SwaggerClientOptions> swaggerClientOptions,
             IOptions<AbpIdentityClientOptions> options, 
             ICancellationTokenProvider cancellationTokenProvider, 
             IHttpClientFactory httpClientFactory, 
@@ -33,7 +31,6 @@ namespace JhAbpQuickComponents
             : base(options, cancellationTokenProvider, httpClientFactory, currentTenant, identityModelHttpRequestMessageOptions, tokenCache,discoveryDocumentCache)
         {
             _identityClientOptions = identityClientOptions.Value;
-            _swaggerClientOptions = swaggerClientOptions.Value;
             _objectMapper = objectMapper;
         }
 
@@ -87,23 +84,5 @@ namespace JhAbpQuickComponents
         }
 
 
-        public Task<AccessTokenResponseDto> GetSwaggerAccessTokenAsync(AccessTokenRequestDto requestDto)
-        {
-            if (string.Equals(requestDto.UserNameOrEmailAddress, _swaggerClientOptions.UserNameOrEmailAddress) 
-                && string.Equals(requestDto.Password, _swaggerClientOptions.Password))
-            {
-                return Task.FromResult(new AccessTokenResponseDto()
-                {
-                    AccessToken = Guid.NewGuid().ToString("n"),
-                    ExpiresIn = DateTime.Now.Millisecond
-                });
-            }
-            else
-            {
-                //2者实现是一样的，一个需要DI注入异步不需要
-                throw new BusinessException("JhAbpQuickComponents:000001").WithData("UserNameOrEmailAddress",requestDto.UserNameOrEmailAddress);
-                //throw new UserFriendlyException(_stringLocalizer["JhAbpQuickComponents:000001", requestDto.UserNameOrEmailAddress], "000001");
-            }
-        }
     }
 }

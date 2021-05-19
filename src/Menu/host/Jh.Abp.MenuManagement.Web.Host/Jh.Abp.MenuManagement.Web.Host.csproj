@@ -31,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\QuickComponents\Jh.Abp.QuickComponents\Jh.Abp.QuickComponents.csproj" />
     <ProjectReference Include="..\..\src\Jh.Abp.MenuManagement.HttpApi.Client\Jh.Abp.MenuManagement.HttpApi.Client.csproj" />
     <ProjectReference Include="..\..\src\Jh.Abp.MenuManagement.Web\Jh.Abp.MenuManagement.Web.csproj" />
     <ProjectReference Include="..\Jh.Abp.MenuManagement.Host.Shared\Jh.Abp.MenuManagement.Host.Shared.csproj" />

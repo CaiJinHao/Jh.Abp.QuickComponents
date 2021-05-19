@@ -42,20 +42,6 @@ namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
             return await _accessTokenAppService.GetRefreshAccessTokenAsync(refreshToken);
         }
 
-        [AllowAnonymous]
-        [HttpPost("Swagger")]
-        public async Task<AccessTokenResponseDto> GetSwaggerAccessTokenAsync(AccessTokenRequestDto requestDto)
-        {
-            return await _accessTokenAppService.GetSwaggerAccessTokenAsync(requestDto);
-        }
-
-        [Route("claims")]
-        [HttpGet]
-        public dynamic GetClaimsAsync()
-        {
-            return CurrentUser.GetAllClaims().Select(a => new { a.Type, a.Value });
-        }
-
         /*
          [HttpPost]
         [MapToApiVersion("1.0")]
