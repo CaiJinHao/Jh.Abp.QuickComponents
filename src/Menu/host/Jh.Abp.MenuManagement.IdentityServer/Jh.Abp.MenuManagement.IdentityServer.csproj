@@ -52,6 +52,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Pages\Account\Login.cshtml" />
+    <None Include="Pages\Account\_Layout.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Pages\**\*.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
