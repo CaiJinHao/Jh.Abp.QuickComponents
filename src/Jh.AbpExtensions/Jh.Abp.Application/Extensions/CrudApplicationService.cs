@@ -50,23 +50,23 @@ namespace Jh.Abp.Extensions
             return await crudRepository.CreateAsync(entity, autoSave, cancellationToken).ConfigureAwait(false);
         }
 
-        public virtual async Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckDeletePolicyAsync().ConfigureAwait(false);
             var query = await CreateFilteredQueryAsync(deleteInputDto, methodStringType);
-            return await crudRepository.DeleteEntitysAsync(query, autoSave, cancellationToken).ConfigureAwait(false);
+            return await crudRepository.DeleteEntitysAsync(query, autoSave, isHard, cancellationToken).ConfigureAwait(false);
         }
 
-        public virtual async Task<TEntity[]> DeleteAsync(TKey[] keys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity[]> DeleteAsync(TKey[] keys, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckDeletePolicyAsync().ConfigureAwait(false);
-            return await crudRepository.DeleteListAsync(a => keys.Contains(a.Id), autoSave, cancellationToken).ConfigureAwait(false);
+            return await crudRepository.DeleteListAsync(a => keys.Contains(a.Id), autoSave, isHard, cancellationToken).ConfigureAwait(false);
         }
 
-        public virtual async Task<TEntity> DeleteAsync(TKey id, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
+        public virtual async Task<TEntity> DeleteAsync(TKey id, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckDeletePolicyAsync().ConfigureAwait(false);
-            return (await crudRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, cancellationToken).ConfigureAwait(false)).FirstOrDefault();
+            return (await crudRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, isHard, cancellationToken).ConfigureAwait(false)).FirstOrDefault();
         }
 
         public virtual async Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.ContainsMethod, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))

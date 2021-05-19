@@ -69,7 +69,7 @@ namespace Jh.Abp.MenuManagement.Menus
         }
 
         [UnitOfWork]
-        public override async Task<Menu> DeleteAsync(Guid id, bool autoSave = false, CancellationToken cancellationToken = default)
+        public override async Task<Menu> DeleteAsync(Guid id, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
         {
             /*var data = await MenuDapperRepository.GetDapperListAsync();
             if (data != null)
@@ -77,24 +77,21 @@ namespace Jh.Abp.MenuManagement.Menus
                 var c = await menuDtoRepository.GetDtoDapperListAsync();
                 var d = await MenuDapperRepository.GetDtoListAsync();
             }*/
-            var entity = await base.DeleteAsync(id, autoSave, cancellationToken);
-            await menuAndRoleMapRepository.DeleteListAsync(a => a.MenuId == entity.Id).ConfigureAwait(false);
+            var entity = await base.DeleteAsync(id, autoSave, isHard, cancellationToken);
             return entity;
         }
 
         [UnitOfWork]
-        public override async Task<Menu[]> DeleteAsync(Guid[] keys, bool autoSave = false, CancellationToken cancellationToken = default)
+        public override async Task<Menu[]> DeleteAsync(Guid[] keys, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
         {
-            var entitys = await base.DeleteAsync(keys, autoSave, cancellationToken);
-            await menuAndRoleMapRepository.DeleteListAsync(a => keys.Contains(a.MenuId)).ConfigureAwait(false);
+            var entitys = await base.DeleteAsync(keys, autoSave, isHard, cancellationToken);
             return entitys;
         }
 
         [UnitOfWork]
-        public override async Task<Menu[]> DeleteAsync(MenuDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, CancellationToken cancellationToken = default)
+        public override async Task<Menu[]> DeleteAsync(MenuDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
         {
-            var entitys = await base.DeleteAsync(deleteInputDto, autoSave:autoSave, cancellationToken:cancellationToken);
-            await menuAndRoleMapRepository.DeleteListAsync(a => entitys.Select(b => b.Id).Contains(a.MenuId)).ConfigureAwait(false);
+            var entitys = await base.DeleteAsync(deleteInputDto, autoSave:autoSave, isHard:isHard, cancellationToken:cancellationToken);
             return entitys;
         }
     }

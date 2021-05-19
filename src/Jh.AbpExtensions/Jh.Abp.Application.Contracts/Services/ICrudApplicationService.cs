@@ -50,7 +50,7 @@ namespace Jh.Abp.Extensions
         /// <param name="autoSave"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 根据主键删除多条[Route("keys")][HttpDelete]
@@ -59,7 +59,7 @@ namespace Jh.Abp.Extensions
         /// <param name="autoSave"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<TEntity[]> DeleteAsync(TKey[] keys, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task<TEntity[]> DeleteAsync(TKey[] keys, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 根据主键删除
@@ -68,7 +68,7 @@ namespace Jh.Abp.Extensions
         /// <param name="autoSave"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<TEntity> DeleteAsync(TKey id, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task<TEntity> DeleteAsync(TKey id, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 根据主键更新部分[HttpPatch]

@@ -36,7 +36,7 @@ namespace Jh.Abp.Domain.Extensions
         /// <param name="autoSave"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<TEntity[]> DeleteListAsync(Expression<Func<TEntity, bool>> predicate, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task<TEntity[]> DeleteListAsync(Expression<Func<TEntity, bool>> predicate, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 根据条件删除
@@ -45,7 +45,7 @@ namespace Jh.Abp.Domain.Extensions
         /// <param name="autoSave"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<TEntity[]> DeleteEntitysAsync(IQueryable<TEntity> query, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken));
+        Task<TEntity[]> DeleteEntitysAsync(IQueryable<TEntity> query, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 获取DbSet
@@ -53,5 +53,15 @@ namespace Jh.Abp.Domain.Extensions
         /// <param name="includeDetails"></param>
         /// <returns></returns>
         Task<IQueryable<TEntity>> GetQueryableAsync(bool includeDetails = false);
+
+        /// <summary>
+        /// 删除(支持硬删除)
+        /// </summary>
+        /// <param name="autoSave"></param>
+        /// <param name="isHard"></param>
+        /// <param name="cancellationToken"></param>
+        /// <param name="entitys"></param>
+        /// <returns></returns>
+        Task<TEntity[]> DeleteAsync(bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken), params TEntity[] entitys);
     }
 }

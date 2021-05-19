@@ -126,7 +126,10 @@ namespace Jh.Abp.MenuManagement.v1
         [HttpDelete("{id}")]
         public virtual async Task DeleteAsync(Guid id)
         {
-            await menuAppService.DeleteAsync(id);
+            using (dataFilter.Disable())
+            {
+                await menuAppService.DeleteAsync(id, autoSave: true, isHard: false);
+            }
         }
 
         /// <summary>
