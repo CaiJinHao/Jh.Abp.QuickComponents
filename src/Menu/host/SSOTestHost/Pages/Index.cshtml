@@ -1,0 +1,17 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<div>
+    <form method="POST">
+        <input type="submit" asp-page-handler="Login" value="LOGIN" class="btn btn-primary" />
+    </form>
+    <strong>Claims</strong><br />
+    @Html.Raw(string.Join("<br/>", HttpContext.User.Claims.Select(c => $"{c.Type}={c.Value}").OrderBy(x => x).ToList<string>()))
+</div>
