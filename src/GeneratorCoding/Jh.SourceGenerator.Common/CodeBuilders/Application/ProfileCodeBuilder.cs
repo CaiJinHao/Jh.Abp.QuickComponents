@@ -38,14 +38,16 @@ using Volo.Abp.AutoMapper;");
                         {
                             builder.AppendLine($".Ignore(a => a.{item.Name})");
                         }
-                        builder.AppendLine(";");
+                        builder.Append(";");
+                        builder.AppendLine();
 
                         builder.AppendLine($"\t\tCreateMap<{table.Name}UpdateInputDto, {table.Name}>(){table.IgnoreObjectProperties}");
                         foreach (var item in table.FieldsIgnore)
                         {
                             builder.AppendLine($".Ignore(a => a.{item.Name})");
                         }
-                        builder.AppendLine(";");
+                        builder.Append(";");
+                        builder.AppendLine();
                         /*
                          * 没有用到DeleteInputDto、RetrieveInputDto的数据映射
                                                 builder.AppendLine($"\t\tCreateMap<{table.Name}DeleteInputDto, {table.Name}>(){table.IgnoreObjectProperties}");
