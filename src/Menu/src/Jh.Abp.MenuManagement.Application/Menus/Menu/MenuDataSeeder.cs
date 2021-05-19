@@ -33,7 +33,7 @@ namespace Jh.Abp.MenuManagement
                 await menuAppService.CreateAsync(new MenuCreateInputDto()
                 {
                     Code = "A0101",
-                    Name = "设备组管理",
+                    Name = "你的菜单",
                     Icon = "fa fa-bars",
                     Sort = 1,
                     ParentCode = "A01",

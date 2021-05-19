@@ -19,7 +19,7 @@ namespace Jh.Abp.MenuManagement.Migrations
                 .UseIdentityColumns()
                 .HasAnnotation("_Abp_DatabaseProvider", EfCoreDatabaseProvider.SqlServer)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.5");
 
             modelBuilder.Entity("Jh.Abp.MenuManagement.Menus.Menu", b =>
                 {
@@ -29,7 +29,9 @@ namespace Jh.Abp.MenuManagement.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)")
+                        .HasComment("菜单编号");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -54,7 +56,9 @@ namespace Jh.Abp.MenuManagement.Migrations
                         .HasColumnName("DeletionTime");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
+                        .HasComment("菜单描述");
 
                     b.Property<string>("ExtraProperties")
                         .HasColumnType("nvarchar(max)")
@@ -62,7 +66,9 @@ namespace Jh.Abp.MenuManagement.Migrations
 
                     b.Property<string>("Icon")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasComment("菜单图标");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -80,20 +86,30 @@ namespace Jh.Abp.MenuManagement.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasComment("菜单名称");
 
                     b.Property<string>("ParentCode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)")
+                        .HasComment("上级菜单编号");
 
                     b.Property<int>("Sort")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("同一级别内排序");
 
                     b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
+                        .HasComment("导航路径");
 
                     b.HasKey("Id");
 
                     b.ToTable("SysMenu");
+
+                    b
+                        .HasComment("菜单");
                 });
 
             modelBuilder.Entity("Jh.Abp.MenuManagement.Menus.MenuAndRoleMap", b =>
@@ -124,6 +140,9 @@ namespace Jh.Abp.MenuManagement.Migrations
                         .IncludeProperties(new[] { "MenuId" });
 
                     b.ToTable("SysMenuAndRoleMap");
+
+                    b
+                        .HasComment("菜单和角色映射表");
                 });
 
             modelBuilder.Entity("Jh.Abp.MenuManagement.Menus.MenuAndRoleMap", b =>
