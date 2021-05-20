@@ -8,7 +8,7 @@
     
     <RootNamespace>Jh.Abp.MenuManagement</RootNamespace>
     <UserSecretsId>aa13ea6e-f093-48d9-9bbf-1dc6e97ee752</UserSecretsId>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>CaiJinHao</Authors>
     <Company>CaiJinHao</Company>
     <Copyright>CaiJinHao</Copyright>
@@ -17,7 +17,7 @@
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Jh.Abp.MenuManagement</PackageReleaseNotes>
-    <Version>0.1.9.0</Version>
+    <Version>0.1.9.1</Version>
     <Description>Jh.Abp.MenuManagement</Description>
   </PropertyGroup>
 

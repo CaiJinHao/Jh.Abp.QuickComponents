@@ -13,7 +13,7 @@
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Jh.SourceGenerator</PackageTags>
     <PackageReleaseNotes>Jh.SourceGenerator libs</PackageReleaseNotes>
-    <Version>3.0.0.6</Version>
+    <Version>3.0.0.7</Version>
     <Description>Jh.SourceGenerator libs</Description>
   </PropertyGroup>
 
