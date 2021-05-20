@@ -46,7 +46,7 @@ using Jh.Abp.Extensions;
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
-        //typeof(JhAbpQuickComponentsHttpApiModule),
+        typeof(JhAbpQuickComponentsHttpApiModule),
         typeof(AbpQuickComponentsModule),
         typeof(MenuManagementHttpApiModule),
         typeof(AbpAspNetCoreMvcUiMultiTenancyModule),

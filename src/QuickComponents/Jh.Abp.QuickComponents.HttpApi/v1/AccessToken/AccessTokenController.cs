@@ -25,14 +25,11 @@ namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
     public class AccessTokenController : JhAbpQuickComponentsController
     {
         private readonly IConfiguration _configuration;
-        //private readonly IAccessTokenAppService _accessTokenAppService;
         public AccessTokenController(
             IConfiguration configuration
-            //IAccessTokenAppService accessTokenAppService
             )
         {
             _configuration = configuration;
-            //_accessTokenAppService = accessTokenAppService;
         }
 
         [AllowAnonymous]
@@ -68,8 +65,13 @@ namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
                 RefreshToken = tokenResponse.RefreshToken,
                 TokenType = tokenResponse.TokenType
             };
+        }
 
-            //return await _accessTokenAppService.GetAccessTokenAsync(requestDto);
+        [Route("claims")]
+        [HttpGet]
+        public dynamic GetClaimsAsync()
+        {
+            return CurrentUser.GetAllClaims().Select(a => new { a.Type, a.Value });
         }
 
         //[HttpPost("Refresh")]

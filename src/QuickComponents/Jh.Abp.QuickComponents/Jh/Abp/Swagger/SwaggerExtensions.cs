@@ -212,15 +212,8 @@ namespace Jh.Abp.QuickComponents.Swagger
                 options.RoutePrefix = configuration["SwaggerApi:RoutePrefix"];
                 options.IndexStream = () => Assembly.GetExecutingAssembly().GetManifestResourceStream("Jh.Abp.QuickComponents.Jh.Abp.Swagger.index.html");//这个是用点连接的途径
 
-                /*
-                options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
-                options.OAuthClientSecret(configuration["AuthServer:SwaggerClientSecret"]);
-                var scopeStr = configuration["AuthServer:Scope"];
-                if (!string.IsNullOrWhiteSpace(scopeStr))
-                {
-                    var scopes = scopeStr.Split(" ");
-                    options.OAuthScopes(scopes);
-                }*/
+                //options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
+                //options.OAuthClientSecret(configuration["AuthServer:SwaggerClientSecret"]);
 
                 // Display
                 options.DefaultModelExpandDepth(2);
