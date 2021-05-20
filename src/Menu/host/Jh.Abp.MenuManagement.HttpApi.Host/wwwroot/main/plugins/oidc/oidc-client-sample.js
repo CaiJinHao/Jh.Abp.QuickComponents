@@ -1,7 +1,7 @@
 // Oidc.Log.logger = console;
 // Oidc.Log.level = Oidc.Log.INFO;
 var settings = {
-    authority: 'https://localhost:6102',
+    authority: 'http://localhost:6102',
     client_id: 'MenuManagement_Js',
     redirect_uri: window.location.origin + '/ids/callback.html',
     response_type: 'id_token token',
@@ -18,7 +18,6 @@ var oidcManager = {
     getUser: function (_fn) {
         let _the=this;
         manager.getUser().then(function (user) {
-            console.log(user);
             if (user) {
                 log('用户已登录', user.profile);
             } else {

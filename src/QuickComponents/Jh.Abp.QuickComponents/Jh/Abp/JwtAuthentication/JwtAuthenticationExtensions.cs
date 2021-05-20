@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,7 +30,7 @@ namespace Jh.Abp.QuickComponents.JwtAuthentication
         /*
 "AuthServer": {
     //jwt
-    "Authority": "https://localhost:6102/",
+    "Authority": "http://localhost:6102/",
     "RequireHttpsMetadata": false,
     "Audience": "MenuManagement",
   }
@@ -50,7 +51,7 @@ namespace Jh.Abp.QuickComponents.JwtAuthentication
         /*
 "AuthServer": {
     //jwt
-    "Authority": "https://localhost:6102/",
+    "Authority": "http://localhost:6102/",
     "RequireHttpsMetadata": false,
     "Audience": "MenuManagement",
     //oidc
@@ -124,5 +125,6 @@ namespace Jh.Abp.QuickComponents.JwtAuthentication
             });
             return services;
         }
+
     }
 }

@@ -41,6 +41,7 @@ using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.Threading;
 using Volo.Abp.VirtualFileSystem;
+using Jh.Abp.Extensions;
 
 namespace Jh.Abp.MenuManagement
 {
@@ -178,9 +179,9 @@ namespace Jh.Abp.MenuManagement
                 //options.EntityHistorySelectors.AddAllEntities();
             });
 
-            //禁用http验证cookies xsrf
             Configure<AbpAntiForgeryOptions>(options =>
             {
+                //禁用csrf-xsrf（跨站请求伪造保护）
                 options.AutoValidate = false;
             });
 
@@ -188,7 +189,7 @@ namespace Jh.Abp.MenuManagement
             {
                 options.SendExceptionsDetailsToClients = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
             });
-            
+
             context.Services.AddApiVersion();
             context.Services.AddLocalizationComponent();
             context.Services.AddAuthorizeFilter(configuration);
@@ -210,13 +211,13 @@ namespace Jh.Abp.MenuManagement
             else
             {
                 app.UseErrorPage();
-                app.UseHsts();
+                //app.UseHsts();
             }
 
 #if DEBUG
             app.UseMiniProfiler();
 #endif
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseCorrelationId();
             app.UseStaticFiles();
             app.UseRouting();

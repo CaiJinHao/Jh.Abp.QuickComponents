@@ -14,7 +14,7 @@ using Volo.Abp.IdentityServer.AspNetIdentity;
 using Volo.Abp.MultiTenancy;
 using IdentityUser = Volo.Abp.Identity.IdentityUser;
 
-namespace Jh.Abp.IdentityServer.Jh.Abp.AspNetIdentity
+namespace Jh.Abp.IdentityServer
 {
     /// <summary>
     /// 添加自定义的Claims

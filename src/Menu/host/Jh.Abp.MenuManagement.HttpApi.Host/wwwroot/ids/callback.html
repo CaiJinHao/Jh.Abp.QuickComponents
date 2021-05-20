@@ -9,9 +9,10 @@
     <title>callback</title>
 </head>
 <body>
-    <script src="/main/plugins/oidc/oidc-client.js"></script>
+    <script src="/main/plugins/oidc/oidc-client.min.js"></script>
+    <script src="/main/plugins/oidc/oidc-client-sample.js"></script>
     <script>
-        new Oidc.UserManager().signinRedirectCallback().then(function () {
+        new Oidc.UserManager(settings).signinRedirectCallback().then(function () {
             // window.location = './index.html';
             window.location = '/main/index.html';
         }).catch(function (e) {

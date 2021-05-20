@@ -171,6 +171,8 @@ namespace Jh.Abp.MenuManagement
                         .AllowCredentials();
                 });
             });
+
+            context.Services.AddSameSiteCookiePolicy();
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -185,10 +187,11 @@ namespace Jh.Abp.MenuManagement
             else
             {
                 app.UseErrorPage();
-                app.UseHsts();
+                //app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
+            app.UseCookiePolicy();
             app.UseCorrelationId();
             app.UseStaticFiles();
             app.UseRouting();

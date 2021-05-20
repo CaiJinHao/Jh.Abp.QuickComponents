@@ -1,5 +1,4 @@
-﻿using Jh.Abp.IdentityServer.Jh.Abp.AspNetIdentity;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using Volo.Abp.Modularity;
 
