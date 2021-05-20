@@ -26,7 +26,14 @@ namespace Jh.Abp.QuickComponents.JwtAuthentication
 
             return services;
         }*/
-
+        /*
+"AuthServer": {
+    //jwt
+    "Authority": "https://localhost:6102/",
+    "RequireHttpsMetadata": false,
+    "Audience": "MenuManagement",
+  }
+         */
         public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -38,6 +45,21 @@ namespace Jh.Abp.QuickComponents.JwtAuthentication
                  });
             return services;
         }
+
+
+        /*
+"AuthServer": {
+    //jwt
+    "Authority": "https://localhost:6102/",
+    "RequireHttpsMetadata": false,
+    "Audience": "MenuManagement",
+    //oidc
+    "ClientId": "MenuManagement_Web",
+    "ClientSecret": "kimho",
+    "CookieExpireTimeSpanHours": 48,
+    "Scope": " email openid profile role phone address MenuManagement offline_access"
+  }
+         */
 
         /// <summary>
         /// 混合模式

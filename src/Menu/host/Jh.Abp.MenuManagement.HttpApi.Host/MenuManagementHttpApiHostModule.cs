@@ -45,7 +45,7 @@ using Volo.Abp.VirtualFileSystem;
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
-        typeof(JhAbpQuickComponentsHttpApiModule),
+        //typeof(JhAbpQuickComponentsHttpApiModule),
         typeof(AbpQuickComponentsModule),
         typeof(MenuManagementHttpApiModule),
         typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
@@ -168,6 +168,7 @@ namespace Jh.Abp.MenuManagement
                 });
             });*/
 
+            //审计日志配置
             Configure<AbpAuditingOptions>(options =>
             {
                 options.ApplicationName = "MunuManagement";
@@ -177,7 +178,7 @@ namespace Jh.Abp.MenuManagement
                 //options.EntityHistorySelectors.AddAllEntities();
             });
 
-            //禁用http验证cookies xsf
+            //禁用http验证cookies xsrf
             Configure<AbpAntiForgeryOptions>(options =>
             {
                 options.AutoValidate = false;
@@ -191,7 +192,6 @@ namespace Jh.Abp.MenuManagement
             context.Services.AddApiVersion();
             context.Services.AddLocalizationComponent();
             context.Services.AddAuthorizeFilter(configuration);
-            context.Services.AddAbpIdentity().AddClaimsPrincipalFactory<JhUserClaimsPrincipalFactory>();
             context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
 #if DEBUG
             context.Services.AddMiniProfilerComponent();
@@ -228,9 +228,11 @@ namespace Jh.Abp.MenuManagement
                 app.UseMultiTenancy();
             }
             app.UseJhRequestLocalization();
+            //app.UseAbpRequestLocalization();
             app.UseAuthorization();
-            app.UseSwagger();
+#if DEBUG
             app.UseJhAbpSwagger(configuration);
+#endif
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();

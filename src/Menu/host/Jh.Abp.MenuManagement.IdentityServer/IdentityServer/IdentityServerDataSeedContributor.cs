@@ -147,6 +147,7 @@ namespace Jh.Abp.MenuManagement.IdentityServer
 
             var configurationSection = _configuration.GetSection("IdentityServer:Clients");
 
+            //TODO:modify
             //js Client
             var jsClientId = configurationSection["MenuManagement_Js:ClientId"];
             if (!jsClientId.IsNullOrWhiteSpace())
@@ -265,7 +266,7 @@ namespace Jh.Abp.MenuManagement.IdentityServer
                         name
                     )
                     {
-                        AllowAccessTokensViaBrowser=true,
+                        AllowAccessTokensViaBrowser=true,//TODO:modify
                         ClientName = name,
                         ProtocolType = "oidc",
                         Description = name,
