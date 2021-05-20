@@ -54,15 +54,11 @@ layui.define(['layer'], function (exports) {
         },
         //获取登录用户信息
         getUserInfo: function (callback) {
-            var _the = this;
-            ajaxobj.requestAuthorize({
-                url: '/User/info',
-                type: 'Get',
-                success: function (response) {
-                    callback(response);
+            oidcManager.getUser(function(user){
+                if (user) {
+                    callback(user);
                 }
             });
-            return;
         }
     };
 

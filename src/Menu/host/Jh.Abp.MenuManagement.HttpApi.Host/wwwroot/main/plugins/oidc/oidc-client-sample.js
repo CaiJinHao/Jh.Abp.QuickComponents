@@ -18,6 +18,7 @@ var oidcManager = {
     getUser: function (_fn) {
         let _the=this;
         manager.getUser().then(function (user) {
+            console.log(user);
             if (user) {
                 log('用户已登录', user.profile);
             } else {
