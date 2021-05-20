@@ -147,6 +147,27 @@ namespace Jh.Abp.MenuManagement.IdentityServer
 
             var configurationSection = _configuration.GetSection("IdentityServer:Clients");
 
+            //js Client
+            var jsClientId = configurationSection["MenuManagement_Js:ClientId"];
+            if (!jsClientId.IsNullOrWhiteSpace())
+            {
+                var webClientRootUrl = configurationSection["MenuManagement_Js:RootUrl"].EnsureEndsWith('/');
+
+                /* MenuManagement_Web client is only needed if you created a tiered
+                 * solution. Otherwise, you can delete this client. */
+
+                await CreateClientAsync(
+                    name: jsClientId,
+                    scopes: commonScopes,
+                    grantTypes: new[] { "implicit" },
+                    secret: (configurationSection["MenuManagement_Js:ClientSecret"] ?? "kimho").Sha256(),
+                    redirectUri: $"{webClientRootUrl}testids4/callback.html",
+                    postLogoutRedirectUri: $"{webClientRootUrl}testids4/index.html",
+                    frontChannelLogoutUri: $"{webClientRootUrl}Account/FrontChannelLogout",
+                    corsOrigins: new[] { webClientRootUrl.RemovePostFix("/") }
+                );
+            }
+
             //Web Client
             var webClientId = configurationSection["MenuManagement_Web:ClientId"];
             if (!webClientId.IsNullOrWhiteSpace())
@@ -244,6 +265,7 @@ namespace Jh.Abp.MenuManagement.IdentityServer
                         name
                     )
                     {
+                        AllowAccessTokensViaBrowser=true,
                         ClientName = name,
                         ProtocolType = "oidc",
                         Description = name,

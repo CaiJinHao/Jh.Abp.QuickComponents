@@ -1,6 +1,9 @@
 ﻿//加载公共样式 每个页面都有用
 layui.link("/main/plugins/font-awesome/css/font-awesome.min.css");
-document.writeln("<script src=\"/main/plugins/rsasign/jsrsasign-all-min.js\"></script>");
+// document.writeln("<script src=\"/main/plugins/rsasign/jsrsasign-all-min.js\"></script>");
+document.writeln("<script src=\"/main/plugins/oidc/oidc-client.js\"></script>");
+document.writeln("<script src=\"/main/plugins/oidc/log.js\"></script>");
+document.writeln("<script src=\"/main/plugins/oidc/oidc-client-sample.js\"></script>");
 
 // 公共函数
 
