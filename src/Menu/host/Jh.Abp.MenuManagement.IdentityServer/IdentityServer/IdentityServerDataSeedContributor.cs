@@ -161,8 +161,8 @@ namespace Jh.Abp.MenuManagement.IdentityServer
                     scopes: commonScopes,
                     grantTypes: new[] { "implicit" },
                     secret: (configurationSection["MenuManagement_Js:ClientSecret"] ?? "kimho").Sha256(),
-                    redirectUri: $"{webClientRootUrl}testids4/callback.html",
-                    postLogoutRedirectUri: $"{webClientRootUrl}testids4/index.html",
+                    redirectUri: $"{webClientRootUrl}ids/callback.html",
+                    postLogoutRedirectUri: $"{webClientRootUrl}main/index.html",
                     frontChannelLogoutUri: $"{webClientRootUrl}Account/FrontChannelLogout",
                     corsOrigins: new[] { webClientRootUrl.RemovePostFix("/") }
                 );

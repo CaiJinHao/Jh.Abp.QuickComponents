@@ -125,7 +125,8 @@ namespace Jh.Abp.MenuManagement
                 options.Languages.Add(new LanguageInfo("zh-Hant", "zh-Hant", "繁體中文"));
             });
 
-            //context.Services.AddJwtAuthentication(configuration);
+            context.Services.AddJwtAuthentication(configuration);
+            //context.Services.AddOidcAuthentication(configuration);
             /*context.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -189,8 +190,7 @@ namespace Jh.Abp.MenuManagement
             
             context.Services.AddApiVersion();
             context.Services.AddLocalizationComponent();
-            context.Services.AddOidcAuthentication(configuration);
-            //context.Services.AddAuthorizeFilter(configuration);
+            context.Services.AddAuthorizeFilter(configuration);
             context.Services.AddAbpIdentity().AddClaimsPrincipalFactory<JhUserClaimsPrincipalFactory>();
             context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
 #if DEBUG

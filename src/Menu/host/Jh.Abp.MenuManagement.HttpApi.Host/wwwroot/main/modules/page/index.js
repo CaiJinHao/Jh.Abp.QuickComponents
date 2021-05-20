@@ -88,8 +88,7 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
         },
         // 退出
         loginout: function () {
-            cookie.clear();
-            window.location.href = "/login.html";
+            oidcManager.loginout();
         },
         //获取菜单
         initMenuList: function (_options) {
