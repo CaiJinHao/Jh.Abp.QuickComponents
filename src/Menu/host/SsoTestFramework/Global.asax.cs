@@ -10,6 +10,10 @@ namespace SsoTestFramework
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            SameSiteCookieRewriter.FilterSameSiteNoneForIncompatibleUserAgents(sender);
+        }
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();

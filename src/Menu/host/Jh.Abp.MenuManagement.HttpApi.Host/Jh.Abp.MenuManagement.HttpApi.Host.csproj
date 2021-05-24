@@ -45,4 +45,6 @@
     <None Include="wwwroot\swagger\js\jquery.js" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
 </Project>

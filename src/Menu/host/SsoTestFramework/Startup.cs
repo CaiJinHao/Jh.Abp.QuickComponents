@@ -1,0 +1,55 @@
+﻿using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.Owin.Host.SystemWeb;
+using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.Notifications;
+using Microsoft.Owin.Security.OpenIdConnect;
+using Owin;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+
+//[assembly: OwinStartup(typeof(SsoTestFramework.Startup))]
+namespace SsoTestFramework
+{
+    public class Startup
+    {
+        public void Configuration(IAppBuilder app)
+        {
+            /*
+            问题原因：
+Asp.net 的安全和表示下的机密管理有一项是强制执行https，
+            A批客户端可能不理解活遵循从HTTP到HTTPS的重定向。此类客户端可以通过HTTP发送信息，Web Api 应：不侦听HTTP。关闭状态代码为400的连接（错误请求）并且不处理请求。
+             chrome 内核需要金庸SameSite 
+            Chrome浏览器 => chrome://flags  =>  Cookies without SameSite must be secure => disabled=》重启浏览器
+             */
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationType = "Cookies",
+            });
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            app.UseOpenIdConnectAuthentication(new OpenIdConnectAuthenticationOptions
+            {
+                Authority = "http://localhost:6102", //ID Server
+                ClientId = "MenuManagement_Web",
+                ResponseType = "id_token code",
+                SignInAsAuthenticationType = "Cookies",
+                RedirectUri = "http://localhost:44309/signin-oidc", //URL of website
+                Scope = "email openid profile role phone address MenuManagement offline_access",
+                RequireHttpsMetadata = false,
+                Notifications = new OpenIdConnectAuthenticationNotifications
+                {
+                    AuthenticationFailed = OnAuthenticationFailed
+                }
+            });
+        }
+        private Task OnAuthenticationFailed(AuthenticationFailedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> context)
+        {
+            context.HandleResponse();
+            context.Response.Redirect("/?errormessage=" + context.Exception.Message);
+            return Task.FromResult(0);
+        }
+    }
+}

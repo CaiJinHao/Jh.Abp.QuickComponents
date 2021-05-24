@@ -12,11 +12,12 @@ namespace SsoTestFramework.Controllers
         {
             return View();
         }
-
+        [Authorize]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
+            var claims = HttpContext.User as System.Security.Claims.ClaimsPrincipal;
+            ViewBag.claims = string.Join(",",claims.Claims);
             return View();
         }
 
