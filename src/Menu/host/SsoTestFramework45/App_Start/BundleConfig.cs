@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace SsoTestFramework
+namespace SsoTestFramework45
 {
     public class BundleConfig
     {

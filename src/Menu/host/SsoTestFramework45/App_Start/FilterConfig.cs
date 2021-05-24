@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace SsoTestFramework
+namespace SsoTestFramework45
 {
     public class FilterConfig
     {

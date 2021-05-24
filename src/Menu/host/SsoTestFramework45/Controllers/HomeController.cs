@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace SsoTestFramework.Controllers
+namespace SsoTestFramework45.Controllers
 {
     public class HomeController : Controller
     {
@@ -12,12 +12,13 @@ namespace SsoTestFramework.Controllers
         {
             return View();
         }
+
         [Authorize]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-            var claims = HttpContext.User as System.Security.Claims.ClaimsPrincipal;
-            ViewBag.claims = string.Join(",",claims.Claims);
+            var cliams = HttpContext.User as System.Security.Claims.ClaimsPrincipal;
+            ViewBag.cliams =string.Join("<br/>", cliams.Claims.ToList());
             return View();
         }
 

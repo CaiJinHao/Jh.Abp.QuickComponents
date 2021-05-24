@@ -1,5 +1,4 @@
 ﻿using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Microsoft.Owin.Host.SystemWeb;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Notifications;
 using Microsoft.Owin.Security.OpenIdConnect;
@@ -11,8 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
-//[assembly: OwinStartup(typeof(SsoTestFramework.Startup))]
-namespace SsoTestFramework
+namespace SsoTestFramework45
 {
     public class Startup
     {
@@ -39,10 +37,10 @@ Asp.net 的安全和表示下的机密管理有一项是强制执行https，
                 RedirectUri = "http://localhost:44309/signin-oidc", //URL of website
                 Scope = "email openid profile role phone address MenuManagement offline_access",
                 RequireHttpsMetadata = false,
-                Notifications = new OpenIdConnectAuthenticationNotifications
+                /*Notifications = new OpenIdConnectAuthenticationNotifications
                 {
                     AuthenticationFailed = OnAuthenticationFailed
-                }
+                }*/
             });
         }
         private Task OnAuthenticationFailed(AuthenticationFailedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> context)
