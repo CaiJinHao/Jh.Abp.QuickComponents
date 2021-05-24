@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Notifications;
 using Microsoft.Owin.Security.OpenIdConnect;
@@ -23,11 +24,14 @@ Asp.net 的安全和表示下的机密管理有一项是强制执行https，
              chrome 内核需要金庸SameSite 
             Chrome浏览器 => chrome://flags  =>  Cookies without SameSite must be secure => disabled=》重启浏览器
              */
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
+            //app.UseKentorOwinCookieSaver();
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationType = "Cookies",
+                AuthenticationType = CookieAuthenticationDefaults.AuthenticationType,
             });
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             app.UseOpenIdConnectAuthentication(new OpenIdConnectAuthenticationOptions
             {
                 Authority = "http://localhost:6102", //ID Server
@@ -37,17 +41,7 @@ Asp.net 的安全和表示下的机密管理有一项是强制执行https，
                 RedirectUri = "http://localhost:44309/signin-oidc", //URL of website
                 Scope = "email openid profile role phone address MenuManagement offline_access",
                 RequireHttpsMetadata = false,
-                /*Notifications = new OpenIdConnectAuthenticationNotifications
-                {
-                    AuthenticationFailed = OnAuthenticationFailed
-                }*/
             });
-        }
-        private Task OnAuthenticationFailed(AuthenticationFailedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> context)
-        {
-            context.HandleResponse();
-            context.Response.Redirect("/?errormessage=" + context.Exception.Message);
-            return Task.FromResult(0);
         }
     }
 }

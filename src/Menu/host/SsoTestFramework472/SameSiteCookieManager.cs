@@ -39,11 +39,15 @@ namespace SsoTestFramework472
 
         private void CheckSameSite(IOwinContext context, CookieOptions options)
         {
-            if (options.SameSite == Microsoft.Owin.SameSiteMode.None &&
-                                    SameSite.BrowserDetection.DisallowsSameSiteNone(context.Request.Headers["User-Agent"]))
+            if (options.SameSite == SameSiteMode.None)
             {
-                options.SameSite = null;
+                options.SameSite = (SameSiteMode)(-1);
             }
+            //if (options.SameSite == Microsoft.Owin.SameSiteMode.None &&
+            //                        SameSite.BrowserDetection.DisallowsSameSiteNone(context.Request.Headers["User-Agent"]))
+            //{
+            //    options.SameSite = null;
+            //}
         }
     }
 }
