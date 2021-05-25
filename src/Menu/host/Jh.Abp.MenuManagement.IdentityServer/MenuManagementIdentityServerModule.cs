@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
@@ -25,6 +26,7 @@ using Volo.Abp.Autofac;
 using Volo.Abp.Caching;
 using Volo.Abp.Caching.StackExchangeRedis;
 using Volo.Abp.Data;
+using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.SqlServer;
 using Volo.Abp.FeatureManagement;
@@ -45,6 +47,7 @@ using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.Threading;
 using Volo.Abp.UI.Navigation.Urls;
+using IdentityUser = Volo.Abp.Identity.IdentityUser;
 
 namespace Jh.Abp.MenuManagement
 {
@@ -82,6 +85,12 @@ namespace Jh.Abp.MenuManagement
     public class MenuManagementIdentityServerModule : AbpModule
     {
         private const string DefaultCorsPolicyName = "Default";
+        public override void PreConfigureServices(ServiceConfigurationContext context)
+        {
+            PreConfigure<IIdentityServerBuilder>(builder => {
+                builder.Services.AddTransient<IObjectAccessor<IUserClaimsPrincipalFactory<IdentityUser>>, ObjectAccessor<JhUserClaimsPrincipalFactory>>();
+            });
+        }
 
         public override void ConfigureServices(ServiceConfigurationContext context)
         {

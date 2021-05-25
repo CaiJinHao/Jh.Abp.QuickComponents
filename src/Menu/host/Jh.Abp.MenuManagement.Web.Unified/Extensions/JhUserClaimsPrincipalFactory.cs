@@ -14,10 +14,6 @@ using IdentityUser = Volo.Abp.Identity.IdentityUser;
 
 namespace Jh.Abp.MenuManagement
 {
-    //context.Services.AddAbpIdentity().AddClaimsPrincipalFactory<MyUserClaimsPrincipalFactory>();
-    /// <summary>
-    /// 添加自定义的Claims
-    /// </summary>
     public class JhUserClaimsPrincipalFactory : AbpUserClaimsPrincipalFactory
     {
         public IdentityUserManager MyUserManager { get; set; }

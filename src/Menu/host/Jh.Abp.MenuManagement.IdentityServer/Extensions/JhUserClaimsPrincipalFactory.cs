@@ -12,8 +12,15 @@ using Volo.Abp.Identity;
 using Volo.Abp.Security.Claims;
 using IdentityUser = Volo.Abp.Identity.IdentityUser;
 
-namespace Jh.Abp.QuickComponents
+namespace Jh.Abp.MenuManagement
 {
+    /*
+    context.Services.AddAbpIdentity().AddClaimsPrincipalFactory<JhUserClaimsPrincipalFactory>();
+    or
+     PreConfigure<IIdentityServerBuilder>(builder => {
+                builder.Services.AddTransient<IObjectAccessor<IUserClaimsPrincipalFactory<IdentityUser>>, ObjectAccessor<JhUserClaimsPrincipalFactory>>();
+            });
+     */
     public class JhUserClaimsPrincipalFactory : AbpUserClaimsPrincipalFactory
     {
         public IdentityUserManager MyUserManager { get; set; }
