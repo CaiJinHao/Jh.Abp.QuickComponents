@@ -16,6 +16,7 @@ namespace Jh.Abp.QuickComponents.Tests.JhSourceGeneratorCommon
         [Fact]
         public void TestGetTableClass()
         {
+            var basePath = @"G:\Temp\";
             var domainAssembly = typeof(MenuManagement.MenuManagementDomainModule).Assembly;
             var domain = @"\AppSettings";
             var options = new GeneratorOptions()
@@ -23,14 +24,14 @@ namespace Jh.Abp.QuickComponents.Tests.JhSourceGeneratorCommon
                 DbContext = "EquipmentQuotationAppDbContext",
                 Namespace = "EquipmentQuotationApp",
                 ControllerBase = "EquipmentQuotationAppController",
-                CreateContractsPath = @$"G:\Temp\trunk\src\SupplyDemandPlatform.Application.Contracts{domain}",
-                CreateApplicationPath = @$"G:\Temp\trunk\src\SupplyDemandPlatform.Application{domain}",
-                CreateDomainPath = @$"G:\Temp\trunk\src\SupplyDemandPlatform.Domain{domain}",
-                CreateEfCorePath = @$"G:\Temp\trunk\src\SupplyDemandPlatform.EntityFrameworkCore{domain}",
-                CreateHttpApiPath = @$"G:\Temp\trunk\src\SupplyDemandPlatform.HttpApi\v1{domain}",
+                CreateContractsPath = @$"{basePath}trunk\src\SupplyDemandPlatform.Application.Contracts{domain}",
+                CreateApplicationPath = @$"{basePath}trunk\src\SupplyDemandPlatform.Application{domain}",
+                CreateDomainPath = @$"{basePath}trunk\src\SupplyDemandPlatform.Domain{domain}",
+                CreateEfCorePath = @$"{basePath}trunk\src\SupplyDemandPlatform.EntityFrameworkCore{domain}",
+                CreateHttpApiPath = @$"{basePath}trunk\src\SupplyDemandPlatform.HttpApi\v1{domain}",
                 //不需要domain做文件夹
-                CreateHtmlPath = @$"G:\Temp\trunk\host\SupplyDemandPlatform.Web.Unified\wwwroot\main\view",
-                CreateHtmlTemplatePath = @"G:\github\mygithub\Jh.Abp.QuickComponents\src\GeneratorCoding\Jh.SourceGenerator.Common\CodeBuilders\Html\Layui",
+                CreateHtmlPath = @$"{basePath}trunk\host\SupplyDemandPlatform.Web.Unified\wwwroot\main\view",
+                CreateHtmlTemplatePath = @"G:\github\mygithub\Jh.Abp.QuickComponents\src\GeneratorCoding\Jh.SourceGenerator.Common\CodeBuilders\Html\Layui"
             };
             var service = new GeneratorService(domainAssembly, options);
             Assert.True(service.GeneratorCode());

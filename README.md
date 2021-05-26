@@ -1,94 +1,53 @@
-# Jh.Abp.QuickComponents
+# 介绍
 
-Abp webapi项目需要使用的基础组件。Swagger、MiniProfiler、IdentityServer.
-提供AccessToken自动验证控制器，请求地址：api/v1/AccessToken
+该仓库的目的是为了快速开始项目的核心业务而建立，基于[Abp vNext框架](https://docs.abp.io/zh-Hans/abp/latest),会随着Abp框架的最新版本迭代。访问[Abp源码](https://github.com/abpframework);  
+该仓库包含基础组件：Swagger、MiniProfiler、SameSite、JWT、OIDC、默认使用中文、CRUD基础代码生成(包括HTML,基于Layui/vue.js)  
+详细使用，可参考[Menu模块](https://github.com/CaiJinHao/Jh.Abp.QuickComponents/tree/master/src/Menu)
 
-## 修改IdentityServer & Host
+## UI使用
 
-修改install_package.bat中的项目名称为你的项目名称，之后执行install_package.bat
-Program
-hostsettings.json
-UseMySQL
-	删除掉SQLServer依赖，安装Install-Package Volo.Abp.EntityFrameworkCore.MySQL，更改为依赖AbpEntityFrameworkCoreMySQLModule
-	修改IdentityServerHostMigrationsDbContextFactory中的CreateDbContext
-            var connectionString = configuration.GetConnectionString("Default");
-            var builder = new DbContextOptionsBuilder<IdentityServerHostMigrationsDbContext>()
-                  .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), optionsBuilder =>
-                  {
-                      optionsBuilder.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
-                      //mySQLOptionsAction?.Invoke(optionsBuilder);
-                  })
-                  .EnableSensitiveDataLogging();
-            return new IdentityServerHostMigrationsDbContext(builder.Options);
-			
-## IdentityServer 
+复制[Menu模块下wwwroot文件夹](https://github.com/CaiJinHao/Jh.Abp.QuickComponents/tree/master/src/Menu/host/Jh.Abp.MenuManagement.HttpApi.Host/wwwroot)到你的项目wwwroot下
 
-	typeof(JhAbpIdentityServerModule)
-	SeedData
-	IdentityServerDataSeedContributor
-	1q2w3e*(批量替换)
-	add-migration(先删掉原有的)
-	update-database
-	执行程序开始数据迁移，完成之后复制RoleId到Host
-	IdentityServer启动报缺少js文件问题,使用命令行在IdentityServer文件夹下依次运行 yarn 、gulp。执行完成之后即可。如果还不行， 有可能是cli版本更新的问题，需要替换最新的js文件
-	
-## HttpApi.Host
+## 项目快速启动
 
-	Module
-		typeof(AbpQuickComponentsModule),
-		注释掉AddAbpSwaggerGenWithOAuth,AddAuthentication,AddCors
-		底部添加：
-		context.Services.Configure<AbpExceptionHandlingOptions>(options =>
+## 安装依赖
+
+启动[install_package.bat](https://github.com/CaiJinHao/Jh.Abp.QuickComponents/tree/master/src/Menu/install_package.bat)，来安装你的项目依赖项。
+
+## 代码生成
+
+通过单元测试来生成代码，需要在Domain Class上添加[GeneratorClass]才能被代码生成识别
+
+```C#
+            var basePath = @"G:\Temp\";
+            var domainAssembly = typeof(MenuManagement.MenuManagementDomainModule).Assembly;
+            var domain = @"\AppSettings";
+            var options = new GeneratorOptions()
             {
-                options.SendExceptionsDetailsToClients = configuration.GetValue<bool>("AppSettings:SendExceptionsDetailsToClients");
-            });
+                DbContext = "EquipmentQuotationAppDbContext",
+                Namespace = "EquipmentQuotationApp",
+                ControllerBase = "EquipmentQuotationAppController",
+                CreateContractsPath = @$"{basePath}trunk\src\SupplyDemandPlatform.Application.Contracts{domain}",
+                CreateApplicationPath = @$"{basePath}trunk\src\SupplyDemandPlatform.Application{domain}",
+                CreateDomainPath = @$"{basePath}trunk\src\SupplyDemandPlatform.Domain{domain}",
+                CreateEfCorePath = @$"{basePath}trunk\src\SupplyDemandPlatform.EntityFrameworkCore{domain}",
+                CreateHttpApiPath = @$"{basePath}trunk\src\SupplyDemandPlatform.HttpApi\v1{domain}",
+                //不需要domain做文件夹
+                CreateHtmlPath = @$"{basePath}trunk\host\SupplyDemandPlatform.Web.Unified\wwwroot\main\view",
+                CreateHtmlTemplatePath = @"G:\github\mygithub\Jh.Abp.QuickComponents\src\GeneratorCoding\Jh.SourceGenerator.Common\CodeBuilders\Html\Layui"
+            };
+            var service = new GeneratorService(domainAssembly, options);
+            Assert.True(service.GeneratorCode());
+```
 
-            context.Services.AddAuthorizeFilter();
-		注释掉UseCors，UseSwagger，UseAbpSwaggerUI
-		添加app.UseJhSwagger(context.GetConfiguration(), this.GetType());
-	appsettings.json配置
-	添加：
-  "App": {
-    "CorsOrigins": "https://*.MenuManagement.com,http://localhost:4200,http://localhost:66001,https://localhost:6101",
-    "AllowAnonymousArea": "abp",
-    "AllowAnonymousController": "AbpApiDefinition"
-  },
-  "DistributedCache": {
-    "KeyPrefix": "SupplyDemandPlatform:"
-  },
-  "SwaggerApi": {
-    "User": {
-      "UserNameOrEmailAddress": "admin",
-      "Password": "123456"
-    },
-    "OpenApiInfo": {
-      "Title": "你的项目名称",
-      "Version": "v1",
-      "Description": "你的项目名称"
-    },
-    "DocumentTitle": "你的项目名称 RESTfull Api",
-    "RoutePrefix": "swagger",
-    "SwaggerEndpoint": {
-      "Name": "Support APP API"
-    }
-  },
-  "IdentityServer": {
-    "Clients": {
-      "WebApi": {
-        "Authority": "https://localhost:44361/",
-        "ClientId": "SupplyDemandPlatform_App",
-        "ClientSecret": "Cngrain@123",
-        "Scope": "role email SupplyDemandPlatform offline_access",
-        "RequireHttps": false
-      }
-    }
-  }
-  
+## 其他使用
 
-## Use
+其他使用请参照[Abp vNext框架](https://docs.abp.io/zh-Hans/abp/latest)
 
-最后打开包所在路径将C:\Users\Administrator\.nuget\packages\jh.abp.quickcomponents.httpapi\x.x.x\content\wwwroot文件夹copy到项目根路径即可
+## PowerDesigner 生成Class
 
-## Use Demo 
+[PowerDesigner 生成Class配置](https://github.com/CaiJinHao/Jh.Abp.QuickComponents/powerdesigner.md)
 
-具体使用可参考Menu模块
+## 版本更新
+
+[版本更新](https://github.com/CaiJinHao/Jh.Abp.QuickComponents/UpDateVersion.md)
