@@ -1,5 +1,6 @@
-using Jh.Abp.IdentityServer;
 using Jh.Abp.MenuManagement.MultiTenancy;
+using Jh.Abp.QuickComponents.Cors;
+using Jh.Abp.QuickComponents.Localization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
@@ -52,7 +53,6 @@ using IdentityUser = Volo.Abp.Identity.IdentityUser;
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
-        typeof(JhAbpIdentityServerModule),
         typeof(AbpAccountWebIdentityServerModule),
         typeof(AbpAccountApplicationModule),
         typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
@@ -182,6 +182,7 @@ namespace Jh.Abp.MenuManagement
             });
 
             context.Services.AddSameSiteCookiePolicy();
+            context.Services.AddLocalizationComponent();
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -213,7 +214,7 @@ namespace Jh.Abp.MenuManagement
                 app.UseMultiTenancy();
             }
 
-            app.UseAbpRequestLocalization();
+            app.UseJhRequestLocalization();
             app.UseIdentityServer();
             app.UseAuthorization();
             app.UseSwagger();
