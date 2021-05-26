@@ -1,9 +1,12 @@
+# PowerDesigner配置
+
 ## 注意
 
-生成OOM的时候注意勾掉：convert names to codes
+生成OOM的时候注意勾掉：convert names to codes  
 
 ## C# 2::Profile\Class\Templates\definition
 
+```text
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,9 +33,11 @@ using System.Linq;
    %innerInterfaces%\n
 ]\
 }
+```
 
 ## Attribute/Templates/definition
 
+```text
 .if (%isGenerated%) and (%isValidAttribute%)
 \n
     .if(%Mandatory%=="TRUE")
@@ -54,14 +59,18 @@ using System.Linq;
  %Code%[ = %InitialValue%]  {get;set;}
    .endif
 .endif
+```
 
 ## Attribute/Templates/effluntapi
 
+```text
 b.Property(p => p.[%Code%]).HasComment("%Name%");
 b.Property(p => p.[%Code%]).HasMaxLength(%Length%).HasComment("%Name%");
+```
 
 ## Classfier/Templates/fields
 
+```text
 .foreach_item(Attributes,,,%isField%)
    .if ((%@1?% == false) or (%@1% == all) or (%Visibility% == %@1%)) and (%Derived% == false)
       .if (%isRoleAMigrated%)
@@ -85,12 +94,15 @@ b.Property(p => p.[%Code%]).HasMaxLength(%Length%).HasComment("%Name%");
       .endif
    .endif
 .next
+```
 
 ## PDM生成 MYSQL50::Script\Objects\Column\Add
 
+```text
 %20:COLUMN% [%National%?national ]%DATATYPE%[%Unsigned%? unsigned][%ZeroFill%? zerofill][ [.O:[character set][charset]] %CharSet%][.Z:[ %NOTNULL%][%R%?[%PRIMARY%]][%IDENTITY%? auto_increment:[ default %DEFAULT%]][ comment %.q:@OBJTLABL%]]
 b.Property(p => p.%COLUMN%)
 .if (%Length% != 0)
 [.HasMaxLength(%Length%)]
 .endif
 [.HasComment("%Name%");]
+```

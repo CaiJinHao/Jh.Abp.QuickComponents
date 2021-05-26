@@ -1,3 +1,4 @@
+# 注意更换你的项目名称
 dotnet add ./src/QingHaiWL.Application/QingHaiWL.Application.csproj package Jh.Abp.Application
 dotnet add ./src/QingHaiWL.Application.Contracts/QingHaiWL.Application.Contracts.csproj package Jh.Abp.Application.Contracts
 dotnet add ./src/QingHaiWL.Domain/QingHaiWL.Domain.csproj package Jh.SourceGenerator.Common

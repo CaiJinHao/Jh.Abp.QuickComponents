@@ -16,7 +16,7 @@
 
 ## 代码生成
 
-通过单元测试来生成代码，需要在Domain Class上添加[GeneratorClass]才能被代码生成识别
+通过单元测试来生成代码，需要在Domain Class上添加[GeneratorClass]才能被代码生成识别，生成之后记得去除不需要生的[GeneratorClass]，否则会覆盖原有的文件
 
 ```C#
             var basePath = @"G:\Temp\";
@@ -46,8 +46,8 @@
 
 ## PowerDesigner 生成Class
 
-[PowerDesigner 生成Class配置](https://github.com/CaiJinHao/Jh.Abp.QuickComponents/powerdesigner.md)
+[PowerDesigner 生成Class配置](https://github.com/CaiJinHao/Jh.Abp.QuickComponents/tree/master/powerdesigner.md)
 
 ## 版本更新
 
-[版本更新](https://github.com/CaiJinHao/Jh.Abp.QuickComponents/UpDateVersion.md)
+[版本更新](https://github.com/CaiJinHao/Jh.Abp.QuickComponents/tree/master/UpDateVersion.md)
