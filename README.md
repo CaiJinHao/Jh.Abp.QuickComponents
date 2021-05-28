@@ -95,4 +95,17 @@
 ```
 
 4. 批量修改密码(1q2w3e*)，使用区分大小，整个解决方案替换
-5. 执行更新数据库操作、成功后启动项目(数据播种)
+5. 更改连接数据库类型
+
+```C#
+//更改引用
+//Volo.Abp.EntityFrameworkCore.SqlServer
+Volo.Abp.EntityFrameworkCore.MySQL
+
+            Configure<AbpDbContextOptions>(options =>
+            {
+                options.UseMySQL();
+            });
+```
+
+6. 执行更新数据库操作、成功后启动项目(数据播种)
