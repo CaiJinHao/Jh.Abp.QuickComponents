@@ -58,7 +58,7 @@
 2. Copy IdentityServer下的Extensions文件夹到你的IdentityServer下
 3. 修改IdentityServerModule文件
 
-```csharp
+```C#
         public override void PreConfigureServices(ServiceConfigurationContext context)
         {
             PreConfigure<IIdentityServerBuilder>(builder => {
@@ -66,14 +66,17 @@
             });
         }
 ```
-```csharp
+
+```C#
         context.Services.AddSameSiteCookiePolicy();
         context.Services.AddLocalizationComponent();
 ```
-```csharp
+
+```C#
         app.UseJhRequestLocalization();
 ```
-```charp
+
+```C#
         private void SeedData(ApplicationInitializationContext context)
         {
             AsyncHelper.RunSync(async () =>
@@ -90,5 +93,6 @@
             });
         }
 ```
+
 4. 批量修改密码(1q2w3e*)，使用区分大小，整个解决方案替换
 5. 执行更新数据库操作、成功后启动项目(数据播种)
