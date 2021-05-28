@@ -44,7 +44,7 @@
         </div>
     </script>
     <script type="text/html" id="tpl_name">
-        {{d.surname + d.name}}
+        {{d.surname??'' + d.name}}
     </script>
     <script type="text/html" id="tpl_lockoutEnabled">
         <input type="checkbox" name="lockoutEnabled" value="1" lay-skin="switch" data-code="{{d.id}}" lay-text="是|否" lay-filter="table_tpl_lockoutEnabled" {{d.lockoutEnabled?'checked':''}}>

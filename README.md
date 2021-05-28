@@ -51,3 +51,44 @@
 ## 版本更新
 
 [版本更新](https://github.com/CaiJinHao/Jh.Abp.QuickComponents/tree/master/UpDateVersion.md)
+
+## 启动项目
+
+1. 执行install_package.bat文件安装依赖包
+2. Copy IdentityServer下的Extensions文件夹到你的IdentityServer下
+3. 修改IdentityServerModule文件
+
+```csharp
+        public override void PreConfigureServices(ServiceConfigurationContext context)
+        {
+            PreConfigure<IIdentityServerBuilder>(builder => {
+                builder.Services.AddTransient<IObjectAccessor<IUserClaimsPrincipalFactory<IdentityUser>>, ObjectAccessor<JhUserClaimsPrincipalFactory>>();
+            });
+        }
+```
+```csharp
+        context.Services.AddSameSiteCookiePolicy();
+        context.Services.AddLocalizationComponent();
+```
+```csharp
+        app.UseJhRequestLocalization();
+```
+```charp
+        private void SeedData(ApplicationInitializationContext context)
+        {
+            AsyncHelper.RunSync(async () =>
+            {
+                using (var scope = context.ServiceProvider.CreateScope())
+                {
+                    var data = scope.ServiceProvider
+                        .GetRequiredService<IDataSeeder>();
+                    var context = new DataSeedContext();
+                    context["AdminEmail"] = "531003539@qq.com";
+                    context["AdminPassword"] = "CaiJinHao@940421";
+                    await data.SeedAsync(context);
+                }
+            });
+        }
+```
+4. 批量修改密码(1q2w3e*)，使用区分大小，整个解决方案替换
+5. 执行更新数据库操作、成功后启动项目(数据播种)
