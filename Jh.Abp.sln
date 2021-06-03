@@ -31,6 +31,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.EntityFrameworkCore"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.Common", "src\Common\Jh.Abp.Common\Jh.Abp.Common.csproj", "{A3A3F09F-CC03-4EF5-AAAC-4D1215614D45}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.EntityFrameworkCore.DmExtensions", "src\Jh.AbpExtensions\Jh.Abp.EntityFrameworkCore.DmExtensions\Jh.Abp.EntityFrameworkCore.DmExtensions.csproj", "{0D3259D5-B140-42B2-831A-137A093608C0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jh.Abp.EntityFrameworkCore.Dm", "src\Jh.AbpExtensions\Jh.Abp.EntityFrameworkCore.Dm\Jh.Abp.EntityFrameworkCore.Dm.csproj", "{7BF6DDB2-969F-43F7-9A7D-EF5137F153E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +77,14 @@ Global
 		{A3A3F09F-CC03-4EF5-AAAC-4D1215614D45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3A3F09F-CC03-4EF5-AAAC-4D1215614D45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3A3F09F-CC03-4EF5-AAAC-4D1215614D45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D3259D5-B140-42B2-831A-137A093608C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D3259D5-B140-42B2-831A-137A093608C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D3259D5-B140-42B2-831A-137A093608C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D3259D5-B140-42B2-831A-137A093608C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BF6DDB2-969F-43F7-9A7D-EF5137F153E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BF6DDB2-969F-43F7-9A7D-EF5137F153E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BF6DDB2-969F-43F7-9A7D-EF5137F153E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BF6DDB2-969F-43F7-9A7D-EF5137F153E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +102,8 @@ Global
 		{D3B1CBFA-11EC-45CD-A413-4736C0FC7393} = {52ADE1AB-1905-4D6E-B686-14A16A0182B5}
 		{1F1094C1-48ED-41C5-B2FF-AC66D04FCF89} = {52ADE1AB-1905-4D6E-B686-14A16A0182B5}
 		{A3A3F09F-CC03-4EF5-AAAC-4D1215614D45} = {525A7CC4-25D7-4F16-A772-8F5A1649C2C5}
+		{0D3259D5-B140-42B2-831A-137A093608C0} = {52ADE1AB-1905-4D6E-B686-14A16A0182B5}
+		{7BF6DDB2-969F-43F7-9A7D-EF5137F153E0} = {52ADE1AB-1905-4D6E-B686-14A16A0182B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6B20184E-2D65-4B3A-91AB-E2AF0CBE4E16}
