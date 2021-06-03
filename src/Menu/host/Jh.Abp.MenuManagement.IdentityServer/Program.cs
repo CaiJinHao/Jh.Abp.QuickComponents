@@ -56,14 +56,6 @@ namespace Jh.Abp.MenuManagement
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    var _path = Directory.GetCurrentDirectory();
-                    var config = new ConfigurationBuilder()
-                                    .SetBasePath(_path)
-                                    .AddJsonFile("hostsettings.json", optional: true)
-                                    .AddCommandLine(args)
-                                    .Build();
-                    webBuilder.UseConfiguration(config);
-                    //webBuilder.UseUrls("https://*:6102");
                     webBuilder.UseStartup<Startup>();
                 })
                 .UseAutofac()
