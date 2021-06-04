@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Uow;
 using Jh.Abp.Application.Contracts.Extensions;
 using Jh.Abp.Common.Linq;
+using Jh.Abp.MenuManagement.Permissions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Jh.Abp.MenuManagement.Menus
 {
@@ -41,6 +43,7 @@ namespace Jh.Abp.MenuManagement.Menus
         }
 
         [UnitOfWork]
+        [Authorize(MenuManagementPermissions.Menus.Create)]
         public override async Task<Menu> CreateAsync(MenuCreateInputDto inputDto, bool autoSave = true, CancellationToken cancellationToken = default)
         {
             var entity = await base.CreateAsync(inputDto, true, cancellationToken);
@@ -63,12 +66,14 @@ namespace Jh.Abp.MenuManagement.Menus
         }
 
         [UnitOfWork]
+        [Authorize(MenuManagementPermissions.Menus.Create)]
         public override Task<Menu[]> CreateAsync(MenuCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             return Task.FromResult(EnumerableCreateAsync(inputDtos, autoSave, cancellationToken).ToArray());
         }
 
         [UnitOfWork]
+        [Authorize(MenuManagementPermissions.Menus.Delete)]
         public override async Task<Menu> DeleteAsync(Guid id, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
         {
             /*var data = await MenuDapperRepository.GetDapperListAsync();
@@ -82,6 +87,7 @@ namespace Jh.Abp.MenuManagement.Menus
         }
 
         [UnitOfWork]
+        [Authorize(MenuManagementPermissions.Menus.Delete)]
         public override async Task<Menu[]> DeleteAsync(Guid[] keys, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
         {
             var entitys = await base.DeleteAsync(keys, autoSave, isHard, cancellationToken);
@@ -89,6 +95,7 @@ namespace Jh.Abp.MenuManagement.Menus
         }
 
         [UnitOfWork]
+        [Authorize(MenuManagementPermissions.Menus.Delete)]
         public override async Task<Menu[]> DeleteAsync(MenuDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default)
         {
             var entitys = await base.DeleteAsync(deleteInputDto, autoSave:autoSave, isHard:isHard, cancellationToken:cancellationToken);
