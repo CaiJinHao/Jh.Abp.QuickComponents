@@ -24,6 +24,7 @@ namespace Jh.Abp.QuickComponents.Tests.JhSourceGeneratorCommon
                 DbContext = "EquipmentQuotationAppDbContext",
                 Namespace = "EquipmentQuotationApp",
                 ControllerBase = "EquipmentQuotationAppController",
+                CreateContractsPermissionsPath = @$"{basePath}trunk\src\SupplyDemandPlatform.Application.Contracts/Permissions",
                 CreateContractsPath = @$"{basePath}trunk\src\SupplyDemandPlatform.Application.Contracts{domain}",
                 CreateApplicationPath = @$"{basePath}trunk\src\SupplyDemandPlatform.Application{domain}",
                 CreateDomainPath = @$"{basePath}trunk\src\SupplyDemandPlatform.Domain{domain}",

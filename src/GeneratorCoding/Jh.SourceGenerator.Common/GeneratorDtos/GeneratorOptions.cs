@@ -28,6 +28,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         /// Dots路径  上级文件夹表名称 CreateIAppService,CreateDomainDto,CreateCreateInputDto,CreateRetrieveInputDto,CreateDeleteInputDto，CreateUpdateInputDto
         /// </summary>
         public string CreateContractsPath { get; set; }
+        public string CreateContractsPermissionsPath { get; set; }
         /// <summary>
         /// Domain路径 上级文件夹表名称 CreateIRepository
         /// </summary>

@@ -38,6 +38,23 @@ namespace Jh.SourceGenerator.Common
             return tableClass;
         }
 
+        public virtual IEnumerable<TableDto> GetTablesDto(IEnumerable<Type> classTypes)
+        {
+            foreach (var classType in classTypes)
+            {
+                yield return new TableDto(GeneratorConsts.DbContext, GeneratorConsts.Namespace, GeneratorConsts.ControllerBase)
+                {
+                    Name = GetTableName(classType),
+                    KeyType = GetKeyType(classType),
+                    InheritClass = GetTableInheritClass(classType),
+                    Comment = GetTableDescription(classType),
+                    FieldsCreateOrUpdateInput = GetFieldDto(GetMembers<CreateOrUpdateInputDtoAttribute>(classType)).ToList(),
+                    FieldsRetrieve = GetFieldDto(GetMembers<RetrieveDtoAttribute>(classType)).ToList(),
+                    FieldsIgnore = GetFieldDto(GetMembers<ProfileIgnoreAttribute>(classType)).ToList(),
+                };
+            }
+        }
+
         public virtual TableDto GetTableDto(Type classType)
         {
             return new TableDto(GeneratorConsts.DbContext, GeneratorConsts.Namespace, GeneratorConsts.ControllerBase)
@@ -159,10 +176,10 @@ namespace Jh.SourceGenerator.Common
 
         public virtual bool GeneratorCode()
         { 
-            var tableClass = GetTableClass();
-            foreach (var item in tableClass)
+            var tables = GetTablesDto(GetTableClass());
+            CreateFile(new PermissionsCodeBuilder(tables, generatorOptions.CreateContractsPermissionsPath));
+            foreach (var tableDto in tables)
             {
-                var tableDto = GetTableDto(item);
                 {//contracts
                     var CreateInputDto = CreateFile(new CreateInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
                     var CreateRetrieveInputDto = CreateFile(new RetrieveInputDtoCodeBuilder(tableDto, generatorOptions.CreateContractsPath));
