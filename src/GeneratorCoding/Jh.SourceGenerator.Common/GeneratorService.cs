@@ -175,8 +175,13 @@ namespace Jh.SourceGenerator.Common
         }
 
         public virtual bool GeneratorCode()
-        { 
-            var tables = GetTablesDto(GetTableClass());
+        {
+            var tableClass = GetTableClass();
+            if (!tableClass.Any())
+            {
+                throw new Exception("The identity GeneratorClass was not found");
+            }
+            var tables = GetTablesDto(tableClass);
             CreateFile(new PermissionsCodeBuilder(tables, generatorOptions.CreateContractsPermissionsPath));
             CreateFile(new PermissionsDefinitionProviderCodeBuilder(tables, generatorOptions.CreateContractsPermissionsPath));
             foreach (var tableDto in tables)

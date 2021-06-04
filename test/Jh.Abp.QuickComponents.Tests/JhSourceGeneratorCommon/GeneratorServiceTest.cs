@@ -24,7 +24,7 @@ namespace Jh.Abp.QuickComponents.Tests.JhSourceGeneratorCommon
                 DbContext = "MenuManagementDbContext",
                 Namespace = "ComprehensiveSite",
                 ControllerBase = "MenuManagementController",
-                CreateContractsPermissionsPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.Contracts/Permissions",
+                CreateContractsPermissionsPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.Contracts\Permissions",
                 CreateContractsPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.Contracts{domain}",
                 CreateApplicationPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.Application{domain}",
                 CreateDomainPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.Domain{domain}",

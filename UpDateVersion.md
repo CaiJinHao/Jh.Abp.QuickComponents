@@ -5,7 +5,7 @@
 Jh.Abp.Application 2.0.1.0  
 Jh.Abp.QuickComponents 1.2.5.4  
 Jh.Abp.MenuManagement.Application 0.1.9.3  
-Jh.SourceGenerator.Common 3.0.0.9  
+Jh.SourceGenerator.Common 3.0.1.0
 
 ## tag 0.5.3
 

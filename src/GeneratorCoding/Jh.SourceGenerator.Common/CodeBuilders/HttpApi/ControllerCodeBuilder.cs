@@ -126,22 +126,25 @@ using Volo.Abp.Data;");
                         builder.AppendLine("\t\t}");
                     }
 
-                    builder.AppendLine("\t\t[HttpPatch]");
-                    builder.AppendLine("\t\t[Route(\"{id}/Deleted\")]");
-                    builder.AppendLine($"\t\tpublic virtual async Task UpdateDeletedAsync({table.KeyType} id, [FromBody] bool isDeleted)");
+                    if (table.IsDelete)
                     {
-                        builder.AppendLine("\t\t{");
-                        builder.AppendLine("\t\t\tusing (dataFilter.Disable())");
-                        builder.AppendLine("\t\t\t{");
-                        builder.AppendLine($"\t\t\t\tawait {table.Name}AppService.UpdatePortionAsync(id, new {table.Name}UpdateInputDto()");
-                        builder.AppendLine("\t\t\t\t{");
-                        builder.AppendLine($"\t\t\t\t\tMethodInput = new MethodDto<{table.Name}>()");
-                        builder.AppendLine("\t\t\t\t\t{");
-                        builder.AppendLine("\t\t\t\t\t\tUpdateEntityAction = (entity) => entity.IsDeleted = isDeleted");
-                        builder.AppendLine("\t\t\t\t\t}");
-                        builder.AppendLine("\t\t\t\t});");
-                        builder.AppendLine("\t\t\t}");
-                        builder.AppendLine("\t\t}");
+                        builder.AppendLine("\t\t[HttpPatch]");
+                        builder.AppendLine("\t\t[Route(\"{id}/Deleted\")]");
+                        builder.AppendLine($"\t\tpublic virtual async Task UpdateDeletedAsync({table.KeyType} id, [FromBody] bool isDeleted)");
+                        {
+                            builder.AppendLine("\t\t{");
+                            builder.AppendLine("\t\t\tusing (dataFilter.Disable())");
+                            builder.AppendLine("\t\t\t{");
+                            builder.AppendLine($"\t\t\t\tawait {table.Name}AppService.UpdatePortionAsync(id, new {table.Name}UpdateInputDto()");
+                            builder.AppendLine("\t\t\t\t{");
+                            builder.AppendLine($"\t\t\t\t\tMethodInput = new MethodDto<{table.Name}>()");
+                            builder.AppendLine("\t\t\t\t\t{");
+                            builder.AppendLine("\t\t\t\t\t\tUpdateEntityAction = (entity) => entity.IsDeleted = isDeleted");
+                            builder.AppendLine("\t\t\t\t\t}");
+                            builder.AppendLine("\t\t\t\t});");
+                            builder.AppendLine("\t\t\t}");
+                            builder.AppendLine("\t\t}");
+                        }
                     }
                 }
                 builder.AppendLine("\t}");
