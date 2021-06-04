@@ -21,7 +21,10 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
         {
             //用构造函数传值
             table = tableDto;
-            FilePath = Path.Combine(filePath,table.Name);//以表名称为上级文件名创建路径
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                FilePath = Path.Combine(filePath, table.Name);//以表名称为上级文件名创建路径
+            }
         }
 
         public CodeBuilderAbs(IEnumerable<TableDto> tableDto, string filePath)

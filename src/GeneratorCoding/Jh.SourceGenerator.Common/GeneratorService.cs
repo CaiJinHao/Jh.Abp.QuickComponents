@@ -178,6 +178,7 @@ namespace Jh.SourceGenerator.Common
         { 
             var tables = GetTablesDto(GetTableClass());
             CreateFile(new PermissionsCodeBuilder(tables, generatorOptions.CreateContractsPermissionsPath));
+            CreateFile(new PermissionsDefinitionProviderCodeBuilder(tables, generatorOptions.CreateContractsPermissionsPath));
             foreach (var tableDto in tables)
             {
                 {//contracts
@@ -210,13 +211,16 @@ namespace Jh.SourceGenerator.Common
 
         public virtual bool CreateFile(CodeBuilderAbs codeBuilder)
         {
-            new DirectoryInfo(codeBuilder.FilePath).CreateDirectoryInfo();
-            var filePath = Path.Combine(codeBuilder.FilePath, codeBuilder.FileName + codeBuilder.Suffix);
-            if (File.Exists(filePath))
+            if (!string.IsNullOrEmpty(codeBuilder.FilePath))
             {
-                File.Delete(filePath);
+                new DirectoryInfo(codeBuilder.FilePath).CreateDirectoryInfo();
+                var filePath = Path.Combine(codeBuilder.FilePath, codeBuilder.FileName + codeBuilder.Suffix);
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+                File.WriteAllText(filePath, codeBuilder.ToString());
             }
-            File.WriteAllText(filePath, codeBuilder.ToString());
             return true;
         }
     }

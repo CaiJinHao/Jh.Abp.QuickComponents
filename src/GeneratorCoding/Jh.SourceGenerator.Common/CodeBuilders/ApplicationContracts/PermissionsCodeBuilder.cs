@@ -10,7 +10,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
     {
         public PermissionsCodeBuilder(IEnumerable<TableDto> tableDto, string filePath) : base(tableDto, filePath)
         {
-            this.FileName = $"{table.Namespace}ManagementPermissions";
+            this.FileName = $"{table.Namespace}Permissions";
         }
 
         public override string ToString()
@@ -22,7 +22,7 @@ using Volo.Abp.Reflection;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
-                var groupName = $"{table.Namespace}Management";
+                var groupName = $"{table.Namespace}";
                 builder.AppendLine($"\tpublic class {groupName}Permissions");
                 builder.AppendLine("\t{");
                 {

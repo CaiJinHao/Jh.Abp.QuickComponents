@@ -21,17 +21,17 @@ namespace Jh.Abp.QuickComponents.Tests.JhSourceGeneratorCommon
             var domain = @"\AppSettings";
             var options = new GeneratorOptions()
             {
-                DbContext = "EquipmentQuotationAppDbContext",
-                Namespace = "EquipmentQuotationApp",
-                ControllerBase = "EquipmentQuotationAppController",
-                CreateContractsPermissionsPath = @$"{basePath}trunk\src\SupplyDemandPlatform.Application.Contracts/Permissions",
-                CreateContractsPath = @$"{basePath}trunk\src\SupplyDemandPlatform.Application.Contracts{domain}",
-                CreateApplicationPath = @$"{basePath}trunk\src\SupplyDemandPlatform.Application{domain}",
-                CreateDomainPath = @$"{basePath}trunk\src\SupplyDemandPlatform.Domain{domain}",
-                CreateEfCorePath = @$"{basePath}trunk\src\SupplyDemandPlatform.EntityFrameworkCore{domain}",
-                CreateHttpApiPath = @$"{basePath}trunk\src\SupplyDemandPlatform.HttpApi\v1{domain}",
+                DbContext = "MenuManagementDbContext",
+                Namespace = "ComprehensiveSite",
+                ControllerBase = "MenuManagementController",
+                CreateContractsPermissionsPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.Contracts/Permissions",
+                CreateContractsPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.Contracts{domain}",
+                CreateApplicationPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.Application{domain}",
+                CreateDomainPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.Domain{domain}",
+                CreateEfCorePath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.EntityFrameworkCore{domain}",
+                CreateHttpApiPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.HttpApi\v1{domain}",
                 //不需要domain做文件夹
-                CreateHtmlPath = @$"{basePath}trunk\host\SupplyDemandPlatform.Web.Unified\wwwroot\main\view",
+                //CreateHtmlPath = @$"{basePath}trunk\host\Jh.Abp.MenuManagement.Web.Unified\wwwroot\main\view",
                 CreateHtmlTemplatePath = @"G:\github\mygithub\Jh.Abp.QuickComponents\src\GeneratorCoding\Jh.SourceGenerator.Common\CodeBuilders\Html\Layui"
             };
             var service = new GeneratorService(domainAssembly, options);
