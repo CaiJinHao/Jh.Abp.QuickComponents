@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -26,8 +26,8 @@
   
   <ItemGroup>
     <PackageReference Include="IdentityServer4" Version="4.1.1" />
-    <PackageReference Include="Volo.Abp.Core" Version="4.3.0" />
-    <PackageReference Include="Volo.Abp.IdentityServer.Domain" Version="4.3.0" />
+    <PackageReference Include="Volo.Abp.Core" Version="4.3.2" />
+    <PackageReference Include="Volo.Abp.IdentityServer.Domain" Version="4.3.2" />
   </ItemGroup>
 
   <ItemGroup>
