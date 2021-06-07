@@ -27,10 +27,6 @@
   <ItemGroup>
     <PackageReference Include="DmProvider" Version="1.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Dm" Version="5.0.0" />
-    <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="4.3.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Jh.Abp.EntityFrameworkCore.DmExtensions\Jh.Abp.EntityFrameworkCore.DmExtensions.csproj" />
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="4.2.2" />
   </ItemGroup>
 </Project>

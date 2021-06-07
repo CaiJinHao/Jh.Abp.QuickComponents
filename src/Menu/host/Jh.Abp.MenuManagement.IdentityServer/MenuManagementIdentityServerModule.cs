@@ -1,3 +1,5 @@
+using Jh.Abp.EntityFrameworkCore.Dm;
+using Jh.Abp.EntityFrameworkCore.DmExtensions;
 using Jh.Abp.MenuManagement.MultiTenancy;
 using Jh.Abp.QuickComponents.Cors;
 using Jh.Abp.QuickComponents.Localization;
@@ -53,6 +55,8 @@ using IdentityUser = Volo.Abp.Identity.IdentityUser;
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
+        typeof(JhEntityFrameworkCoreDmExtensionsModule),
+        typeof(AbpEntityFrameworkCoreDmModule),
         typeof(AbpAccountWebIdentityServerModule),
         typeof(AbpAccountApplicationModule),
         typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
@@ -99,7 +103,8 @@ namespace Jh.Abp.MenuManagement
 
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlServer();
+                //options.UseSqlServer();
+                options.UseDm();
             });
 
             context.Services.AddSwaggerGen(

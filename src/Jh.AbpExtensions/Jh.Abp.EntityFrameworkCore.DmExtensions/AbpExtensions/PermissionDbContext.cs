@@ -1,36 +1,28 @@
-﻿using Jh.Abp.MenuManagement.Menus;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq.Expressions;
+using System.Reflection;
 using Volo.Abp;
 using Volo.Abp.Data;
+using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.Identity;
+using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.MultiTenancy;
+using Volo.Abp.PermissionManagement;
+using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 
-namespace Jh.Abp.MenuManagement.EntityFrameworkCore
+namespace Jh.Abp.EntityFrameworkCore.DmExtensions.AbpExtensions
 {
-    [ConnectionStringName(MenuManagementDbProperties.ConnectionStringName)]
-    public class MenuManagementDbContext : AbpDbContext<MenuManagementDbContext>, IMenuManagementDbContext
+    [Dependency(ReplaceServices = true)]
+    [ExposeServices(typeof(IPermissionManagementDbContext))]
+    [ConnectionStringName(AbpPermissionManagementDbProperties.ConnectionStringName)]
+    public class PermissionDbContext : PermissionManagementDbContext, IPermissionManagementDbContext, ITransientDependency
     {
-        /* Add DbSet for each Aggregate Root here. Example:
-         * public DbSet<Question> Questions { get; set; }
-         */
-        public DbSet<Menu> Menus { get; set; }
-
-        public DbSet<MenuAndRoleMap> MenuAndRoleMaps { get; set; }
-        public MenuManagementDbContext(DbContextOptions<MenuManagementDbContext> options) 
-            : base(options)
+        public PermissionDbContext(DbContextOptions<PermissionManagementDbContext> options) : base(options)
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-
-            builder.ConfigureMenuManagement();
-        }
-
-        //达梦兼容
         protected override Expression<Func<TEntity, bool>> CreateFilterExpression<TEntity>()
         {
             Expression<Func<TEntity, bool>> expression = null;

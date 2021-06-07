@@ -233,12 +233,12 @@ namespace Jh.Abp.Extensions
                         {
                             case 1:
                                 {
-                                    query = query.Where(e => ((ISoftDelete)e).IsDeleted == true);
+                                    query = query.Where(e => Convert.ToInt16(((ISoftDelete)e).IsDeleted) == 1);
                                 }
                                 break;
                             case 2:
                                 {
-                                    query = query.Where(e => ((ISoftDelete)e).IsDeleted == false);
+                                    query = query.Where(e => Convert.ToInt16(((ISoftDelete)e).IsDeleted) == 0);
                                 }
                                 break;
                             default:

@@ -42,10 +42,14 @@ using Volo.Abp.Swashbuckle;
 using Volo.Abp.Threading;
 using Volo.Abp.VirtualFileSystem;
 using Jh.Abp.Extensions;
+using Jh.Abp.EntityFrameworkCore.DmExtensions;
+using Jh.Abp.EntityFrameworkCore.Dm;
 
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
+            typeof(JhEntityFrameworkCoreDmExtensionsModule),
+        typeof(AbpEntityFrameworkCoreDmModule),
         typeof(JhAbpQuickComponentsHttpApiModule),
         typeof(AbpQuickComponentsModule),
         typeof(MenuManagementHttpApiModule),
@@ -70,7 +74,8 @@ namespace Jh.Abp.MenuManagement
 
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlServer();
+                //options.UseSqlServer();
+                options.UseDm();
             });
 
             Configure<AbpMultiTenancyOptions>(options =>

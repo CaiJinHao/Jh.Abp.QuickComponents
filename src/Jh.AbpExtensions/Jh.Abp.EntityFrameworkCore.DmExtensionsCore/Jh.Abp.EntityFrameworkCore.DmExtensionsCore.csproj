@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <LangVersion>8.0</LangVersion>
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -16,8 +16,8 @@
     <Version>0.1</Version>
     <Description>Abp Dm Extension</Description>
   </PropertyGroup>
-  
-    <ItemGroup>
+
+  <ItemGroup>
     <None Include="..\..\..\document\images\nugeticon.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
@@ -27,6 +27,7 @@
   <ItemGroup>
     <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="4.2.2" />
     <PackageReference Include="Volo.Abp.Identity.EntityFrameworkCore" Version="4.2.2" />
+    <PackageReference Include="Volo.Abp.IdentityServer.EntityFrameworkCore" Version="4.2.2" />
     <PackageReference Include="Volo.Abp.PermissionManagement.EntityFrameworkCore" Version="4.2.2" />
   </ItemGroup>
 </Project>
