@@ -1,41 +1,27 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>8.0</LangVersion>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>CaiJinHao</Authors>
+    <Company>CaiJinHao</Company>
+    <Copyright>CaiJinHao</Copyright>
+    <PackageProjectUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</RepositoryUrl>
+    <PackageIcon>nugeticon.png</PackageIcon>
+    <PackageTags>Abp</PackageTags>
+    <PackageReleaseNotes>Abp Extension</PackageReleaseNotes>
+    <Version>2.0.1.1</Version>
+    <Description>Abp Extension</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Localization\JhAbpExtensions\ar.json" />
-    <None Remove="Localization\JhAbpExtensions\cs.json" />
-    <None Remove="Localization\JhAbpExtensions\de-DE.json" />
-    <None Remove="Localization\JhAbpExtensions\en.json" />
-    <None Remove="Localization\JhAbpExtensions\es.json" />
-    <None Remove="Localization\JhAbpExtensions\fr.json" />
-    <None Remove="Localization\JhAbpExtensions\hu.json" />
-    <None Remove="Localization\JhAbpExtensions\pl-PL.json" />
-    <None Remove="Localization\JhAbpExtensions\pt-BR.json" />
-    <None Remove="Localization\JhAbpExtensions\sl.json" />
-    <None Remove="Localization\JhAbpExtensions\tr.json" />
-    <None Remove="Localization\JhAbpExtensions\vi.json" />
-    <None Remove="Localization\JhAbpExtensions\zh-Hans.json" />
-    <None Remove="Localization\JhAbpExtensions\zh-Hant.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Localization\JhAbpExtensions\ar.json" />
-    <EmbeddedResource Include="Localization\JhAbpExtensions\cs.json" />
-    <EmbeddedResource Include="Localization\JhAbpExtensions\de-DE.json" />
-    <EmbeddedResource Include="Localization\JhAbpExtensions\en.json" />
-    <EmbeddedResource Include="Localization\JhAbpExtensions\es.json" />
-    <EmbeddedResource Include="Localization\JhAbpExtensions\fr.json" />
-    <EmbeddedResource Include="Localization\JhAbpExtensions\hu.json" />
-    <EmbeddedResource Include="Localization\JhAbpExtensions\pl-PL.json" />
-    <EmbeddedResource Include="Localization\JhAbpExtensions\pt-BR.json" />
-    <EmbeddedResource Include="Localization\JhAbpExtensions\sl.json" />
-    <EmbeddedResource Include="Localization\JhAbpExtensions\tr.json" />
-    <EmbeddedResource Include="Localization\JhAbpExtensions\vi.json" />
-    <EmbeddedResource Include="Localization\JhAbpExtensions\zh-Hans.json" />
-    <EmbeddedResource Include="Localization\JhAbpExtensions\zh-Hant.json" />
+    <None Include="..\..\..\document\images\nugeticon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -43,4 +29,8 @@
     <PackageReference Include="Volo.Abp.Localization.Abstractions" Version="4.3.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\JhAbpExtensions\*.json" />
+    <Content Remove="Localization\JhAbpExtensions\*.json" />
+  </ItemGroup>
 </Project>

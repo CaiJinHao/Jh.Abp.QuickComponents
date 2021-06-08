@@ -1,7 +1,6 @@
 using Jh.Abp.MenuManagement.MultiTenancy;
 using Jh.Abp.QuickComponents;
 using Jh.Abp.QuickComponents.Cors;
-using Jh.Abp.QuickComponents.HttpApi;
 using Jh.Abp.QuickComponents.JwtAuthentication;
 using Jh.Abp.QuickComponents.Localization;
 using Jh.Abp.QuickComponents.MiniProfiler;
@@ -48,9 +47,8 @@ using Jh.Abp.EntityFrameworkCore.Dm;
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
-            typeof(JhEntityFrameworkCoreDmExtensionsModule),
+        typeof(JhEntityFrameworkCoreDmExtensionsModule),
         typeof(AbpEntityFrameworkCoreDmModule),
-        typeof(JhAbpQuickComponentsHttpApiModule),
         typeof(AbpQuickComponentsModule),
         typeof(MenuManagementHttpApiModule),
         typeof(AbpAspNetCoreMvcUiMultiTenancyModule),

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -13,8 +13,8 @@
     <PackageIcon>nugeticon.png</PackageIcon>
     <PackageTags>Abp</PackageTags>
     <PackageReleaseNotes>Abp Extension</PackageReleaseNotes>
-    <Version>2.0.1.0</Version>
-    <Description>AccessToken</Description>
+    <Version>2.0.1.1</Version>
+    <Description>Abp Extension</Description>
   </PropertyGroup>
 
   <ItemGroup>
