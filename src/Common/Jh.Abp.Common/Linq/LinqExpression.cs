@@ -123,19 +123,9 @@ namespace Jh.Abp.Common.Linq
                 ConstantExpression constantExpression = Expression.Constant(propertyVal, propertyType);
                 //4.创建方法调用表达式
                 var currentFilter = Expression.Call(proerty, method, new Expression[] { constantExpression });
-                if (resultFilters == null)
-                {
-                    resultFilters = currentFilter;
-                }
-                else
-                {
-                    resultFilters = Expression.And(resultFilters, currentFilter);
-                }
-            }
-            if (resultFilters != null)
-            {
                 //5.创建Lambda表达式
-                expression = Expression.Lambda<Func<TSource, bool>>(resultFilters, new ParameterExpression[] { parameterExpression });
+                var right = Expression.Lambda<Func<TSource, bool>>(resultFilters, new ParameterExpression[] { parameterExpression });
+                expression = CombineExpressions(expression, right);
             }
             return expression;
         }
