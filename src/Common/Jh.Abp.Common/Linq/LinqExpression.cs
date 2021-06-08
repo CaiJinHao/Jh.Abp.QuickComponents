@@ -41,6 +41,7 @@ namespace Jh.Abp.Common.Linq
         /// <returns></returns>
         public static Expression<Func<TSource, bool>> ConvetToExpression<TWhere, TSource>(TWhere inputDto,string methodStringType= "Equals")
         {
+            Expression<Func<TSource, bool>> expression = e => true;
             if (inputDto == null)
             {
                 throw new ArgumentNullException(nameof(inputDto));
@@ -129,13 +130,12 @@ namespace Jh.Abp.Common.Linq
                     resultFilters = Expression.And(resultFilters, currentFilter);
                 }
             }
-            if (resultFilters == null)
+            if (resultFilters != null)
             {
-                resultFilters = Expression.Equal(Expression.Constant(true), Expression.Constant(true));
+                //5.创建Lambda表达式
+                expression = Expression.Lambda<Func<TSource, bool>>(resultFilters, new ParameterExpression[] { parameterExpression });
             }
-            //5.创建Lambda表达式
-            var lambda = Expression.Lambda<Func<TSource, bool>>(resultFilters, new ParameterExpression[] { parameterExpression });
-            return lambda;
+            return expression;
         }
 
         /// <summary>

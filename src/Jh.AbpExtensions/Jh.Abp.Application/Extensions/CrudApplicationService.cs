@@ -120,7 +120,9 @@ namespace Jh.Abp.Extensions
 
             var query = CreateFilteredQuery(await crudRepository.GetQueryableAsync(includeDetails), input, methodStringType);
 
-            var totalCount = await query.LongCountAsync(cancellationToken);
+            //var totalCount = await query.LongCountAsync(cancellationToken);
+            //TODO:兼容dm
+            var totalCount = await query.CountAsync(cancellationToken);
 
             query = ApplySorting(query, input);
             query = ApplyPaging(query, input);
@@ -234,11 +236,13 @@ namespace Jh.Abp.Extensions
                             case 1:
                                 {
                                     query = query.Where(e => Convert.ToInt16(((ISoftDelete)e).IsDeleted) == 1);
+                                    //query = query.Where(e => ((ISoftDelete)e).IsDeleted == true);
                                 }
                                 break;
                             case 2:
                                 {
                                     query = query.Where(e => Convert.ToInt16(((ISoftDelete)e).IsDeleted) == 0);
+                                    //query = query.Where(e => ((ISoftDelete)e).IsDeleted == false);
                                 }
                                 break;
                             default:
