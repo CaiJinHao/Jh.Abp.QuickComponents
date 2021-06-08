@@ -93,6 +93,7 @@ namespace Jh.Abp.Common.Linq
                         {
                             //只要不是null就添加查询条件
                             method = propertyType.GetMethod("Equals", new Type[] { propertyType });
+                            proerty = Expression.Convert(proerty, propertyType);
                         }
                         break;
                     case Enums.ObjectType.Guid:

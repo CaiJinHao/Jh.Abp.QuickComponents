@@ -16,5 +16,7 @@ namespace Jh.Abp.QuickComponents.Tests
 		public DateTime? DateTime { get; set; }
 
 		public bool? isDelete { get; set; }
+
+		public int? Status { get; set; }
 	}
 }
