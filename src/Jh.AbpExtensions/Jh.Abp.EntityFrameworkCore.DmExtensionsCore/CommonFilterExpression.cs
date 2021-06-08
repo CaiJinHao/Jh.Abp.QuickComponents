@@ -18,17 +18,19 @@ namespace Jh.Abp.EntityFrameworkCore.DmExtensions
             Guid? CurrentTenantId,
             Func<Expression<Func<TEntity, bool>>, Expression<Func<TEntity, bool>>, Expression<Func<TEntity, bool>>> CombineExpressions)
         {
+            //WHERE (@__ef_filter__p_0 = CAST(1 AS bit)) OR ([s].[IsDeleted] <> CAST(1 AS bit))
             Expression<Func<TEntity, bool>> expression = null;
 
-            //WHERE (@__ef_filter__p_0 = CAST(1 AS bit)) OR ([s].[IsDeleted] <> CAST(1 AS bit))
-            if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)) && IsSoftDeleteFilterEnabled)
+            if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
             {
-                expression = e => Convert.ToInt32(EF.Property<bool>(e, "IsDeleted")) == 0;
+                //达梦兼容
+                expression = e => Convert.ToInt32(EF.Property<bool>(e, "IsDeleted")) == Convert.ToInt32(!IsSoftDeleteFilterEnabled)//根据条件永远取已删除的
+                || Convert.ToInt32(EF.Property<bool>(e, "IsDeleted")) == 0;//永远取未删除的
             }
 
-            if (typeof(IMultiTenant).IsAssignableFrom(typeof(TEntity)) && IsMultiTenantFilterEnabled)
+            if (typeof(IMultiTenant).IsAssignableFrom(typeof(TEntity)))
             {
-                Expression<Func<TEntity, bool>> multiTenantFilter = e => EF.Property<Guid>(e, "TenantId") == CurrentTenantId;
+                Expression<Func<TEntity, bool>> multiTenantFilter = e => !IsMultiTenantFilterEnabled || EF.Property<Guid>(e, "TenantId") == CurrentTenantId;
                 expression = expression == null ? multiTenantFilter : CombineExpressions(expression, multiTenantFilter);
             }
 
