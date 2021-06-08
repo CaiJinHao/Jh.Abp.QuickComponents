@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -138,6 +139,41 @@ namespace Jh.Abp.Common.Linq
             return expression;
         }
 
+        public static Expression<Func<T, bool>> CombineExpressions<T>(Expression<Func<T, bool>> expression1, Expression<Func<T, bool>> expression2)
+        {
+            var parameter = Expression.Parameter(typeof(T));
+
+            var leftVisitor = new ReplaceExpressionVisitor(expression1.Parameters[0], parameter);
+            var left = leftVisitor.Visit(expression1.Body);
+
+            var rightVisitor = new ReplaceExpressionVisitor(expression2.Parameters[0], parameter);
+            var right = rightVisitor.Visit(expression2.Body);
+
+            return Expression.Lambda<Func<T, bool>>(Expression.AndAlso(left, right), parameter);
+        }
+
+        class ReplaceExpressionVisitor : ExpressionVisitor
+        {
+            private readonly Expression _oldValue;
+            private readonly Expression _newValue;
+
+            public ReplaceExpressionVisitor(Expression oldValue, Expression newValue)
+            {
+                _oldValue = oldValue;
+                _newValue = newValue;
+            }
+
+            public override Expression Visit(Expression node)
+            {
+                if (node == _oldValue)
+                {
+                    return _newValue;
+                }
+
+                return base.Visit(node);
+            }
+        }
+
         /// <summary>
         /// 将IQueryable转为Expression<Func<TSource, bool>>
         /// </summary>
@@ -166,39 +202,5 @@ namespace Jh.Abp.Common.Linq
             var _methodExpression = methodCallExpression.Arguments.FirstOrDefault(a => a.NodeType == ExpressionType.Call);
             return _methodExpression != null && _methodExpression is MethodCallExpression _mexp ? GetMethodCallExpression<TSource>(_mexp) : f => true;
         }
-
-
-        public static Expression<Func<T, bool>> True<T>() { return f => true; }
-        public static Expression<Func<T, bool>> False<T>() { return f => false; }
-        public static Expression<T> Compose<T>(this Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)
-        {
-            // build parameter map (from parameters of second to parameters of first)  
-            var map = first.Parameters.Select((f, i) => new { f, s = second.Parameters[i] }).ToDictionary(p => p.s, p => p.f);
-
-            // replace parameters in the second lambda expression with parameters from the first  
-            var secondBody = ParameterRebinder.ReplaceParameters(map, second.Body);
-
-            // apply composition of lambda expression bodies to parameters from the first expression   
-            return Expression.Lambda<T>(merge(first.Body, secondBody), first.Parameters);
-        }
-
-        public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
-        {
-            return first.Compose(second, Expression.And);
-        }
-
-        public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
-        {
-            return first.Compose(second, Expression.Or);
-        }
-
-        /*
-         use:
-        Expression<Func<WMS_User, bool>> Conditions = PredicateExtensions.True<WMS_User>();
-if (ids != null)
-   Conditions = Conditions.And(u => u.UserOrgIds.Any(o => ids.Contains(o.OrgId)));
-if (Cds != null && Cds.Length > 0)
-   Conditions = Conditions.And(u => u.UserName.Contains(Cds)|| u.NickName.Contains(Cds) );
-         */
     }
 }
