@@ -47,7 +47,7 @@ namespace Jh.Abp.Common.Linq
             {
                 throw new ArgumentNullException(nameof(inputDto));
             }
-            Expression? resultFilters = null;
+
             //1.创建参数表达式
             ParameterExpression parameterExpression = Expression.Parameter(typeof(TSource), "a");
             var sourcePropertyInfosNames = typeof(TSource).GetProperties().Select(a => a.Name);
@@ -122,10 +122,10 @@ namespace Jh.Abp.Common.Linq
                 //3.创建常数表达式
                 ConstantExpression constantExpression = Expression.Constant(propertyVal, propertyType);
                 //4.创建方法调用表达式
-                var currentFilter = Expression.Call(proerty, method, new Expression[] { constantExpression });
+                var filterMethod = Expression.Call(proerty, method, new Expression[] { constantExpression });
                 //5.创建Lambda表达式
-                var right = Expression.Lambda<Func<TSource, bool>>(resultFilters, new ParameterExpression[] { parameterExpression });
-                expression = CombineExpressions(expression, right);
+                var right = Expression.Lambda<Func<TSource, bool>>(filterMethod, new ParameterExpression[] { parameterExpression });
+                expression = expression == null ? right : CombineExpressions(expression, right);
             }
             return expression;
         }

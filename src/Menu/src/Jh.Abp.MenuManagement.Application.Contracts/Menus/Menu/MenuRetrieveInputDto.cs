@@ -19,6 +19,8 @@ namespace Jh.Abp.MenuManagement.Menus
         /// </summary>
         public string Name { get; set; }
 
+        public int? Sort { get; set; }
+
         /// <summary>
         /// 上级菜单编号，顶级可为null
         /// </summary>
