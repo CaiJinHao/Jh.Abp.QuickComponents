@@ -12,7 +12,8 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
             var configuration = BuildConfiguration();
 
             var builder = new DbContextOptionsBuilder<UnifiedDbContext>()
-                .UseSqlServer(configuration.GetConnectionString("Default"));
+                //.UseSqlServer(configuration.GetConnectionString("Default"));
+                .UseDm(configuration.GetConnectionString("Default"));
 
             return new UnifiedDbContext(builder.Options);
         }

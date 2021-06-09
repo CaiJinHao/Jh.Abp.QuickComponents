@@ -53,10 +53,13 @@ using Jh.Abp.QuickComponents.Cors;
 using Jh.Abp.QuickComponents.Localization;
 using Jh.Abp.QuickComponents.JwtAuthentication;
 using Microsoft.Extensions.Configuration;
+using Jh.Abp.EntityFrameworkCore.DmExtensions;
+using Jh.Abp.EntityFrameworkCore.Dm;
 
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
+        typeof(AbpEntityFrameworkCoreDmModule),
         typeof(AbpQuickComponentsModule),
         typeof(MenuManagementWebModule),
         typeof(MenuManagementApplicationModule),
@@ -81,6 +84,7 @@ namespace Jh.Abp.MenuManagement
         typeof(AbpTenantManagementEntityFrameworkCoreModule),
         typeof(AbpAspNetCoreMvcUiBasicThemeModule),
         typeof(AbpAspNetCoreSerilogModule),
+        typeof(JhEntityFrameworkCoreDmExtensionsModule),
         typeof(AbpSwashbuckleModule)
         )]
     public class MenuManagementWebUnifiedModule : AbpModule
@@ -92,7 +96,8 @@ namespace Jh.Abp.MenuManagement
 
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlServer();
+                //options.UseSqlServer();
+                options.UseDm();
             });
 
             if (hostingEnvironment.IsDevelopment())
@@ -178,9 +183,10 @@ namespace Jh.Abp.MenuManagement
             });*/
 
             //禁用http验证cookies xsf
-            /*  Configure<AbpAntiForgeryOptions>(options => {
-                  options.AutoValidate = false;
-              });*/
+            Configure<AbpAntiForgeryOptions>(options =>
+            {
+                options.AutoValidate = false;
+            });
 
             /* context.Services.ConfigureApplicationCookie(options =>
              {
@@ -203,6 +209,7 @@ namespace Jh.Abp.MenuManagement
             context.Services.AddAbpIdentity().AddClaimsPrincipalFactory<JhUserClaimsPrincipalFactory>();
             context.Services.AddLocalizationComponent();
             context.Services.AddAuthorizeFilter(configuration);
+            context.Services.AddSameSiteCookiePolicy();
             //是否将错误发送到客户端
 #if DEBUG
             context.Services.Configure<AbpExceptionHandlingOptions>(options =>
@@ -225,11 +232,12 @@ namespace Jh.Abp.MenuManagement
             {
                 //app.UseExceptionHandler("/Error");
                 app.UseErrorPage();
-                app.UseHsts();
+                //app.UseHsts();
             }
 
+            app.UseCookiePolicy();
             app.UseSession();
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
@@ -259,15 +267,23 @@ namespace Jh.Abp.MenuManagement
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            //using (var scope = context.ServiceProvider.CreateScope())
-            //{
-            //    AsyncHelper.RunSync(async () =>
-            //    {
-            //        await scope.ServiceProvider
-            //            .GetRequiredService<IDataSeeder>()
-            //            .SeedAsync();
-            //    });
-            //}
+            SeedData(context);
+        }
+
+        private void SeedData(ApplicationInitializationContext context)
+        {
+            AsyncHelper.RunSync(async () =>
+            {
+                using (var scope = context.ServiceProvider.CreateScope())
+                {
+                    var data = scope.ServiceProvider
+                        .GetRequiredService<IDataSeeder>();
+                    var context = new DataSeedContext();
+                    context["AdminEmail"] = "531003539@qq.com";
+                    context["AdminPassword"] = "KimHo@123";
+                    await data.SeedAsync(context);
+                }
+            });
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Jh.Abp.MenuManagement
                     identity.AddClaim(new Claim(JhJwtClaimTypes.RoleId, item.RoleId.ToString()));
                 }
             }
-            //identity.AddIfNotContains(new Claim(IdentityRoleExtension.PlatformType, platformType.ToString()));
+            //identity.AddClaim(new Claim(IdentityRoleExtension.PlatformType, platformType.ToString()));
             return principal;
         }
     }

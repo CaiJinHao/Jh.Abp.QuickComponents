@@ -38,6 +38,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Jh.AbpExtensions\Jh.Abp.EntityFrameworkCore.DmExtensionsCore\Jh.Abp.EntityFrameworkCore.DmExtensionsCore.csproj" />
+    <ProjectReference Include="..\..\..\Jh.AbpExtensions\Jh.Abp.EntityFrameworkCore.Dm\Jh.Abp.EntityFrameworkCore.Dm.csproj" />
     <ProjectReference Include="..\..\..\QuickComponents\Jh.Abp.QuickComponents\Jh.Abp.QuickComponents.csproj" />
     <ProjectReference Include="..\..\src\Jh.Abp.MenuManagement.Application\Jh.Abp.MenuManagement.Application.csproj" />
     <ProjectReference Include="..\..\src\Jh.Abp.MenuManagement.EntityFrameworkCore\Jh.Abp.MenuManagement.EntityFrameworkCore.csproj" />
