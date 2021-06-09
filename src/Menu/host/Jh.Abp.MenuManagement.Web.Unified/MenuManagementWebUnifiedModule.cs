@@ -281,6 +281,7 @@ namespace Jh.Abp.MenuManagement
                     var context = new DataSeedContext();
                     context["AdminEmail"] = "531003539@qq.com";
                     context["AdminPassword"] = "KimHo@123";
+                    context["RoleId"] = "39fd006b-32f2-2f81-7de7-3e01ff927df2";//IdentityServerHost创建的角色ID
                     await data.SeedAsync(context);
                 }
             });
