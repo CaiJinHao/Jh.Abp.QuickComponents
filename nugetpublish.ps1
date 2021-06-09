@@ -1,4 +1,4 @@
-$publishApiKey="oy2cpp6nhqfc7gisjhxqtmlpx7lcylsu3f2nwicky6ripe"
+$publishApiKey="oy2cpp6nhqfc7gisjhxqtmlpx7lcylsu3f2nwicky6rcai"
 $publishSource="https://api.nuget.org/v3/index.json"
 
 dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.Application\bin\Release\Jh.Abp.Application.2.0.1.1.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
