@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>2.0.1.1</Version>
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
-    <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>CaiJinHao</Authors>
     <Company>CaiJinHao</Company>
@@ -11,13 +12,19 @@
     <PackageProjectUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</PackageProjectUrl>
     <RepositoryUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</RepositoryUrl>
     <PackageIcon>nugeticon.png</PackageIcon>
-    <PackageTags>Common</PackageTags>
-    <PackageReleaseNotes>Common libs</PackageReleaseNotes>
-    <Version>2.0.1.1</Version>
-    <Description>Common libs</Description>
+    <PackageTags>Abp .Net5 .NetCore CaiJinHao</PackageTags>
+    <PackageReleaseNotes>Abp Extension</PackageReleaseNotes>
+    <Description>Abp Extension</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
+
   <ItemGroup>
     <None Include="..\..\..\document\images\nugeticon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\..\LICENSE.md">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
