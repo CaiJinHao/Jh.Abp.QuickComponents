@@ -47,8 +47,7 @@ using Jh.Abp.EntityFrameworkCore.Dm;
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
-        typeof(JhEntityFrameworkCoreDmExtensionsModule),
-        typeof(AbpEntityFrameworkCoreDmModule),
+        //typeof(AbpEntityFrameworkCoreDmModule),
         typeof(AbpQuickComponentsModule),
         typeof(MenuManagementHttpApiModule),
         typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
@@ -59,6 +58,7 @@ namespace Jh.Abp.MenuManagement
         typeof(AbpPermissionManagementEntityFrameworkCoreModule),
         typeof(AbpSettingManagementEntityFrameworkCoreModule),
         typeof(AbpAspNetCoreSerilogModule),
+        //typeof(JhEntityFrameworkCoreDmExtensionsModule),
         typeof(AbpSwashbuckleModule)
         )]
     public class MenuManagementHttpApiHostModule : AbpModule
@@ -252,7 +252,7 @@ namespace Jh.Abp.MenuManagement
                     var data = scope.ServiceProvider
                         .GetRequiredService<IDataSeeder>();
                     var context = new DataSeedContext();
-                    context["RoleId"] = "39fd006b-32f2-2f81-7de7-3e01ff927df2";//IdentityServerHost创建的角色ID
+                    context["RoleId"] = "3386F8C8-DF1E-949E-CEE1-39FD06994913";//IdentityServerHost创建的角色ID
                     await data.SeedAsync(context);
                 }
             });

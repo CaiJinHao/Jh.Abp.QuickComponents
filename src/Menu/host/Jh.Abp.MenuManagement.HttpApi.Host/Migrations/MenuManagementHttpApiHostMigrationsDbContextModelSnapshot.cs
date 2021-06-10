@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Volo.Abp.EntityFrameworkCore;
 
 namespace Jh.Abp.MenuManagement.Migrations
 {
@@ -15,90 +16,92 @@ namespace Jh.Abp.MenuManagement.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Dm:ValueGenerationStrategy", DmValueGenerationStrategy.IdentityColumn)
+                .HasAnnotation("_Abp_DatabaseProvider", EfCoreDatabaseProvider.SqlServer)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.6");
+                .HasAnnotation("ProductVersion", "5.0.6")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Jh.Abp.MenuManagement.Menus.Menu", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("VARCHAR(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("NVARCHAR2(64)")
+                        .HasColumnType("nvarchar(64)")
                         .HasComment("菜单编号");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasMaxLength(40)
-                        .HasColumnType("NVARCHAR2(40)")
+                        .HasColumnType("nvarchar(40)")
                         .HasColumnName("ConcurrencyStamp");
 
                     b.Property<DateTime>("CreationTime")
-                        .HasColumnType("TIMESTAMP")
+                        .HasColumnType("datetime2")
                         .HasColumnName("CreationTime");
 
                     b.Property<Guid?>("CreatorId")
-                        .HasColumnType("VARCHAR(36)")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatorId");
 
                     b.Property<Guid?>("DeleterId")
-                        .HasColumnType("VARCHAR(36)")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("DeleterId");
 
                     b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("TIMESTAMP")
+                        .HasColumnType("datetime2")
                         .HasColumnName("DeletionTime");
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
-                        .HasColumnType("NVARCHAR2(500)")
+                        .HasColumnType("nvarchar(500)")
                         .HasComment("菜单描述");
 
                     b.Property<string>("ExtraProperties")
-                        .HasColumnType("NVARCHAR2(8188)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
 
                     b.Property<string>("Icon")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("NVARCHAR2(200)")
+                        .HasColumnType("nvarchar(200)")
                         .HasComment("菜单图标");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("BIT")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
                         .HasDefaultValue(false)
                         .HasColumnName("IsDeleted");
 
                     b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("TIMESTAMP")
+                        .HasColumnType("datetime2")
                         .HasColumnName("LastModificationTime");
 
                     b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("VARCHAR(36)")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("LastModifierId");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("NVARCHAR2(200)")
+                        .HasColumnType("nvarchar(200)")
                         .HasComment("菜单名称");
 
                     b.Property<string>("ParentCode")
                         .HasMaxLength(64)
-                        .HasColumnType("NVARCHAR2(64)")
+                        .HasColumnType("nvarchar(64)")
                         .HasComment("上级菜单编号");
 
                     b.Property<int>("Sort")
-                        .HasColumnType("INT")
+                        .HasColumnType("int")
                         .HasComment("同一级别内排序");
 
                     b.Property<string>("Url")
                         .HasMaxLength(500)
-                        .HasColumnType("NVARCHAR2(500)")
+                        .HasColumnType("nvarchar(500)")
                         .HasComment("导航路径");
 
                     b.HasKey("Id");
@@ -113,21 +116,21 @@ namespace Jh.Abp.MenuManagement.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("VARCHAR(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreationTime")
-                        .HasColumnType("TIMESTAMP")
+                        .HasColumnType("datetime2")
                         .HasColumnName("CreationTime");
 
                     b.Property<Guid?>("CreatorId")
-                        .HasColumnType("VARCHAR(36)")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatorId");
 
                     b.Property<Guid>("MenuId")
-                        .HasColumnType("VARCHAR(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("RoleId")
-                        .HasColumnType("VARCHAR(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 

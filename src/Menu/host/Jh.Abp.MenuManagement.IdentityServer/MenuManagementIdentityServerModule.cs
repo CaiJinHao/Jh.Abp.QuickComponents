@@ -55,8 +55,6 @@ using IdentityUser = Volo.Abp.Identity.IdentityUser;
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
-        typeof(JhEntityFrameworkCoreDmExtensionsModule),
-        typeof(AbpEntityFrameworkCoreDmModule),
         typeof(AbpAccountWebIdentityServerModule),
         typeof(AbpAccountApplicationModule),
         typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
@@ -66,6 +64,7 @@ namespace Jh.Abp.MenuManagement
         typeof(AbpAutofacModule),
         typeof(AbpCachingStackExchangeRedisModule),
         typeof(AbpEntityFrameworkCoreSqlServerModule),
+        //typeof(AbpEntityFrameworkCoreDmModule),
         typeof(AbpIdentityEntityFrameworkCoreModule),
         typeof(AbpIdentityApplicationModule),
         typeof(AbpIdentityHttpApiModule),
@@ -84,6 +83,7 @@ namespace Jh.Abp.MenuManagement
         typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
         typeof(MenuManagementApplicationContractsModule),
         typeof(AbpAspNetCoreSerilogModule),
+        //typeof(JhEntityFrameworkCoreDmExtensionsModule),
         typeof(AbpSwashbuckleModule)
         )]
     public class MenuManagementIdentityServerModule : AbpModule
@@ -103,8 +103,8 @@ namespace Jh.Abp.MenuManagement
 
             Configure<AbpDbContextOptions>(options =>
             {
-                //options.UseSqlServer();
-                options.UseDm();
+                options.UseSqlServer();
+                //options.UseDm();
             });
 
             context.Services.AddSwaggerGen(

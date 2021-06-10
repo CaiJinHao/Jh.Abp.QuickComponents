@@ -12,8 +12,8 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
             var configuration = BuildConfiguration();
 
             var builder = new DbContextOptionsBuilder<IdentityServerHostMigrationsDbContext>()
-                //.UseSqlServer(configuration.GetConnectionString("Default"));
-                .UseDm(configuration.GetConnectionString("Default"));
+                .UseSqlServer(configuration.GetConnectionString("Default"));
+            //.UseDm(configuration.GetConnectionString("Default"));
 
             return new IdentityServerHostMigrationsDbContext(builder.Options);
         }

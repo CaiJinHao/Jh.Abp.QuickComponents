@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Volo.Abp.AuditLogging;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
@@ -29,6 +30,16 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
             modelBuilder.ConfigureIdentityServer();
             modelBuilder.ConfigureFeatureManagement();
             modelBuilder.ConfigureTenantManagement();
+
+            modelBuilder.Entity<AuditLog>(b => {
+                AuditLogConsts.MaxExceptionsLength = int.MaxValue;
+                b.Property(x => x.Exceptions).HasMaxLength(AuditLogConsts.MaxExceptionsLength).HasColumnType("text");
+            });
+
+            modelBuilder.Entity<AuditLogAction>(b => {
+                AuditLogActionConsts.MaxParametersLength = int.MaxValue;
+                b.Property(x => x.Parameters).HasMaxLength(AuditLogActionConsts.MaxParametersLength).HasColumnType("text");
+            });
         }
     }
 }
