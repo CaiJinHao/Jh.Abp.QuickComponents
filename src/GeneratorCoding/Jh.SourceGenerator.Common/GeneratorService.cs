@@ -202,12 +202,15 @@ namespace Jh.SourceGenerator.Common
                 var CreateProfile = CreateFile(new ProfileCodeBuilder(tableDto, generatorOptions.CreateApplicationPath));
                 var CreateController = CreateFile(new ControllerCodeBuilder(tableDto, generatorOptions.CreateHttpApiPath));
                 //获取去模板列表
-                foreach (var file in new DirectoryInfo(generatorOptions.CreateHtmlTemplatePath).GetFiles())
+                if (!string.IsNullOrEmpty(generatorOptions.CreateHtmlTemplatePath))
                 {
-                    if (file.Extension.Equals(".cshtml"))
+                    foreach (var file in new DirectoryInfo(generatorOptions.CreateHtmlTemplatePath).GetFiles())
                     {
-                        var _filePath = Path.Combine(generatorOptions.CreateHtmlTemplatePath, file.FullName);
-                        CreateFile(new HtmlTemplateCodeBuilder(_filePath, tableDto, generatorOptions.CreateHtmlPath));
+                        if (file.Extension.Equals(".cshtml"))
+                        {
+                            var _filePath = Path.Combine(generatorOptions.CreateHtmlTemplatePath, file.FullName);
+                            CreateFile(new HtmlTemplateCodeBuilder(_filePath, tableDto, generatorOptions.CreateHtmlPath));
+                        }
                     }
                 }
             }
