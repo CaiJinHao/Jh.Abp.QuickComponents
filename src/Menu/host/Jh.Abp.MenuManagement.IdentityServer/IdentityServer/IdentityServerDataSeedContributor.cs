@@ -163,7 +163,7 @@ namespace Jh.Abp.MenuManagement.IdentityServer
                     grantTypes: new[] { "implicit" },
                     secret: (configurationSection["MenuManagement_Js:ClientSecret"] ?? "kimho").Sha256(),
                     redirectUri: $"{webClientRootUrl}ids/callback.html",
-                    postLogoutRedirectUri: $"{webClientRootUrl}main/index.html",//需要和客户端配置一致才能跳转
+                    postLogoutRedirectUri: $"{webClientRootUrl}/ids/index.html",//需要和客户端配置一致才能跳转
                     frontChannelLogoutUri: $"{webClientRootUrl}Account/FrontChannelLogout",
                     corsOrigins: new[] { webClientRootUrl.RemovePostFix("/") }
                 );

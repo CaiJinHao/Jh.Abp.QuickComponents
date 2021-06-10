@@ -196,7 +196,7 @@ namespace Jh.Abp.MenuManagement
             context.Services.AddApiVersion();
             context.Services.AddLocalizationComponent();
             context.Services.AddAuthorizeFilter(configuration);
-            context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
+            //context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
 #if DEBUG
             context.Services.AddMiniProfilerComponent();
 #endif
@@ -252,7 +252,7 @@ namespace Jh.Abp.MenuManagement
                     var data = scope.ServiceProvider
                         .GetRequiredService<IDataSeeder>();
                     var context = new DataSeedContext();
-                    context["RoleId"] = "3386F8C8-DF1E-949E-CEE1-39FD06994913";//IdentityServerHost创建的角色ID
+                    context["RoleId"] = "93B854BF-8D26-A7EE-E1A5-39FD071BD9B7";//IdentityServerHost创建的角色ID
                     await data.SeedAsync(context);
                 }
             });

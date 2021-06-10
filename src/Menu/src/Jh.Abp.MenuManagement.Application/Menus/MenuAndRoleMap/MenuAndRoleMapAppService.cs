@@ -27,20 +27,17 @@ namespace Jh.Abp.MenuManagement.Menus
             MenuRepository = menuRepository;
         }
 
-        [Authorize(MenuManagementPermissions.MenuAndRoleMaps.Create)]
         public override Task<MenuAndRoleMap> CreateAsync(MenuAndRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        [Authorize(MenuManagementPermissions.MenuAndRoleMaps.Create)]
         public override Task<MenuAndRoleMap[]> CreateAsync(MenuAndRoleMapCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
         [UnitOfWork]
-        [Authorize(MenuManagementPermissions.MenuAndRoleMaps.Create)]
         public virtual async Task<MenuAndRoleMap[]> CreateV2Async(MenuAndRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             return await crudRepository.CreateAsync(GetCreateEnumerableAsync(inputDto).ToArray());
@@ -59,7 +56,6 @@ namespace Jh.Abp.MenuManagement.Menus
             }
         }
 
-        [Authorize(MenuManagementPermissions.MenuAndRoleMaps.Default)]
         public virtual async Task<IEnumerable<MenusNavDto>> GetMenusNavTreesAsync()
         {
             //查看CurrentUser.Roles 是的值是否为guid ,只能用一个角色的权限渲染菜单
@@ -83,7 +79,6 @@ namespace Jh.Abp.MenuManagement.Menus
             return user.Roles.Select(a => a.RoleId);
         }
 
-        [Authorize(MenuManagementPermissions.MenuAndRoleMaps.Default)]
         public virtual async Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(Guid roleid)
         {
             var auth_menus_id = crudRepository.Where(a => a.RoleId == roleid).Select(a => a.MenuId).ToList();

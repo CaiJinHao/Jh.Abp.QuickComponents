@@ -1,6 +1,5 @@
 ﻿using Jh.Abp.Application.Contracts.Dtos;
 using Jh.Abp.Application.Contracts.Extensions;
-using Jh.Abp.Application.Contracts.Permissions;
 using Jh.Abp.Common.Entity;
 using Jh.Abp.Common.Linq;
 using Jh.Abp.Domain.Extensions;

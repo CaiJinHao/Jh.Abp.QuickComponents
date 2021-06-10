@@ -329,9 +329,6 @@ layui.define(['layer'], function (exports) {
             var myToken = _the.validateLogin();
             var optDefault = {
                 url: '/sysusers',
-                data: {
-                    Oprator: 10
-                },
                 isApi: true,
                 isDecrypt: false,
                 type: 'Get',

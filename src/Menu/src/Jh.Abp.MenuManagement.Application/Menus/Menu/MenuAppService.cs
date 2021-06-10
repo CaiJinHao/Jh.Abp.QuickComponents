@@ -34,8 +34,6 @@ namespace Jh.Abp.MenuManagement.Menus
             menuAndRoleMapAppService = _menuAndRoleMapAppService;
         }
 
-        [UnitOfWork]
-        [Authorize(MenuManagementPermissions.Menus.Create)]
         public override async Task<Menu> CreateAsync(MenuCreateInputDto inputDto, bool autoSave = true, CancellationToken cancellationToken = default)
         {
             var entity = await base.CreateAsync(inputDto, true, cancellationToken);
@@ -57,8 +55,6 @@ namespace Jh.Abp.MenuManagement.Menus
             }
         }
 
-        [UnitOfWork]
-        [Authorize(MenuManagementPermissions.Menus.Create)]
         public override Task<Menu[]> CreateAsync(MenuCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             return Task.FromResult(EnumerableCreateAsync(inputDtos, autoSave, cancellationToken).ToArray());

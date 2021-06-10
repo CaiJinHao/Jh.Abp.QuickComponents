@@ -8,7 +8,7 @@ namespace Jh.Abp.MenuManagement.Permissions
     {
         public override void Define(IPermissionDefinitionContext context)
         {
-            var MenuManagementGroup = context.AddGroup(MenuManagementPermissions.GroupName, L("Permission: MenuManagement"));
+            var MenuManagementGroup = context.AddGroup(MenuManagementPermissions.GroupName, L("Permission:MenuManagement"));
             var MenuAndRoleMapsPermission = MenuManagementGroup.AddPermission(MenuManagementPermissions.MenuAndRoleMaps.Default, L("Permission:MenuAndRoleMapManagement"));
             MenuAndRoleMapsPermission.AddChild(MenuManagementPermissions.MenuAndRoleMaps.Create, L("Permission:Create"));
             MenuAndRoleMapsPermission.AddChild(MenuManagementPermissions.MenuAndRoleMaps.Update, L("Permission:Edit"));

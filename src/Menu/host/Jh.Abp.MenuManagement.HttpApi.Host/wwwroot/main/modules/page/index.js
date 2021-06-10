@@ -51,7 +51,7 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
 
     //获取用户信息时会自动验证是否登录了
     ajaxmod.getUserInfo(function (response) {
-        vm.$set(vm, 'userinfo', response);
+        vm.$set(vm, 'userinfo', response.profile);
     });
 
     //验证是否锁屏
@@ -88,16 +88,13 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
         },
         // 退出
         loginout: function () {
-            oidcManager.loginout();
+            oidcManager.logout();
         },
         //获取菜单
         initMenuList: function (_options) {
             var _the = this;
             ajaxmod.requestAuthorize({
                 url: '/MenuAndRoleMap/Trees',
-                data: {
-                    Oprator: 10
-                },
                 type: 'Get',
                 success: function (response) {
                     vm.$set(vm, 'navList', response.items);

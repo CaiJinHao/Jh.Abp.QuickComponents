@@ -59,7 +59,7 @@ using Jh.Abp.EntityFrameworkCore.Dm;
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
-        typeof(AbpEntityFrameworkCoreDmModule),
+        //typeof(AbpEntityFrameworkCoreDmModule),
         typeof(AbpQuickComponentsModule),
         typeof(MenuManagementWebModule),
         typeof(MenuManagementApplicationModule),
@@ -84,7 +84,7 @@ namespace Jh.Abp.MenuManagement
         typeof(AbpTenantManagementEntityFrameworkCoreModule),
         typeof(AbpAspNetCoreMvcUiBasicThemeModule),
         typeof(AbpAspNetCoreSerilogModule),
-        typeof(JhEntityFrameworkCoreDmExtensionsModule),
+        //typeof(JhEntityFrameworkCoreDmExtensionsModule),
         typeof(AbpSwashbuckleModule)
         )]
     public class MenuManagementWebUnifiedModule : AbpModule
@@ -96,8 +96,8 @@ namespace Jh.Abp.MenuManagement
 
             Configure<AbpDbContextOptions>(options =>
             {
-                //options.UseSqlServer();
-                options.UseDm();
+                options.UseSqlServer();
+                //options.UseDm();
             });
 
             if (hostingEnvironment.IsDevelopment())

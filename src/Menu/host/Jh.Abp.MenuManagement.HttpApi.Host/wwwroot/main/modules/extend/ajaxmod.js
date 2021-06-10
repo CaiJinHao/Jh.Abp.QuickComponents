@@ -84,6 +84,7 @@ layui.define(['layer'], function (exports) {
             });
         },
         ajax: function (opts) {
+            let _the=this;
             //上传文件使用 FormData ,提交后台表单不能从FormBody中读取
             let loading;
             let optDefault = {
@@ -125,7 +126,8 @@ layui.define(['layer'], function (exports) {
                 .done(function (response) {
                     console.log('done');
                 })
-                .fail(function (response) {
+                .fail(function (responseData) {
+                    var response = _the.handlerResponse(responseData);
                     optDefault.error(response);
                     console.log('fail');
                 })
@@ -147,6 +149,18 @@ layui.define(['layer'], function (exports) {
             Object.assign(optDefault, opts);
             this.ajax(optDefault);
         },
+        handlerResponse(response){
+            if (response.status > 400 && response.status < 500) {
+                response = {
+                    responseJSON: {
+                        error: {
+                            message: '对不起没有该请求权限'
+                        }
+                    }
+                };
+            }
+            return response;
+        },
         //自动携带token信息
         requestAuthorize: function (opts) {
             let _the = this;
@@ -154,8 +168,9 @@ layui.define(['layer'], function (exports) {
                 let optDefault = {
                     headers: opts_headers, //默认值 不需要赋值
                     error: function (responseData) {
-                        var response = responseData.responseJSON;
-                        var error = response.error;
+                        var response = _the.handlerResponse(responseData);
+                        console.log(response);
+                        var error = response.responseJSON.error;
                         top.layer.msg(error.message, {
                             icon: 5,
                             time: 5000

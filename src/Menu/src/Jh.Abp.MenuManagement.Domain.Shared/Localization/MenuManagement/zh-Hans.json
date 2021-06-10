@@ -3,9 +3,13 @@
   "texts": {
     "ManageYourProfile": "管理个人资料",
     "SamplePageMessage": "MenuManagement模块的示例页面",
-    "Permission:ManagePermissions": "管理权限",
+    "Permission:MenuManagement": "菜单模块管理",
+    "Permission:ManagePermissions": "更改权限",
     "Permission:MenuAndRoleMapManagement": "权限管理",
     "Permission:MenusManagement": "菜单管理",
-    "Permission:AuditLoggingsManagement": "日志管理"
+    "Permission:AuditLoggingsManagement": "日志管理",
+    "Permission:Create": "创建",
+    "Permission:Edit": "编辑",
+    "Permission:Delete": "删除"
   }
 }
