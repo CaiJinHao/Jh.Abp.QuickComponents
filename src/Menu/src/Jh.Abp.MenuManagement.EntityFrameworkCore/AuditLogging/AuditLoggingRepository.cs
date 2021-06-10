@@ -42,5 +42,42 @@ namespace Jh.Abp.MenuManagement
             }
             return entitys;
         }
+
+        public override async Task<long> GetCountAsync(
+            DateTime? startTime = null,
+            DateTime? endTime = null,
+            string httpMethod = null,
+            string url = null,
+            string userName = null,
+            string applicationName = null,
+            string correlationId = null,
+            int? maxExecutionDuration = null,
+            int? minExecutionDuration = null,
+            bool? hasException = null,
+            HttpStatusCode? httpStatusCode = null,
+            CancellationToken cancellationToken = default)
+        {
+
+            var query = await GetListQueryAsync(
+                startTime,
+                endTime,
+                httpMethod,
+                url,
+                userName,
+                applicationName,
+                correlationId,
+                maxExecutionDuration,
+                minExecutionDuration,
+                hasException,
+                httpStatusCode
+            );
+#if DAMENG
+            var totalCount = await query.CountAsync(GetCancellationToken(cancellationToken));
+#else
+            var totalCount = await query.LongCountAsync(GetCancellationToken(cancellationToken));
+#endif
+
+            return totalCount;
+        }
     }
 }
