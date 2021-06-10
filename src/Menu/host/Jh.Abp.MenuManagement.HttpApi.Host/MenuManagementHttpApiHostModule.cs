@@ -72,8 +72,8 @@ namespace Jh.Abp.MenuManagement
 
             Configure<AbpDbContextOptions>(options =>
             {
-                //options.UseSqlServer();
-                options.UseDm();
+                options.UseSqlServer();
+                //options.UseDm();
             });
 
             Configure<AbpMultiTenancyOptions>(options =>

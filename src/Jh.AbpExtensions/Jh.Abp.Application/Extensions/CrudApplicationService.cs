@@ -120,9 +120,11 @@ namespace Jh.Abp.Extensions
 
             var query = CreateFilteredQuery(await crudRepository.GetQueryableAsync(includeDetails), input, methodStringType);
 
-            //var totalCount = await query.LongCountAsync(cancellationToken);
-            //TODO:兼容dm
+#if DAMENG
             var totalCount = await query.CountAsync(cancellationToken);
+#else
+            var totalCount = await query.LongCountAsync(cancellationToken);
+#endif
 
             query = ApplySorting(query, input);
             query = ApplyPaging(query, input);
@@ -144,7 +146,11 @@ namespace Jh.Abp.Extensions
 
             var query = await CreateFilteredQueryAsync(input, methodStringType);
 
+#if DAMENG
             var totalCount = await AsyncExecuter.CountAsync(query);
+#else
+            var totalCount = await AsyncExecuter.LongCountAsync(query);
+#endif
 
             query = ApplySorting(query, input);
             query = ApplyPaging(query, input);

@@ -19,6 +19,10 @@
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;DAMENG</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="..\..\..\document\images\nugeticon.png">
       <Pack>True</Pack>
