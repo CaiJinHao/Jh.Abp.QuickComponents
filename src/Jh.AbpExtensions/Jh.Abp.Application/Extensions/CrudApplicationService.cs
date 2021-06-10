@@ -38,7 +38,6 @@ namespace Jh.Abp.Extensions
             crudRepository = repository;
         }
 
-        [Authorize(CrudPermissions.Cruds.Create)]
         public virtual async Task<TEntity[]> CreateAsync(TCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckCreatePolicyAsync().ConfigureAwait(false);
@@ -46,7 +45,6 @@ namespace Jh.Abp.Extensions
             return await crudRepository.CreateAsync(entitys, autoSave, cancellationToken).ConfigureAwait(false);
         }
 
-        [Authorize(CrudPermissions.Cruds.Create)]
         public virtual async Task<TEntity> CreateAsync(TCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckCreatePolicyAsync().ConfigureAwait(false);
@@ -54,7 +52,6 @@ namespace Jh.Abp.Extensions
             return await crudRepository.CreateAsync(entity, autoSave, cancellationToken).ConfigureAwait(false);
         }
 
-        [Authorize(CrudPermissions.Cruds.Delete)]
         public virtual async Task<TEntity[]> DeleteAsync(TDeleteInputDto deleteInputDto, string methodStringType = ObjectMethodConsts.EqualsMethod, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckDeletePolicyAsync().ConfigureAwait(false);
@@ -62,21 +59,18 @@ namespace Jh.Abp.Extensions
             return await crudRepository.DeleteEntitysAsync(query, autoSave, isHard, cancellationToken).ConfigureAwait(false);
         }
 
-        [Authorize(CrudPermissions.Cruds.Delete)]
         public virtual async Task<TEntity[]> DeleteAsync(TKey[] keys, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckDeletePolicyAsync().ConfigureAwait(false);
             return await crudRepository.DeleteListAsync(a => keys.Contains(a.Id), autoSave, isHard, cancellationToken).ConfigureAwait(false);
         }
 
-        [Authorize(CrudPermissions.Cruds.Delete)]
         public virtual async Task<TEntity> DeleteAsync(TKey id, bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckDeletePolicyAsync().ConfigureAwait(false);
             return (await crudRepository.DeleteListAsync(a => a.Id.Equals(id), autoSave, isHard, cancellationToken).ConfigureAwait(false)).FirstOrDefault();
         }
 
-        [Authorize(CrudPermissions.Cruds.Default)]
         public virtual async Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.ContainsMethod, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckGetListPolicyAsync().ConfigureAwait(false);
@@ -89,7 +83,6 @@ namespace Jh.Abp.Extensions
             );
         }
 
-        [Authorize(CrudPermissions.Cruds.Default)]
         public virtual async Task<TEntityDto> GetAsync(TKey id, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckGetPolicyAsync().ConfigureAwait(false);
@@ -99,7 +92,6 @@ namespace Jh.Abp.Extensions
             return await MapToGetOutputDtoAsync(entity);
         }
 
-        [Authorize(CrudPermissions.Cruds.Default)]
         [Obsolete("请使用 GetEntitysAsync includeDetails")]
         public virtual async Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.ContainsMethod, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -113,7 +105,6 @@ namespace Jh.Abp.Extensions
             );
         }
 
-        [Authorize(CrudPermissions.Cruds.Default)]
         public virtual async Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, string methodStringType = ObjectMethodConsts.ContainsMethod, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckGetListPolicyAsync().ConfigureAwait(false);
@@ -138,7 +129,6 @@ namespace Jh.Abp.Extensions
             );
         }
 
-        [Authorize(CrudPermissions.Cruds.Default)]
         [Obsolete("请使用 GetListAsync includeDetails")]
         public virtual async Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, string methodStringType = ObjectMethodConsts.ContainsMethod, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -164,7 +154,6 @@ namespace Jh.Abp.Extensions
             );
         }
 
-        [Authorize(CrudPermissions.Cruds.Update)]
         public virtual async Task<TEntity> UpdatePortionAsync(TKey key, TUpdateInputDto updateInput, bool autoSave = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckUpdatePolicyAsync().ConfigureAwait(false);
@@ -184,7 +173,6 @@ namespace Jh.Abp.Extensions
             return await crudRepository.UpdateAsync(entity, autoSave, cancellationToken).ConfigureAwait(false);
         }
 
-        [Authorize(CrudPermissions.Cruds.Update)]
         public override async Task<TEntityDto> UpdateAsync(TKey id, TUpdateInputDto updateInput)
         {
             await CheckUpdatePolicyAsync().ConfigureAwait(false);

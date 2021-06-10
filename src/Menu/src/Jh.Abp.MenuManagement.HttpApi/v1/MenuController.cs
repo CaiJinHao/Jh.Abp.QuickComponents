@@ -1,5 +1,7 @@
 ﻿using Jh.Abp.Application.Contracts.Extensions;
 using Jh.Abp.MenuManagement.Menus;
+using Jh.Abp.MenuManagement.Permissions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -26,6 +28,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.Menus.Create)]
         [HttpPost]
         public virtual async Task CreateAsync(MenuCreateInputDto input)
         {
@@ -37,6 +40,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.Menus.Create)]
         [Route("items")]
         [HttpPost]
         public virtual async Task CreateAsync(MenuCreateInputDto[] input)
@@ -49,6 +53,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="deleteInputDto"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.Menus.Delete)]
         [HttpDelete]
         public virtual async Task DeleteAsync([FromQuery] MenuDeleteInputDto deleteInputDto)
         {
@@ -60,6 +65,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="keys"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.Menus.Delete)]
         [Route("keys")]
         [HttpDelete]
         public virtual async Task DeleteAsync([FromBody]Guid[] keys)
@@ -72,6 +78,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="inputDto"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.Menus.Default)]
         [Route("all")]
         [HttpGet]
         public virtual async Task<ListResultDto<MenuDto>> GetEntitysAsync([FromQuery] MenuRetrieveInputDto inputDto)
@@ -86,6 +93,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="key"></param>
         /// <param name="inputDto"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.Menus.Update)]
         [HttpPatch("{id}")]
         public virtual async Task UpdatePortionAsync(Guid id, MenuUpdateInputDto inputDto)
         {
@@ -98,6 +106,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="id"></param>
         /// <param name="input"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.Menus.Update)]
         [HttpPut("{id}")]
         public virtual async Task<MenuDto> UpdateAsync(Guid id, MenuUpdateInputDto input)
         {
@@ -109,6 +118,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.Menus.Default)]
         [HttpGet]
         public virtual async Task<PagedResultDto<MenuDto>> GetListAsync([FromQuery] MenuRetrieveInputDto input)
         {
@@ -123,6 +133,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.Menus.Delete)]
         [HttpDelete("{id}")]
         public virtual async Task DeleteAsync(Guid id)
         {
@@ -137,12 +148,14 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.Menus.Default)]
         [HttpGet("{id}")]
         public virtual async Task<MenuDto> GetAsync(Guid id)
         {
             return await menuAppService.GetAsync(id, true);
         }
 
+		[Authorize(MenuManagementPermissions.Menus.Update)]
         [HttpPatch]
         [Route("{id}/Deleted")]
         public virtual async Task UpdateDeletedAsync(Guid id, [FromBody] bool isDeleted)

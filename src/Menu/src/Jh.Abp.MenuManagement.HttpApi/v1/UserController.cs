@@ -1,4 +1,6 @@
 ﻿using Jh.Abp.MenuManagement.Menus;
+using Jh.Abp.MenuManagement.Permissions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -33,6 +35,7 @@ namespace Jh.Abp.MenuManagement.v1
             UserManager = userManager;
         }
 
+		[Authorize(MenuManagementPermissions.Users.Default)]
         [HttpGet]
         [Route("{id}/selectroles")]
         public virtual async Task<dynamic> GetRolesToSelectAsync(Guid id)
@@ -44,6 +47,7 @@ namespace Jh.Abp.MenuManagement.v1
             };
         }
 
+		[Authorize(MenuManagementPermissions.Users.Default)]
         [HttpGet]
         public override async Task<PagedResultDto<IdentityUserDto>> GetListAsync([FromQuery] GetIdentityUsersInput input)
         {
@@ -57,12 +61,14 @@ namespace Jh.Abp.MenuManagement.v1
         /// 当前登录用户信息
         /// </summary>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.Users.Default)]
         [HttpGet("info")]
         public virtual Task<ProfileDto> GetLoginInfoAsync()
         {
             return ProfileAppService.GetAsync();
         }
 
+		[Authorize(MenuManagementPermissions.Users.ChangePassword)]
         [HttpPost]
         [Route("change-password")]
         public virtual Task ChangePasswordAsync(ChangePasswordInput input)
@@ -71,6 +77,7 @@ namespace Jh.Abp.MenuManagement.v1
         }
 
 
+		[Authorize(MenuManagementPermissions.Users.LockoutEnabled)]
         [HttpPatch]
         [Route("{id}/lockoutEnabled")]
         public virtual async Task UpdateLockoutEnabledAsync(Guid id, [FromBody] bool lockoutEnabled)
@@ -83,6 +90,7 @@ namespace Jh.Abp.MenuManagement.v1
             }
         }
 
+		[Authorize(MenuManagementPermissions.Users.Update)]
         [HttpPatch]
         [Route("{id}/Deleted")]
         public virtual async Task UpdateDeletedAsync(Guid id, [FromBody] bool isDeleted)
@@ -100,6 +108,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="keys"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.Users.Delete)]
         [Route("keys")]
         [HttpDelete]
         public virtual async Task DeleteAsync([FromBody] Guid[] keys)

@@ -1,4 +1,6 @@
 ﻿using Jh.Abp.MenuManagement.Menus;
+using Jh.Abp.MenuManagement.Permissions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -24,6 +26,7 @@ namespace Jh.Abp.MenuManagement.v1
             RoleRepository = roleRepository;
         }
 
+		[Authorize(MenuManagementPermissions.Roles.Default)]
         [HttpGet]
         [Route("tree")]
         public virtual async Task<dynamic> GetTreeAsync(string name)
@@ -35,6 +38,7 @@ namespace Jh.Abp.MenuManagement.v1
             };
         }
 
+		[Authorize(MenuManagementPermissions.Roles.Default)]
         [HttpGet]
         [Route("select")]
         public virtual async Task<dynamic> GetSelectAsync(string name)

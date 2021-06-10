@@ -16,13 +16,14 @@ namespace Jh.Abp.QuickComponents.Tests.JhSourceGeneratorCommon
         [Fact]
         public void TestGetTableClass()
         {
+            //模板路径为空不生成
             var basePath = @"G:\Temp\";
             var domainAssembly = typeof(MenuManagement.MenuManagementDomainModule).Assembly;
-            var domain = @"\AppSettings";
+            var domain = @"\Menus";
             var options = new GeneratorOptions()
             {
                 DbContext = "MenuManagementDbContext",
-                Namespace = "ComprehensiveSite",
+                Namespace = "MenuManagement",
                 ControllerBase = "MenuManagementController",
                 CreateContractsPermissionsPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.Contracts\Permissions",
                 CreateContractsPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.Contracts{domain}",
@@ -32,7 +33,7 @@ namespace Jh.Abp.QuickComponents.Tests.JhSourceGeneratorCommon
                 CreateHttpApiPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.HttpApi\v1{domain}",
                 //不需要domain做文件夹
                 //CreateHtmlPath = @$"{basePath}trunk\host\Jh.Abp.MenuManagement.Web.Unified\wwwroot\main\view",
-                CreateHtmlTemplatePath = @"G:\github\mygithub\Jh.Abp.QuickComponents\src\GeneratorCoding\Jh.SourceGenerator.Common\CodeBuilders\Html\Layui"
+                //CreateHtmlTemplatePath = @"G:\github\mygithub\Jh.Abp.QuickComponents\src\GeneratorCoding\Jh.SourceGenerator.Common\CodeBuilders\Html\Layui"
             };
             var service = new GeneratorService(domainAssembly, options);
             Assert.True(service.GeneratorCode());

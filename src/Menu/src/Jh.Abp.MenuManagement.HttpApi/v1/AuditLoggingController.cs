@@ -1,5 +1,7 @@
 ﻿using Jh.Abp.Application.Contracts.Extensions;
 using Jh.Abp.MenuManagement.Menus;
+using Jh.Abp.MenuManagement.Permissions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -21,6 +23,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="deleteInputDto"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.AuditLoggings.Delete)]
         [HttpDelete]
         public virtual async Task DeleteAsync([FromQuery]AuditLoggingDeleteInputDto deleteInputDto)
         {
@@ -32,6 +35,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="keys"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.AuditLoggings.Delete)]
         [Route("keys")]
         [HttpDelete]
         public virtual async Task DeleteAsync([FromBody] Guid[] keys)
@@ -44,6 +48,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.AuditLoggings.Default)]
         [HttpGet]
         public virtual async Task<PagedResultDto<AuditLog>> GetListAsync([FromQuery] AuditLoggingRetrieveInputDto input)
         {
@@ -55,6 +60,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="inputDto"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.AuditLoggings.Default)]
         [Route("all")]
         [HttpGet]
         public virtual async Task<ListResultDto<AuditLog>> GetEntitysAsync([FromQuery] AuditLoggingRetrieveInputDto inputDto)
@@ -67,6 +73,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.AuditLoggings.Delete)]
         [HttpDelete("{id}")]
         public virtual async Task DeleteAsync(Guid id)
         {

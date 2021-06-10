@@ -1,4 +1,6 @@
 ﻿using Jh.Abp.MenuManagement.Menus;
+using Jh.Abp.MenuManagement.Permissions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -24,6 +26,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.MenuAndRoleMaps.Create)]
         [HttpPost]
         public virtual async Task<MenuAndRoleMap[]> CreateAsync(MenuAndRoleMapCreateInputDto input)
         {
@@ -35,6 +38,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="deleteInputDto"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.MenuAndRoleMaps.Delete)]
         [HttpDelete]
         public virtual async Task<MenuAndRoleMap[]> DeleteAsync([FromQuery] MenuAndRoleMapDeleteInputDto deleteInputDto)
         {
@@ -46,6 +50,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="keys"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.MenuAndRoleMaps.Delete)]
         [Route("keys")]
         [HttpDelete]
         public virtual async Task<MenuAndRoleMap[]> DeleteAsync(Guid[] keys)
@@ -58,6 +63,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="inputDto"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.MenuAndRoleMaps.Default)]
         [Route("all")]
         [HttpGet]
         public virtual async Task<ListResultDto<MenuAndRoleMapDto>> GetEntitysAsync([FromQuery] MenuAndRoleMapRetrieveInputDto inputDto)
@@ -72,6 +78,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="key"></param>
         /// <param name="inputDto"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.MenuAndRoleMaps.Update)]
         [HttpPatch]
         public virtual async Task<MenuAndRoleMap> UpdatePortionAsync(Guid key, MenuAndRoleMapUpdateInputDto inputDto)
         {
@@ -84,6 +91,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="id"></param>
         /// <param name="input"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.MenuAndRoleMaps.Update)]
         [HttpPut("id")]
         public virtual async Task<MenuAndRoleMapDto> UpdateAsync(Guid id, MenuAndRoleMapUpdateInputDto input)
         {
@@ -95,6 +103,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.MenuAndRoleMaps.Default)]
         [HttpGet]
         public virtual async Task<PagedResultDto<MenuAndRoleMapDto>> GetListAsync([FromQuery] MenuAndRoleMapRetrieveInputDto input)
         {
@@ -106,6 +115,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.MenuAndRoleMaps.Delete)]
         [HttpDelete("id")]
         public virtual async Task<MenuAndRoleMap> DeleteAsync(Guid id)
         {
@@ -117,12 +127,14 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+		[Authorize(MenuManagementPermissions.MenuAndRoleMaps.Default)]
         [HttpGet("id")]
         public virtual async Task<MenuAndRoleMapDto> GetAsync(Guid id)
         {
             return await menuAndRoleMapAppService.GetAsync(id);
         }
 
+		[Authorize(MenuManagementPermissions.MenuAndRoleMaps.Default)]
         [HttpGet("Trees")]
         public virtual async Task<dynamic> GetMenusNavTreesAsync()
         {
@@ -130,6 +142,7 @@ namespace Jh.Abp.MenuManagement.v1
             return new { items };
         }
 
+		[Authorize(MenuManagementPermissions.MenuAndRoleMaps.Default)]
         [HttpGet("TreesAll")]
         public virtual async Task<dynamic> GetMenusTreesAsync(Guid roleId)
         {
