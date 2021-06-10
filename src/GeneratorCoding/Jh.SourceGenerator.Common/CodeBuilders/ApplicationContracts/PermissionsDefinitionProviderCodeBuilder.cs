@@ -32,15 +32,15 @@ using Volo.Abp.Localization;");
                     builder.AppendLine($"\tpublic override void Define(IPermissionDefinitionContext context)");
                     builder.AppendLine("\t{");
                     {
-                        builder.AppendLine($"\t\tvar {groupName}Group = context.AddGroup({groupName}Permissions.GroupName, L(\"Permission: {table.Namespace}\"));");
+                        builder.AppendLine($"\t\tvar {groupName}Group = context.AddGroup({groupName}Permissions.GroupName, L(\"Permission:{table.Namespace}\"));");
                         foreach (var item in tables)
                         {
                             var moduleName = $"{item.Name}s";
-                            builder.AppendLine($"\t\t  var {moduleName}Permission = {groupName}Group.AddPermission({permissions}.{moduleName}.Default, L(\"Permission: {table.Name}\"));");
-                            builder.AppendLine($"\t\t {moduleName}Permission.AddChild({permissions}.{moduleName}.Create, L(\"Permission: Create\"));");
-                            builder.AppendLine($"\t\t {moduleName}Permission.AddChild({permissions}.{moduleName}.Update, L(\"Permission: Edit\"));");
-                            builder.AppendLine($"\t\t {moduleName}Permission.AddChild({permissions}.{moduleName}.Delete, L(\"Permission: Delete\"));");
-                            builder.AppendLine($"\t\t {moduleName}Permission.AddChild({permissions}.{moduleName}.ManagePermissions, L(\"Permission: ManagePermissions\"));");
+                            builder.AppendLine($"\t\t  var {moduleName}Permission = {groupName}Group.AddPermission({permissions}.{moduleName}.Default, L(\"Permission:{table.Name}\"));");
+                            builder.AppendLine($"\t\t {moduleName}Permission.AddChild({permissions}.{moduleName}.Create, L(\"Permission:Create\"));");
+                            builder.AppendLine($"\t\t {moduleName}Permission.AddChild({permissions}.{moduleName}.Update, L(\"Permission:Edit\"));");
+                            builder.AppendLine($"\t\t {moduleName}Permission.AddChild({permissions}.{moduleName}.Delete, L(\"Permission:Delete\"));");
+                            builder.AppendLine($"\t\t {moduleName}Permission.AddChild({permissions}.{moduleName}.ManagePermissions, L(\"Permission:ManagePermissions\"));");
                         }
                         builder.AppendLine("\t\t //Write additional permission definitions");
                     }

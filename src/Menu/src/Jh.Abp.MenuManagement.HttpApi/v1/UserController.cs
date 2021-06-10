@@ -35,7 +35,7 @@ namespace Jh.Abp.MenuManagement.v1
             UserManager = userManager;
         }
 
-		[Authorize(MenuManagementPermissions.Users.Default)]
+		[Authorize(IdentityPermissions.Users.Default)]
         [HttpGet]
         [Route("{id}/selectroles")]
         public virtual async Task<dynamic> GetRolesToSelectAsync(Guid id)
@@ -47,7 +47,7 @@ namespace Jh.Abp.MenuManagement.v1
             };
         }
 
-		[Authorize(MenuManagementPermissions.Users.Default)]
+		[Authorize(IdentityPermissions.Users.Default)]
         [HttpGet]
         public override async Task<PagedResultDto<IdentityUserDto>> GetListAsync([FromQuery] GetIdentityUsersInput input)
         {
@@ -61,14 +61,14 @@ namespace Jh.Abp.MenuManagement.v1
         /// 当前登录用户信息
         /// </summary>
         /// <returns></returns>
-		[Authorize(MenuManagementPermissions.Users.Default)]
+		[Authorize(IdentityPermissions.Users.Default)]
         [HttpGet("info")]
         public virtual Task<ProfileDto> GetLoginInfoAsync()
         {
             return ProfileAppService.GetAsync();
         }
 
-		[Authorize(MenuManagementPermissions.Users.ChangePassword)]
+		[Authorize(IdentityPermissions.Users.Update)]
         [HttpPost]
         [Route("change-password")]
         public virtual Task ChangePasswordAsync(ChangePasswordInput input)
@@ -77,7 +77,7 @@ namespace Jh.Abp.MenuManagement.v1
         }
 
 
-		[Authorize(MenuManagementPermissions.Users.LockoutEnabled)]
+		[Authorize(IdentityPermissions.Users.Update)]
         [HttpPatch]
         [Route("{id}/lockoutEnabled")]
         public virtual async Task UpdateLockoutEnabledAsync(Guid id, [FromBody] bool lockoutEnabled)
@@ -90,7 +90,7 @@ namespace Jh.Abp.MenuManagement.v1
             }
         }
 
-		[Authorize(MenuManagementPermissions.Users.Update)]
+		[Authorize(IdentityPermissions.Users.Update)]
         [HttpPatch]
         [Route("{id}/Deleted")]
         public virtual async Task UpdateDeletedAsync(Guid id, [FromBody] bool isDeleted)
@@ -108,7 +108,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="keys"></param>
         /// <returns></returns>
-		[Authorize(MenuManagementPermissions.Users.Delete)]
+		[Authorize(IdentityPermissions.Users.Delete)]
         [Route("keys")]
         [HttpDelete]
         public virtual async Task DeleteAsync([FromBody] Guid[] keys)

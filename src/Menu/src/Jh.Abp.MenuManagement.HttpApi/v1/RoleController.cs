@@ -26,7 +26,7 @@ namespace Jh.Abp.MenuManagement.v1
             RoleRepository = roleRepository;
         }
 
-		[Authorize(MenuManagementPermissions.Roles.Default)]
+		[Authorize(IdentityPermissions.Roles.Default)]
         [HttpGet]
         [Route("tree")]
         public virtual async Task<dynamic> GetTreeAsync(string name)
@@ -38,7 +38,7 @@ namespace Jh.Abp.MenuManagement.v1
             };
         }
 
-		[Authorize(MenuManagementPermissions.Roles.Default)]
+		[Authorize(IdentityPermissions.Roles.Default)]
         [HttpGet]
         [Route("select")]
         public virtual async Task<dynamic> GetSelectAsync(string name)

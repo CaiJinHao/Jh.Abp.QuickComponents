@@ -2,6 +2,10 @@
   "culture": "zh-Hans",
   "texts": {
     "ManageYourProfile": "管理个人资料",
-    "SamplePageMessage": "MenuManagement模块的示例页面"
+    "SamplePageMessage": "MenuManagement模块的示例页面",
+    "Permission:ManagePermissions": "管理权限",
+    "Permission:MenuAndRoleMapManagement": "权限管理",
+    "Permission:MenusManagement": "菜单管理",
+    "Permission:AuditLoggingsManagement": "日志管理"
   }
 }
