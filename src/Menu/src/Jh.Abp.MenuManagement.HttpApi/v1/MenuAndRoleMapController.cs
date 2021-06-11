@@ -70,7 +70,6 @@ namespace Jh.Abp.MenuManagement.v1
         [HttpGet]
         public virtual async Task<ListResultDto<MenuAndRoleMapDto>> GetEntitysAsync([FromQuery] MenuAndRoleMapRetrieveInputDto inputDto)
         {
-            inputDto.MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount;
             return await menuAndRoleMapAppService.GetEntitysAsync(inputDto);
         }
 
@@ -119,7 +118,6 @@ namespace Jh.Abp.MenuManagement.v1
         {
             var datas = await menuPermissionMapAppService.GetEntitysAsync(new MenuPermissionMapRetrieveInputDto()
             {
-                MaxResultCount = 1000,
                 MenuId = id
             });
             return datas.Items.Select(a => a.PermissionName).ToList();

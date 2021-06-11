@@ -24,13 +24,33 @@ namespace Jh.Abp.MenuManagement
             MenuPermissionMapDapperRepository = menupermissionmapDapperRepository;
         }
 
-        public async Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(string providerName, string providerKey)
+        public async Task<IEnumerable<MenusTreeDto>> GetPermissionTreesAsync(Guid menuid, string providerName, string providerKey)
         {
-            //TODO:Permission
-            var datas = PermissionDefinitionManager.GetGroups();
-            var _t = PermissionDefinitionManager.GetPermissions();
-            await Task.CompletedTask;
-            return default;
+            var permissionNames = (await base.GetEntitysAsync(new MenuPermissionMapRetrieveInputDto()
+            {
+                MenuId = menuid
+            })).Items.Select(a => a.PermissionName);
+            var datas = await GetPermissionGrantsAsync();
+            var permissions = datas.Where(a => permissionNames.Contains(a.Name));
+            var result = new List<MenusTreeDto>();
+            foreach (var permission in permissions)
+            {
+                foreach (var item in permission.Children)
+                {
+                    var a = item.DisplayName.Localize(StringLocalizerFactory);
+                    result.Add(new MenusTreeDto()
+                    {
+                        id = a.Value,
+                        parent_id = permission.Name,
+                        title = a.Name,
+                        value = a.Value,
+                        //@checked = auth_menus_id.Contains(a.Id),
+                        @checked = false,
+                        disabled = false
+                    });
+                }
+            }
+            return result;
         }
 
         public virtual async Task UpdateAsync(string providerName, string providerKey, UpdatePermissionsDto input)
@@ -51,7 +71,7 @@ namespace Jh.Abp.MenuManagement
         public virtual async Task<IEnumerable<LocalizedString>> GetLocalizePermissionGrantsAsync()
         {
             var datas = await GetPermissionGrantsAsync();
-            return datas.Select(a=>a.DisplayName.Localize(StringLocalizerFactory));
+            return datas.Select(a => a.DisplayName.Localize(StringLocalizerFactory));
         }
     }
 }

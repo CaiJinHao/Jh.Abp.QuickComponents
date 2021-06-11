@@ -87,7 +87,6 @@ using Volo.Abp.Data;");
                     builder.AppendLine($"\t\tpublic virtual async Task<ListResultDto<{table.Name}Dto>> GetEntitysAsync([FromQuery] {table.Name}RetrieveInputDto inputDto)");
                     {
                         builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\tinputDto.MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount;");
                         builder.AppendLine($"\t\t\treturn await {table.Name}AppService.GetEntitysAsync(inputDto);");
                         builder.AppendLine("\t\t}");
                     }

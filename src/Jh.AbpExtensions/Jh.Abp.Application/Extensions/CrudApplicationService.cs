@@ -27,6 +27,7 @@ namespace Jh.Abp.Extensions
         where TEntity : class, IEntity<TKey>
         where TEntityDto : IEntityDto<TKey>
         where TPagedRetrieveOutputDto : IEntityDto<TKey>
+        where TRetrieveInputDto: ILimitedResultRequest
     {
         public IDataFilter DataFilter { get; set; }
 
@@ -84,6 +85,7 @@ namespace Jh.Abp.Extensions
         public virtual async Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.ContainsMethod, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckGetListPolicyAsync().ConfigureAwait(false);
+            inputDto.MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount;
             var query = CreateFilteredQuery(await crudRepository.GetQueryableAsync(includeDetails), inputDto, methodStringType);
             query = ApplySorting(query, inputDto);
             query = ApplyPaging(query, inputDto);
@@ -102,19 +104,6 @@ namespace Jh.Abp.Extensions
             return await MapToGetOutputDtoAsync(entity);
         }
 
-        [Obsolete("请使用 GetEntitysAsync includeDetails")]
-        public virtual async Task<ListResultDto<TEntityDto>> GetEntitysAsync(TRetrieveInputDto inputDto, string methodStringType = ObjectMethodConsts.ContainsMethod, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            await CheckGetListPolicyAsync().ConfigureAwait(false);
-            var query = await CreateFilteredQueryAsync(inputDto, methodStringType);
-            query = ApplySorting(query, inputDto);
-            query = ApplyPaging(query, inputDto);
-            var entities = await AsyncExecuter.ToListAsync(query, cancellationToken).ConfigureAwait(false);
-            return new ListResultDto<TEntityDto>(
-                 ObjectMapper.Map<List<TEntity>, List<TEntityDto>>(entities)
-            );
-        }
-
         public virtual async Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, string methodStringType = ObjectMethodConsts.ContainsMethod, bool includeDetails = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             await CheckGetListPolicyAsync().ConfigureAwait(false);
@@ -131,31 +120,6 @@ namespace Jh.Abp.Extensions
             query = ApplyPaging(query, input);
 
             var entities = await query.ToListAsync(cancellationToken);
-            var entityDtos = await MapToGetListOutputDtosAsync(entities);
-
-            return new PagedResultDto<TPagedRetrieveOutputDto>(
-                totalCount,
-                entityDtos
-            );
-        }
-
-        [Obsolete("请使用 GetListAsync includeDetails")]
-        public virtual async Task<PagedResultDto<TPagedRetrieveOutputDto>> GetListAsync(TRetrieveInputDto input, string methodStringType = ObjectMethodConsts.ContainsMethod, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            await CheckGetListPolicyAsync().ConfigureAwait(false);
-
-            var query = await CreateFilteredQueryAsync(input, methodStringType);
-
-#if DAMENG
-            var totalCount = await AsyncExecuter.CountAsync(query);
-#else
-            var totalCount = await AsyncExecuter.LongCountAsync(query);
-#endif
-
-            query = ApplySorting(query, input);
-            query = ApplyPaging(query, input);
-
-            var entities = await AsyncExecuter.ToListAsync(query);
             var entityDtos = await MapToGetListOutputDtosAsync(entities);
 
             return new PagedResultDto<TPagedRetrieveOutputDto>(

@@ -129,9 +129,10 @@ namespace Jh.Abp.MenuManagement
                     }
                     else
                     {
-                        (item as MenusTreeDto).data = await GetChildNodesAsync(item.id) as IEnumerable<MenusTreeDto>;
+                        var data = item as MenusTreeDto;
+                        data.data = await GetChildNodesAsync(item.id) as IEnumerable<MenusTreeDto>;
+                        var permissionDatas = await menuPermissionMapAppService.GetPermissionTreesAsync(new Guid(data.value), "R", "admin");
                     }
-                    await menuPermissionMapAppService.GetMenusTreesAsync("R", "admin");
                 }
                 return childs;
             }

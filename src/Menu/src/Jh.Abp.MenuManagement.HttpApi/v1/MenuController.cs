@@ -89,7 +89,6 @@ namespace Jh.Abp.MenuManagement.v1
         [HttpGet]
         public virtual async Task<ListResultDto<MenuDto>> GetEntitysAsync([FromQuery] MenuRetrieveInputDto inputDto)
         {
-            inputDto.MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount;
             return await menuAppService.GetEntitysAsync(inputDto);
         }
 

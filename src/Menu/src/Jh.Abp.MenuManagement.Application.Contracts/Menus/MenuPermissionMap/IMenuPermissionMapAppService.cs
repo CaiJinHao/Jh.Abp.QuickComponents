@@ -11,7 +11,7 @@ namespace Jh.Abp.MenuManagement
 	public interface IMenuPermissionMapAppService
 		: ICrudApplicationService<MenuPermissionMap, MenuPermissionMapDto, MenuPermissionMapDto, System.Guid, MenuPermissionMapRetrieveInputDto, MenuPermissionMapCreateInputDto, MenuPermissionMapUpdateInputDto, MenuPermissionMapDeleteInputDto>
 	{
-		Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(string providerName, string providerKey);
+		Task<IEnumerable<MenusTreeDto>> GetPermissionTreesAsync(Guid menuid, string providerName, string providerKey);
 
 		Task UpdateAsync(string providerName, string providerKey, UpdatePermissionsDto input);
 

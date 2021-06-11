@@ -49,7 +49,7 @@ namespace Jh.Abp.MenuManagement
             var app = context.GetApplicationBuilder();
 
             //查询单个表所有数据最大值
-            //LimitedResultRequestDto.MaxMaxResultCount = 2000;//默认1000
+            //LimitedResultRequestDto.MaxMaxResultCount = 2000;//默认1000,超过此值会按此值处理或者报错
 
             //设置密码格式不是用特殊字符
             //app.ApplicationServices.GetService<ISettingDefinitionManager>().Get(IdentitySettingNames.Password.RequireNonAlphanumeric).DefaultValue = false.ToString();
