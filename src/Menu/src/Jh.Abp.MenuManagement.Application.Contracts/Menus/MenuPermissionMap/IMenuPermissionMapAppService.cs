@@ -13,10 +13,10 @@ namespace Jh.Abp.MenuManagement
 	{
 		Task<IEnumerable<MenusTreeDto>> GetPermissionTreesAsync(Guid menuid, string providerName, string providerKey);
 
-		Task UpdateAsync(string providerName, string providerKey, UpdatePermissionsDto input);
+		Task UpdateAsync(string providerName, string providerKey, string[] PermissionNames);
 
-		Task<List<PermissionDefinition>> GetPermissionGrantsAsync();
+		Task<IEnumerable<PermissionDefinition>> GetPermissionGrantsAsync();
 
-		Task<IEnumerable<LocalizedString>> GetLocalizePermissionGrantsAsync();
+		Task<dynamic> GetMenuSelectPermissionGrantsAsync();
 	}
 }

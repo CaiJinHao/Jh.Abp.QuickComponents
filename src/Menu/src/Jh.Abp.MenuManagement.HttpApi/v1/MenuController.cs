@@ -182,10 +182,10 @@ namespace Jh.Abp.MenuManagement.v1
         [Route("SelectPermissions")]
         public virtual async Task<dynamic> GetSelectAsync(string name)
         {
-            var datas = await menuPermissionMapAppService.GetLocalizePermissionGrantsAsync();
+            var datas = await menuPermissionMapAppService.GetMenuSelectPermissionGrantsAsync();
             return new
             {
-                items = datas.Select(a => new { name = a.Value, value = a.Name })
+                items = datas
             };
         }
     }

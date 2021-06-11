@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Volo.Abp.Authorization.Permissions;
 
 namespace Jh.Abp.MenuManagement
 {
@@ -23,7 +24,7 @@ namespace Jh.Abp.MenuManagement
         /// 权限名称列表
         /// </summary>
         public string[] PermissionNames { get; set; }
-        public string ProviderName { get; set; }
+        public string ProviderName { get; set; } = RolePermissionValueProvider.ProviderName;
         public string ProviderKey { get; set; }
     }
 }

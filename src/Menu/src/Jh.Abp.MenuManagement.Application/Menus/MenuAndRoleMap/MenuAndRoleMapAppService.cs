@@ -40,18 +40,9 @@ namespace Jh.Abp.MenuManagement
             throw new NotImplementedException();
         }
 
-        protected virtual async Task UpdatePermissionAsync(string ProviderName, string ProviderKey, string[] PermissionNames)
-        {
-            if (PermissionNames != null && PermissionNames.Length > 0)
-            {
-                var upDtos = PermissionNames.Select(a => new UpdatePermissionDto() { Name = a, IsGranted = true }).ToArray();
-                await menuPermissionMapAppService.UpdateAsync(ProviderName, ProviderKey, new UpdatePermissionsDto() { Permissions = upDtos });
-            }
-        }
-
         public virtual async Task<MenuAndRoleMap[]> CreateV2Async(MenuAndRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
-            await UpdatePermissionAsync(inputDto.ProviderName, inputDto.ProviderKey, inputDto.PermissionNames);
+            await menuPermissionMapAppService.UpdateAsync(inputDto.ProviderName, inputDto.ProviderKey, inputDto.PermissionNames);
             return await crudRepository.CreateAsync(GetCreateEnumerableAsync(inputDto).ToArray());
         }
 
