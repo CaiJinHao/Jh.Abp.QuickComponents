@@ -259,16 +259,25 @@
             $('#btn_sysmenurolemiddle_from').on('click', function () {
                 var cks = sysmenurolemiddleObj.modulepointTree.GetChecked();//不包含父级
                 var menuIds = [];
+                var permissionNames = [];
                 $.each(cks, function (k, v) {
-                    menuIds.push(v.value);
+                    if (v.value.length === 36) {
+                        menuIds.push(v.value);
+                    } else {
+                        permissionNames.push(v.value);
+                    }
                 });
+                console.log(vm.selectedRole);
                 if (menuIds.length < 1) {
                     layer.msg("请选择菜单权限");
                     return false;
                 }
                 var _data = {
                     roleIds: [vm.selectedRole.id],
-                    menuIds: menuIds
+                    menuIds: menuIds,
+                    permissionNames:permissionNames,
+                    providerKey:vm.selectedRole.title,
+                    providerName:'R'
                 };
                 ajaxmod.requestAuthorize({
                     url: '/MenuAndRoleMap',
