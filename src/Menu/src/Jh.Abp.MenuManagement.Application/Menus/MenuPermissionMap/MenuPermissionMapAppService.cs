@@ -40,8 +40,15 @@ namespace Jh.Abp.MenuManagement
             {
                 var parentPermission = await PermissionManager.GetAsync(permission.Name, providerName, providerKey);
                 var module = permission.DisplayName.Localize(StringLocalizerFactory);
-
-                var childs = new List<MenusTreeDto>();
+                var modulePermission = new MenusTreeDto()
+                {
+                    id = permission.Name,
+                    title = module.Value,
+                    value = permission.Name,
+                    @checked = parentPermission.IsGranted,
+                    disabled = false,
+                };
+                var childs = new List<MenusTreeDto>() { modulePermission };
                 {//childs
                     foreach (var item in permission.Children)
                     {
@@ -58,15 +65,14 @@ namespace Jh.Abp.MenuManagement
                         });
                     }
                 }
-
                 results.Add(new MenusTreeDto()
                 {
-                    id = permission.Name,
+                    id = $"yezi{permission.Name}",
                     title = module.Value,
-                    value = permission.Name,
+                    value = $"yezi{permission.Name}",
                     @checked = parentPermission.IsGranted,
                     disabled = false,
-                    data= childs
+                    data = childs
                 });
             }
             return results;

@@ -263,11 +263,13 @@
                 $.each(cks, function (k, v) {
                     if (v.value.length === 36) {
                         menuIds.push(v.value);
-                    } else {
+                    } else if (v.value.indexOf('yezi') != -1) {
+                        //不做任何处理
+                    }
+                    else {
                         permissionNames.push(v.value);
                     }
                 });
-                console.log(vm.selectedRole);
                 if (menuIds.length < 1) {
                     layer.msg("请选择菜单权限");
                     return false;
