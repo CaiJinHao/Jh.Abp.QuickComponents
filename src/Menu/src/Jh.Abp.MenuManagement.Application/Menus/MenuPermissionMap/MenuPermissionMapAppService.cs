@@ -35,35 +35,41 @@ namespace Jh.Abp.MenuManagement
             })).Items.Select(a => a.PermissionName);
             var datas = await GetPermissionGrantsAsync();
             var permissions = datas.Where(a => permissionNames.Contains(a.Name));
-            var result = new List<MenusTreeDto>();
+            var results = new List<MenusTreeDto>();
             foreach (var permission in permissions)
             {
                 var parentPermission = await PermissionManager.GetAsync(permission.Name, providerName, providerKey);
                 var module = permission.DisplayName.Localize(StringLocalizerFactory);
-                result.Add(new MenusTreeDto()
+
+                var childs = new List<MenusTreeDto>();
+                {//childs
+                    foreach (var item in permission.Children)
+                    {
+                        var itemPermission = await PermissionManager.GetAsync(permission.Name, providerName, providerKey);
+                        var a = item.DisplayName.Localize(StringLocalizerFactory);
+                        childs.Add(new MenusTreeDto()
+                        {
+                            id = item.Name,
+                            parent_id = permission.Name,
+                            title = a.Value,
+                            value = item.Name,
+                            @checked = itemPermission.IsGranted,
+                            disabled = false
+                        });
+                    }
+                }
+
+                results.Add(new MenusTreeDto()
                 {
                     id = permission.Name,
                     title = module.Value,
                     value = permission.Name,
                     @checked = parentPermission.IsGranted,
-                    disabled = false
+                    disabled = false,
+                    data= childs
                 });
-                foreach (var item in permission.Children)
-                {
-                    var itemPermission = await PermissionManager.GetAsync(permission.Name, providerName, providerKey);
-                    var a = item.DisplayName.Localize(StringLocalizerFactory);
-                    result.Add(new MenusTreeDto()
-                    {
-                        id = item.Name,
-                        parent_id = permission.Name,
-                        title = a.Value,
-                        value = item.Name,
-                        @checked = itemPermission.IsGranted,
-                        disabled = false
-                    });
-                }
             }
-            return result;
+            return results;
         }
 
         public virtual async Task UpdateAsync(string providerName, string providerKey, string[] permissionNames)
