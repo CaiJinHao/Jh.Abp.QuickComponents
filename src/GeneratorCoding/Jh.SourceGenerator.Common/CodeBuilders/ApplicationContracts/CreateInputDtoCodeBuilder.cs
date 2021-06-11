@@ -24,8 +24,10 @@ using Volo.Abp.ObjectExtending;");
                 builder.AppendLine($"\tpublic class {FileName}");
                 if (table.IsConcurrencyStamp)
                 {
-                    builder.AppendLine($":ExtensibleObject");
+                    builder.AppendLine($":ExtensibleObject,");
                 }
+                builder.AppendLine($"IMethodDto<{table.Name}>");
+
                 builder.AppendLine("\t{");
                 {
                     foreach (var _field in table.FieldsCreateOrUpdateInput)

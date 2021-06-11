@@ -1,4 +1,5 @@
-﻿using Jh.Abp.Application.Contracts.Extensions;
+﻿using Jh.Abp.Application.Contracts.Dtos;
+using Jh.Abp.Application.Contracts.Extensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.ObjectExtending;
@@ -8,7 +9,7 @@ namespace Jh.Abp.MenuManagement
     /// <summary>
     /// 只存放需要传值的
     /// </summary>
-    public class MenuCreateInputDto: ExtensibleObject
+    public class MenuCreateInputDto: ExtensibleObject, IMethodDto<Menu>
     {
         /// <summary>
         /// 菜单编号

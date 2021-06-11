@@ -103,8 +103,9 @@ namespace Jh.Abp.MenuManagement
 
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlServer();
+                //options.UseSqlServer();
                 //options.UseDm();
+                options.UseMySQL();
             });
 
             context.Services.AddSwaggerGen(

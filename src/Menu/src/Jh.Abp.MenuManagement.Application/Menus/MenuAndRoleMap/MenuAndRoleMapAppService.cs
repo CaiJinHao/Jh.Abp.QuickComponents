@@ -123,7 +123,7 @@ namespace Jh.Abp.MenuManagement
                 var childs = menus.Where(a => a.parent_id == parentNodeId);
                 foreach (var item in childs)
                 {
-                    if (_type==typeof(MenusNavDto))
+                    if (_type == typeof(MenusNavDto))
                     {
                         (item as MenusNavDto).children = await GetChildNodesAsync(item.id) as IEnumerable<MenusNavDto>;
                     }
@@ -131,7 +131,11 @@ namespace Jh.Abp.MenuManagement
                     {
                         var data = item as MenusTreeDto;
                         data.data = await GetChildNodesAsync(item.id) as IEnumerable<MenusTreeDto>;
-                        var permissionDatas = await menuPermissionMapAppService.GetPermissionTreesAsync(new Guid(data.value), "R", "admin");
+                        if (!data.data.Any())
+                        {
+                            //菜单加载完了，开始加载权限
+                            data.data = await menuPermissionMapAppService.GetPermissionTreesAsync(new Guid(data.value), "R", "admin");
+                        }
                     }
                 }
                 return childs;

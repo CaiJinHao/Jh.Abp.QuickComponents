@@ -11,9 +11,11 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
         {
             var configuration = BuildConfiguration();
 
+            var connectionString = configuration.GetConnectionString("Default");
             var builder = new DbContextOptionsBuilder<IdentityServerHostMigrationsDbContext>()
-                .UseSqlServer(configuration.GetConnectionString("Default"));
-            //.UseDm(configuration.GetConnectionString("Default"));
+                 //.UseSqlServer(connectionString);
+                 //.UseDm(connectionString);
+                 .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 
             return new IdentityServerHostMigrationsDbContext(builder.Options);
         }

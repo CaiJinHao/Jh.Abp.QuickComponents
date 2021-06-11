@@ -43,17 +43,19 @@ using Volo.Abp.VirtualFileSystem;
 using Jh.Abp.Extensions;
 using Jh.Abp.EntityFrameworkCore.DmExtensions;
 using Jh.Abp.EntityFrameworkCore.Dm;
+using Volo.Abp.EntityFrameworkCore.MySQL;
 
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
-        //typeof(AbpEntityFrameworkCoreDmModule),
         typeof(AbpQuickComponentsModule),
         typeof(MenuManagementHttpApiModule),
         typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
         typeof(AbpAutofacModule),
         typeof(AbpCachingStackExchangeRedisModule),
-        typeof(AbpEntityFrameworkCoreSqlServerModule),
+        //typeof(AbpEntityFrameworkCoreDmModule),
+        //typeof(AbpEntityFrameworkCoreSqlServerModule),
+        typeof(AbpEntityFrameworkCoreMySQLModule),
         typeof(AbpAuditLoggingEntityFrameworkCoreModule),
         typeof(AbpPermissionManagementEntityFrameworkCoreModule),
         typeof(AbpSettingManagementEntityFrameworkCoreModule),
@@ -72,8 +74,9 @@ namespace Jh.Abp.MenuManagement
 
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlServer();
+                //options.UseSqlServer();
                 //options.UseDm();
+                options.UseMySQL();
             });
 
             Configure<AbpMultiTenancyOptions>(options =>
@@ -252,7 +255,7 @@ namespace Jh.Abp.MenuManagement
                     var data = scope.ServiceProvider
                         .GetRequiredService<IDataSeeder>();
                     var context = new DataSeedContext();
-                    context["RoleId"] = "93B854BF-8D26-A7EE-E1A5-39FD071BD9B7";//IdentityServerHost创建的角色ID
+                    context["RoleId"] = "8cb6c2ac-05de-152c-5b88-39fd0b870eab";//IdentityServerHost创建的角色ID
                     await data.SeedAsync(context);
                 }
             });

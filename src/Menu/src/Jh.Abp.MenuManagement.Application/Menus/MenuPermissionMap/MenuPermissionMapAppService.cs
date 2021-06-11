@@ -31,19 +31,29 @@ namespace Jh.Abp.MenuManagement
                 MenuId = menuid
             })).Items.Select(a => a.PermissionName);
             var datas = await GetPermissionGrantsAsync();
-            var permissions = datas.Where(a => permissionNames.Contains(a.Name));
+            var permissions = datas.Where(a => permissionNames.Contains(a.DisplayName.Localize(StringLocalizerFactory).Name));
             var result = new List<MenusTreeDto>();
             foreach (var permission in permissions)
             {
+                var module= permission.DisplayName.Localize(StringLocalizerFactory);
+                result.Add(new MenusTreeDto()
+                {
+                    id = module.Name,
+                    title = module.Value,
+                    value = module.Name,
+                    //@checked = auth_menus_id.Contains(a.Id),
+                    @checked = false,
+                    disabled = false
+                });
                 foreach (var item in permission.Children)
                 {
                     var a = item.DisplayName.Localize(StringLocalizerFactory);
                     result.Add(new MenusTreeDto()
                     {
-                        id = a.Value,
+                        id = a.Name,
                         parent_id = permission.Name,
-                        title = a.Name,
-                        value = a.Value,
+                        title = a.Value,
+                        value = a.Name,
                         //@checked = auth_menus_id.Contains(a.Id),
                         @checked = false,
                         disabled = false
