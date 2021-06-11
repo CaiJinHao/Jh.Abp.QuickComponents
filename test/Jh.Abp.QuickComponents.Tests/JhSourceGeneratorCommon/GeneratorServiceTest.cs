@@ -17,6 +17,7 @@ namespace Jh.Abp.QuickComponents.Tests.JhSourceGeneratorCommon
         public void TestGetTableClass()
         {
             //模板路径为空不生成
+            //var basePath = @"G:\Temp\";
             var basePath = @"G:\Temp\";
             var domainAssembly = typeof(MenuManagement.MenuManagementDomainModule).Assembly;
             var domain = @"\Menus";

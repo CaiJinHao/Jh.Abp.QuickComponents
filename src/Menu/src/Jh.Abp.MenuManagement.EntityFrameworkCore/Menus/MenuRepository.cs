@@ -9,7 +9,7 @@ using Volo.Abp.DependencyInjection;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace Jh.Abp.MenuManagement.Menus
+namespace Jh.Abp.MenuManagement
 {
     public class MenuRepository : CrudRepository<MenuManagementDbContext, Menu, Guid>, IMenuRepository
     {

@@ -4,7 +4,7 @@ using System.Text;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities.Auditing;
 
-namespace Jh.Abp.MenuManagement.Menus
+namespace Jh.Abp.MenuManagement
 {
     public class MenuAndRoleMapDto : CreationAuditedEntityDto<Guid>
     {

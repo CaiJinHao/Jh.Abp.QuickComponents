@@ -1,4 +1,4 @@
-﻿using Jh.Abp.MenuManagement.Menus;
+﻿
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq.Expressions;
@@ -18,6 +18,9 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
         public DbSet<Menu> Menus { get; set; }
 
         public DbSet<MenuAndRoleMap> MenuAndRoleMaps { get; set; }
+
+        public DbSet<MenuPermissionMap> MenuPermissionMaps { get; }
+
         public MenuManagementDbContext(DbContextOptions<MenuManagementDbContext> options) 
             : base(options)
         {
@@ -30,6 +33,7 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
             builder.ConfigureMenuManagement();
         }
 
+#if DAMENG
         protected override Expression<Func<TEntity, bool>> CreateFilterExpression<TEntity>()
         {
             Expression<Func<TEntity, bool>> expression = null;
@@ -49,5 +53,7 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
 
             return expression;
         }
+#endif
+
     }
 }

@@ -2,7 +2,7 @@
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
 
-namespace Jh.Abp.MenuManagement.Menus
+namespace Jh.Abp.MenuManagement
 {
     public class MenuDto: ExtensibleFullAuditedEntityDto<Guid>, IHasConcurrencyStamp
     {

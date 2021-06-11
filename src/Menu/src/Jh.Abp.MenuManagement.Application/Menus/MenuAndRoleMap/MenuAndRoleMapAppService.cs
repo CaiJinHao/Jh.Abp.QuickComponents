@@ -9,14 +9,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
+using Volo.Abp.PermissionManagement;
 using Volo.Abp.Uow;
 
-namespace Jh.Abp.MenuManagement.Menus
+namespace Jh.Abp.MenuManagement
 {
     public class MenuAndRoleMapAppService
         : CrudApplicationService<MenuAndRoleMap, MenuAndRoleMapDto, MenuAndRoleMapDto, Guid, MenuAndRoleMapRetrieveInputDto, MenuAndRoleMapCreateInputDto, MenuAndRoleMapUpdateInputDto, MenuAndRoleMapDeleteInputDto>,
         IMenuAndRoleMapAppService
     {
+        protected IMenuPermissionMapAppService menuPermissionMapAppService => LazyServiceProvider.LazyGetRequiredService<IMenuPermissionMapAppService>();
+
         private readonly IMenuRepository MenuRepository;
         public IdentityUserManager MyUserManager { get; set; }
 
@@ -37,9 +40,18 @@ namespace Jh.Abp.MenuManagement.Menus
             throw new NotImplementedException();
         }
 
-        [UnitOfWork]
+        protected virtual async Task UpdatePermissionAsync(string ProviderName, string ProviderKey, string[] PermissionNames)
+        {
+            if (PermissionNames != null && PermissionNames.Length > 0)
+            {
+                var upDtos = PermissionNames.Select(a => new UpdatePermissionDto() { Name = a, IsGranted = true }).ToArray();
+                await menuPermissionMapAppService.UpdateAsync(ProviderName, ProviderKey, new UpdatePermissionsDto() { Permissions = upDtos });
+            }
+        }
+
         public virtual async Task<MenuAndRoleMap[]> CreateV2Async(MenuAndRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
+            await UpdatePermissionAsync(inputDto.ProviderName, inputDto.ProviderKey, inputDto.PermissionNames);
             return await crudRepository.CreateAsync(GetCreateEnumerableAsync(inputDto).ToArray());
         }
 
@@ -69,7 +81,7 @@ namespace Jh.Abp.MenuManagement.Menus
                 .Select(a => new MenusNavDto() { id = a.Code, icon = a.Icon, parent_id = a.ParentCode, sort = a.Sort, title = a.Name, url = a.Url}).ToListAsync();
 
             //返回多个根节点
-            return GetMenusTreeAsync(auth_menus);
+            return await GetMenusTreeAsync(auth_menus);
         }
 
         protected virtual async Task<IEnumerable<Guid>> GetRolesAsync()
@@ -99,26 +111,27 @@ namespace Jh.Abp.MenuManagement.Menus
             ).ToListAsync();
 
             //返回多个根节点
-            return GetMenusTreeAsync(resutlMenus);
+            return await GetMenusTreeAsync(resutlMenus);
         }
 
-        protected virtual List<T> GetMenusTreeAsync<T>(List<T> menus) where T:MenusTree
+        protected virtual async Task<List<T>> GetMenusTreeAsync<T>(List<T> menus) where T:MenusTree
         {
             var _type = typeof(T);
             //组装树
-            IEnumerable<T> GetChildNodes(string parentNodeId)
+            async Task<IEnumerable<T>> GetChildNodesAsync(string parentNodeId)
             {
                 var childs = menus.Where(a => a.parent_id == parentNodeId);
                 foreach (var item in childs)
                 {
                     if (_type==typeof(MenusNavDto))
                     {
-                        (item as MenusNavDto).children = GetChildNodes(item.id) as IEnumerable<MenusNavDto>;
+                        (item as MenusNavDto).children = await GetChildNodesAsync(item.id) as IEnumerable<MenusNavDto>;
                     }
                     else
                     {
-                        (item as MenusTreeDto).data = GetChildNodes(item.id) as IEnumerable<MenusTreeDto>;
+                        (item as MenusTreeDto).data = await GetChildNodesAsync(item.id) as IEnumerable<MenusTreeDto>;
                     }
+                    await menuPermissionMapAppService.GetMenusTreesAsync("R", "admin");
                 }
                 return childs;
             }
@@ -129,11 +142,11 @@ namespace Jh.Abp.MenuManagement.Menus
             {
                 if (_type == typeof(MenusNavDto))
                 {
-                    (item as MenusNavDto).children = (GetChildNodes(item.id) as IEnumerable<MenusNavDto>).OrderBy(a=>a.sort);
+                    (item as MenusNavDto).children = (await GetChildNodesAsync(item.id) as IEnumerable<MenusNavDto>).OrderBy(a=>a.sort);
                 }
                 else
                 {
-                    (item as MenusTreeDto).data = (GetChildNodes(item.id) as IEnumerable<MenusTreeDto>).OrderBy(a=>a.sort);
+                    (item as MenusTreeDto).data = (await GetChildNodesAsync(item.id) as IEnumerable<MenusTreeDto>).OrderBy(a=>a.sort);
                 }
             }
             return roots;

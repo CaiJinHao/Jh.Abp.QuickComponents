@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Volo.Abp.Domain.Entities.Auditing;
 
-namespace Jh.Abp.MenuManagement.Menus
+namespace Jh.Abp.MenuManagement
 {
     //[GeneratorClass]
     [Description("菜单和角色映射表")]

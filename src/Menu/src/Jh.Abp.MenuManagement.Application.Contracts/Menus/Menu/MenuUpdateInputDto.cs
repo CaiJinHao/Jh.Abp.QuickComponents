@@ -3,7 +3,7 @@ using Jh.Abp.Application.Contracts.Extensions;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.ObjectExtending;
 
-namespace Jh.Abp.MenuManagement.Menus
+namespace Jh.Abp.MenuManagement
 {
     public class MenuUpdateInputDto : ExtensibleObject, IHasConcurrencyStamp, IMethodDto<Menu>
     {
@@ -50,5 +50,7 @@ namespace Jh.Abp.MenuManagement.Menus
         /// 并发检测字段 必须和数据中数据的值一样才会允许更新
         /// </summary>
         public string ConcurrencyStamp { get; set; }
+
+        public string[] PermissionNames { get; set; }
     }
 }

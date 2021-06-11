@@ -1,14 +1,13 @@
-﻿using Jh.Abp.Extensions;
-using Jh.Abp.MenuManagement.Permissions;
-using Microsoft.AspNetCore.Authorization;
+﻿using Jh.Abp.Application.Contracts.Extensions;
+using Jh.Abp.Common;
+using Jh.Abp.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Volo.Abp.Uow;
 
-namespace Jh.Abp.MenuManagement.Menus
+namespace Jh.Abp.MenuManagement
 {
     public class MenuAppService
         : CrudApplicationService<Menu, MenuDto, MenuDto, Guid, MenuRetrieveInputDto, MenuCreateInputDto, MenuUpdateInputDto, MenuDeleteInputDto>
@@ -36,15 +35,17 @@ namespace Jh.Abp.MenuManagement.Menus
 
         public override async Task<Menu> CreateAsync(MenuCreateInputDto inputDto, bool autoSave = true, CancellationToken cancellationToken = default)
         {
-            var entity = await base.CreateAsync(inputDto, true, cancellationToken);
-            if (inputDto.RoleIds != null && inputDto.RoleIds.Length > 0)
+            inputDto.MethodInput = new MethodDto<Menu>()
             {
-                foreach (var roleid in inputDto.RoleIds)
+                CreateOrUpdateEntityAction = entity =>
                 {
-                    entity.AddMenuRoleMap(roleid);
+                    foreach (var roleid in inputDto.RoleIds.ToNullList())
+                    {
+                        entity.AddMenuRoleMap(roleid);
+                    }
                 }
-            }
-            return entity;
+            };
+            return await base.CreateAsync(inputDto, true, cancellationToken);
         }
 
         protected virtual IEnumerable<Menu> EnumerableCreateAsync(MenuCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default)
@@ -58,6 +59,21 @@ namespace Jh.Abp.MenuManagement.Menus
         public override Task<Menu[]> CreateAsync(MenuCreateInputDto[] inputDtos, bool autoSave = false, CancellationToken cancellationToken = default)
         {
             return Task.FromResult(EnumerableCreateAsync(inputDtos, autoSave, cancellationToken).ToArray());
+        }
+
+        public override Task<MenuDto> UpdateAsync(Guid id, MenuUpdateInputDto updateInput)
+        {
+            updateInput.MethodInput = new MethodDto<Menu>()
+            {
+                CreateOrUpdateEntityAction = (entity) =>
+                {
+                    foreach (var item in updateInput.PermissionNames.ToNullList())
+                    {
+                        entity.AddMenuPermissionMap(item);
+                    }
+                }
+            };
+            return base.UpdateAsync(id, updateInput);
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Jh.Abp.MenuManagement.Menus
+namespace Jh.Abp.MenuManagement
 {
     public class MenuAndRoleMapCreateInputDto
     {
@@ -18,5 +18,12 @@ namespace Jh.Abp.MenuManagement.Menus
         /// </summary>
         [Required]
         public Guid[] RoleIds { get; set; }
+
+        /// <summary>
+        /// 权限名称列表
+        /// </summary>
+        public string[] PermissionNames { get; set; }
+        public string ProviderName { get; set; }
+        public string ProviderKey { get; set; }
     }
 }

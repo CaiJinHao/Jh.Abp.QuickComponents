@@ -12,7 +12,7 @@ namespace Jh.Abp.Application.Contracts.Extensions
     /// <typeparam name="TEntity"></typeparam>
     public  class MethodDto<TEntity>
     {
-        public Action<TEntity> UpdateEntityAction;
+        public Action<TEntity> CreateOrUpdateEntityAction;
 
         public Func<IQueryable<TEntity>, IQueryable<TEntity>> QueryAction;
     }

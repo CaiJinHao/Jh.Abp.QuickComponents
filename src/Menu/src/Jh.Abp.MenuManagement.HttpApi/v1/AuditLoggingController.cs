@@ -1,5 +1,5 @@
 ﻿using Jh.Abp.Application.Contracts.Extensions;
-using Jh.Abp.MenuManagement.Menus;
+
 using Jh.Abp.MenuManagement.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

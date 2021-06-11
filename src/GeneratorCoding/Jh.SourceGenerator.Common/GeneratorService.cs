@@ -125,7 +125,7 @@ namespace Jh.SourceGenerator.Common
                 }
                 var required = GetAttr<RequiredAttribute>(property);
                 var theType = property.PropertyType;
-                var valueType = ObjectExtensions.GetObjectType(theType);
+                var valueType = theType.GetObjectType();
                 var fieldDto = new FieldDto()
                 {
                     Name = GetFiledName(property),

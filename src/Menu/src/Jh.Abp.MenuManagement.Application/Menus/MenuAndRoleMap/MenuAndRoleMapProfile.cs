@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Volo.Abp.AutoMapper;
 
-namespace Jh.Abp.MenuManagement.Menus
+namespace Jh.Abp.MenuManagement
 {
     public class MenuAndRoleMapProfile : Profile
     {

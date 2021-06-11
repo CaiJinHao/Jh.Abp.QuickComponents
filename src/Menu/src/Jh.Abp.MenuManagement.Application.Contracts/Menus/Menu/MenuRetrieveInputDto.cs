@@ -2,7 +2,7 @@
 using Jh.Abp.Application.Contracts.Extensions;
 using Volo.Abp.Application.Dtos;
 
-namespace Jh.Abp.MenuManagement.Menus
+namespace Jh.Abp.MenuManagement
 {
     /// <summary>
     /// 只存放需要查询的字段

@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Jh.Abp.Application.Contracts.Extensions;
+using System;
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.ObjectExtending;
 
-namespace Jh.Abp.MenuManagement.Menus
+namespace Jh.Abp.MenuManagement
 {
     /// <summary>
     /// 只存放需要传值的
@@ -52,5 +53,8 @@ namespace Jh.Abp.MenuManagement.Menus
         /// 角色ID列表
         /// </summary>
         public Guid[] RoleIds { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        public MethodDto<Menu> MethodInput { get; set; }
     }
 }

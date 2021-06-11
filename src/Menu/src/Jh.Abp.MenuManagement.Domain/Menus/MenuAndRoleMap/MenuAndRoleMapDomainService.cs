@@ -6,7 +6,7 @@ using Volo.Abp.Domain.Services;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Jh.Abp.MenuManagement.Menus
+namespace Jh.Abp.MenuManagement
 {
     public class MenuAndRoleMapDomainService: IMenuAndRoleMapDomainService,IDomainService
     {

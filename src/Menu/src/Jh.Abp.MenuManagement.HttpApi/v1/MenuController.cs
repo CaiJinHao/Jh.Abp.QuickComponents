@@ -1,5 +1,5 @@
 ﻿using Jh.Abp.Application.Contracts.Extensions;
-using Jh.Abp.MenuManagement.Menus;
+
 using Jh.Abp.MenuManagement.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +7,10 @@ using System;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Data;
+using System.Linq;
+using Volo.Abp.PermissionManagement;
 
 namespace Jh.Abp.MenuManagement.v1
 {
@@ -15,6 +18,9 @@ namespace Jh.Abp.MenuManagement.v1
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
     public class MenuController: MenuManagementController
     {
+        public IPermissionDefinitionManager PermissionDefinitionManager { get; set; }
+        public IPermissionAppService permissionAppService { get; set; }
+        public IMenuPermissionMapAppService menuPermissionMapAppService { get; set; }
         private readonly IMenuAppService menuAppService;
         public IDataFilter<ISoftDelete> dataFilter { get; set; }
 
@@ -166,10 +172,22 @@ namespace Jh.Abp.MenuManagement.v1
                 {
                     MethodInput = new MethodDto<Menu>()
                     {
-                        UpdateEntityAction = (entity) => entity.IsDeleted = isDeleted
+                        CreateOrUpdateEntityAction = (entity) => entity.IsDeleted = isDeleted
                     }
                 });
             }
+        }
+
+        [Authorize(MenuManagementPermissions.Menus.Default)]
+        [HttpGet]
+        [Route("SelectPermissions")]
+        public virtual async Task<dynamic> GetSelectAsync(string name)
+        {
+            var datas = await menuPermissionMapAppService.GetLocalizePermissionGrantsAsync();
+            return new
+            {
+                items = datas.Select(a => new { name = a.Value, value = a.Name })
+            };
         }
     }
 }

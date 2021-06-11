@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Volo.Abp.EntityFrameworkCore;
 
-namespace Jh.Abp.MenuManagement.Menus
+namespace Jh.Abp.MenuManagement
 {
     public class MenuAndRoleMapRepository : CrudRepository<MenuManagementDbContext, MenuAndRoleMap, Guid>, IMenuAndRoleMapRepository
     {

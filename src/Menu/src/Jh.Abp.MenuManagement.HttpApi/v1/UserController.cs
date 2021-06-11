@@ -1,4 +1,4 @@
-﻿using Jh.Abp.MenuManagement.Menus;
+﻿
 using Jh.Abp.MenuManagement.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Identity;
@@ -20,6 +21,7 @@ namespace Jh.Abp.MenuManagement.v1
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
     public class UserController : IdentityUserController
     {
+        public IPermissionDefinitionManager PermissionDefinitionManager { get; set; }
         public IDataFilter<ISoftDelete> dataFilter { get; set; }
         protected IProfileAppService ProfileAppService { get; }
         protected IdentityUserManager UserManager { get; }
@@ -47,7 +49,7 @@ namespace Jh.Abp.MenuManagement.v1
             };
         }
 
-		[Authorize(IdentityPermissions.Users.Default)]
+        [Authorize(IdentityPermissions.Users.Default)]
         [HttpGet]
         public override async Task<PagedResultDto<IdentityUserDto>> GetListAsync([FromQuery] GetIdentityUsersInput input)
         {
@@ -68,7 +70,15 @@ namespace Jh.Abp.MenuManagement.v1
             return ProfileAppService.GetAsync();
         }
 
-		[Authorize(IdentityPermissions.Users.Update)]
+        [Authorize(IdentityPermissions.Users.Default)]
+        [HttpGet("{id}/Permissions")]
+        public virtual IEnumerable<string> GePermissionsAsync()
+        {
+            var datas = PermissionDefinitionManager.GetPermissions();
+            return datas.Select(a => a.Name).ToList();
+        }
+
+        [Authorize(IdentityPermissions.Users.Update)]
         [HttpPost]
         [Route("change-password")]
         public virtual Task ChangePasswordAsync(ChangePasswordInput input)

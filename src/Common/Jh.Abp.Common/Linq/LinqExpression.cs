@@ -68,7 +68,7 @@ namespace Jh.Abp.Common.Linq
                 MethodInfo? method = null;
                 Expression proerty = Expression.Property(parameterExpression, item.Name);
                 var propertyType = propertyVal.GetType();
-                var valueType = ObjectExtensions.GetObjectType(propertyType);
+                var valueType = propertyType.GetObjectType();
                 switch (valueType)
                 {
                     case Enums.ObjectType.Enum:
@@ -80,7 +80,6 @@ namespace Jh.Abp.Common.Linq
                                 continue;
                             }
                             method = propertyType.GetMethod("Equals", new Type[] { propertyType });
-                            proerty = Expression.Convert(proerty, propertyType);
                         }
                         break;
                     case Enums.ObjectType.Int16:
@@ -93,7 +92,6 @@ namespace Jh.Abp.Common.Linq
                         {
                             //只要不是null就添加查询条件
                             method = propertyType.GetMethod("Equals", new Type[] { propertyType });
-                            proerty = Expression.Convert(proerty, propertyType);
                         }
                         break;
                     case Enums.ObjectType.Guid:
@@ -119,6 +117,8 @@ namespace Jh.Abp.Common.Linq
                         //其他不添加查询条件
                         continue;
                 }
+                //处理可空类型抛异常问题，转换为不可空
+                proerty = Expression.Convert(proerty, propertyType);
                 //3.创建常数表达式
                 ConstantExpression constantExpression = Expression.Constant(propertyVal, propertyType);
                 //4.创建方法调用表达式

@@ -10,7 +10,7 @@ using Volo.Abp;
 using JetBrains.Annotations;
 using System.Linq;
 
-namespace Jh.Abp.MenuManagement.Menus
+namespace Jh.Abp.MenuManagement
 {
     [GeneratorClass]
     [Description("菜单和权限映射")]
@@ -26,16 +26,16 @@ namespace Jh.Abp.MenuManagement.Menus
         [CreateOrUpdateInputDto]
         [Description("权限标识")]
         [Required]
-        public Guid PermissionId { get; set; }
+        public string PermissionName { get; set; }
 
         [ProfileIgnore]
         public virtual Menu Menu { get; set; }
 
         public MenuPermissionMap() { }
-        public MenuPermissionMap(Guid menuid, Guid permissionId)
+        public MenuPermissionMap(Guid menuid, string permissionName)
         {
             this.MenuId = menuid;
-            this.PermissionId = permissionId;
+            this.PermissionName = permissionName;
         }
     }
 }

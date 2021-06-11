@@ -7,12 +7,12 @@ using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories.Dapper;
 using Volo.Abp.EntityFrameworkCore;
 using Dapper;
-using Jh.Abp.MenuManagement.Menus;
+
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Jh.Abp.MenuManagement.Menus
+namespace Jh.Abp.MenuManagement
 {
     /*
      使用该类的模块需要引用typeof(AbpDapperModule)

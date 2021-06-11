@@ -92,6 +92,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <!-- 多选角色 -->
+                                <label class="layui-form-label">映射权限模块：</label>
+                                <div class="layui-input-inline">
+                                    <div id="permissionsNames" style="width: 182px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <br />
                 <div class="layui-row" style="text-align:center;">
@@ -108,6 +119,7 @@
     <script src="../../plugins/vue/vue.min.js"></script>
     <!--公共函数库-->
     <script src="../../modules/extend/common.js"></script>
+    <script src="../../plugins/xm-select/xm-select.js"></script>
     <script>
         var vm = new Vue({
             el: '#page-vm',
@@ -163,6 +175,7 @@
                     var _the = this;
                     vm.paramObj = geturlparam();
                     _the.loadData();
+                    _the.loadPermissionsNames();
                 },
                 loadData: function () {
                     if (vm.paramObj.id) {
@@ -175,7 +188,48 @@
                             }
                         });
                     }
-                }
+                },
+                setPermissionsNamesValue:function(_fn){
+                    let _the=this;
+                    ajaxmod.requestAuthorize({
+                        url: '/MenuAndRoleMap/'+vm.paramObj.id+'/Permissions',
+                        type: 'Get',
+                        success: function (response) {
+                            if (_fn) {
+                                _fn(response);
+                            }
+                        }
+                    });
+                },
+                loadPermissionsNames:function(_fn){
+                    let _the=this;
+                    ajaxmod.requestAuthorize({
+                        url: '/menu/SelectPermissions',
+                        type: 'Get',
+                        success: function (response) {
+                            let _permissionsValue = [];
+                            function _render() {
+                                _the.permissionsNamesSelects = xmSelect.render({
+                                    el: '#permissionsNames',
+                                    language: 'zn',
+                                    initValue: _permissionsValue,
+                                    data: response.items
+                                });
+                            }
+                            if (vm.paramObj.id) {
+                                _the.setPermissionsNamesValue(function (permissions) {
+                                    _permissionsValue = permissions;
+                                    _render();
+                                });
+                            } else {
+                                _render();
+                            }
+                            if (_fn) {
+                                _fn();
+                            }
+                        }
+                    });
+                },
             };
             menuObj.initPage();
 
@@ -187,6 +241,7 @@
 
             form.on('submit(btn_submit_menu_form)', function (_from_data) {
                 var data = vm.menu;
+                data.permissionNames = menuObj.permissionsNamesSelects.getValue('value');
                 var url = '/menu';
                 var type = 'Post';
                 if (vm.paramObj.id) {

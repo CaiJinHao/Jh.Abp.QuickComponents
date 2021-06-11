@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
 
-namespace Jh.Abp.MenuManagement.Menus
+namespace Jh.Abp.MenuManagement
 {
     public interface IMenuAndRoleMapAppService
         :ICrudApplicationService<MenuAndRoleMap, MenuAndRoleMapDto, MenuAndRoleMapDto, Guid, MenuAndRoleMapRetrieveInputDto, MenuAndRoleMapCreateInputDto, MenuAndRoleMapUpdateInputDto, MenuAndRoleMapDeleteInputDto>

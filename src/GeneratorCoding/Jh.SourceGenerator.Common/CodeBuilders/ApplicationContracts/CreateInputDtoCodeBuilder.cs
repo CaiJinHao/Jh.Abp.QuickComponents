@@ -40,6 +40,10 @@ using Volo.Abp.ObjectExtending;");
                         var nullable = _field.IsNullable ? "?" : "";//可空类型
                         builder.AppendLine($"\t\tpublic {_field.Type}{nullable} {_field.Name} " + "{ get; set; }");
                     }
+                    builder.AppendLine("\t\t/// <summary>");
+                    builder.AppendLine("\t\t/// 方法参数回调");
+                    builder.AppendLine("\t\t/// <summary>");
+                    builder.AppendLine($"\t\tpublic MethodDto<{table.Name}> MethodInput " + "{ get; set; }");
                 }
                 builder.AppendLine("\t}");
             }

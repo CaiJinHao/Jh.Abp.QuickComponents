@@ -10,7 +10,7 @@ using Volo.Abp;
 using JetBrains.Annotations;
 using System.Linq;
 
-namespace Jh.Abp.MenuManagement.Menus
+namespace Jh.Abp.MenuManagement
 {
     //[GeneratorClass]
     [Description("菜单")]
@@ -60,15 +60,26 @@ namespace Jh.Abp.MenuManagement.Menus
         [ProfileIgnore]
         public virtual IList<MenuAndRoleMap> MenuRoleMaps { get; protected set; }
 
+        [ProfileIgnore]
+        public virtual IList<MenuPermissionMap> MenuPermissionMaps { get; protected set; }
+        
+
         public Menu()
         {
             MenuRoleMaps = new List<MenuAndRoleMap>();
+            MenuPermissionMaps = new List<MenuPermissionMap>();
         }
 
         public virtual void AddMenuRoleMap(Guid roleid)
         {
             Check.NotNull(roleid, nameof(roleid));
             MenuRoleMaps.Add(new MenuAndRoleMap(Id, roleid));
+        }
+
+        public virtual void AddMenuPermissionMap(string permissionName)
+        {
+            Check.NotNull(permissionName, nameof(permissionName));
+            MenuPermissionMaps.Add(new MenuPermissionMap(Id, permissionName));
         }
     }
 }

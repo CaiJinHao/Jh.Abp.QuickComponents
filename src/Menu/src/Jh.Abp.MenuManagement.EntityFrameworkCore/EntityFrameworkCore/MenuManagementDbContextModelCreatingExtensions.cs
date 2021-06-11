@@ -1,5 +1,5 @@
 ﻿using System;
-using Jh.Abp.MenuManagement.Menus;
+
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp;
 using Volo.Abp.EntityFrameworkCore.Modeling;
@@ -53,6 +53,16 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
 
                 b.HasOne(mrm => mrm.Menu).WithMany(menu => menu.MenuRoleMaps).HasForeignKey(menu => menu.MenuId);
                 b.HasIndex(c => c.RoleId).IncludeProperties(p => p.MenuId);//mysql不能使用包含列
+            });
+
+            builder.Entity<MenuPermissionMap>(b => {
+                b.HasComment("菜单和权限映射");
+                b.ToTable(options.TablePrefix + "MenuPermissionMap", options.Schema);
+                b.ConfigureByConvention();
+                b.Property(p => p.Id).ValueGeneratedOnAdd();
+
+                b.HasOne(mrm => mrm.Menu).WithMany(menu => menu.MenuPermissionMaps).HasForeignKey(menu => menu.MenuId);
+                b.HasIndex(c => c.MenuId).IncludeProperties(p => p.PermissionName);//mysql不能使用包含列
             });
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace Jh.Abp.MenuManagement.Menus
+﻿namespace Jh.Abp.MenuManagement
 {
     public class MenuDeleteInputDto : MenuRetrieveInputDto
     {

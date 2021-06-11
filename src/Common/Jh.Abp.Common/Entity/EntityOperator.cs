@@ -76,7 +76,7 @@ namespace Jh.Abp.Common.Entity
                 return false;
             }
             var propertyType = propertyVal.GetType();
-            var valueType = ObjectExtensions.GetObjectType(propertyType);
+            var valueType = propertyType.GetObjectType();
             switch (valueType)
             {
                 case Enums.ObjectType.Int16:

@@ -48,6 +48,17 @@ namespace Jh.Abp.Extensions
         {
             await CheckCreatePolicyAsync().ConfigureAwait(false);
             var entity = ObjectMapper.Map<TCreateInputDto, TEntity>(inputDto);
+            var methodDto = inputDto as IMethodDto<TEntity>;
+            if (methodDto != null)
+            {
+                if (methodDto.MethodInput != null)
+                {
+                    if (methodDto.MethodInput.CreateOrUpdateEntityAction != null)
+                    {
+                        methodDto.MethodInput.CreateOrUpdateEntityAction(entity);
+                    }
+                }
+            }
             return await crudRepository.CreateAsync(entity, autoSave, cancellationToken).ConfigureAwait(false);
         }
 
@@ -163,9 +174,9 @@ namespace Jh.Abp.Extensions
             {
                 if (methodDto.MethodInput != null)
                 {
-                    if (methodDto.MethodInput.UpdateEntityAction != null)
+                    if (methodDto.MethodInput.CreateOrUpdateEntityAction != null)
                     {
-                        methodDto.MethodInput.UpdateEntityAction(entity);
+                        methodDto.MethodInput.CreateOrUpdateEntityAction(entity);
                     }
                 }
             }
@@ -182,9 +193,9 @@ namespace Jh.Abp.Extensions
             {
                 if (methodDto.MethodInput != null)
                 {
-                    if (methodDto.MethodInput.UpdateEntityAction != null)
+                    if (methodDto.MethodInput.CreateOrUpdateEntityAction != null)
                     {
-                        methodDto.MethodInput.UpdateEntityAction(entity);
+                        methodDto.MethodInput.CreateOrUpdateEntityAction(entity);
                     }
                 }
             }

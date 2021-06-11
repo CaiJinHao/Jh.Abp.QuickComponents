@@ -1,4 +1,4 @@
-﻿using Jh.Abp.MenuManagement.Menus;
+﻿
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
@@ -14,5 +14,6 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
 
         DbSet<Menu> Menus { get; }
         DbSet<MenuAndRoleMap> MenuAndRoleMaps { get; }
+        DbSet<MenuPermissionMap> MenuPermissionMaps { get; }
     }
 }
