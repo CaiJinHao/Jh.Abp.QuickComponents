@@ -2,10 +2,12 @@
 using Volo.Abp.Application;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
+using Volo.Abp.PermissionManagement;
 
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
+        typeof(AbpPermissionManagementApplicationModule),
         typeof(MenuManagementDomainModule),
         typeof(MenuManagementApplicationContractsModule),
         typeof(AbpDddApplicationModule),

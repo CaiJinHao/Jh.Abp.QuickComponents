@@ -8,6 +8,7 @@ using Volo.Abp.EventBus.Local;
 using Volo.Abp.PermissionManagement;
 using Microsoft.Extensions.Localization;
 using Jh.Abp.Common;
+using Volo.Abp.MultiTenancy;
 
 namespace Jh.Abp.MenuManagement
 {
@@ -15,8 +16,8 @@ namespace Jh.Abp.MenuManagement
         : CrudApplicationService<MenuPermissionMap, MenuPermissionMapDto, MenuPermissionMapDto, System.Guid, MenuPermissionMapRetrieveInputDto, MenuPermissionMapCreateInputDto, MenuPermissionMapUpdateInputDto, MenuPermissionMapDeleteInputDto>,
         IMenuPermissionMapAppService
     {
+        public IPermissionManager PermissionManager { get; set; }
         public IPermissionAppService permissionAppService { get; set; }
-        //protected IPermissionAppService permissionAppService => LazyServiceProvider.LazyGetRequiredService<IPermissionAppService>();
         public IPermissionDefinitionManager PermissionDefinitionManager { get; set; }
         private readonly IMenuPermissionMapRepository MenuPermissionMapRepository;
         private readonly IMenuPermissionMapDapperRepository MenuPermissionMapDapperRepository;
@@ -32,24 +33,24 @@ namespace Jh.Abp.MenuManagement
             {
                 MenuId = menuid
             })).Items.Select(a => a.PermissionName);
-            //var result = await PermissionAppService.GetAsync(providerName, providerKey);
             var datas = await GetPermissionGrantsAsync();
             var permissions = datas.Where(a => permissionNames.Contains(a.Name));
             var result = new List<MenusTreeDto>();
             foreach (var permission in permissions)
             {
-                var module= permission.DisplayName.Localize(StringLocalizerFactory);
+                var parentPermission = await PermissionManager.GetAsync(permission.Name, providerName, providerKey);
+                var module = permission.DisplayName.Localize(StringLocalizerFactory);
                 result.Add(new MenusTreeDto()
                 {
                     id = permission.Name,
                     title = module.Value,
                     value = permission.Name,
-                    //@checked = auth_menus_id.Contains(a.Id),
-                    @checked = false,
+                    @checked = parentPermission.IsGranted,
                     disabled = false
                 });
                 foreach (var item in permission.Children)
                 {
+                    var itemPermission = await PermissionManager.GetAsync(permission.Name, providerName, providerKey);
                     var a = item.DisplayName.Localize(StringLocalizerFactory);
                     result.Add(new MenusTreeDto()
                     {
@@ -57,8 +58,7 @@ namespace Jh.Abp.MenuManagement
                         parent_id = permission.Name,
                         title = a.Value,
                         value = item.Name,
-                        //@checked = auth_menus_id.Contains(a.Id),
-                        @checked = false,
+                        @checked = itemPermission.IsGranted,
                         disabled = false
                     });
                 }
@@ -79,7 +79,12 @@ namespace Jh.Abp.MenuManagement
 
         public virtual Task<IEnumerable<PermissionDefinition>> GetPermissionGrantsAsync()
         {
-            var datas = PermissionDefinitionManager.GetGroups().SelectMany(g => g.Permissions).Where(a => a.Providers.Contains(RolePermissionValueProvider.ProviderName) || a.Providers.Count == 0);
+            var multiTenancySide = CurrentTenant.GetMultiTenancySide();
+            var datas = PermissionDefinitionManager.GetGroups()
+                .SelectMany(g => g.Permissions)
+                .Where(a => (a.Providers.Contains(RolePermissionValueProvider.ProviderName)|| a.Providers.Count == 0)
+                &&a.IsEnabled
+                && a.MultiTenancySide.HasFlag(multiTenancySide));
             return Task.FromResult(datas);
         }
 
