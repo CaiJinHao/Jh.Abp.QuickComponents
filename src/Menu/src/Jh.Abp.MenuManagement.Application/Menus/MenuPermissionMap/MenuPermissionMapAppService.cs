@@ -32,6 +32,7 @@ namespace Jh.Abp.MenuManagement
             {
                 MenuId = menuid
             })).Items.Select(a => a.PermissionName);
+            //var result = await PermissionAppService.GetAsync(providerName, providerKey);
             var datas = await GetPermissionGrantsAsync();
             var permissions = datas.Where(a => permissionNames.Contains(a.Name));
             var result = new List<MenusTreeDto>();
@@ -67,7 +68,7 @@ namespace Jh.Abp.MenuManagement
 
         public virtual async Task UpdateAsync(string providerName, string providerKey, string[] permissionNames)
         {
-            var updatePermissionDtos = PermissionDefinitionManager.GetPermissions()
+            var updatePermissionDtos = (await GetPermissionGrantsAsync())
                 .Select(p => new UpdatePermissionDto
                 {
                     Name = p.Name,
@@ -78,7 +79,7 @@ namespace Jh.Abp.MenuManagement
 
         public virtual Task<IEnumerable<PermissionDefinition>> GetPermissionGrantsAsync()
         {
-            var datas = PermissionDefinitionManager.GetGroups().SelectMany(g => g.Permissions);
+            var datas = PermissionDefinitionManager.GetGroups().SelectMany(g => g.Permissions).Where(a => a.Providers.Contains(RolePermissionValueProvider.ProviderName) || a.Providers.Count == 0);
             return Task.FromResult(datas);
         }
 

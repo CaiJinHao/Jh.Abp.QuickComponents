@@ -44,6 +44,8 @@ using Jh.Abp.Extensions;
 using Jh.Abp.EntityFrameworkCore.DmExtensions;
 using Jh.Abp.EntityFrameworkCore.Dm;
 using Volo.Abp.EntityFrameworkCore.MySQL;
+using Volo.Abp.PermissionManagement.Identity;
+using Volo.Abp.PermissionManagement;
 
 namespace Jh.Abp.MenuManagement
 {
@@ -58,6 +60,8 @@ namespace Jh.Abp.MenuManagement
         typeof(AbpEntityFrameworkCoreMySQLModule),
         typeof(AbpAuditLoggingEntityFrameworkCoreModule),
         typeof(AbpPermissionManagementEntityFrameworkCoreModule),
+        typeof(AbpPermissionManagementApplicationModule),
+        typeof(AbpPermissionManagementDomainIdentityModule),
         typeof(AbpSettingManagementEntityFrameworkCoreModule),
         typeof(AbpAspNetCoreSerilogModule),
         //typeof(JhEntityFrameworkCoreDmExtensionsModule),
@@ -255,7 +259,7 @@ namespace Jh.Abp.MenuManagement
                     var data = scope.ServiceProvider
                         .GetRequiredService<IDataSeeder>();
                     var context = new DataSeedContext();
-                    context["RoleId"] = "8cb6c2ac-05de-152c-5b88-39fd0b870eab";//IdentityServerHost创建的角色ID
+                    context["RoleId"] = "75a8f151-d69a-c5ba-05cd-39fd0c6ac115";//IdentityServerHost创建的角色ID
                     await data.SeedAsync(context);
                 }
             });
