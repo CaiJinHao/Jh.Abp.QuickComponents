@@ -6,9 +6,9 @@ Jh.Abp.Application 2.0.1.2
 Jh.Abp.QuickComponents 1.2.5.6  
 Jh.Abp.MenuManagement.Application 0.1.9.5  
 Jh.SourceGenerator.Common 3.0.1.2
-Jh.Abp.EntityFrameworkCore.Dm 0.3
+Jh.Abp.EntityFrameworkCore.Dm 0.2
 
-模板：Module 4.3.2 -pre 
+模板：Module 4.3.2 -pre  
 Jh.Abp.Application 2.0.1.1  
 Jh.Abp.QuickComponents 1.2.5.5  
 Jh.Abp.MenuManagement.Application 0.1.9.4  
