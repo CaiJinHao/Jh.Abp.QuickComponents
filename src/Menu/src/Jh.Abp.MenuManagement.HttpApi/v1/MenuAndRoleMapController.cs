@@ -157,9 +157,9 @@ namespace Jh.Abp.MenuManagement.v1
 
 		[Authorize(MenuManagementPermissions.MenuAndRoleMaps.Default)]
         [HttpGet("TreesAll")]
-        public virtual async Task<dynamic> GetMenusTreesAsync(Guid roleId)
+        public virtual async Task<dynamic> GetMenusTreesAsync([FromQuery]MenuAndRoleMapTreeAllRetrieveInputDto input)
         {
-            var items = await menuAndRoleMapAppService.GetMenusTreesAsync(roleId);
+            var items = await menuAndRoleMapAppService.GetMenusTreesAsync(input);
             return new { items };
         }
     }

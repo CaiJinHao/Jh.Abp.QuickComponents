@@ -82,9 +82,11 @@ namespace Jh.Abp.MenuManagement
             return user.Roles.Select(a => a.RoleId);
         }
 
-        public virtual async Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(Guid roleid)
+        private MenuAndRoleMapTreeAllRetrieveInputDto menuAndRoleMapTreeAllRetrieveInputDto { get; set; }
+        public virtual async Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(MenuAndRoleMapTreeAllRetrieveInputDto input)
         {
-            var auth_menus_id = crudRepository.Where(a => a.RoleId == roleid).Select(a => a.MenuId).ToList();
+            menuAndRoleMapTreeAllRetrieveInputDto = input;
+            var auth_menus_id = crudRepository.Where(a => a.RoleId == input.RoleId).Select(a => a.MenuId).ToList();
 
             var resutlMenus = await MenuRepository.Select(a =>
                 new MenusTreeDto()
@@ -125,7 +127,7 @@ namespace Jh.Abp.MenuManagement
                         if (!data.data.Any())
                         {
                             //菜单加载完了，开始加载权限
-                            data.data = await menuPermissionMapAppService.GetPermissionTreesAsync(new Guid(data.value), "R", "admin");
+                            data.data = await menuPermissionMapAppService.GetPermissionTreesAsync(new Guid(data.value), menuAndRoleMapTreeAllRetrieveInputDto.ProviderName, menuAndRoleMapTreeAllRetrieveInputDto.ProviderKey);
                         }
                     }
                 }

@@ -204,7 +204,7 @@
                     ajaxmod.requestAuthorize({
                         url: '/MenuAndRoleMap/TreesAll',
                         type: 'Get',
-                        data: { roleId: vm.selectedRole.id },
+                        data: { roleId: vm.selectedRole.id, providerKey: vm.selectedRole.title },
                         success: function (response) {
                             _the.modulepointTree = new layuiXtree({
                                 elem: 'modulepoint_tree'                  //必填三兄弟之老大

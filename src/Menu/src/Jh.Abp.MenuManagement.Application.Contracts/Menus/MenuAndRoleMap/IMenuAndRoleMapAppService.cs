@@ -21,8 +21,7 @@ namespace Jh.Abp.MenuManagement
         /// <summary>
         /// 获取所有菜单树，有权限的自动选中
         /// </summary>
-        /// <param name="roleid"></param>
         /// <returns></returns>
-        Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(Guid roleid);
+        Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(MenuAndRoleMapTreeAllRetrieveInputDto input);
     }
 }

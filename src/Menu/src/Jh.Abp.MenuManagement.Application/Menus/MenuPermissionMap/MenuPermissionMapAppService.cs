@@ -34,12 +34,12 @@ namespace Jh.Abp.MenuManagement
                 MenuId = menuid
             })).Items.Select(a => a.PermissionName);
             var datas = await GetPermissionGrantsAsync();
-            var permissions = datas.Where(a => permissionNames.Contains(a.Name));
+            var permissions = datas.Where(a => permissionNames.Contains(a.Name));//当前菜单绑定的所有权限组
             var results = new List<MenusTreeDto>();
             foreach (var permission in permissions)
             {
-                var parentPermission = await PermissionManager.GetAsync(permission.Name, providerName, providerKey);
-                var module = permission.DisplayName.Localize(StringLocalizerFactory);
+                var parentPermission = await PermissionManager.GetAsync(permission.Name, providerName, providerKey);//获取当前权限组的选中信息
+                var module = permission.DisplayName.Localize(StringLocalizerFactory);//本地化当前权限的名称
                 var modulePermission = new MenusTreeDto()
                 {
                     id = permission.Name,
@@ -50,9 +50,9 @@ namespace Jh.Abp.MenuManagement
                 };
                 var childs = new List<MenusTreeDto>() { modulePermission };
                 {//childs
-                    foreach (var item in permission.Children)
+                    foreach (var item in permission.Children)//拿到当前权限组的子列表
                     {
-                        var itemPermission = await PermissionManager.GetAsync(permission.Name, providerName, providerKey);
+                        var itemPermission = await PermissionManager.GetAsync(item.Name, providerName, providerKey);
                         var a = item.DisplayName.Localize(StringLocalizerFactory);
                         childs.Add(new MenusTreeDto()
                         {
@@ -80,13 +80,21 @@ namespace Jh.Abp.MenuManagement
 
         public virtual async Task UpdateAsync(string providerName, string providerKey, string[] permissionNames)
         {
-            var updatePermissionDtos = (await GetPermissionGrantsAsync())
-                .Select(p => new UpdatePermissionDto
+            var multiTenancySide = CurrentTenant.GetMultiTenancySide();
+            var permissions = PermissionDefinitionManager.GetPermissions()
+                .Where(a => (a.Providers.Contains(RolePermissionValueProvider.ProviderName) || a.Providers.Count == 0)
+                && a.IsEnabled
+                && a.MultiTenancySide.HasFlag(multiTenancySide));
+            var updatePermissionDtos = permissions.Select(p => new UpdatePermissionDto
                 {
                     Name = p.Name,
                     IsGranted = permissionNames.ToNullList().Contains(p.Name)
                 }).ToArray();
-            await permissionAppService.UpdateAsync(providerName, providerKey, new UpdatePermissionsDto() { Permissions = updatePermissionDtos });
+            //await permissionAppService.UpdateAsync(providerName, providerKey, new UpdatePermissionsDto() { Permissions = updatePermissionDtos });
+            foreach (var permissionDto in updatePermissionDtos)
+            {
+                await PermissionManager.SetAsync(permissionDto.Name, providerName, providerKey, permissionDto.IsGranted);
+            }
         }
 
         public virtual Task<IEnumerable<PermissionDefinition>> GetPermissionGrantsAsync()
@@ -104,7 +112,7 @@ namespace Jh.Abp.MenuManagement
         {
             var result = new List<dynamic>();
             var datas = await GetPermissionGrantsAsync();
-            foreach (var item in PermissionDefinitionManager.GetGroups().SelectMany(g => g.Permissions))
+            foreach (var item in datas)
             {
                 var module = item.DisplayName.Localize(StringLocalizerFactory);
                 result.Add(new { name = module.Value, value = item.Name });
