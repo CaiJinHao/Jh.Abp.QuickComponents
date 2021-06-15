@@ -81,6 +81,15 @@ using Volo.Abp.Data;");
                         builder.AppendLine("\t\t}");
                     }
 
+                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Delete)]");
+                    builder.AppendLine("\t\t[HttpDelete(\"{id}\")]");
+                    builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync({table.KeyType} id)");
+                    {
+                        builder.AppendLine("\t\t{");
+                        builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(id);");
+                        builder.AppendLine("\t\t}");
+                    }
+
                     builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Default)]");
                     builder.AppendLine("\t\t[Route(\"all\")]");
                     builder.AppendLine("\t\t[HttpGet]");
@@ -88,24 +97,6 @@ using Volo.Abp.Data;");
                     {
                         builder.AppendLine("\t\t{");
                         builder.AppendLine($"\t\t\treturn await {table.Name}AppService.GetEntitysAsync(inputDto);");
-                        builder.AppendLine("\t\t}");
-                    }
-
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Update)]");
-                    builder.AppendLine("\t\t[HttpPatch(\"{id}\")]");
-                    builder.AppendLine($"\t\tpublic virtual async Task UpdatePortionAsync({table.KeyType} id, {table.Name}UpdateInputDto inputDto)");
-                    {
-                        builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\t await {table.Name}AppService.UpdatePortionAsync(id, inputDto);");
-                        builder.AppendLine("\t\t}");
-                    }
-
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Update)]");
-                    builder.AppendLine("\t\t[HttpPut(\"{id}\")]");
-                    builder.AppendLine($"\t\tpublic virtual async Task<{table.Name}Dto> UpdateAsync({table.KeyType} id, {table.Name}UpdateInputDto input)");
-                    {
-                        builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\treturn await {table.Name}AppService.UpdateAsync(id, input);");
                         builder.AppendLine("\t\t}");
                     }
 
@@ -121,21 +112,30 @@ using Volo.Abp.Data;");
                         builder.AppendLine("\t\t}");
                     }
 
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Delete)]");
-                    builder.AppendLine("\t\t[HttpDelete(\"{id}\")]");
-                    builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync({table.KeyType} id)");
-                    {
-                        builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(id);");
-                        builder.AppendLine("\t\t}");
-                    }
-
                     builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Default)]");
                     builder.AppendLine("\t\t[HttpGet(\"{id}\")]");
                     builder.AppendLine($"\t\tpublic virtual async Task<{table.Name}Dto> GetAsync({table.KeyType} id)");
                     {
                         builder.AppendLine("\t\t{");
                         builder.AppendLine($"\t\t\treturn await {table.Name}AppService.GetAsync(id);");
+                        builder.AppendLine("\t\t}");
+                    }
+
+                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Update)]");
+                    builder.AppendLine("\t\t[HttpPut(\"{id}\")]");
+                    builder.AppendLine($"\t\tpublic virtual async Task<{table.Name}Dto> UpdateAsync({table.KeyType} id, {table.Name}UpdateInputDto input)");
+                    {
+                        builder.AppendLine("\t\t{");
+                        builder.AppendLine($"\t\t\treturn await {table.Name}AppService.UpdateAsync(id, input);");
+                        builder.AppendLine("\t\t}");
+                    }
+
+                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Update)]");
+                    builder.AppendLine("\t\t[HttpPatch(\"{id}\")]");
+                    builder.AppendLine($"\t\tpublic virtual async Task UpdatePortionAsync({table.KeyType} id, {table.Name}UpdateInputDto inputDto)");
+                    {
+                        builder.AppendLine("\t\t{");
+                        builder.AppendLine($"\t\t\t await {table.Name}AppService.UpdatePortionAsync(id, inputDto);");
                         builder.AppendLine("\t\t}");
                     }
 
