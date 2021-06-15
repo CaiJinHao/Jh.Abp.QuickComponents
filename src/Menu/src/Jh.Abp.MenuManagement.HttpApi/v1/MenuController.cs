@@ -160,7 +160,7 @@ namespace Jh.Abp.MenuManagement.v1
             return await menuAppService.GetAsync(id, true);
         }
 
-		[Authorize(MenuManagementPermissions.Menus.Update)]
+		[Authorize(MenuManagementPermissions.Menus.Recover)]
         [HttpPatch]
         [Route("{id}/Deleted")]
         public virtual async Task UpdateDeletedAsync(Guid id, [FromBody] bool isDeleted)

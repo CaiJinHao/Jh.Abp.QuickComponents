@@ -10,6 +10,7 @@
     "Permission:AuditLoggingsManagement": "日志列表",
     "Permission:Create": "创建",
     "Permission:Edit": "编辑",
-    "Permission:Delete": "删除"
+    "Permission:Delete": "删除",
+    "Permission:Recover": "恢复"
   }
 }
