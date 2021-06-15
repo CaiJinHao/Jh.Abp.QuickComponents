@@ -24,7 +24,7 @@ namespace Jh.Abp.Domain.Shared
             {
                 options.Resources
                     .Add<JhAbpExtensionsResource>("en")
-                    .AddBaseTypes(typeof(AbpValidationResource))
+                    .AddBaseTypes(typeof(AbpValidationResource))//继承资源
                     .AddVirtualJson("/Localization/JhAbpExtensions");
             });
 
