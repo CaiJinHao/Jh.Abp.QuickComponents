@@ -9,6 +9,7 @@ using Volo.Abp.VirtualFileSystem;
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
+        typeof(AbpLocalizationModule),
         typeof(AbpValidationModule)
     )]
     public class MenuManagementDomainSharedModule : AbpModule
