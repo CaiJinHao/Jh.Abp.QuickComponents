@@ -46,7 +46,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-		[Authorize(MenuManagementPermissions.Menus.Create)]
+		[Authorize(MenuManagementPermissions.Menus.BatchCreate)]
         [Route("items")]
         [HttpPost]
         public virtual async Task CreateAsync(MenuCreateInputDto[] input)
@@ -59,7 +59,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="deleteInputDto"></param>
         /// <returns></returns>
-		[Authorize(MenuManagementPermissions.Menus.Delete)]
+		[Authorize(MenuManagementPermissions.Menus.BatchDelete)]
         [HttpDelete]
         public virtual async Task DeleteAsync([FromQuery] MenuDeleteInputDto deleteInputDto)
         {
@@ -71,7 +71,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="keys"></param>
         /// <returns></returns>
-		[Authorize(MenuManagementPermissions.Menus.Delete)]
+		[Authorize(MenuManagementPermissions.Menus.BatchDelete)]
         [Route("keys")]
         [HttpDelete]
         public virtual async Task DeleteAsync([FromBody]Guid[] keys)
@@ -84,7 +84,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="inputDto"></param>
         /// <returns></returns>
-		[Authorize(MenuManagementPermissions.Menus.Default)]
+		[Authorize(MenuManagementPermissions.Menus.Export)]
         [Route("all")]
         [HttpGet]
         public virtual async Task<ListResultDto<MenuDto>> GetEntitysAsync([FromQuery] MenuRetrieveInputDto inputDto)
@@ -98,7 +98,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// <param name="key"></param>
         /// <param name="inputDto"></param>
         /// <returns></returns>
-		[Authorize(MenuManagementPermissions.Menus.Update)]
+		[Authorize(MenuManagementPermissions.Menus.PortionUpdate)]
         [HttpPatch("{id}")]
         public virtual async Task UpdatePortionAsync(Guid id, MenuUpdateInputDto inputDto)
         {
@@ -116,21 +116,6 @@ namespace Jh.Abp.MenuManagement.v1
         public virtual async Task<MenuDto> UpdateAsync(Guid id, MenuUpdateInputDto input)
         {
             return await menuAppService.UpdateAsync(id, input);
-        }
-
-        /// <summary>
-        /// 根据条件分页查询
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-		[Authorize(MenuManagementPermissions.Menus.Default)]
-        [HttpGet]
-        public virtual async Task<PagedResultDto<MenuDto>> GetListAsync([FromQuery] MenuRetrieveInputDto input)
-        {
-            using (dataFilter.Disable())
-            {
-                return await menuAppService.GetListAsync(input);
-            }
         }
 
         /// <summary>
@@ -153,7 +138,7 @@ namespace Jh.Abp.MenuManagement.v1
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		[Authorize(MenuManagementPermissions.Menus.Default)]
+		[Authorize(MenuManagementPermissions.Menus.Detail)]
         [HttpGet("{id}")]
         public virtual async Task<MenuDto> GetAsync(Guid id)
         {
@@ -176,6 +161,22 @@ namespace Jh.Abp.MenuManagement.v1
                 });
             }
         }
+
+        /// <summary>
+        /// 根据条件分页查询
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [Authorize(MenuManagementPermissions.Menus.Default)]
+        [HttpGet]
+        public virtual async Task<PagedResultDto<MenuDto>> GetListAsync([FromQuery] MenuRetrieveInputDto input)
+        {
+            using (dataFilter.Disable())
+            {
+                return await menuAppService.GetListAsync(input);
+            }
+        }
+
 
         [Authorize(MenuManagementPermissions.Menus.Default)]
         [HttpGet]

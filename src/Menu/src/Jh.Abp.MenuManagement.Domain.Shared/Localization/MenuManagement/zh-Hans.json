@@ -8,9 +8,14 @@
     "Permission:MenuAndRoleMapManagement": "权限列表",
     "Permission:MenusManagement": "菜单列表",
     "Permission:AuditLoggingsManagement": "日志列表",
+    "Permission:Export": "导出",
+    "Permission:Detail": "详细",
     "Permission:Create": "创建",
+    "Permission:BatchCreate": "批量创建",
     "Permission:Edit": "编辑",
+    "Permission:PortionEdit": "局部更新",
     "Permission:Delete": "删除",
+    "Permission:BatchDelete": "批量删除",
     "Permission:Recover": "恢复"
   }
 }
