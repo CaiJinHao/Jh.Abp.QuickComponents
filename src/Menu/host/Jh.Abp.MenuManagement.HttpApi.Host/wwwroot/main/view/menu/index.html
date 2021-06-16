@@ -32,9 +32,9 @@
                             <div class="layui-inline">
                                 <label class="layui-form-label">是否禁用：</label>
                                 <div class="layui-input-inline">
-                                    <select lay-search name="deleted">
-                                        <option value="0">请选择</option>
+                                    <select lay-search name="deleted" :value="2">
                                         <option v-for="option in deletedlist" v-bind:value="option.value">{{ option.text }}</option>
+                                        <option value="0">全部</option>
                                     </select>
                                 </div>
                             </div>
@@ -104,7 +104,6 @@
                 datatable = layui.datatable;
             var _context = $('.table_menu_mg'),
                 _table_style = { align: 'center' };//公共样式
-
             var menuObj = {
                 renderTable: function () {
                     var optDefault = {
@@ -115,6 +114,7 @@
                     };
                     var formfield = form.val("form_menu");
                     $.extend(optDefault, formfield);
+                    console.log(optDefault);
                     var _the = this;
                     datatable.renderTable(optDefault, {
                         url: '/menu',
@@ -218,7 +218,7 @@
                 loadtable: function () {
                     $('#btn_menu_from_query').click();
                 },
-                loadList: function () {
+                loadList: function (_fn) {
                     var _the = this;
                     ajaxmod.ajaxArray([
                         {
@@ -229,12 +229,11 @@
                             }
                         }
                     ], function () {
-                        vm.RenderDom(form);
+                            vm.RenderDom(form, function () { vm.RenderDom(form, _fn)});
                     });
                 }
             };
-            menuObj.loadList();
-            menuObj.renderTable();//加载第一页
+            menuObj.loadList(menuObj.renderTable);
 
             //绑定编辑也保存事件
             top.tool.subscribe("edit_menu_form_refresh", function () {

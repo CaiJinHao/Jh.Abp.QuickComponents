@@ -46,15 +46,18 @@
                                     </div>
                                 </div>
                             }
-                            <div class="layui-inline">
-                                <label class="layui-form-label">已删除：</label>
-                                <div class="layui-input-inline">
-                                    <select lay-search name="deleted">
-                                        <option value="0">请选择</option>
-                                        <option v-for="option in deletedlist" v-bind:value="option.value">{{ option.text }}</option>
-                                    </select>
+                            @if (table.IsDelete)
+                            {
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">已删除：</label>
+                                    <div class="layui-input-inline">
+                                        <select lay-search name="deleted" :value="2">
+                                            <option v-for="option in deletedlist" v-bind:value="option.value">{{ option.text }}</option>
+                                            <option value="0">全部</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+                            }
                             <div class="layui-inline btngroup">
                                 <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_@(table_name_lower)_from" id="btn_@(table_name_lower)_from_query">查询</a>
                                 <!-- <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_@(table_name_lower)_from_export">导出</a> -->
@@ -224,7 +227,7 @@
                 loadtable:function(){
                     $('#btn_@(table_name_lower)_from_query').click();
                 },
-                loadList: function () {
+                loadList: function (_fn) {
                     var _the = this;
                     ajaxmod.ajaxArray([
                         {
@@ -235,16 +238,22 @@
                             }
                         }
                     ], function () {
-                        vm.RenderDom(form);
+                            vm.RenderDom(form, function () { vm.RenderDom(form, _fn) });
                     });
                 }
             };
-            @(table_name_lower)Obj.loadList();
-            @(table_name_lower)Obj.renderTable();
 
-            top.tool.subscribe("edit_@(table_name_lower)_form_refresh", function () {
+         @if (table.IsDelete) {
+            @:@(table_name_lower)Obj.loadList(@(table_name_lower)Obj.renderTable);
+         }
+         else
+         {
+            @:@(table_name_lower)Obj.renderTable();
+         }
+
+         top.tool.subscribe("edit_@(table_name_lower)_form_refresh", function () {
                 @(table_name_lower)Obj.renderTable();
-            });
+         });
 
             table.on('tool(table_@(table_name_lower)_list)', function (obj) {
                 var data = obj.data;

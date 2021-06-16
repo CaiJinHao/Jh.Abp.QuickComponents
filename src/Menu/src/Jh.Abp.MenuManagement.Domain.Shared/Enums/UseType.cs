@@ -11,9 +11,9 @@ namespace Jh.Abp.MenuManagement
     public enum UseType
     {
         None = 0,
+        [Description("否")]
+        No = 2,
         [Description("是")]
         Yes = 1,
-        [Description("否")]
-        No = 2
     }
 }
