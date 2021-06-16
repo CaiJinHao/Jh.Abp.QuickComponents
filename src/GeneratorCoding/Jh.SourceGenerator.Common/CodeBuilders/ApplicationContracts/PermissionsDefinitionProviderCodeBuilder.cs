@@ -42,7 +42,7 @@ using Volo.Abp.Localization;");
                             builder.AppendLine($"\t\t {moduleName}Permission.AddChild({permissions}.{moduleName}.Create, L(\"Permission:Create\"));");
                             builder.AppendLine($"\t\t {moduleName}Permission.AddChild({permissions}.{moduleName}.BatchCreate, L(\"Permission:BatchCreate\"));");
                             builder.AppendLine($"\t\t {moduleName}Permission.AddChild({permissions}.{moduleName}.Update, L(\"Permission:Edit\"));");
-                            builder.AppendLine($"\t\t {moduleName}Permission.AddChild({permissions}.{moduleName}.PortionEdit, L(\"Permission:PortionEdit\"));");
+                            builder.AppendLine($"\t\t {moduleName}Permission.AddChild({permissions}.{moduleName}.PortionUpdate, L(\"Permission:PortionEdit\"));");
                             builder.AppendLine($"\t\t {moduleName}Permission.AddChild({permissions}.{moduleName}.Delete, L(\"Permission:Delete\"));");
                             builder.AppendLine($"\t\t {moduleName}Permission.AddChild({permissions}.{moduleName}.BatchDelete, L(\"Permission:BatchDelete\"));");
                             builder.AppendLine($"\t\t {moduleName}Permission.AddChild({permissions}.{moduleName}.Recover, L(\"Permission:Recover\"));");
