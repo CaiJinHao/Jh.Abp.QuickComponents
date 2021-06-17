@@ -18,5 +18,7 @@ namespace Jh.Abp.MenuManagement
 		Task<IEnumerable<PermissionDefinition>> GetPermissionGrantsAsync();
 
 		Task<dynamic> GetMenuSelectPermissionGrantsAsync();
+
+		Task<IEnumerable<PermissionGrantedDto>> GetPermissionGrantedByNameAsync(PermissionGrantedRetrieveInputDto input);
 	}
 }

@@ -162,5 +162,11 @@ namespace Jh.Abp.MenuManagement.v1
             var items = await menuAndRoleMapAppService.GetMenusTreesAsync(input);
             return new { items };
         }
+
+        [HttpPost("PermissionGranted")]
+        public virtual async Task<IEnumerable<PermissionGrantedDto>> GetPermissionGrantedByNameAsync([FromBody] PermissionGrantedRetrieveInputDto input)
+        {
+            return await menuPermissionMapAppService.GetPermissionGrantedByNameAsync(input);
+        }
     }
 }

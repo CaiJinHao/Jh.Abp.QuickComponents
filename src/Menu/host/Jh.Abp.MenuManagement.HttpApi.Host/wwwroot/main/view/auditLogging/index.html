@@ -86,7 +86,6 @@
             el: '#page-vm',
             data: {
                 currPage: 1,
-                deletedlist: []
             },
             methods: {
                 RenderDom: function (form, callback) {
@@ -244,7 +243,6 @@
                             url: '/appenums/use',
                             type: 'Get',
                             success: function (response) {
-                                vm.deletedlist = response;
                             }
                         }
                     ], function () {
@@ -252,7 +250,6 @@
                     });
                 }
             };
-            auditLoggingObj.loadList();
             auditLoggingObj.renderTable();//加载第一页
 
             //绑定编辑也保存事件

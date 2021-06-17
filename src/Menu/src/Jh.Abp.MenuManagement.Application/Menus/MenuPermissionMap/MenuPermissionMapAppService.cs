@@ -119,5 +119,21 @@ namespace Jh.Abp.MenuManagement
             }
             return result;
         }
+
+        public virtual async Task<IEnumerable<PermissionGrantedDto>> GetPermissionGrantedByNameAsync(PermissionGrantedRetrieveInputDto input)
+        {
+            var result = new List<PermissionGrantedDto>();
+            foreach (var permissionName in input.PermissionNames)
+            {
+                var isGranted = false;
+                foreach (var providerKey in CurrentUser.Roles)//当前用户拥有多个角色，只要有一个角色有这个权限就可以
+                {
+                    var itemPermission = await PermissionManager.GetAsync(permissionName, input.ProviderName, providerKey);
+                    isGranted = itemPermission.IsGranted;
+                }
+                result.Add(new PermissionGrantedDto() { Name = permissionName, Granted = isGranted });
+            }
+            return result;
+        }
     }
 }

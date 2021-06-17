@@ -34,6 +34,7 @@ layui.define(['table', 'layer', 'form', 'laypage', 'ajaxmod', 'jquery'], functio
                 tableCols: [],
                 done: function (res, curr, count) { },
                 success: function (response) {},
+                extendObj:{}
             };
             $.extend(optDefault, _data);
             $.extend(paramDefault, _param);
@@ -52,7 +53,8 @@ layui.define(['table', 'layer', 'form', 'laypage', 'ajaxmod', 'jquery'], functio
                         toolbar: '#toolbarDemo',
                         defaultToolbar: ['filter'],
                         limit: optDefault.PageSize,
-                        done:paramDefault.done
+                        done:paramDefault.done,
+                        extendObj: paramDefault.extendObj
                     });
                     paramDefault.success(data);
                     _the.renderPage(data.totalCount, optDefault,paramDefault);
