@@ -43,63 +43,6 @@ using Volo.Abp.Data;");
                         builder.AppendLine("\t\t}");
                     }
 
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Create)]");
-                    builder.AppendLine("\t\t[HttpPost]");
-                    builder.AppendLine($"\t\tpublic virtual async Task CreateAsync({table.Name}CreateInputDto input)");
-                    {
-                        builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\t await {table.Name}AppService.CreateAsync(input,true);");
-                        builder.AppendLine("\t\t}");
-                    }
-
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Create)]");
-                    builder.AppendLine("\t\t[Route(\"items\")]");
-                    builder.AppendLine("\t\t[HttpPost]");
-                    builder.AppendLine($"\t\tpublic virtual async Task CreateAsync({table.Name}CreateInputDto[] input)");
-                    {
-                        builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\t await {table.Name}AppService.CreateAsync(input);");
-                        builder.AppendLine("\t\t}");
-                    }
-
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Delete)]");
-                    builder.AppendLine("\t\t[HttpDelete]");
-                    builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync({table.Name}DeleteInputDto deleteInputDto)");
-                    {
-                        builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(deleteInputDto);");
-                        builder.AppendLine("\t\t}");
-                    }
-
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Delete)]");
-                    builder.AppendLine("\t\t[Route(\"keys\")]");
-                    builder.AppendLine("\t\t[HttpDelete]");
-                    builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync([FromBody]{table.KeyType}[] keys)");
-                    {
-                        builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(keys);");
-                        builder.AppendLine("\t\t}");
-                    }
-
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Delete)]");
-                    builder.AppendLine("\t\t[HttpDelete(\"{id}\")]");
-                    builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync({table.KeyType} id)");
-                    {
-                        builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(id);");
-                        builder.AppendLine("\t\t}");
-                    }
-
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Default)]");
-                    builder.AppendLine("\t\t[Route(\"all\")]");
-                    builder.AppendLine("\t\t[HttpGet]");
-                    builder.AppendLine($"\t\tpublic virtual async Task<ListResultDto<{table.Name}Dto>> GetEntitysAsync([FromQuery] {table.Name}RetrieveInputDto inputDto)");
-                    {
-                        builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\treturn await {table.Name}AppService.GetEntitysAsync(inputDto);");
-                        builder.AppendLine("\t\t}");
-                    }
-
                     builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Default)]");
                     builder.AppendLine("\t\t[HttpGet]");
                     builder.AppendLine($"\t\tpublic virtual async Task<PagedResultDto<{table.Name}Dto>> GetListAsync([FromQuery] {table.Name}RetrieveInputDto input)");
@@ -112,12 +55,41 @@ using Volo.Abp.Data;");
                         builder.AppendLine("\t\t}");
                     }
 
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Default)]");
+                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Export)]");
+                    builder.AppendLine("\t\t[Route(\"all\")]");
+                    builder.AppendLine("\t\t[HttpGet]");
+                    builder.AppendLine($"\t\tpublic virtual async Task<ListResultDto<{table.Name}Dto>> GetEntitysAsync([FromQuery] {table.Name}RetrieveInputDto inputDto)");
+                    {
+                        builder.AppendLine("\t\t{");
+                        builder.AppendLine($"\t\t\treturn await {table.Name}AppService.GetEntitysAsync(inputDto);");
+                        builder.AppendLine("\t\t}");
+                    }
+
+                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Detail)]");
                     builder.AppendLine("\t\t[HttpGet(\"{id}\")]");
                     builder.AppendLine($"\t\tpublic virtual async Task<{table.Name}Dto> GetAsync({table.KeyType} id)");
                     {
                         builder.AppendLine("\t\t{");
                         builder.AppendLine($"\t\t\treturn await {table.Name}AppService.GetAsync(id);");
+                        builder.AppendLine("\t\t}");
+                    }
+
+                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Create)]");
+                    builder.AppendLine("\t\t[HttpPost]");
+                    builder.AppendLine($"\t\tpublic virtual async Task CreateAsync({table.Name}CreateInputDto input)");
+                    {
+                        builder.AppendLine("\t\t{");
+                        builder.AppendLine($"\t\t\t await {table.Name}AppService.CreateAsync(input,true);");
+                        builder.AppendLine("\t\t}");
+                    }
+
+                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.BatchCreate)]");
+                    builder.AppendLine("\t\t[Route(\"items\")]");
+                    builder.AppendLine("\t\t[HttpPost]");
+                    builder.AppendLine($"\t\tpublic virtual async Task CreateAsync({table.Name}CreateInputDto[] input)");
+                    {
+                        builder.AppendLine("\t\t{");
+                        builder.AppendLine($"\t\t\t await {table.Name}AppService.CreateAsync(input);");
                         builder.AppendLine("\t\t}");
                     }
 
@@ -130,7 +102,7 @@ using Volo.Abp.Data;");
                         builder.AppendLine("\t\t}");
                     }
 
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Update)]");
+                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.PortionUpdate)]");
                     builder.AppendLine("\t\t[HttpPatch(\"{id}\")]");
                     builder.AppendLine($"\t\tpublic virtual async Task UpdatePortionAsync({table.KeyType} id, {table.Name}UpdateInputDto inputDto)");
                     {
@@ -139,9 +111,37 @@ using Volo.Abp.Data;");
                         builder.AppendLine("\t\t}");
                     }
 
+                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Delete)]");
+                    builder.AppendLine("\t\t[HttpDelete(\"{id}\")]");
+                    builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync({table.KeyType} id)");
+                    {
+                        builder.AppendLine("\t\t{");
+                        builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(id);");
+                        builder.AppendLine("\t\t}");
+                    }
+
+                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.BatchDelete)]");
+                    builder.AppendLine("\t\t[HttpDelete]");
+                    builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync({table.Name}DeleteInputDto deleteInputDto)");
+                    {
+                        builder.AppendLine("\t\t{");
+                        builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(deleteInputDto);");
+                        builder.AppendLine("\t\t}");
+                    }
+
+                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.BatchDelete)]");
+                    builder.AppendLine("\t\t[Route(\"keys\")]");
+                    builder.AppendLine("\t\t[HttpDelete]");
+                    builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync([FromBody]{table.KeyType}[] keys)");
+                    {
+                        builder.AppendLine("\t\t{");
+                        builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(keys);");
+                        builder.AppendLine("\t\t}");
+                    }
+
                     if (table.IsDelete)
                     {
-                        builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Update)]");
+                        builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Recover)]");
                         builder.AppendLine("\t\t[HttpPatch]");
                         builder.AppendLine("\t\t[Route(\"{id}/Deleted\")]");
                         builder.AppendLine($"\t\tpublic virtual async Task UpdateDeletedAsync({table.KeyType} id, [FromBody] bool isDeleted)");
