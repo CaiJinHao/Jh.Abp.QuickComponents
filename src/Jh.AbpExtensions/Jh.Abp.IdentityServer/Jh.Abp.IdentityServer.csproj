@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <Version>2.0.1.4</Version>
     <LangVersion>8.0</LangVersion>
-    
+
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>CaiJinHao</Authors>
     <Company>CaiJinHao</Company>
@@ -11,14 +12,19 @@
     <PackageProjectUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</PackageProjectUrl>
     <RepositoryUrl>https://github.com/CaiJinHao/Jh.Abp.QuickComponents</RepositoryUrl>
     <PackageIcon>nugeticon.png</PackageIcon>
-    <PackageTags>Jh.AbpExtensions</PackageTags>
-    <PackageReleaseNotes>Jh.AbpExtensions libs</PackageReleaseNotes>
-    <Version>2.0.0.9</Version>
-    <Description>Jh.AbpExtensions libs</Description>
+    <PackageTags>Abp .Net5 .NetCore CaiJinHao</PackageTags>
+    <PackageReleaseNotes>Abp Extension</PackageReleaseNotes>
+    <Description>Abp Extension</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <None Include="..\..\..\document\images\nugeticon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\..\LICENSE.md">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
@@ -26,6 +32,8 @@
   
   <ItemGroup>
     <PackageReference Include="IdentityServer4" Version="4.1.1" />
+    <PackageReference Include="Volo.Abp.Account.Web" Version="4.3.2" />
+    <PackageReference Include="Volo.Abp.Account.Web.IdentityServer" Version="4.3.2" />
     <PackageReference Include="Volo.Abp.Core" Version="4.3.2" />
     <PackageReference Include="Volo.Abp.IdentityServer.Domain" Version="4.3.2" />
   </ItemGroup>

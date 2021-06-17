@@ -24,14 +24,14 @@ namespace Jh.Abp.QuickComponents.Tests.JhSourceGeneratorCommon
             var options = new GeneratorOptions()
             {
                 DbContext = "MenuManagementDbContext",
-                Namespace = "MenuManagement",
+                Namespace = "Jh.MenuManagement",
                 ControllerBase = "MenuManagementController",
                 CreateContractsPermissionsPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.Contracts\Permissions",
-                //CreateContractsPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.Contracts{domain}",
-                //CreateApplicationPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.Application{domain}",
-                //CreateDomainPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.Domain{domain}",
-                //CreateEfCorePath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.EntityFrameworkCore{domain}",
-                //CreateHttpApiPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.HttpApi\v1{domain}",
+                CreateContractsPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.Contracts{domain}",
+                CreateApplicationPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.Application{domain}",
+                CreateDomainPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.Domain{domain}",
+                CreateEfCorePath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.EntityFrameworkCore{domain}",
+                CreateHttpApiPath = @$"{basePath}trunk\src\Jh.Abp.MenuManagement.HttpApi\v1{domain}",
                 //不需要domain做文件夹
                 //CreateHtmlPath = @$"{basePath}trunk\host\Jh.Abp.MenuManagement.Web.Unified\wwwroot\main\view",
                 //CreateHtmlTemplatePath = @"G:\github\mygithub\Jh.Abp.QuickComponents\src\GeneratorCoding\Jh.SourceGenerator.Common\CodeBuilders\Html\Layui"

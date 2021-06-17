@@ -8,10 +8,7 @@ namespace Jh.Abp.IdentityServer
     {
         public override void PreConfigureServices(ServiceConfigurationContext context)
         {
-            PreConfigure<IIdentityServerBuilder>(identityServerBuilder =>
-            {
-                identityServerBuilder.AddProfileService<JhProfileServices>();
-            });
+          
         }
     }
 }

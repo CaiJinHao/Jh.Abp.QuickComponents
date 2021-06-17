@@ -78,6 +78,7 @@ namespace Jh.Abp.MenuManagement.IdentityServer
                 "phone_number",
                 "phone_number_verified",
                 "role",
+
                 "user_name",
                 "sur_name",
                 "given_name",

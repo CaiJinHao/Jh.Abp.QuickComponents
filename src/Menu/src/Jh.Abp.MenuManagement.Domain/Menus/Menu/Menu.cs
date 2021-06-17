@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace Jh.Abp.MenuManagement
 {
-    //[GeneratorClass]
+    [GeneratorClass]
     [Description("菜单")]
     public class Menu : FullAuditedAggregateRoot<Guid>
     {
