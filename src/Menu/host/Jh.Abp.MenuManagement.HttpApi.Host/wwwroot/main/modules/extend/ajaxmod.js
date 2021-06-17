@@ -149,7 +149,8 @@ layui.define(['layer'], function (exports) {
             Object.assign(optDefault, opts);
             this.ajax(optDefault);
         },
-        handlerResponse(response){
+        handlerResponse(response) {
+
             if (response.status > 400 && response.status < 500) {
                 response = {
                     responseJSON: {
@@ -158,6 +159,9 @@ layui.define(['layer'], function (exports) {
                         }
                     }
                 };
+            }
+            if (response.status === 404) {
+                response.responseJSON.error.message = "没有找到请求地址";
             }
             return response;
         },
