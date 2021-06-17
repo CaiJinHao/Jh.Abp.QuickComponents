@@ -139,6 +139,15 @@
                             callback();
                         }
                     });
+                },
+                RenderPermission: function (permission) {
+                    var _the = this;
+                    var _pers = this.permissions.filter(function (_el) {
+                        return _el.name == _the.permissionModule + permission;
+                    });
+                    if (_pers.length > 0) {
+                        return _pers[0].granted;
+                    }
                 }
             }
         });
