@@ -85,17 +85,16 @@
             data: {
                 currPage: 1,
                 deletedlist: [],
-                permissionModule:'MenuManagement.Menus.',
                 permissionDefineds:{
-                    Export: 'Export',
-                    Detail: 'Detail',
-                    Create: 'Create',
-                    BatchCreate: 'BatchCreate',
-                    Update: 'Update',
-                    PortionUpdate: 'PortionUpdate',
-                    Delete: 'Delete',
-                    BatchDelete: 'BatchDelete',
-                    Recover: 'Recover',
+                    Export: 'MenuManagement.Menus.Export',
+                    Detail: 'MenuManagement.Menus.Detail',
+                    Create: 'MenuManagement.Menus.Create',
+                    BatchCreate: 'MenuManagement.Menus.BatchCreate',
+                    Update: 'MenuManagement.Menus.Update',
+                    PortionUpdate: 'MenuManagement.Menus.PortionUpdate',
+                    Delete: 'MenuManagement.Menus.Delete',
+                    BatchDelete: 'MenuManagement.Menus.BatchDelete',
+                    Recover: 'MenuManagement.Menus.Recover',
                 },
                 permissions:[]
             },
@@ -114,7 +113,7 @@
                 RenderPermission: function (permission) {
                     var _the=this;
                     var _pers = this.permissions.filter(function (_el) {
-                        return _el.name == _the.permissionModule + permission;
+                        return _el.name == permission;
                     });
                     if (_pers.length > 0) {
                         return _pers[0].granted;
@@ -266,15 +265,15 @@
                 loadPermissions:function(_fn){
                     var _the=this;
                     let _permissions = [
-                        vm.permissionModule + vm.permissionDefineds.Export,
-                        vm.permissionModule + vm.permissionDefineds.Detail,
-                        vm.permissionModule + vm.permissionDefineds.Create,
-                        vm.permissionModule + vm.permissionDefineds.BatchCreate,
-                        vm.permissionModule + vm.permissionDefineds.Update,
-                        vm.permissionModule + vm.permissionDefineds.PortionUpdate,
-                        vm.permissionModule + vm.permissionDefineds.Delete,
-                        vm.permissionModule + vm.permissionDefineds.BatchDelete,
-                        vm.permissionModule + vm.permissionDefineds.Recover,
+                        vm.permissionDefineds.Export,
+                        vm.permissionDefineds.Detail,
+                        vm.permissionDefineds.Create,
+                        vm.permissionDefineds.BatchCreate,
+                        vm.permissionDefineds.Update,
+                        vm.permissionDefineds.PortionUpdate,
+                        vm.permissionDefineds.Delete,
+                        vm.permissionDefineds.BatchDelete,
+                        vm.permissionDefineds.Recover,
                     ];
                     ajaxmod.requestAuthorize({
                         url: '/MenuAndRoleMap/PermissionGranted',
