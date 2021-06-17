@@ -261,7 +261,7 @@
                 var menuIds = [];
                 var permissionNames = [];
                 $.each(cks, function (k, v) {
-                    if (v.value.length === 36) {
+                    if (v.value.length === 36 && v.value.indexOf('-') != -1) {
                         menuIds.push(v.value);
                     } else if (v.value.indexOf('yezi') != -1) {
                         //不做任何处理
