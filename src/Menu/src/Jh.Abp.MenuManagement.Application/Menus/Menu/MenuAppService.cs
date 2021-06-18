@@ -39,10 +39,7 @@ namespace Jh.Abp.MenuManagement
             {
                 CreateOrUpdateEntityAction = entity =>
                 {
-                    foreach (var roleid in inputDto.RoleIds.ToNullList())
-                    {
-                        entity.AddMenuRoleMap(roleid);
-                    }
+                    entity.AddOrUpdateMenuPermissionMap(inputDto.PermissionNames);
                 }
             };
             return await base.CreateAsync(inputDto, true, cancellationToken);
@@ -67,10 +64,7 @@ namespace Jh.Abp.MenuManagement
             {
                 CreateOrUpdateEntityAction = (entity) =>
                 {
-                    foreach (var item in updateInput.PermissionNames.ToNullList())
-                    {
-                        entity.AddMenuPermissionMap(item);
-                    }
+                    entity.AddOrUpdateMenuPermissionMap(updateInput.PermissionNames);
                 }
             };
             return base.UpdateAsync(id, updateInput);

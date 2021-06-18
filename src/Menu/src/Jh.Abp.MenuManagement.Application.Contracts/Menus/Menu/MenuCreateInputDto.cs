@@ -57,5 +57,6 @@ namespace Jh.Abp.MenuManagement
 
         [Newtonsoft.Json.JsonIgnore]
         public MethodDto<Menu> MethodInput { get; set; }
+        public string[] PermissionNames { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Jh.Abp.Application.Contracts.Dtos;
 using Jh.Abp.Application.Contracts.Extensions;
+using System;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.ObjectExtending;
 
@@ -52,5 +53,6 @@ namespace Jh.Abp.MenuManagement
         public string ConcurrencyStamp { get; set; }
 
         public string[] PermissionNames { get; set; }
+        public Guid[] RoleIds { get; set; }
     }
 }

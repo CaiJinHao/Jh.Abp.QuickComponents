@@ -9,6 +9,7 @@ using Jh.SourceGenerator.Common.GeneratorAttributes;
 using Volo.Abp;
 using JetBrains.Annotations;
 using System.Linq;
+using Jh.Abp.Common;
 
 namespace Jh.Abp.MenuManagement
 {
@@ -70,16 +71,22 @@ namespace Jh.Abp.MenuManagement
             MenuPermissionMaps = new List<MenuPermissionMap>();
         }
 
-        public virtual void AddMenuRoleMap(Guid roleid)
+        public virtual void AddOrUpdateMenuRoleMap(Guid[] roleids)
         {
-            Check.NotNull(roleid, nameof(roleid));
-            MenuRoleMaps.Add(new MenuAndRoleMap(Id, roleid));
+            MenuRoleMaps.Clear();
+            foreach (var roleid in roleids.ToNullList())
+            {
+                MenuRoleMaps.Add(new MenuAndRoleMap(Id, roleid));
+            }
         }
 
-        public virtual void AddMenuPermissionMap(string permissionName)
+        public virtual void AddOrUpdateMenuPermissionMap(string[] permissionNames)
         {
-            Check.NotNull(permissionName, nameof(permissionName));
-            MenuPermissionMaps.Add(new MenuPermissionMap(Id, permissionName));
+            MenuPermissionMaps.Clear();
+            foreach (var permissionName in permissionNames.ToNullList())
+            {
+                MenuPermissionMaps.Add(new MenuPermissionMap(Id, permissionName));
+            }
         }
     }
 }
