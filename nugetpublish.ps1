@@ -12,6 +12,7 @@ dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.Application.Contracts\bin\Release\
 dotnet nuget push src\Common\Jh.Abp.Common\bin\Release\Jh.Abp.Common.$applicationVersion.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
 dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.Domain\bin\Release\Jh.Abp.Domain.$applicationVersion.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
 dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.Domain.Shared\bin\Release\Jh.Abp.Domain.Shared.$applicationVersion.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.IdentityServer\bin\Release\Jh.Abp.IdentityServer.$applicationVersion.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
 dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.EntityFrameworkCore\bin\Release\Jh.Abp.EntityFrameworkCore.$applicationVersion.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
 dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.EntityFrameworkCore.Dm\bin\Release\Jh.Abp.EntityFrameworkCore.Dm.$EntityFrameworkCoredm.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
 dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.EntityFrameworkCore.DmExtensionsCore\bin\Release\Jh.Abp.EntityFrameworkCore.DmExtensionsCore.$EntityFrameworkCoredm.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
