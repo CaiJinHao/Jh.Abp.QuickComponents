@@ -38,6 +38,12 @@ namespace Jh.Abp.MenuManagement
             var results = new List<MenusTreeDto>();
             foreach (var permission in permissions)
             {
+                var isGranted = await GetCurentUserByPermissionName(permission.Name + ".ManagePermissions",providerName);
+                if (!isGranted)
+                {
+                    //判断当前登录用户的角色是否可以编辑当前菜单的权限，不能编辑就不显示了
+                    continue;
+                }
                 var parentPermission = await PermissionManager.GetAsync(permission.Name, providerName, providerKey);//获取当前权限组的选中信息
                 var module = permission.DisplayName.Localize(StringLocalizerFactory);//本地化当前权限的名称
                 var modulePermission = new MenusTreeDto()
@@ -125,15 +131,31 @@ namespace Jh.Abp.MenuManagement
             var result = new List<PermissionGrantedDto>();
             foreach (var permissionName in input.PermissionNames)
             {
-                var isGranted = false;
-                foreach (var providerKey in CurrentUser.Roles)//当前用户拥有多个角色，只要有一个角色有这个权限就可以
-                {
-                    var itemPermission = await PermissionManager.GetAsync(permissionName, input.ProviderName, providerKey);
-                    isGranted = itemPermission.IsGranted;
-                }
+                var isGranted = await GetCurentUserByPermissionName(permissionName, input.ProviderName);
                 result.Add(new PermissionGrantedDto() { Name = permissionName, Granted = isGranted });
             }
             return result;
+        }
+
+        /// <summary>
+        /// 只要当前用户有一个角色有权限就返回true
+        /// </summary>
+        /// <param name="permissionName"></param>
+        /// <param name="providerName"></param>
+        /// <returns></returns>
+        protected async Task<bool> GetCurentUserByPermissionName(string permissionName,string providerName)
+        {
+            var isGranted = false;
+            foreach (var providerKey in CurrentUser.Roles)
+            {
+                var managePermission = await PermissionManager.GetAsync(permissionName, providerName, providerKey);
+                isGranted = managePermission.IsGranted;
+                if (isGranted)
+                {
+                    break;
+                }
+            }
+            return isGranted;
         }
     }
 }

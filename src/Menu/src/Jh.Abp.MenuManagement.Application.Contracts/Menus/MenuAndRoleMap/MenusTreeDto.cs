@@ -41,5 +41,10 @@ namespace Jh.Abp.MenuManagement
                 }
             }
         }
+
+        public MenusTreeDto Copy()
+        {
+            return (MenusTreeDto)this.MemberwiseClone();
+        }
     }
 }
