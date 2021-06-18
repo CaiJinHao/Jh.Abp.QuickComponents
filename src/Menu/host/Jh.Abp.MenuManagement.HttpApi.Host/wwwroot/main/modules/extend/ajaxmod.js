@@ -150,18 +150,36 @@ layui.define(['layer'], function (exports) {
             this.ajax(optDefault);
         },
         handlerResponse(response) {
-
-            if (response.status > 400 && response.status < 500) {
-                response = {
-                    responseJSON: {
-                        error: {
-                            message: '对不起没有该请求权限'
+            console.log(response);
+            switch (response.status) {
+                case 400:
+                case 401:
+                case 402:
+                case 403:
+                    {
+                        if (!response.responseJSON) {
+                            response = {
+                                responseJSON: {
+                                    error: {
+                                        message: '对不起没有该请求权限'
+                                    }
+                                }
+                            };
                         }
-                    }
-                };
-            }
-            if (response.status === 404) {
-                response.responseJSON.error.message = "没有找到请求地址";
+                    } break;
+                case 404:
+                    {
+                        response = {
+                            responseJSON: {
+                                error: {
+                                    message: '没有找到请求地址'
+                                }
+                            }
+                        };
+                    } break;
+                default:
+                    //不处理
+                    break;
             }
             return response;
         },
