@@ -150,7 +150,6 @@ layui.define(['layer'], function (exports) {
             this.ajax(optDefault);
         },
         handlerResponse(response) {
-            console.log(response);
             switch (response.status) {
                 case 400:
                 case 401:
