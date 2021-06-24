@@ -4,7 +4,6 @@ using Jh.Abp.IdentityServer;
 using Jh.Abp.MenuManagement.MultiTenancy;
 using Jh.Abp.QuickComponents;
 using Jh.Abp.QuickComponents.Cors;
-using Jh.Abp.QuickComponents.Localization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;

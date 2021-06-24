@@ -2,7 +2,6 @@
 using Jh.Abp.QuickComponents.Cors;
 using Jh.Abp.QuickComponents.Json;
 using Jh.Abp.QuickComponents.JwtAuthentication;
-using Jh.Abp.QuickComponents.Localization;
 using Jh.Abp.QuickComponents.MiniProfiler;
 using Jh.Abp.QuickComponents.Swagger;
 using Microsoft.AspNetCore.Builder;

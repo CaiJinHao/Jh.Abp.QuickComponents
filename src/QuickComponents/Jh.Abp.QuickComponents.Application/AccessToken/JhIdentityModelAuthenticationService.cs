@@ -42,21 +42,24 @@ namespace Jh.Abp.QuickComponents.Application.AccessToken
 
             if (tokenResponse.IsError)
             {
-                if (tokenResponse.ErrorType == ResponseErrorType.Exception)
-                {
-                    throw new BusinessException("JhAbpQuickComponents:000003");
-                }
-
                 if (tokenResponse.ErrorDescription != null)
                 {
                     throw new AbpException(tokenResponse.ErrorDescription);
                     //throw new AbpException($"Could not get token from the OpenId Connect server! ErrorType: {tokenResponse.ErrorType}. " +
                                            //$"Error: {tokenResponse.Error}. ErrorDescription: {tokenResponse.ErrorDescription}. HttpStatusCode: {tokenResponse.HttpStatusCode}");
                 }
-
+                if (tokenResponse.Error!=null)
+                {
+                    throw new AbpException(tokenResponse.Error);
+                }
                 var rawError = tokenResponse.Raw;
-                var withoutInnerException = rawError.Split(new string[] { "<eof/>" }, StringSplitOptions.RemoveEmptyEntries);
-                throw new AbpException(withoutInnerException[0]);
+                if (rawError != null)
+                {
+                    var withoutInnerException = rawError.Split(new string[] { "<eof/>" }, StringSplitOptions.RemoveEmptyEntries);
+                    throw new AbpException(withoutInnerException[0]);
+                }
+
+                throw new BusinessException("JhAbpQuickComponents:000001");
             }
             return tokenResponse;
         }
