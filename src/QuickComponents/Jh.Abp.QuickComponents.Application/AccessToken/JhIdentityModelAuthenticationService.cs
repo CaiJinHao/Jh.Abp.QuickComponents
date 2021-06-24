@@ -44,13 +44,11 @@ namespace Jh.Abp.QuickComponents.Application.AccessToken
             {
                 if (tokenResponse.ErrorDescription != null)
                 {
-                    throw new AbpException(tokenResponse.ErrorDescription);
-                    //throw new AbpException($"Could not get token from the OpenId Connect server! ErrorType: {tokenResponse.ErrorType}. " +
-                                           //$"Error: {tokenResponse.Error}. ErrorDescription: {tokenResponse.ErrorDescription}. HttpStatusCode: {tokenResponse.HttpStatusCode}");
+                    throw new UserFriendlyException(tokenResponse.ErrorDescription);
                 }
                 if (tokenResponse.Error!=null)
                 {
-                    throw new AbpException(tokenResponse.Error);
+                    throw new UserFriendlyException(tokenResponse.Error);
                 }
                 var rawError = tokenResponse.Raw;
                 if (rawError != null)

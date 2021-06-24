@@ -52,8 +52,8 @@ namespace Jh.Abp.QuickComponents
                 options.Resources
                     .Add<JhAbpQuickComponentsResource>("zh-Hans")
                     .AddBaseTypes(typeof(AbpValidationResource))
-                    //指定嵌入式资源的虚拟路径
-                    .AddVirtualJson("/Localization/JhAbpQuickComponents");
+                     //指定嵌入式资源的虚拟路径
+                     .AddVirtualJson("/Jh/Abp/QuickComponents/Application/Contracts/Localization/JhAbpQuickComponents");
             });
 
             Configure<AbpExceptionLocalizationOptions>(options =>
