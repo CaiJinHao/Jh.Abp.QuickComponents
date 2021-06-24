@@ -37,6 +37,7 @@ namespace Jh.Abp.QuickComponents.JwtAuthentication
                     }
                 }
             }
+            //TODO: 添加对url得过滤，nginx转发挡再外面了
             return base.OnAuthorizationAsync(context);
         }
     }
