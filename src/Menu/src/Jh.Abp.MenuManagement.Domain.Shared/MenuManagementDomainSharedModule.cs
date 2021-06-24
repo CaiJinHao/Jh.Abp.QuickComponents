@@ -24,7 +24,7 @@ namespace Jh.Abp.MenuManagement
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources
-                    .Add<MenuManagementResource>("en")
+                    .Add<MenuManagementResource>("zh-Hans")
                     .AddBaseTypes(typeof(AbpValidationResource))
                     .AddVirtualJson("/Localization/MenuManagement");
             });

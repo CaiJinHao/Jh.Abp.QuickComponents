@@ -49,7 +49,7 @@ namespace Jh.Abp.QuickComponents.Application.AccessToken
 
                 if (tokenResponse.ErrorDescription != null)
                 {
-                    throw new BusinessException(tokenResponse.ErrorDescription);
+                    throw new AbpException(tokenResponse.ErrorDescription);
                     //throw new AbpException($"Could not get token from the OpenId Connect server! ErrorType: {tokenResponse.ErrorType}. " +
                                            //$"Error: {tokenResponse.Error}. ErrorDescription: {tokenResponse.ErrorDescription}. HttpStatusCode: {tokenResponse.HttpStatusCode}");
                 }
