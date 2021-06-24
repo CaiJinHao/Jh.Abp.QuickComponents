@@ -25,7 +25,8 @@ namespace Jh.Abp.Domain.Shared
                 options.Resources
                     .Add<JhAbpExtensionsResource>("en")
                     .AddBaseTypes(typeof(AbpValidationResource))//继承资源
-                    .AddVirtualJson("/Localization/JhAbpExtensions");
+                     //模块资源按照项目名称+文件夹路径写
+                    .AddVirtualJson("/Jh/Abp/Domain/Shared/Localization/JhAbpExtensions");
             });
 
             Configure<AbpExceptionLocalizationOptions>(options =>

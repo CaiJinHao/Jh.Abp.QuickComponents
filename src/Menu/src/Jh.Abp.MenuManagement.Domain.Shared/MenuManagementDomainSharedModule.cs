@@ -26,7 +26,7 @@ namespace Jh.Abp.MenuManagement
                 options.Resources
                     .Add<MenuManagementResource>("zh-Hans")
                     .AddBaseTypes(typeof(AbpValidationResource))
-                    .AddVirtualJson("/Localization/MenuManagement");
+                    .AddVirtualJson("/Localization/MenuManagement");//当前项目资源按照文件路径写
             });
 
             Configure<AbpExceptionLocalizationOptions>(options =>

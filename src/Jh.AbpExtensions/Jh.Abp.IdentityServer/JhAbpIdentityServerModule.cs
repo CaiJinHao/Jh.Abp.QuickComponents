@@ -26,8 +26,8 @@ namespace Jh.Abp.IdentityServer
                 options.Resources
                     .Add<JhAbpIdentityServerResource>("zh-Hans")
                     .AddBaseTypes(typeof(AbpIdentityServerResource))
-                    //指定嵌入式资源的虚拟路径
-                    .AddVirtualJson("/Localization/JhAbpIdentityServer");
+                    //模块资源按照项目名称+文件夹路径写
+                    .AddVirtualJson("/Jh/Abp/IdentityServer/Localization/JhAbpIdentityServer");
             });
 
             Configure<AbpExceptionLocalizationOptions>(options =>
