@@ -4,7 +4,7 @@
 
 模板：Module 4.3.2 -current  
 Jh.Abp.MenuManagement.Application 0.1.101  
-Jh.Abp.QuickComponents 1.2.5.9  
+Jh.Abp.QuickComponents 1.2.601  
 Jh.Abp.Application 2.0.151  
 Jh.SourceGenerator.Common 3.0.151
 Jh.Abp.EntityFrameworkCore.Dm 0.2

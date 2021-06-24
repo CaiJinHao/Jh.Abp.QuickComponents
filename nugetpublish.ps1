@@ -1,10 +1,10 @@
 $publishApiKey="123456"
 $publishSource="https://api.nuget.org/v3/index.json"
 
-$applicationVersion="2.0.1.4"
-$QuickComponents="1.2.5.9" 
-$MenuManagement="0.1.9.9"
-$SourceGenerator="3.0.1.5"
+$MenuManagement="0.1.101"
+$QuickComponents="1.2.601" 
+$applicationVersion="2.0.151"
+$SourceGenerator="3.0.151"
 $EntityFrameworkCoredm="0.2.0"
 
 dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.Application\bin\Release\Jh.Abp.Application.$applicationVersion.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
