@@ -39,9 +39,9 @@ namespace Jh.Abp.QuickComponents.Application.AccessToken
             return _objectMapper.Map<TokenResponse, AccessTokenResponseDto>(tokenResponse);
         }
 
-        public virtual async Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(string refreshToken)
+        public virtual async Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(string refreshToken, string organizationName = null)
         {
-            var configuration = CreateIdentityClientConfiguration();
+            var configuration = CreateIdentityClientConfiguration(organizationName);
             configuration.GrantType = OidcConstants.GrantTypes.RefreshToken;
 
             var tokenResponse = await _jhIdentityModelAuthenticationService.GetAccessTokenResponseAsync(configuration, refreshToken);

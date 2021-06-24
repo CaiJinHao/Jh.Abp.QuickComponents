@@ -19,6 +19,6 @@ namespace Jh.Abp.QuickComponents.AccessToken
         /// </summary>
         /// <param name="refreshToken"></param>
         /// <returns></returns>
-        Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(string refreshToken);
+        Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(string refreshToken, string organizationName = null);
     }
 }

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using System.Net.Http;
 using IdentityModel.Client;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
 {
@@ -34,11 +35,12 @@ namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
             return await accessTokenAppService.GetAccessTokenAsync(requestDto);
         }
 
-        //[HttpPost("Refresh")]
-        //public async Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(string refreshToken)
-        //{
-        //    return await _accessTokenAppService.GetRefreshAccessTokenAsync(refreshToken);
-        //}
+        [AllowAnonymous]
+        [HttpPost("Refresh")]
+        public async Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(string refreshToken)
+        {
+            return await accessTokenAppService.GetRefreshAccessTokenAsync(refreshToken);
+        }
 
         [Route("claims")]
         [HttpGet]
