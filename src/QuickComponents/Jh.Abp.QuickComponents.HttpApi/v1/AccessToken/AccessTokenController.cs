@@ -9,6 +9,7 @@ using Volo.Abp.Auditing;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http;
 using IdentityModel.Client;
+using Microsoft.Extensions.Options;
 
 namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
 {
@@ -24,21 +25,28 @@ namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
     public class AccessTokenController : JhAbpQuickComponentsController
     {
-        private readonly IConfiguration _configuration;
+        public IAccessTokenAppService accessTokenAppService { get; set; }
+        protected readonly IdentityClientOptions _identityClientOptions;
         public AccessTokenController(
-            IConfiguration configuration
+             IOptions<IdentityClientOptions> identityClientOptions
             )
         {
-            _configuration = configuration;
+            _identityClientOptions = identityClientOptions.Value;
         }
 
         [AllowAnonymous]
         [HttpPost]
         public async Task<AccessTokenResponseDto> GetAccessTokenAsync([FromBody]AccessTokenRequestDto requestDto)
         {
+            var dto = await accessTokenAppService.GetAccessTokenAsync(requestDto);
             // discover endpoints from metadata
             var client = new HttpClient();
-            var disco = await client.GetDiscoveryDocumentAsync(_configuration["AuthServer:Authority"]);
+            var disco = await client.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest() { 
+                Address= _identityClientOptions.Authority,
+                Policy=new DiscoveryPolicy() { 
+                     RequireHttps= _identityClientOptions.RequireHttps
+                }
+            });
             if (disco.IsError)
             {
                 throw new System.Exception("Discovery Error");
@@ -48,11 +56,11 @@ namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
             var tokenResponse = await client.RequestPasswordTokenAsync(new PasswordTokenRequest
             {
                 Address = disco.TokenEndpoint,
-                ClientId = _configuration["AuthServer:AppClientId"],
-                ClientSecret = _configuration["AuthServer:AppClientSecret"],
+                ClientId = _identityClientOptions.ClientId,
+                ClientSecret = _identityClientOptions.ClientSecret,
                 UserName = requestDto.UserNameOrEmailAddress,
                 Password = requestDto.Password,
-                Scope = _configuration["AuthServer:Scope"]
+                Scope = _identityClientOptions.Scope
             });
             if (tokenResponse.IsError)
             {

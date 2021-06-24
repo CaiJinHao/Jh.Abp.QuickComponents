@@ -22,5 +22,7 @@ namespace Jh.Abp.QuickComponents.AccessToken
         [DataType(DataType.Password)]
         [DisableAuditing]
         public string Password { get; set; }
+
+        public string OrganizationName { get; set; }
     }
 }

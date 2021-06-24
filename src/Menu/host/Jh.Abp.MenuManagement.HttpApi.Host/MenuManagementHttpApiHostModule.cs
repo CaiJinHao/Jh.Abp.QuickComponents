@@ -46,11 +46,13 @@ using Jh.Abp.EntityFrameworkCore.Dm;
 using Volo.Abp.EntityFrameworkCore.MySQL;
 using Volo.Abp.PermissionManagement.Identity;
 using Volo.Abp.PermissionManagement;
+using Jh.Abp.QuickComponents.HttpApi;
 
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
         typeof(AbpQuickComponentsModule),
+        typeof(JhAbpQuickComponentsHttpApiModule),
         typeof(MenuManagementHttpApiModule),
         typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
         typeof(AbpAutofacModule),

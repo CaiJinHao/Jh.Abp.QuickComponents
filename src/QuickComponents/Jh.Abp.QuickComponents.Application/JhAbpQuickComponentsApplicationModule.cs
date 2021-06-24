@@ -3,13 +3,15 @@ using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
 using Volo.Abp.Application;
 using Volo.Abp.VirtualFileSystem;
+using Volo.Abp.IdentityModel;
 
 namespace Jh.Abp.QuickComponents
 {
     [DependsOn(
       typeof(JhAbpQuickComponentsApplicationContractsModule),
       typeof(AbpDddApplicationModule),
-      typeof(AbpAutoMapperModule)
+      typeof(AbpAutoMapperModule),
+        typeof(AbpIdentityModelModule)
       )]
     public class JhAbpQuickComponentsApplicationModule:AbpModule
     {
