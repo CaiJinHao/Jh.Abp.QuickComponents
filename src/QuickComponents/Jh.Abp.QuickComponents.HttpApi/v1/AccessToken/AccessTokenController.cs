@@ -26,25 +26,39 @@ namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
     public class AccessTokenController : JhAbpQuickComponentsController
     {
         public IAccessTokenAppService accessTokenAppService { get; set; }
-        protected readonly IdentityClientOptions _identityClientOptions;
-        public AccessTokenController(
-             IOptions<IdentityClientOptions> identityClientOptions
-            )
-        {
-            _identityClientOptions = identityClientOptions.Value;
-        }
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<AccessTokenResponseDto> GetAccessTokenAsync([FromBody]AccessTokenRequestDto requestDto)
+        public virtual async Task<AccessTokenResponseDto> GetAccessTokenAsync([FromBody]AccessTokenRequestDto requestDto)
         {
-            var dto = await accessTokenAppService.GetAccessTokenAsync(requestDto);
+            return await accessTokenAppService.GetAccessTokenAsync(requestDto);
+        }
+
+        //[HttpPost("Refresh")]
+        //public async Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(string refreshToken)
+        //{
+        //    return await _accessTokenAppService.GetRefreshAccessTokenAsync(refreshToken);
+        //}
+
+        [Route("claims")]
+        [HttpGet]
+        public dynamic GetClaimsAsync()
+        {
+            return CurrentUser.GetAllClaims().Select(a => new { a.Type, a.Value });
+        }
+
+        /*[AllowAnonymous]
+        [HttpPost]
+        public async Task<AccessTokenResponseDto> GetAccessTokenAsync([FromBody] AccessTokenRequestDto requestDto)
+        {
             // discover endpoints from metadata
             var client = new HttpClient();
-            var disco = await client.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest() { 
-                Address= _identityClientOptions.Authority,
-                Policy=new DiscoveryPolicy() { 
-                     RequireHttps= _identityClientOptions.RequireHttps
+            var disco = await client.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest()
+            {
+                Address = _identityClientOptions.Authority,
+                Policy = new DiscoveryPolicy()
+                {
+                    RequireHttps = _identityClientOptions.RequireHttps
                 }
             });
             if (disco.IsError)
@@ -74,19 +88,7 @@ namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
                 TokenType = tokenResponse.TokenType
             };
         }
-
-        [Route("claims")]
-        [HttpGet]
-        public dynamic GetClaimsAsync()
-        {
-            return CurrentUser.GetAllClaims().Select(a => new { a.Type, a.Value });
-        }
-
-        //[HttpPost("Refresh")]
-        //public async Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(string refreshToken)
-        //{
-        //    return await _accessTokenAppService.GetRefreshAccessTokenAsync(refreshToken);
-        //}
+*/
 
         /*
          [HttpPost]
