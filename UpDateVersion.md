@@ -3,14 +3,14 @@
 ## tag 0.5.4 -todo
 模板：Module 4.3.2 -current  
 Jh.Abp.Application 2.0.1.4  
-Jh.Abp.QuickComponents 1.2.5.8  
+Jh.Abp.QuickComponents 1.2.5.9  
 Jh.Abp.MenuManagement.Application 0.1.9.9  
 Jh.SourceGenerator.Common 3.0.15
 Jh.Abp.EntityFrameworkCore.Dm 0.2
 
 模板：Module 4.3.2 -pre  
 Jh.Abp.Application 2.0.1.3  
-Jh.Abp.QuickComponents 1.2.5.7  
+Jh.Abp.QuickComponents 1.2.5.8  
 Jh.Abp.MenuManagement.Application 0.1.9.8  
 Jh.SourceGenerator.Common 3.0.1.4  
 Jh.Abp.EntityFrameworkCore.Dm 0.2
