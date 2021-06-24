@@ -1,0 +1,7 @@
+{
+  "culture": "zh-Hans",
+  "texts": {
+    "JhAbpQuickComponents:000002": "RefreshToken 无效或者过期",
+    "JhAbpQuickComponents:000003": "身份验证服务异常",
+  }
+}

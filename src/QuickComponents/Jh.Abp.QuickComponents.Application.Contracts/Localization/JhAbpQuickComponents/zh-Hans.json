@@ -1,7 +1,7 @@
 {
   "culture": "zh-Hans",
   "texts": {
-    "JhAbpQuickComponents:000001": "用户名'{UserNameOrEmailAddress}'无效,检查用户名或者密码",
+    "JhAbpQuickComponents:000001": "用户名或密码错误！",
     "JhAbpQuickComponents:000002": "RefreshToken 无效或者过期",
     "JhAbpQuickComponents:000003": "身份验证服务异常"
   }
