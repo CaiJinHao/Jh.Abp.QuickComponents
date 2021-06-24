@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Application;
 using Volo.Abp.Authorization;
+using Volo.Abp.IdentityServer.Localization;
 using Volo.Abp.Localization;
 using Volo.Abp.Localization.ExceptionHandling;
 using Volo.Abp.Modularity;
@@ -24,7 +25,7 @@ namespace Jh.Abp.IdentityServer
             {
                 options.Resources
                     .Add<JhAbpIdentityServerResource>("zh-Hans")
-                    .AddBaseTypes(typeof(AbpValidationResource))
+                    .AddBaseTypes(typeof(AbpIdentityServerResource))
                     //指定嵌入式资源的虚拟路径
                     .AddVirtualJson("/Localization/JhAbpIdentityServer");
             });

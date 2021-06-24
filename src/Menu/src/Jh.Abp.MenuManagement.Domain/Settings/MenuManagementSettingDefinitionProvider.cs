@@ -1,4 +1,5 @@
-﻿using Volo.Abp.Settings;
+﻿using Volo.Abp.Localization;
+using Volo.Abp.Settings;
 
 namespace Jh.Abp.MenuManagement.Settings
 {
@@ -9,6 +10,8 @@ namespace Jh.Abp.MenuManagement.Settings
             /* Define module settings here.
              * Use names from MenuManagementSettings class.
              */
+
+            
         }
     }
 }

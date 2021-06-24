@@ -206,7 +206,6 @@ namespace Jh.Abp.MenuManagement
             });
 
             context.Services.AddApiVersion();
-            context.Services.AddLocalizationComponent();
             context.Services.AddAuthorizeFilter(configuration);
             //context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
 #if DEBUG
@@ -243,8 +242,7 @@ namespace Jh.Abp.MenuManagement
             {
                 app.UseMultiTenancy();
             }
-            app.UseJhRequestLocalization();
-            //app.UseAbpRequestLocalization();
+            app.UseAbpRequestLocalization();
             app.UseAuthorization();
 #if DEBUG
             app.UseJhAbpSwagger(configuration);

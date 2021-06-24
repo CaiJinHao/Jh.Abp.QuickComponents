@@ -1,6 +1,8 @@
 using Jh.Abp.EntityFrameworkCore.Dm;
 using Jh.Abp.EntityFrameworkCore.DmExtensions;
+using Jh.Abp.IdentityServer;
 using Jh.Abp.MenuManagement.MultiTenancy;
+using Jh.Abp.QuickComponents;
 using Jh.Abp.QuickComponents.Cors;
 using Jh.Abp.QuickComponents.Localization;
 using Microsoft.AspNetCore.Builder;
@@ -84,7 +86,9 @@ namespace Jh.Abp.MenuManagement
         typeof(MenuManagementApplicationContractsModule),
         typeof(AbpAspNetCoreSerilogModule),
         //typeof(JhEntityFrameworkCoreDmExtensionsModule),
-        typeof(AbpSwashbuckleModule)
+        typeof(AbpSwashbuckleModule),
+        typeof(JhAbpIdentityServerModule),
+        typeof(AbpQuickComponentsModule)
         )]
     public class MenuManagementIdentityServerModule : AbpModule
     {
@@ -188,7 +192,6 @@ namespace Jh.Abp.MenuManagement
             });
 
             context.Services.AddSameSiteCookiePolicy();
-            context.Services.AddLocalizationComponent();
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -220,7 +223,7 @@ namespace Jh.Abp.MenuManagement
                 app.UseMultiTenancy();
             }
 
-            app.UseJhRequestLocalization();
+            app.UseAbpRequestLocalization();
             app.UseIdentityServer();
             app.UseAuthorization();
             app.UseSwagger();
