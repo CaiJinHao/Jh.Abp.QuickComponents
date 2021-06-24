@@ -34,7 +34,7 @@ namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<AccessTokenResponseDto> GetAccessTokenAsync(AccessTokenRequestDto requestDto)
+        public async Task<AccessTokenResponseDto> GetAccessTokenAsync([FromBody]AccessTokenRequestDto requestDto)
         {
             // discover endpoints from metadata
             var client = new HttpClient();
