@@ -41,7 +41,7 @@ namespace Jh.Abp.QuickComponents.HttpApi.v1.AccessToken
             var disco = await client.GetDiscoveryDocumentAsync(_configuration["AuthServer:Authority"]);
             if (disco.IsError)
             {
-                throw new System.Exception("Error");
+                throw new System.Exception("Discovery Error");
             }
 
             // request token

@@ -27,6 +27,9 @@ dotnet nuget push src\Menu\src\Jh.Abp.MenuManagement.HttpApi.Client\bin\Release\
 dotnet nuget push src\Menu\src\Jh.Abp.MenuManagement.MongoDB\bin\Release\Jh.Abp.MenuManagement.MongoDB.$MenuManagement.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
 dotnet nuget push src\Menu\src\Jh.Abp.MenuManagement.Web\bin\Release\Jh.Abp.MenuManagement.Web.$MenuManagement.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
 dotnet nuget push src\QuickComponents\Jh.Abp.QuickComponents\bin\Release\Jh.Abp.QuickComponents.$QuickComponents.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+dotnet nuget push src\QuickComponents\Jh.Abp.QuickComponents.Application\bin\Release\Jh.Abp.QuickComponents.Application.$QuickComponents.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+dotnet nuget push src\QuickComponents\Jh.Abp.QuickComponents.Application.Contracts\bin\Release\Jh.Abp.QuickComponents.Application.Contracts.$QuickComponents.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+dotnet nuget push src\QuickComponents\Jh.Abp.QuickComponents.HttpApi\bin\Release\Jh.Abp.QuickComponents.HttpApi.$QuickComponents.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
 dotnet nuget push src\GeneratorCoding\Jh.GeneratorCoding\bin\Release\Jh.SourceGenerator.$SourceGenerator.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
 dotnet nuget push src\GeneratorCoding\Jh.SourceGenerator.Common\bin\Release\Jh.SourceGenerator.Common.$SourceGenerator.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
 echo "success ok"
