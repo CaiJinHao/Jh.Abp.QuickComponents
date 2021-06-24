@@ -9,6 +9,6 @@ namespace Jh.Abp.QuickComponents
 {
     public interface IJhIdentityModelAuthenticationService: IIdentityModelAuthenticationService
     {
-        Task<TokenResponse> GetAccessTokenResponseAsync(IdentityClientConfiguration configuration);
+        Task<TokenResponse> GetAccessTokenResponseAsync(IdentityClientConfiguration configuration, string refreshToken = null);
     }
 }

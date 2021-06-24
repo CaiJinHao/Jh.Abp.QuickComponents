@@ -28,32 +28,42 @@ namespace Jh.Abp.QuickComponents.Application.AccessToken
         }
 
 
-        public async Task<AccessTokenResponseDto> GetAccessTokenAsync(AccessTokenRequestDto requestDto)
+        public virtual async Task<AccessTokenResponseDto> GetAccessTokenAsync(AccessTokenRequestDto requestDto)
         {
-            var configuration = new IdentityClientConfiguration(
-                _identityClientOptions.Authority,
-                _identityClientOptions.Scope,
-                _identityClientOptions.ClientId,
-                _identityClientOptions.ClientSecret,
-                OidcConstants.GrantTypes.Password,
-                requestDto.UserNameOrEmailAddress,
-                requestDto.Password
-            )
-            {
-                RequireHttps = _identityClientOptions.RequireHttps
-            };
-
-            if (!requestDto.OrganizationName.IsNullOrWhiteSpace())
-            {
-                configuration["[o]abp-organization-name"] = requestDto.OrganizationName;
-            }
+            var configuration = CreateIdentityClientConfiguration(requestDto.OrganizationName);
+            configuration.GrantType = OidcConstants.GrantTypes.Password;
+            configuration.UserName = requestDto.UserNameOrEmailAddress;
+            configuration.UserPassword = requestDto.Password;
+            
             var tokenResponse= await _jhIdentityModelAuthenticationService.GetAccessTokenResponseAsync(configuration);
             return _objectMapper.Map<TokenResponse, AccessTokenResponseDto>(tokenResponse);
         }
 
-        public Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(string refreshToken)
+        public virtual async Task<AccessTokenResponseDto> GetRefreshAccessTokenAsync(string refreshToken)
         {
-            throw new NotImplementedException();
+            var configuration = CreateIdentityClientConfiguration();
+            configuration.GrantType = OidcConstants.GrantTypes.RefreshToken;
+
+            var tokenResponse = await _jhIdentityModelAuthenticationService.GetAccessTokenResponseAsync(configuration, refreshToken);
+            return _objectMapper.Map<TokenResponse, AccessTokenResponseDto>(tokenResponse);
+        }
+
+        protected virtual IdentityClientConfiguration CreateIdentityClientConfiguration(string organizationName = null)
+        {
+            var configuration= new IdentityClientConfiguration(
+                _identityClientOptions.Authority,
+                _identityClientOptions.Scope,
+                _identityClientOptions.ClientId,
+                _identityClientOptions.ClientSecret
+            )
+            {
+                RequireHttps = _identityClientOptions.RequireHttps
+            };
+            if (!organizationName.IsNullOrWhiteSpace())
+            {
+                configuration["[o]abp-organization-name"] = organizationName;
+            }
+            return configuration;
         }
     }
 }
