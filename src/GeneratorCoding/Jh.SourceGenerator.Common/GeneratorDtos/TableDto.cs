@@ -220,5 +220,10 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
             var fields = FieldsAll.Where(a => !(FieldsRetrieve.Select(b => b.Name).Contains(a.Name)) && !(FieldsIgnore.Select(b => b.Name).Contains(a.Name)));
             return FieldsIgnore.Concat(fields);
         }
+
+        public virtual string GetGroupName()
+        {
+            return this.Namespace.Replace(".","");
+        }
     }
 }

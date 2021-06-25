@@ -32,7 +32,7 @@ using Volo.Abp.Data;");
                 builder.AppendLine("\t{");
                 {
                     var moduleName = $"{table.Name}s";
-                    var groupName = $"{table.Namespace}Permissions";
+                    var groupName = $"{table.GetGroupName()}Permissions";
 
                     builder.AppendLine($"\t\tprivate readonly I{table.Name}AppService {table.Name}AppService;");
                     builder.AppendLine("\t\tpublic IDataFilter<ISoftDelete> dataFilter { get; set; }");

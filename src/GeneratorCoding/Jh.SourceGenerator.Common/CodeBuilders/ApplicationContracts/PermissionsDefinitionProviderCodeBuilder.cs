@@ -10,7 +10,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
     {
         public PermissionsDefinitionProviderCodeBuilder(IEnumerable<TableDto> tableDto, string filePath) : base(tableDto, filePath)
         {
-            this.FileName = $"{table.Namespace}PermissionDefinitionProvider";
+            this.FileName = $"{table.GetGroupName()}PermissionDefinitionProvider";
         }
 
         public override string ToString()
@@ -19,20 +19,19 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
             builder.AppendLine(@"
 using System;
 using Volo.Abp.Authorization.Permissions;
-using Volo.Abp.Identity.Localization;
 using Volo.Abp.Localization;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
-                builder.AppendLine($"\tpublic class {table.Namespace}PermissionDefinitionProvider: PermissionDefinitionProvider");
+                builder.AppendLine($"\tpublic class {table.GetGroupName()}PermissionDefinitionProvider: PermissionDefinitionProvider");
                 builder.AppendLine("\t{");
                 {
-                    var groupName = $"{table.Namespace}";
+                    var groupName = $"{table.GetGroupName()}";
                     var permissions = $"{groupName}Permissions";
                     builder.AppendLine($"\tpublic override void Define(IPermissionDefinitionContext context)");
                     builder.AppendLine("\t{");
                     {
-                        builder.AppendLine($"\t\tvar {groupName}Group = context.AddGroup({groupName}Permissions.GroupName, L(\"Permission:{table.Namespace}\"));");
+                        builder.AppendLine($"\t\tvar {groupName}Group = context.AddGroup({groupName}Permissions.GroupName, L(\"Permission:{table.GetGroupName()}\"));");
                         foreach (var item in tables)
                         {
                             var moduleName = $"{item.Name}s";
@@ -61,7 +60,7 @@ using Volo.Abp.Localization;");
                     builder.AppendLine($"\t private static LocalizableString L(string name)");
                     builder.AppendLine("\t{");
                     {
-                        builder.AppendLine($"\t\t return LocalizableString.Create<{table.Namespace}Resource>(name);");
+                        builder.AppendLine($"\t\t return LocalizableString.Create<{table.GetGroupName()}Resource>(name);");
                     }
                     builder.AppendLine("\t}");
 
