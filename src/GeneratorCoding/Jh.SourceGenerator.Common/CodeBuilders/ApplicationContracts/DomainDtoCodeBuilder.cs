@@ -29,6 +29,7 @@ using Volo.Abp.Domain.Entities;");
                 {
                     builder.AppendLine($",IHasConcurrencyStamp");
                 }
+                builder.AppendLine($",IMultiTenant");
                 builder.AppendLine("\t{");
                 {
                     foreach (var _field in table.FieldsCreateOrUpdateInput)
@@ -47,6 +48,8 @@ using Volo.Abp.Domain.Entities;");
                         builder.AppendLine("\t\t/// <summary>");
                         builder.AppendLine("\t\tpublic string ConcurrencyStamp { get; set; }");
                     }
+
+                    builder.AppendLine($"\t\t public virtual Guid? TenantId " + "{ get; set; }");
                 }
                 builder.AppendLine("\t}");
             }

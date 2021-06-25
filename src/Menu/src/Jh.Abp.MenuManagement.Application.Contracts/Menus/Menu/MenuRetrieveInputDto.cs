@@ -1,14 +1,18 @@
 ﻿using Jh.Abp.Application.Contracts.Dtos;
 using Jh.Abp.Application.Contracts.Extensions;
+using System;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.MultiTenancy;
 
 namespace Jh.Abp.MenuManagement
 {
     /// <summary>
     /// 只存放需要查询的字段
     /// </summary>
-    public class MenuRetrieveInputDto : PagedAndSortedResultRequestDto, IMethodDto<Menu>, IRetrieveDelete
+    public class MenuRetrieveInputDto : PagedAndSortedResultRequestDto, IMethodDto<Menu>, IRetrieveDelete, IMultiTenant
     {
+        public virtual Guid? TenantId { get; set; }
+
         /// <summary>
         /// 菜单编号
         /// </summary>

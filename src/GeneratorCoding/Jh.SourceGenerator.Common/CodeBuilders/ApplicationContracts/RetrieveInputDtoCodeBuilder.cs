@@ -27,6 +27,7 @@ using Volo.Abp.Application.Dtos;");
                 {
                     builder.AppendLine(", IRetrieveDelete");
                 }
+                builder.AppendLine($",IMultiTenant");
                 builder.AppendLine("\t{");
                 {
                     foreach (var _field in table.FieldsRetrieve)
@@ -51,6 +52,8 @@ using Volo.Abp.Application.Dtos;");
                     builder.AppendLine("\t\t/// <summary>");
                     builder.AppendLine("\t\t[Newtonsoft.Json.JsonIgnore]");
                     builder.AppendLine($"\t\tpublic MethodDto<{table.Name}> MethodInput " + "{ get; set; }");
+
+                    builder.AppendLine($"\t\t public virtual Guid? TenantId "+ "{ get; set; }");
                 }
                 builder.AppendLine("\t}");
             }

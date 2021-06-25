@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Volo.Abp.Authorization.Permissions;
+using Volo.Abp.MultiTenancy;
 
 namespace Jh.Abp.MenuManagement
 {
-    public class MenuAndRoleMapCreateInputDto
+    public class MenuAndRoleMapCreateInputDto: IMultiTenant
     {
+        public virtual Guid? TenantId { get; set; }
         /// <summary>
         /// 菜单外键
         /// </summary>

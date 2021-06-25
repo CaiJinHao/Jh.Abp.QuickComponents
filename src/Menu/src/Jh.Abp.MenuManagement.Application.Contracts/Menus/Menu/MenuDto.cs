@@ -1,11 +1,13 @@
 ﻿using System;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.MultiTenancy;
 
 namespace Jh.Abp.MenuManagement
 {
-    public class MenuDto: ExtensibleFullAuditedEntityDto<Guid>, IHasConcurrencyStamp
+    public class MenuDto: ExtensibleFullAuditedEntityDto<Guid>, IHasConcurrencyStamp, IMultiTenant
     {
+        public virtual Guid? TenantId { get; set; }
         /// <summary>
         /// 菜单编号
         /// </summary>

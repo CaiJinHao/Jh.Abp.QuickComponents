@@ -3,12 +3,14 @@ using Jh.Abp.Application.Contracts.Extensions;
 
 using System;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.MultiTenancy;
 using Volo.Abp.ObjectExtending;
 namespace Jh.Abp.MenuManagement
 {
 	public class MenuPermissionMapUpdateInputDto: 
-IMethodDto<MenuPermissionMap>
+IMethodDto<MenuPermissionMap>, IMultiTenant
 	{
+        public virtual Guid? TenantId { get; set; }
 		/// <summary>
 		/// 菜单外键
 		/// <summary>

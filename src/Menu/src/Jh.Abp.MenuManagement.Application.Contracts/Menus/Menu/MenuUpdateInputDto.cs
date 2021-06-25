@@ -2,12 +2,14 @@
 using Jh.Abp.Application.Contracts.Extensions;
 using System;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.MultiTenancy;
 using Volo.Abp.ObjectExtending;
 
 namespace Jh.Abp.MenuManagement
 {
-    public class MenuUpdateInputDto : ExtensibleObject, IHasConcurrencyStamp, IMethodDto<Menu>
+    public class MenuUpdateInputDto : ExtensibleObject, IHasConcurrencyStamp, IMethodDto<Menu>, IMultiTenant
     {
+        public virtual Guid? TenantId { get; set; }
         /// <summary>
         /// 菜单编号
         /// </summary>

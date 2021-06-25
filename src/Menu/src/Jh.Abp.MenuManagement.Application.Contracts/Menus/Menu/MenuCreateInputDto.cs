@@ -2,6 +2,7 @@
 using Jh.Abp.Application.Contracts.Extensions;
 using System;
 using System.ComponentModel.DataAnnotations;
+using Volo.Abp.MultiTenancy;
 using Volo.Abp.ObjectExtending;
 
 namespace Jh.Abp.MenuManagement
@@ -9,8 +10,9 @@ namespace Jh.Abp.MenuManagement
     /// <summary>
     /// 只存放需要传值的
     /// </summary>
-    public class MenuCreateInputDto: ExtensibleObject, IMethodDto<Menu>
+    public class MenuCreateInputDto: ExtensibleObject, IMethodDto<Menu>, IMultiTenant
     {
+        public virtual Guid? TenantId { get; set; }
         /// <summary>
         /// 菜单编号
         /// </summary>

@@ -9,13 +9,16 @@ using Jh.SourceGenerator.Common.GeneratorAttributes;
 using Volo.Abp;
 using JetBrains.Annotations;
 using System.Linq;
+using Volo.Abp.MultiTenancy;
 
 namespace Jh.Abp.MenuManagement
 {
     [GeneratorClass]
     [Description("菜单和权限映射")]
-    public class MenuPermissionMap : CreationAuditedEntity<Guid>
+    public class MenuPermissionMap : CreationAuditedEntity<Guid>, IMultiTenant
     {
+        public virtual Guid? TenantId { get; set; }
+
         [RetrieveDto]
         [CreateOrUpdateInputDto]
         [Description("菜单外键")]

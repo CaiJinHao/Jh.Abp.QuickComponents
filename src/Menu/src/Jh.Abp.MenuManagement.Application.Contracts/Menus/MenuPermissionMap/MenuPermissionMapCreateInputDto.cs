@@ -1,10 +1,12 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Volo.Abp.MultiTenancy;
 using Volo.Abp.ObjectExtending;
 namespace Jh.Abp.MenuManagement
 {
-	public class MenuPermissionMapCreateInputDto
+	public class MenuPermissionMapCreateInputDto : IMultiTenant
 	{
+        public virtual Guid? TenantId { get; set; }
 		/// <summary>
 		/// 菜单外键
 		/// <summary>

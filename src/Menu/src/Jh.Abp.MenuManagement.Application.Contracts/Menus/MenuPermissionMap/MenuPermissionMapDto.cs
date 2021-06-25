@@ -1,10 +1,13 @@
 using System;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.MultiTenancy;
+
 namespace Jh.Abp.MenuManagement
 {
-	public class MenuPermissionMapDto: CreationAuditedEntityDto<System.Guid>
+	public class MenuPermissionMapDto: CreationAuditedEntityDto<System.Guid>, IMultiTenant
 	{
+        public virtual Guid? TenantId { get; set; }
 		/// <summary>
 		/// 菜单外键
 		/// <summary>

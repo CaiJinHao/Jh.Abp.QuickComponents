@@ -10,13 +10,16 @@ using Volo.Abp;
 using JetBrains.Annotations;
 using System.Linq;
 using Jh.Abp.Common;
+using Volo.Abp.MultiTenancy;
 
 namespace Jh.Abp.MenuManagement
 {
     [GeneratorClass]
     [Description("菜单")]
-    public class Menu : FullAuditedAggregateRoot<Guid>
+    public class Menu : FullAuditedAggregateRoot<Guid>, IMultiTenant
     {
+        public virtual Guid? TenantId { get; set; }
+
         [RetrieveDto]
         [CreateOrUpdateInputDto]
         [Description("菜单编号")]

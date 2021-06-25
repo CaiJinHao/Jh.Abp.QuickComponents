@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Volo.Abp.MultiTenancy;
 
 namespace Jh.Abp.MenuManagement
 {
-    public class MenuAndRoleMapUpdateInputDto
+    public class MenuAndRoleMapUpdateInputDto: IMultiTenant
     {
+        public virtual Guid? TenantId { get; set; }
         [Required]
         public Guid MenuId { get; set; }
 

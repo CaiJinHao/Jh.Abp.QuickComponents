@@ -6,13 +6,16 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.MultiTenancy;
 
 namespace Jh.Abp.MenuManagement
 {
     //[GeneratorClass]
     [Description("菜单和角色映射表")]
-    public class MenuAndRoleMap : CreationAuditedEntity<Guid>
+    public class MenuAndRoleMap : CreationAuditedEntity<Guid>, IMultiTenant
     {
+        public virtual Guid? TenantId { get; set; }
+
         [RetrieveDto]
         [CreateOrUpdateInputDto]
         [Description("菜单外键")]
