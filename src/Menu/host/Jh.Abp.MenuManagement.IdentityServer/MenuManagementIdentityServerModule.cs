@@ -1,6 +1,7 @@
 using Jh.Abp.EntityFrameworkCore.Dm;
 using Jh.Abp.EntityFrameworkCore.DmExtensions;
 using Jh.Abp.IdentityServer;
+using Jh.Abp.IdentityServer.JhDataSeedContributor;
 using Jh.Abp.MenuManagement.MultiTenancy;
 using Jh.Abp.QuickComponents;
 using Jh.Abp.QuickComponents.Cors;
@@ -9,11 +10,13 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using System;
+using System.IO;
 using System.Linq;
 using Volo.Abp;
 using Volo.Abp.Account;
@@ -41,6 +44,7 @@ using Volo.Abp.IdentityServer.EntityFrameworkCore;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
+using Volo.Abp.MultiTenancy.ConfigurationStore;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.HttpApi;
@@ -88,6 +92,8 @@ namespace Jh.Abp.MenuManagement
         typeof(AbpSwashbuckleModule),
         typeof(JhAbpIdentityServerModule),
         typeof(AbpQuickComponentsModule)
+        //, typeof(AbpMultiTenancyModule)
+        //, typeof(Volo.Abp.AspNetCore.MultiTenancy.AbpAspNetCoreMultiTenancyModule)
         )]
     public class MenuManagementIdentityServerModule : AbpModule
     {
@@ -243,12 +249,12 @@ namespace Jh.Abp.MenuManagement
             {
                 using (var scope = context.ServiceProvider.CreateScope())
                 {
-                    var data = scope.ServiceProvider
-                        .GetRequiredService<IDataSeeder>();
-                    var context = new DataSeedContext();
-                    context["AdminEmail"] = "531003539@qq.com";
-                    context["AdminPassword"] = "KimHo@123";
-                    await data.SeedAsync(context);
+                    var serviceProvider = scope.ServiceProvider;
+                     var data = serviceProvider.GetRequiredService<IDataSeeder>();
+                    var seedContext = new DataSeedContext();
+                    seedContext["AdminEmail"] = "531003539@qq.com";
+                    seedContext["AdminPassword"] = "KimHo@123";
+                    await data.SeedAsync(seedContext);
                 }
             });
         }
