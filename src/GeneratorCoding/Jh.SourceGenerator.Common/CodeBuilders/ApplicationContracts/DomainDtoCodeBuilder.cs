@@ -20,6 +20,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
             var builder = new StringBuilder();
             builder.AppendLine(@"using System;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.MultiTenancy;
 using Volo.Abp.Domain.Entities;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");

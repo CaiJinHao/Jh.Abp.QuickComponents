@@ -19,6 +19,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
 using System.ComponentModel.DataAnnotations;
 using Jh.Abp.Application.Contracts.Dtos;
 using Jh.Abp.Application.Contracts.Extensions;
+using Volo.Abp.MultiTenancy;
 using Volo.Abp.ObjectExtending;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
