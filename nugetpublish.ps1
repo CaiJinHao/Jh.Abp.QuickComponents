@@ -4,7 +4,7 @@ $publishSource="https://api.nuget.org/v3/index.json"
 $MenuManagement="0.1.101"
 $QuickComponents="1.2.601" 
 $applicationVersion="2.0.151"
-$SourceGenerator="3.0.153"
+$SourceGenerator="3.0.154"
 $EntityFrameworkCoredm="0.2.0"
 
 dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.Application\bin\Release\Jh.Abp.Application.$applicationVersion.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
