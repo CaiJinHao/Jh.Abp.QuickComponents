@@ -1,20 +1,29 @@
-using System.IO;
-using System.Reflection;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Jh.Abp.MenuManagement.EntityFrameworkCore;
 using Jh.Abp.MenuManagement.MultiTenancy;
 using Jh.Abp.MenuManagement.Web;
+using Jh.Abp.QuickComponents;
+using Jh.Abp.QuickComponents.Cors;
+using Jh.Abp.QuickComponents.JwtAuthentication;
+using Jh.Abp.QuickComponents.Swagger;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IO;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Web;
+using Volo.Abp.AspNetCore.ExceptionHandling;
+using Volo.Abp.AspNetCore.Mvc.AntiForgery;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
+using Volo.Abp.Auditing;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
+using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Autofac;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
@@ -24,6 +33,7 @@ using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.Identity.Web;
+using Volo.Abp.Json;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
@@ -37,24 +47,6 @@ using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.Web;
 using Volo.Abp.Threading;
 using Volo.Abp.VirtualFileSystem;
-using System;
-using Volo.Abp.Json;
-using Volo.Abp.Authorization.Permissions;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Volo.Abp.AspNetCore.Mvc.AntiForgery;
-using Volo.Abp.Auditing;
-using Jh.Abp.QuickComponents;
-using Jh.Abp.QuickComponents.Swagger;
-using Volo.Abp.AspNetCore.ExceptionHandling;
-using Jh.Abp.QuickComponents.Cors;
-using Jh.Abp.QuickComponents.Localization;
-using Jh.Abp.QuickComponents.JwtAuthentication;
-using Microsoft.Extensions.Configuration;
-using Jh.Abp.EntityFrameworkCore.DmExtensions;
-using Jh.Abp.EntityFrameworkCore.Dm;
 
 namespace Jh.Abp.MenuManagement
 {
@@ -207,7 +199,6 @@ namespace Jh.Abp.MenuManagement
 
             context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
             context.Services.AddAbpIdentity().AddClaimsPrincipalFactory<JhUserClaimsPrincipalFactory>();
-            context.Services.AddLocalizationComponent();
             context.Services.AddAuthorizeFilter(configuration);
             context.Services.AddSameSiteCookiePolicy();
             //是否将错误发送到客户端
@@ -247,7 +238,6 @@ namespace Jh.Abp.MenuManagement
                 app.UseMultiTenancy();
             }
 
-            app.UseJhRequestLocalization();
             app.UseAuthorization();
 
 #if DEBUG
