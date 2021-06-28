@@ -20,7 +20,7 @@ namespace Jh.Abp.MenuManagement
     {
         protected IMenuPermissionMapAppService menuPermissionMapAppService => LazyServiceProvider.LazyGetRequiredService<IMenuPermissionMapAppService>();
 
-        private readonly IMenuRepository MenuRepository;
+        protected readonly IMenuRepository MenuRepository;
         public IdentityUserManager MyUserManager { get; set; }
 
         private readonly IMenuAndRoleMapRepository MenuAndRoleMapRepository;

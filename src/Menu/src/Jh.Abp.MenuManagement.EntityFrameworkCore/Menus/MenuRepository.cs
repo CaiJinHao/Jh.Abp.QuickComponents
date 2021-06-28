@@ -13,7 +13,7 @@ namespace Jh.Abp.MenuManagement
 {
     public class MenuRepository : CrudRepository<MenuManagementDbContext, Menu, Guid>, IMenuRepository
     {
-        private readonly IMenuDapperRepository MenuDapperRepository;
+        protected readonly IMenuDapperRepository MenuDapperRepository;
 
         public MenuRepository(IDbContextProvider<MenuManagementDbContext> dbContextProvider
             , IMenuDapperRepository menuDapperRepository) : base(dbContextProvider)
