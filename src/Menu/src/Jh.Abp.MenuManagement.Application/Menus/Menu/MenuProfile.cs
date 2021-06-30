@@ -9,10 +9,10 @@ namespace Jh.Abp.MenuManagement
         {
             CreateMap<Menu, MenuDto>().MapExtraProperties();
             CreateMap<MenuCreateInputDto, Menu>().IgnoreFullAuditedObjectProperties().Ignore(a=>a.ConcurrencyStamp).Ignore(a => a.Id)
-    .Ignore(a => a.MenuRoleMaps).Ignore(a=> a.MenuPermissionMaps)
+    .Ignore(a => a.MenuRoleMaps)
     ;
             CreateMap<MenuUpdateInputDto, Menu>().IgnoreFullAuditedObjectProperties().Ignore(a => a.Id)
-    .Ignore(a => a.MenuRoleMaps).Ignore(a => a.MenuPermissionMaps)
+    .Ignore(a => a.MenuRoleMaps)
     ;
         }
     }

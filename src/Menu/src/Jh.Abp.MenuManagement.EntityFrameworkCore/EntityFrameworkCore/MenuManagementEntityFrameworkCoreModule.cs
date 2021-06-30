@@ -25,10 +25,10 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
                 options.AddDefaultRepositories<IMenuManagementDbContext>(true);
 
                 //getid的时候加载detail
-                options.Entity<Menu>(opt =>
+                /*options.Entity<Menu>(opt =>
                 {
                     opt.DefaultWithDetailsFunc = q => q.Include(a=>a.MenuPermissionMaps);
-                });
+                });*/
             });
         }
     }

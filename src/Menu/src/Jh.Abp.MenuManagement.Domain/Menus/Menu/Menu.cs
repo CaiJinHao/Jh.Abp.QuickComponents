@@ -64,14 +64,9 @@ namespace Jh.Abp.MenuManagement
         [ProfileIgnore]
         public virtual IList<MenuAndRoleMap> MenuRoleMaps { get; protected set; }
 
-        [ProfileIgnore]
-        public virtual IList<MenuPermissionMap> MenuPermissionMaps { get; protected set; }
-        
-
         public Menu()
         {
             MenuRoleMaps = new List<MenuAndRoleMap>();
-            MenuPermissionMaps = new List<MenuPermissionMap>();
         }
 
         public virtual void AddOrUpdateMenuRoleMap(Guid[] roleids)

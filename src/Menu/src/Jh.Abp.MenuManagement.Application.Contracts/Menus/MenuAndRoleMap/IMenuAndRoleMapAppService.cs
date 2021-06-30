@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
+using Volo.Abp.Authorization.Permissions;
 
 namespace Jh.Abp.MenuManagement
 {
@@ -23,5 +24,16 @@ namespace Jh.Abp.MenuManagement
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(MenuAndRoleMapTreeAllRetrieveInputDto input);
+
+
+
+        Task UpdateAsync(string providerName, string providerKey, string[] PermissionNames);
+
+        Task<IEnumerable<PermissionDefinition>> GetPermissionGrantsAsync();
+
+        Task<dynamic> GetMenuSelectPermissionGrantsAsync();
+
+        Task<IEnumerable<PermissionGrantedDto>> GetPermissionGrantedByNameAsync(PermissionGrantedRetrieveInputDto input);
+        Task<IEnumerable<MenusTreeDto>> GetPermissionTreesAsync(string providerName, string providerKey);
     }
 }

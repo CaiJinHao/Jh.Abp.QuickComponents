@@ -177,18 +177,6 @@
                         });
                     }
                 },
-                setPermissionsNamesValue:function(_fn){
-                    let _the=this;
-                    ajaxmod.requestAuthorize({
-                        url: '/MenuAndRoleMap/'+vm.paramObj.id+'/Permissions',
-                        type: 'Get',
-                        success: function (response) {
-                            if (_fn) {
-                                _fn(response);
-                            }
-                        }
-                    });
-                },
                 loadPermissionsNames:function(_fn){
                     let _the=this;
                     ajaxmod.requestAuthorize({

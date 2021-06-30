@@ -20,7 +20,6 @@ namespace Jh.Abp.MenuManagement.v1
     {
         public IPermissionDefinitionManager PermissionDefinitionManager { get; set; }
         public IPermissionAppService permissionAppService { get; set; }
-        public IMenuPermissionMapAppService menuPermissionMapAppService { get; set; }
         private readonly IMenuAppService menuAppService;
         public IDataFilter<ISoftDelete> dataFilter { get; set; }
 
@@ -175,19 +174,6 @@ namespace Jh.Abp.MenuManagement.v1
             {
                 return await menuAppService.GetListAsync(input);
             }
-        }
-
-
-        [Authorize(MenuManagementPermissions.Menus.Default)]
-        [HttpGet]
-        [Route("SelectPermissions")]
-        public virtual async Task<dynamic> GetSelectAsync(string name)
-        {
-            var datas = await menuPermissionMapAppService.GetMenuSelectPermissionGrantsAsync();
-            return new
-            {
-                items = datas
-            };
         }
     }
 }

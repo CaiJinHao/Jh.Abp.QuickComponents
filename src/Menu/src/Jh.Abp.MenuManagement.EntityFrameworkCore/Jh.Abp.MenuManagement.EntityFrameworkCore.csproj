@@ -26,6 +26,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Menus\MenuPermissionMap\**" />
+    <EmbeddedResource Remove="Menus\MenuPermissionMap\**" />
+    <None Remove="Menus\MenuPermissionMap\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\..\..\..\document\images\nugeticon.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

@@ -16,7 +16,6 @@ namespace Jh.Abp.MenuManagement.v1
     [Route("api/v{apiVersion:apiVersion}/[controller]")]
     public class MenuAndRoleMapController : MenuManagementController
     {
-        public IMenuPermissionMapAppService menuPermissionMapAppService { get; set; }
         private readonly IMenuAndRoleMapAppService menuAndRoleMapAppService;
         public MenuAndRoleMapController(IMenuAndRoleMapAppService _menuAndRoleMapAppService)
         {
@@ -111,18 +110,6 @@ namespace Jh.Abp.MenuManagement.v1
             return await menuAndRoleMapAppService.GetListAsync(input);
         }
 
-        [Authorize(MenuManagementPermissions.MenuAndRoleMaps.Default)]
-        [HttpGet]
-        [Route("{id}/Permissions")]
-        public virtual async Task<IEnumerable<string>> GetPermissionsAsync(Guid id)
-        {
-            var datas = await menuPermissionMapAppService.GetEntitysAsync(new MenuPermissionMapRetrieveInputDto()
-            {
-                MenuId = id
-            });
-            return datas.Items.Select(a => a.PermissionName).ToList();
-        }
-
         /// <summary>
         /// 根据ID删除
         /// </summary>
@@ -166,14 +153,14 @@ namespace Jh.Abp.MenuManagement.v1
         [HttpPost("PermissionGranted")]
         public virtual async Task<IEnumerable<PermissionGrantedDto>> GetPermissionGrantedByNameAsync([FromBody] PermissionGrantedRetrieveInputDto input)
         {
-            return await menuPermissionMapAppService.GetPermissionGrantedByNameAsync(input);
+            return await menuAndRoleMapAppService.GetPermissionGrantedByNameAsync(input);
         }
 
         [Authorize(MenuManagementPermissions.InterfaceAndRoleMaps.Default)]
         [HttpGet("InterfaceTreesAll")]
         public virtual async Task<dynamic> GetInterfaceTreesAsync([FromQuery] MenuAndRoleMapTreeAllRetrieveInputDto input)
         {
-            var items = await menuPermissionMapAppService.GetPermissionTreesAsync(input.ProviderName, input.ProviderKey);
+            var items = await menuAndRoleMapAppService.GetPermissionTreesAsync(input.ProviderName, input.ProviderKey);
             return new { items };
         }
 
@@ -181,7 +168,7 @@ namespace Jh.Abp.MenuManagement.v1
         [HttpPost("Interface")]
         public virtual async Task UpdateInterfaceAsync(MenuAndRoleMapCreateInputDto inputDto)
         {
-            await menuPermissionMapAppService.UpdateAsync(inputDto.ProviderName, inputDto.ProviderKey, inputDto.PermissionNames);
+            await menuAndRoleMapAppService.UpdateAsync(inputDto.ProviderName, inputDto.ProviderKey, inputDto.PermissionNames);
         }
     }
 }
