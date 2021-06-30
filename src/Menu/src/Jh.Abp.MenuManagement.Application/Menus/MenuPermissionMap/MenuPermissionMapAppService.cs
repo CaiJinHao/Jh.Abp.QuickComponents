@@ -27,7 +27,7 @@ namespace Jh.Abp.MenuManagement
             MenuPermissionMapDapperRepository = menupermissionmapDapperRepository;
         }
 
-        public async Task<IEnumerable<MenusTreeDto>> GetPermissionTreesAsync(Guid menuid, string providerName, string providerKey)
+        public virtual async Task<IEnumerable<MenusTreeDto>> GetPermissionTreesAsync(Guid menuid, string providerName, string providerKey)
         {
             var permissionNames = (await base.GetEntitysAsync(new MenuPermissionMapRetrieveInputDto()
             {
@@ -82,6 +82,14 @@ namespace Jh.Abp.MenuManagement
                 });
             }
             return results;
+        }
+
+        public virtual async Task<bool> ContainsListPermission()
+        {
+            //TODO:多选权限，需要加字段标识谁是主菜单权限
+            var datas = await GetPermissionGrantsAsync();
+            //var permissions = datas.Where(a => permissionNames.Contains(a.Name));//当前菜单绑定的所有权限组
+            return true;
         }
 
         public virtual async Task UpdateAsync(string providerName, string providerKey, string[] permissionNames)

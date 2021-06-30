@@ -119,6 +119,7 @@ namespace Jh.Abp.MenuManagement
                     if (_type == typeof(MenusNavDto))
                     {
                         (item as MenusNavDto).children = await GetChildNodesAsync(item.id) as IEnumerable<MenusNavDto>;
+                        //TODO:判断该菜单是否包含列表权限，不包含不返回该菜单可见
                     }
                     else
                     {
