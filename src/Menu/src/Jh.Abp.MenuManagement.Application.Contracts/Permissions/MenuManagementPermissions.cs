@@ -39,6 +39,13 @@ namespace Jh.Abp.MenuManagement.Permissions
             public const string ManagePermissions = Default + ".ManagePermissions";
         }
 
+        public static class InterfaceAndRoleMaps
+        {
+            public const string Default = GroupName + ".InterfaceAndRoleMaps";
+            public const string Update = Default + ".Update";
+            public const string ManagePermissions = Default + ".ManagePermissions";
+        }
+
         public static string[] GetAll()
         {
             return ReflectionHelper.GetPublicConstantsRecursively(typeof(MenuManagementPermissions));

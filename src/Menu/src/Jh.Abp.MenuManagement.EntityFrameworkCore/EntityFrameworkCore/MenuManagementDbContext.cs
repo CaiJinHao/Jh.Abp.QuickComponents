@@ -19,8 +19,6 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
 
         public DbSet<MenuAndRoleMap> MenuAndRoleMaps { get; set; }
 
-        public DbSet<MenuPermissionMap> MenuPermissionMaps { get; }
-
         public MenuManagementDbContext(DbContextOptions<MenuManagementDbContext> options) 
             : base(options)
         {

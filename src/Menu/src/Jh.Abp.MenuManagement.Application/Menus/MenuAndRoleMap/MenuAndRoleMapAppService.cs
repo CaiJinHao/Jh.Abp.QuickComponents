@@ -18,7 +18,6 @@ namespace Jh.Abp.MenuManagement
         : CrudApplicationService<MenuAndRoleMap, MenuAndRoleMapDto, MenuAndRoleMapDto, Guid, MenuAndRoleMapRetrieveInputDto, MenuAndRoleMapCreateInputDto, MenuAndRoleMapUpdateInputDto, MenuAndRoleMapDeleteInputDto>,
         IMenuAndRoleMapAppService
     {
-        protected IMenuPermissionMapAppService menuPermissionMapAppService => LazyServiceProvider.LazyGetRequiredService<IMenuPermissionMapAppService>();
 
         protected readonly IMenuRepository MenuRepository;
         public IdentityUserManager MyUserManager { get; set; }
@@ -42,7 +41,6 @@ namespace Jh.Abp.MenuManagement
 
         public virtual async Task<MenuAndRoleMap[]> CreateV2Async(MenuAndRoleMapCreateInputDto inputDto, bool autoSave = false, CancellationToken cancellationToken = default)
         {
-            await menuPermissionMapAppService.UpdateAsync(inputDto.ProviderName, inputDto.ProviderKey, inputDto.PermissionNames);
             return await crudRepository.CreateAsync(GetCreateEnumerableAsync(inputDto).ToArray());
         }
 
@@ -119,17 +117,10 @@ namespace Jh.Abp.MenuManagement
                     if (_type == typeof(MenusNavDto))
                     {
                         (item as MenusNavDto).children = await GetChildNodesAsync(item.id) as IEnumerable<MenusNavDto>;
-                        //TODO:判断该菜单是否包含列表权限，不包含不返回该菜单可见
                     }
                     else
                     {
-                        var data = item as MenusTreeDto;
-                        data.data = await GetChildNodesAsync(item.id) as IEnumerable<MenusTreeDto>;
-                        if (!data.data.Any())
-                        {
-                            //菜单加载完了，开始加载权限
-                            data.data = await menuPermissionMapAppService.GetPermissionTreesAsync(new Guid(data.value), menuAndRoleMapTreeAllRetrieveInputDto.ProviderName, menuAndRoleMapTreeAllRetrieveInputDto.ProviderKey);
-                        }
+                        (item as MenusTreeDto).data = await GetChildNodesAsync(item.id) as IEnumerable<MenusTreeDto>;
                     }
                 }
                 return childs;

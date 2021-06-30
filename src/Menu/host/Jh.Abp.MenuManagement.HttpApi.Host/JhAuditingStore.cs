@@ -28,7 +28,9 @@ namespace Jh.Abp.MenuManagement
                 return;
             }
             //去除没有必要的数据存储
-            if (auditInfo.Url.StartsWith("/api/") && auditInfo.Actions.Where(a => a.Parameters != "{}").Any())
+            if (auditInfo.Url != null &&
+                auditInfo.Url.StartsWith("/api/")//TODO:可以改为正则表达式匹配，使用appsettings配置
+                && auditInfo.Actions.Where(a => a.Parameters != "{}").Any())
             {
                 await base.SaveLogAsync(auditInfo);
             }

@@ -76,19 +76,13 @@ namespace Jh.Abp.MenuManagement
 
         public virtual void AddOrUpdateMenuRoleMap(Guid[] roleids)
         {
-            MenuRoleMaps.Clear();
+            if (MenuRoleMaps.Count > 0)
+            {
+                MenuRoleMaps.Clear();//去除现在有的角色
+            }
             foreach (var roleid in roleids.ToNullList())
             {
                 MenuRoleMaps.Add(new MenuAndRoleMap(Id, roleid));
-            }
-        }
-
-        public virtual void AddOrUpdateMenuPermissionMap(string[] permissionNames)
-        {
-            MenuPermissionMaps.Clear();
-            foreach (var permissionName in permissionNames.ToNullList())
-            {
-                MenuPermissionMaps.Add(new MenuPermissionMap(Id, permissionName));
             }
         }
     }

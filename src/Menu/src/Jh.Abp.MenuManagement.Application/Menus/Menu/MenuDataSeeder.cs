@@ -61,7 +61,7 @@ namespace Jh.Abp.MenuManagement
                 await menuAppService.CreateAsync(new MenuCreateInputDto()
                 {
                     Code = "A0202",
-                    Name = "角色权限管理",
+                    Name = "菜单权限管理",
                     Icon = "fa fa-bars",
                     Sort = 2,
                     ParentCode = "A02",
@@ -71,19 +71,29 @@ namespace Jh.Abp.MenuManagement
                 await menuAppService.CreateAsync(new MenuCreateInputDto()
                 {
                     Code = "A0203",
-                    Name = "用户管理",
+                    Name = "接口权限管理",
                     Icon = "fa fa-bars",
                     Sort = 3,
+                    ParentCode = "A02",
+                    Url = "/main/view/roleinterfaceand/index.html",
+                    RoleIds = new Guid[] { roleid },
+                });
+                await menuAppService.CreateAsync(new MenuCreateInputDto()
+                {
+                    Code = "A0204",
+                    Name = "用户管理",
+                    Icon = "fa fa-bars",
+                    Sort = 4,
                     ParentCode = "A02",
                     Url = "/main/view/user/index.html",
                     RoleIds = new Guid[] { roleid }
                 });
                 await menuAppService.CreateAsync(new MenuCreateInputDto()
                 {
-                    Code = "A0204",
+                    Code = "A0205",
                     Name = "系统审计日志",
                     Icon = "fa fa-bars",
-                    Sort = 4,
+                    Sort = 5,
                     ParentCode = "A02",
                     Url = "/main/view/auditLogging/index.html",
                     RoleIds = new Guid[] { roleid }

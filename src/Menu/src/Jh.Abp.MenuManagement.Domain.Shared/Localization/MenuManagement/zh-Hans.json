@@ -8,6 +8,7 @@
     "Permission:MenuAndRoleMapManagement": "权限列表",
     "Permission:MenusManagement": "菜单列表",
     "Permission:AuditLoggingsManagement": "日志列表",
+    "Permission:InterfaceAndRoleMapsManagement": "接口权限列表",
     "Permission:Export": "导出",
     "Permission:Detail": "详细",
     "Permission:Create": "创建",

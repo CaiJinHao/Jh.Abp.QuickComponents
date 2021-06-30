@@ -32,6 +32,10 @@ namespace Jh.Abp.MenuManagement.Permissions
             AuditLoggingsPermission.AddChild(MenuManagementPermissions.AuditLoggings.Update, L("Permission:Edit"));
             AuditLoggingsPermission.AddChild(MenuManagementPermissions.AuditLoggings.Delete, L("Permission:Delete"));
             AuditLoggingsPermission.AddChild(MenuManagementPermissions.AuditLoggings.ManagePermissions, L("Permission:ManagePermissions"));
+
+            var InterfaceAndRoleMapsPermission = MenuManagementGroup.AddPermission(MenuManagementPermissions.InterfaceAndRoleMaps.Default, L("Permission:InterfaceAndRoleMapsManagement"));
+            InterfaceAndRoleMapsPermission.AddChild(MenuManagementPermissions.InterfaceAndRoleMaps.Update, L("Permission:Edit"));
+            InterfaceAndRoleMapsPermission.AddChild(MenuManagementPermissions.InterfaceAndRoleMaps.ManagePermissions, L("Permission:ManagePermissions"));
         }
 
         private static LocalizableString L(string name)

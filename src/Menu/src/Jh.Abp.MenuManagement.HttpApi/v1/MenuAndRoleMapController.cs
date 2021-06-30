@@ -168,5 +168,20 @@ namespace Jh.Abp.MenuManagement.v1
         {
             return await menuPermissionMapAppService.GetPermissionGrantedByNameAsync(input);
         }
+
+        [Authorize(MenuManagementPermissions.InterfaceAndRoleMaps.Default)]
+        [HttpGet("InterfaceTreesAll")]
+        public virtual async Task<dynamic> GetInterfaceTreesAsync([FromQuery] MenuAndRoleMapTreeAllRetrieveInputDto input)
+        {
+            var items = await menuPermissionMapAppService.GetPermissionTreesAsync(input.ProviderName, input.ProviderKey);
+            return new { items };
+        }
+
+        [Authorize(MenuManagementPermissions.InterfaceAndRoleMaps.Update)]
+        [HttpPost("Interface")]
+        public virtual async Task UpdateInterfaceAsync(MenuAndRoleMapCreateInputDto inputDto)
+        {
+            await menuPermissionMapAppService.UpdateAsync(inputDto.ProviderName, inputDto.ProviderKey, inputDto.PermissionNames);
+        }
     }
 }

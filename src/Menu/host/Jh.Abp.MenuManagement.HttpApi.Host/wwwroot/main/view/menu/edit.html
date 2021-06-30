@@ -92,17 +92,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="layui-col-sm6">
-                        <div class="layui-row">
-                            <div class="layui-inline">
-                                <!-- 多选角色 -->
-                                <label class="layui-form-label">映射权限模块：</label>
-                                <div class="layui-input-inline">
-                                    <div id="permissionsNames" style="width: 182px;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <br />
                 <div class="layui-row" style="text-align:center;">
@@ -175,7 +164,6 @@
                     var _the = this;
                     vm.paramObj = geturlparam();
                     _the.loadData();
-                    _the.loadPermissionsNames();
                 },
                 loadData: function () {
                     if (vm.paramObj.id) {
@@ -241,7 +229,6 @@
 
             form.on('submit(btn_submit_menu_form)', function (_from_data) {
                 var data = vm.menu;
-                data.permissionNames = menuObj.permissionsNamesSelects.getValue('value');
                 var url = '/menu';
                 var type = 'Post';
                 if (vm.paramObj.id) {
