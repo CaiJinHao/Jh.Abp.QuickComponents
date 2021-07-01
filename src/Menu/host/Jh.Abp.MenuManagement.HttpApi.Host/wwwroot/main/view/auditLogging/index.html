@@ -170,9 +170,9 @@
                     var checkStatus = table.checkStatus('table_auditLogging'),
                         data = checkStatus.data;
                     var delIdList = [];
-                    for (const item of data) {
+                    data.forEach(function (item) {
                         delIdList.push(item.id);
-                    }
+                    });
                     datatable.delbatch({
                         url: '/auditLogging/keys',
                         type: 'Delete',

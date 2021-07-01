@@ -132,9 +132,9 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
                 }
             };
             
-            for (const item of vm.navList) {
+            vm.navList.forEach(function (item) {
                 getChild(item);
-            }
+            });
 
             $("#search-menu").html(str);
             form.render();
@@ -228,11 +228,11 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
 
     // 便捷查询菜单事件
     form.on('select(select-search)', function (data) {
-        for (const item of pageHome.searchMenuList) {
+        pageHome.searchMenuList.forEach(function (item) {
             if (item.id === data.value) {
                 pageHome.changePage(item);
             }
-        }
+        });
     });
 
     //皮肤

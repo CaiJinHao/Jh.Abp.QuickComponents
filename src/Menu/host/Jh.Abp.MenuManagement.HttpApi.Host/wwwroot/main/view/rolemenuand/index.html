@@ -120,13 +120,13 @@
                     let _the=this;
                     vm.selectedRole=node;
                     //找到文本
-                    for (const elem of $('#role_tree .layui-tree-spread')) {
+                    $('#role_tree .layui-tree-spread').each(function (k,elem) {
                         let name= $('.layui-tree-txt',$(elem)).html();
                         if (name === vm.selectedRole.title) {
                             _the.seletedRoleBg(elem);
-                            break;
+                            return;
                         }
-                    }
+                    });
                 },
                 loadRoleList: function (form_data) {
                     var _the = this;
