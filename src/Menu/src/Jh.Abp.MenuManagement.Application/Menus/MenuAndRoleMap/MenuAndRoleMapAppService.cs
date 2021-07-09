@@ -127,7 +127,7 @@ namespace Jh.Abp.MenuManagement
                         (item as MenusTreeDto).data = await GetChildNodesAsync(item.id) as IEnumerable<MenusTreeDto>;
                     }
                 }
-                return childs;
+                return childs.OrderBy(a => a.sort);
             }
 
             //找到根节点
