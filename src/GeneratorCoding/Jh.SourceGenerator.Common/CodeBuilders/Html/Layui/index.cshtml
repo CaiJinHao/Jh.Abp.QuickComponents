@@ -265,7 +265,7 @@
 
                     excel.exportExcel({
                         @(table_name_lower): data
-                    }, '@(table_name_lower)' + new Date().toLocaleString() + '.xlsx', 'xlsx');
+                    }, '@(Model.Comment)' + new Date().toLocaleString() + '.xlsx', 'xlsx');
                 },
                 loadtable:function(){
                     $('#btn_@(table_name_lower)_from_query').click();
