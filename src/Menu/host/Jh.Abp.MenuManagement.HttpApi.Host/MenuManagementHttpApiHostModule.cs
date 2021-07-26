@@ -41,7 +41,6 @@ using Volo.Abp.VirtualFileSystem;
 namespace Jh.Abp.MenuManagement
 {
     [DependsOn(
-        typeof(AbpQuickComponentsModule),
         typeof(JhAbpQuickComponentsHttpApiModule),
         typeof(MenuManagementHttpApiModule),
         typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
@@ -57,7 +56,8 @@ namespace Jh.Abp.MenuManagement
         typeof(AbpSettingManagementEntityFrameworkCoreModule),
         typeof(AbpAspNetCoreSerilogModule),
         //typeof(JhEntityFrameworkCoreDmExtensionsModule),
-        typeof(AbpSwashbuckleModule)
+        typeof(AbpSwashbuckleModule),
+        typeof(AbpQuickComponentsModule)
         )]
     public class MenuManagementHttpApiHostModule : AbpModule
     {

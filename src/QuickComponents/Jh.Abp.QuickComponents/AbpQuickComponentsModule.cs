@@ -16,6 +16,7 @@ using Volo.Abp.VirtualFileSystem;
 
 namespace Jh.Abp.QuickComponents
 {
+    //必须在最下边依赖
     public class AbpQuickComponentsModule: AbpModule
     {
         private IConfiguration configuration { get; set; }
