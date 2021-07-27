@@ -44,7 +44,7 @@
         </div>
     </script>
     <script type="text/html" id="tpl_name">
-        {{ (d.surname??"") + d.name}}
+        {{ d.name }}
     </script>
     <script type="text/html" id="tpl_lockoutEnabled">
         <input type="checkbox" name="lockoutEnabled" value="1" lay-skin="switch" data-code="{{d.id}}" lay-text="是|否" lay-filter="table_tpl_lockoutEnabled" {{d.lockoutEnabled?'checked':''}}>
@@ -117,7 +117,7 @@
                             $.extend({ field: 'email', title: '邮箱' }, _table_style),
                             // $.extend({ field: 'user_icon', title: '头像' }, _table_style),
                             // $.extend({ field: 'user_sex', title: '性别', templet: '#tpl_user_sex' }, _table_style),
-                            $.extend({ field: 'lockoutEnabled', title: '启用锁定', templet: '#tpl_lockoutEnabled' }, _table_style),
+                            $.extend({ field: 'lockoutEnabled', title: '启用密码错误锁定', templet: '#tpl_lockoutEnabled' }, _table_style),
                             $.extend({ field: 'isDeleted', title: '用户状态', templet: '#tpl_isDeleted' }, _table_style),
                             $.extend({ field: 'creationTime', title: '创建时间' }, _table_style),
                             $.extend({ field: 'lastModificationTime', title: '最后一次修改时间' }, _table_style),

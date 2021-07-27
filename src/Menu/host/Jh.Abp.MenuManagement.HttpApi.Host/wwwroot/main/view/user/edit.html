@@ -36,7 +36,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="layui-col-sm6">
+                    <!-- <div class="layui-col-sm6">
                         <div class="layui-row">
                             <div class="layui-inline">
                                 <label class="layui-form-label">姓：</label>
@@ -45,11 +45,11 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="layui-col-sm6">
                         <div class="layui-row">
                             <div class="layui-inline">
-                                <label class="layui-form-label">名：</label>
+                                <label class="layui-form-label">姓名：</label>
                                 <div class="layui-input-inline">
                                     <input type="text" class="layui-input" lay-verify="required" placeholder="请输入名称" v-model="user.name">
                                 </div>
@@ -255,6 +255,8 @@
 
             form.on('submit(btn_submit_user_form)', function (_from_data) {
                 var data = vm.user;
+                data.surname = data.name;
+                // data.email = data.userName + '@jh.com';
                 //获取rolenames
                 data.roleNames=userObj.roleNamesSelects.getValue('name');
                 var url = '/api/identity/users/';
