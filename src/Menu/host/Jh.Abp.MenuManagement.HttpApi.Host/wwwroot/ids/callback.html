@@ -14,6 +14,7 @@
     <script>
         new Oidc.UserManager(settings).signinRedirectCallback().then(function () {
             // window.location = './index.html';
+            // var urlsearch = localStorage.getItem("urlsearch");
             window.location = '/main/index.html';
         }).catch(function (e) {
             console.log(e);

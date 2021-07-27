@@ -191,6 +191,7 @@ namespace Jh.Abp.MenuManagement
             });
 
             context.Services.AddSameSiteCookiePolicy();
+            Configure<AppSettingsDto>(context.Services.GetConfiguration().GetSection("AppSettingsDtos"));
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)

@@ -3,6 +3,12 @@
 @using Volo.Abp.Users
 @model IndexModel
 @inject ICurrentUser CurrentUser
+
+@{
+    var navDtos = Model.AppSettingsDto.NavDtos;
+
+}
+
 @if (CurrentUser.IsAuthenticated)
 {
     <div>
@@ -23,12 +29,29 @@
             </abp-column>
         </abp-row>
     </div>
+    <div class="container-fluid">
+        <div class="card-deck">
+            @foreach (var item in navDtos)
+            {
+                <div class="card">
+                    <a href="@item.Url">
+                        <img class="card-img-top" src="@item.Img" alt="@item.Titile">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Titile</h5>
+                        <p class="card-text">@item.Description</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 }
 
 @if (!CurrentUser.IsAuthenticated)
 {
     <div class="text-center">
-        <i class="fa fa-user d-block" style="font-size: 10em; color: #aaa"></i><br/><br />
+        <i class="fa fa-user d-block" style="font-size: 10em; color: #aaa"></i><br /><br />
         <a abp-button="Primary" asp-page="/Account/Login">Login</a>
     </div>
 }

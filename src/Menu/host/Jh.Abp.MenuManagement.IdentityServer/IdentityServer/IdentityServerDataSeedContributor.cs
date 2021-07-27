@@ -146,6 +146,7 @@ namespace Jh.Abp.MenuManagement.IdentityServer
                 "MenuManagement"
             };
 
+            var AppUnifiedLoginUrl = _configuration.GetValue<string>("AppUnifiedLoginUrl");
             var configurationSection = _configuration.GetSection("IdentityServer:Clients");
 
             //TODO:modify
@@ -164,7 +165,8 @@ namespace Jh.Abp.MenuManagement.IdentityServer
                     grantTypes: new[] { "implicit" },
                     secret: (configurationSection["MenuManagement_Js:ClientSecret"] ?? "kimho").Sha256(),
                     redirectUri: $"{webClientRootUrl}ids/callback.html",
-                    postLogoutRedirectUri: $"{webClientRootUrl}/ids/index.html",//需要和客户端配置一致才能跳转
+                    postLogoutRedirectUri: AppUnifiedLoginUrl,
+                    //postLogoutRedirectUri: $"{webClientRootUrl}/ids/index.html",//需要和客户端配置一致才能跳转
                     frontChannelLogoutUri: $"{webClientRootUrl}Account/FrontChannelLogout",
                     corsOrigins: new[] { webClientRootUrl.RemovePostFix("/") }
                 );
@@ -185,7 +187,8 @@ namespace Jh.Abp.MenuManagement.IdentityServer
                     grantTypes: new[] { "hybrid" },
                     secret: (configurationSection["MenuManagement_Web:ClientSecret"] ?? "kimho").Sha256(),
                     redirectUri: $"{webClientRootUrl}signin-oidc",
-                    postLogoutRedirectUri: $"{webClientRootUrl}signout-callback-oidc",
+                    postLogoutRedirectUri: AppUnifiedLoginUrl,
+                    //postLogoutRedirectUri: $"{webClientRootUrl}signout-callback-oidc",
                     frontChannelLogoutUri: $"{webClientRootUrl}Account/FrontChannelLogout",
                     corsOrigins: new[] { webClientRootUrl.RemovePostFix("/") }
                 );
@@ -273,8 +276,8 @@ namespace Jh.Abp.MenuManagement.IdentityServer
                         Description = name,
                         AlwaysIncludeUserClaimsInIdToken = true,
                         AllowOfflineAccess = true,
-                        AbsoluteRefreshTokenLifetime = 31536000, //365 days
-                        AccessTokenLifetime = 31536000, //365 days
+                        AbsoluteRefreshTokenLifetime = 604800,//7 days //31536000, //365 days
+                        AccessTokenLifetime = 604800,//7 days //365 days
                         AuthorizationCodeLifetime = 300,
                         IdentityTokenLifetime = 300,
                         RequireConsent = false,

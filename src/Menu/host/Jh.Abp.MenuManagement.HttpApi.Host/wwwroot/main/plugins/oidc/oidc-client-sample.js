@@ -6,7 +6,7 @@ var settings = {
     redirect_uri: window.location.origin + '/ids/callback.html',
     response_type: 'id_token token',
     scope: 'email openid profile role phone address MenuManagement offline_access',
-    post_logout_redirect_uri: window.location.origin + '/ids/index.html',
+    post_logout_redirect_uri: 'http://localhost:6102/index',
 
     filterProtocolClaims: false,
     loadUserInfo: false
