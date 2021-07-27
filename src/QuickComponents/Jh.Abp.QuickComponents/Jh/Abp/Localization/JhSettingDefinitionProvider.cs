@@ -23,7 +23,7 @@ namespace Jh.Abp.QuickComponents
             var defaultLanguage = context.GetOrNull(LocalizationSettingNames.DefaultLanguage);
             if (defaultLanguage != null)
             {
-                defaultLanguage.DefaultValue = "zh-Hans";
+                defaultLanguage.DefaultValue = "zh-Hans";//默认使用中文
             }
 
 
