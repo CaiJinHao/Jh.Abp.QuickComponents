@@ -34,7 +34,7 @@ namespace Jh.Abp.MenuManagement.v1
             var datas = await RoleRepository.GetListAsync(filter: name);
             return new
             {
-                items = datas.Where(a => a.Name != "admin").Select(a => new { title = a.Name, id = a.Id, data = a, spread = true })
+                items = datas.Select(a => new { title = a.Name, id = a.Id, data = a, spread = true })
             };
         }
 
