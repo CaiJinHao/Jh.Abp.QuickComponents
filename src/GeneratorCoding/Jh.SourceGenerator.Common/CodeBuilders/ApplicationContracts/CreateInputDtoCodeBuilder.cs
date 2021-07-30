@@ -35,14 +35,15 @@ using Volo.Abp.ObjectExtending;");
                 {
                     foreach (var _field in table.FieldsCreateOrUpdateInput)
                     {
+                        var nullable = _field.IsNullable ? "?" : "";//可空类型
                         builder.AppendLine($"\t\t/// <summary>");
                         builder.AppendLine($"\t\t/// {_field.Description}");
                         builder.AppendLine($"\t\t/// <summary>");
                         if (_field.IsRequired)
                         {
+                            nullable = "";
                             builder.AppendLine($"\t\t[Required]");
                         }
-                        var nullable = _field.IsNullable ? "?" : "";//可空类型
                         builder.AppendLine($"\t\tpublic {_field.Type}{nullable} {_field.Name} " + "{ get; set; }");
                     }
                     builder.AppendLine("\t\t/// <summary>");
