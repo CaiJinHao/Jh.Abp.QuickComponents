@@ -78,7 +78,8 @@ namespace Jh.Abp.MenuManagement.v1
             return datas.Select(a => a.Name).ToList();
         }
 
-        [Authorize(IdentityPermissions.Users.Update)]
+        //由于每个人都需要改密码所以注销权限
+        //[Authorize(IdentityPermissions.Users.Update)]
         [HttpPost]
         [Route("change-password")]
         public virtual Task ChangePasswordAsync(ChangePasswordInput input)
