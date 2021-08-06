@@ -338,10 +338,12 @@
             });
 
             form.on('submit(btn_@(table_name_lower)_from_export)', function (data) {
+                var requestData = { deleted: 2 };
+                Object.assign(requestData,data);
                 ajaxmod.requestAuthorize({
                     url: '/@(table_name_lower)/all',
                     type: 'Get',
-                    data: data.field,
+                    data: requestData,
                     success: function (response) {
                         @(table_name_lower)Obj.exportExcel(response.items);
                     }
