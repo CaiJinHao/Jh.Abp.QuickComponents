@@ -12,6 +12,15 @@ namespace Jh.Abp.MenuManagement
     {
         None = 0,
         [Description("否")]
+        No = 1,
+        [Description("是")]
+        Yes = 2,
+    }
+
+    public enum DeleteType
+    {
+        None = 0,
+        [Description("否")]
         No = 2,
         [Description("是")]
         Yes = 1,

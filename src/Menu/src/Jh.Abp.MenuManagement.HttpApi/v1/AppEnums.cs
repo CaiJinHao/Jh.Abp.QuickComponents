@@ -17,5 +17,12 @@ namespace Jh.Abp.MenuManagement.v1
         {
             return Task.FromResult(Common.Utils.UtilEnums.GetEnumListByDescription<UseType>());
         }
+
+        [Route("Delete")]
+        [HttpGet]
+        public virtual Task<IEnumerable<dynamic>> GetDeleteAsync()
+        {
+            return Task.FromResult(Common.Utils.UtilEnums.GetEnumListByDescription<DeleteType>());
+        }
     }
 }

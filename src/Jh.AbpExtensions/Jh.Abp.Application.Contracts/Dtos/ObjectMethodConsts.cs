@@ -10,6 +10,7 @@ namespace Jh.Abp.Application.Contracts.Extensions
         /// 查询方式为包含
         /// </summary>
         public const string ContainsMethod = "Contains";
+        public const string StartsWithMethod = "StartsWith";
 
         /// <summary>
         /// 查询方式为等于
