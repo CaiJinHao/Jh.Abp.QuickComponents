@@ -164,13 +164,13 @@
 
             var @(table_name_lower)Obj = {
                 renderTable: function () {
+                    var _the = this;
                     var optDefault = {
                         Page: vm.currPage,
                         PageSize: PageSize,//common中定义的全局
                     };
                     var formfield = form.val('form_@(table_name_lower)');
                     $.extend(optDefault, formfield);
-                    var _the = this;
                     let _tableCols = [
                             { type: 'checkbox'},
 							@foreach (var col in columns) {
@@ -310,7 +310,7 @@
             };
 
          @if (table.IsDelete) {
-             @:@(table_name_lower)Obj.loadPermissions(function() { @(table_name_lower)Obj.loadList(@(table_name_lower)Obj.renderTable); });
+             @:@(table_name_lower)Obj.loadPermissions(function () { @(table_name_lower)Obj.loadList(function () { @(table_name_lower)Obj.renderTable();}); });
          }
          else
          {

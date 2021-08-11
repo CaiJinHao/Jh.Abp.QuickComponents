@@ -159,7 +159,7 @@
             var _context = $('.table_menu_mg'),
                 _table_style = { align: 'center' };//公共样式
             var menuObj = {
-                loadModulePointList: function () {
+                loadTree: function () {
                     var _the = this;
                     //必须参数 roleId
                     ajaxmod.requestAuthorize({
@@ -174,15 +174,17 @@
                                 data: response.items,
                                 click: function (node) {
                                     $('#orCode').val(node.data.obj.code);
-                                    _the.renderTable();
+                                    _the.renderTable(true);
                                 },
                             });
                         }
                     });
                 },
-                renderTable: function () {
+                renderTable: function (isloadtree) {
                     var _the = this;
-                    menuObj.loadModulePointList();
+                    if(isloadtree){
+                        _the.loadTree();
+                    }
                     var optDefault = {
                         Page: vm.currPage,
                         PageSize: PageSize,//common中定义的全局
@@ -335,7 +337,7 @@
                 },
                 
             };
-            menuObj.loadPermissions(function () { menuObj.loadList(function(){menuObj.renderTable();}); });
+            menuObj.loadPermissions(function () { menuObj.loadList(function(){menuObj.renderTable(true);}); });
 
             //绑定编辑也保存事件
             top.tool.subscribe("edit_menu_form_refresh", function () {
