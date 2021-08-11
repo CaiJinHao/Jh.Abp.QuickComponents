@@ -161,17 +161,18 @@
                     var _the = this;
                     //必须参数 roleId
                     ajaxmod.requestAuthorize({
-                        url: '/MenuAndRoleMap/Trees',
+                        url: '/MenuAndRoleMap/TreesAll',
                         type: 'Get',
                         data: {},
                         success: function (response) {
-                            console.log(response);
                             tree.render({
                                 elem: '#modulepoint_tree',
+                                onlyIconControl:true,
                                 data: response.items,
                                 click: function (node) {
                                     console.log(node);
-                                    //重新加载右侧列表
+                                    $('#parentCode').val(node.data.obj.code);
+                                    _the.renderTable();
                                 },
                             });
                         }

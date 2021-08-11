@@ -16,6 +16,7 @@ namespace Jh.Abp.Common
         public bool spread { get; set; } = true;
         public bool @checked { get; set; }
         public bool disabled { get; set; }
+        public object obj { get; set; }
 
         private IEnumerable<TreeDto> _children = new TreeDto[] { };
         /// <summary>

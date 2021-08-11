@@ -71,7 +71,7 @@ namespace Jh.Abp.MenuManagement
 
             //按照前端要求字段返回
             var auth_menus = await MenuRepository.Where(m => auth_menus_id.Contains(m.Id))
-                .Select(a => new TreeDto() { id = a.Code, icon = a.Icon, parent_id = a.ParentCode, sort = a.Sort, title = a.Name, url = a.Url}).ToListAsync();
+                .Select(a => new TreeDto() { id = a.Code, icon = a.Icon, parent_id = a.ParentCode, sort = a.Sort, title = a.Name, url = a.Url,obj=a}).ToListAsync();
 
             //返回多个根节点
             return await UtilTree.GetMenusTreeAsync(auth_menus);
@@ -101,7 +101,8 @@ namespace Jh.Abp.MenuManagement
                     url = a.Url,
                     value = a.Id.ToString(),
                     @checked = auth_menus_id.Contains(a.Id),
-                    disabled = false
+                    disabled = false,
+                    obj=a
                 }
             ).ToListAsync();
 
