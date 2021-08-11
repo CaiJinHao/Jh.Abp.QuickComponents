@@ -61,7 +61,7 @@ namespace Jh.Abp.MenuManagement
             }
         }
 
-        public virtual async Task<IEnumerable<MenusNavDto>> GetMenusNavTreesAsync()
+        public virtual async Task<IEnumerable<NavTreeDto>> GetMenusNavTreesAsync()
         {
             //查看CurrentUser.Roles 是的值是否为guid ,只能用一个角色的权限渲染菜单
             //var roles = CurrentUser.FindClaims(Common.Extensions.JhJwtClaimTypes.RoleId).Select(a => new Guid(a.Value)).ToList();
@@ -71,10 +71,10 @@ namespace Jh.Abp.MenuManagement
 
             //按照前端要求字段返回
             var auth_menus = await MenuRepository.Where(m => auth_menus_id.Contains(m.Id))
-                .Select(a => new MenusNavDto() { id = a.Code, icon = a.Icon, parent_id = a.ParentCode, sort = a.Sort, title = a.Name, url = a.Url}).ToListAsync();
+                .Select(a => new NavTreeDto() { id = a.Code, icon = a.Icon, parent_id = a.ParentCode, sort = a.Sort, title = a.Name, url = a.Url}).ToListAsync();
 
             //返回多个根节点
-            return await GetMenusTreeAsync(auth_menus);
+            return await UtilTree.GetMenusTreeAsync(auth_menus);
         }
 
         protected virtual async Task<IEnumerable<Guid>> GetRolesAsync()
@@ -85,13 +85,13 @@ namespace Jh.Abp.MenuManagement
         }
 
         private MenuAndRoleMapTreeAllRetrieveInputDto menuAndRoleMapTreeAllRetrieveInputDto { get; set; }
-        public virtual async Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(MenuAndRoleMapTreeAllRetrieveInputDto input)
+        public virtual async Task<IEnumerable<CheckTreeDto>> GetMenusTreesAsync(MenuAndRoleMapTreeAllRetrieveInputDto input)
         {
             menuAndRoleMapTreeAllRetrieveInputDto = input;
             var auth_menus_id = crudRepository.Where(a => a.RoleId == input.RoleId).Select(a => a.MenuId).ToList();
 
             var resutlMenus = await MenuRepository.Select(a =>
-                new MenusTreeDto()
+                new CheckTreeDto()
                 {
                     id = a.Code,
                     icon = a.Icon,
@@ -106,52 +106,14 @@ namespace Jh.Abp.MenuManagement
             ).ToListAsync();
 
             //返回多个根节点
-            return await GetMenusTreeAsync(resutlMenus);
-        }
-
-        protected virtual async Task<List<T>> GetMenusTreeAsync<T>(List<T> menus) where T:MenusTree
-        {
-            var _type = typeof(T);
-            //组装树
-            async Task<IEnumerable<T>> GetChildNodesAsync(string parentNodeId)
-            {
-                var childs = menus.Where(a => a.parent_id == parentNodeId);
-                foreach (var item in childs)
-                {
-                    if (_type == typeof(MenusNavDto))
-                    {
-                        (item as MenusNavDto).children = await GetChildNodesAsync(item.id) as IEnumerable<MenusNavDto>;
-                    }
-                    else
-                    {
-                        (item as MenusTreeDto).data = await GetChildNodesAsync(item.id) as IEnumerable<MenusTreeDto>;
-                    }
-                }
-                return childs.OrderBy(a => a.sort);
-            }
-
-            //找到根节点
-            var roots = menus.Where(a => a.parent_id == null || a.parent_id == "").OrderBy(a=>a.sort).ToList();
-            foreach (var item in roots)
-            {
-                if (_type == typeof(MenusNavDto))
-                {
-                    (item as MenusNavDto).children = (await GetChildNodesAsync(item.id) as IEnumerable<MenusNavDto>).OrderBy(a=>a.sort);
-                }
-                else
-                {
-                    (item as MenusTreeDto).data = (await GetChildNodesAsync(item.id) as IEnumerable<MenusTreeDto>).OrderBy(a=>a.sort);
-                }
-            }
-            return roots;
+            return await UtilTree.GetMenusTreeAsync(resutlMenus);
         }
 
 
-
-        public virtual async Task<IEnumerable<MenusTreeDto>> GetPermissionTreesAsync(string providerName, string providerKey)
+        public virtual async Task<IEnumerable<CheckTreeDto>> GetPermissionTreesAsync(string providerName, string providerKey)
         {
             var datas = await GetPermissionGrantsAsync();
-            var results = new List<MenusTreeDto>();
+            var results = new List<CheckTreeDto>();
             foreach (var permission in datas)
             {
                 var isGranted = await GetCurentUserByPermissionName(permission.Name + ".ManagePermissions", providerName);
@@ -162,7 +124,7 @@ namespace Jh.Abp.MenuManagement
                 }
                 var parentPermission = await PermissionManager.GetAsync(permission.Name, providerName, providerKey);//获取当前权限组的选中信息
                 var module = permission.DisplayName.Localize(StringLocalizerFactory);//本地化当前权限的名称
-                var modulePermission = new MenusTreeDto()
+                var modulePermission = new CheckTreeDto()
                 {
                     id = permission.Name,
                     title = module.Value,
@@ -170,13 +132,13 @@ namespace Jh.Abp.MenuManagement
                     @checked = parentPermission.IsGranted,
                     disabled = false,
                 };
-                var childs = new List<MenusTreeDto>() { modulePermission };
+                var childs = new List<CheckTreeDto>() { modulePermission };
                 {//childs
                     foreach (var item in permission.Children)//拿到当前权限组的子列表
                     {
                         var itemPermission = await PermissionManager.GetAsync(item.Name, providerName, providerKey);
                         var a = item.DisplayName.Localize(StringLocalizerFactory);
-                        childs.Add(new MenusTreeDto()
+                        childs.Add(new CheckTreeDto()
                         {
                             id = item.Name,
                             parent_id = permission.Name,
@@ -187,7 +149,7 @@ namespace Jh.Abp.MenuManagement
                         });
                     }
                 }
-                results.Add(new MenusTreeDto()
+                results.Add(new CheckTreeDto()
                 {
                     id = $"yezi{permission.Name}",
                     title = module.Value,

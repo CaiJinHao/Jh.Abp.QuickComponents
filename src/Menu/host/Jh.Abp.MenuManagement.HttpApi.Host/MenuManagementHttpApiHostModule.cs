@@ -252,7 +252,7 @@ namespace Jh.Abp.MenuManagement
                     var data = scope.ServiceProvider
                         .GetRequiredService<IDataSeeder>();
                     var context = new DataSeedContext();
-                    context["RoleId"] = "1fa5d4e3-7ecd-8e45-6274-39fdf81887c3";//IdentityServerHost创建的角色ID
+                    context["RoleId"] = "9e322bbd-ce77-93d3-5a3c-39fe45558324";//IdentityServerHost创建的角色ID
                     await data.SeedAsync(context);
                 }
             });

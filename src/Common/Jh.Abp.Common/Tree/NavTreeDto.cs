@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jh.Abp.MenuManagement
+namespace Jh.Abp.Common
 {
     /// <summary>
-    /// 导航菜单
+    /// 导航树
     /// </summary>
-    public class MenusNavDto : MenusTree
+    public class NavTreeDto: TreeDto
     {
-
-        private IEnumerable<MenusNavDto> _children = new MenusNavDto[] { };
+        private IEnumerable<NavTreeDto> _children = new NavTreeDto[] { };
         /// <summary>
         /// 数组类型
         /// </summary>
-        public IEnumerable<MenusNavDto> children
+        public IEnumerable<NavTreeDto> children
         {
             get
             {

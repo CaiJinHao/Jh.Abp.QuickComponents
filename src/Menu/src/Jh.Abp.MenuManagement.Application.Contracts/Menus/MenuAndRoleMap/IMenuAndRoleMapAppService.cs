@@ -1,4 +1,5 @@
-﻿using Jh.Abp.Extensions;
+﻿using Jh.Abp.Common;
+using Jh.Abp.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,14 +19,13 @@ namespace Jh.Abp.MenuManagement
         /// 获取当前登录角色有权限的菜单树
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<MenusNavDto>> GetMenusNavTreesAsync();
+        Task<IEnumerable<NavTreeDto>> GetMenusNavTreesAsync();
+
         /// <summary>
         /// 获取所有菜单树，有权限的自动选中
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<MenusTreeDto>> GetMenusTreesAsync(MenuAndRoleMapTreeAllRetrieveInputDto input);
-
-
+        Task<IEnumerable<CheckTreeDto>> GetMenusTreesAsync(MenuAndRoleMapTreeAllRetrieveInputDto input);
 
         Task UpdateAsync(string providerName, string providerKey, string[] PermissionNames);
 
@@ -34,6 +34,7 @@ namespace Jh.Abp.MenuManagement
         Task<dynamic> GetMenuSelectPermissionGrantsAsync();
 
         Task<IEnumerable<PermissionGrantedDto>> GetPermissionGrantedByNameAsync(PermissionGrantedRetrieveInputDto input);
-        Task<IEnumerable<MenusTreeDto>> GetPermissionTreesAsync(string providerName, string providerKey);
+
+        Task<IEnumerable<CheckTreeDto>> GetPermissionTreesAsync(string providerName, string providerKey);
     }
 }
