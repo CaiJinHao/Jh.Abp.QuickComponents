@@ -4,7 +4,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <Version>0.1.105</Version>
+    <Version>0.1.106</Version>
     <LangVersion>8.0</LangVersion>
     
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

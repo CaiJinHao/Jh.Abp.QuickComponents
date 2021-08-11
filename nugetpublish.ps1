@@ -1,9 +1,9 @@
 $publishApiKey="123456"
 $publishSource="https://api.nuget.org/v3/index.json"
 
-$MenuManagement="0.1.103"
-$QuickComponents="1.2.601" 
-$applicationVersion="2.0.151"
+$MenuManagement="0.1.106"
+$QuickComponents="1.2.602" 
+$applicationVersion="2.0.152"
 $SourceGenerator="3.0.154"
 $EntityFrameworkCoredm="0.2.0"
 
