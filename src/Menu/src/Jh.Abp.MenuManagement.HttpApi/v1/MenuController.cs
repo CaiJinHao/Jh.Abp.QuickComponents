@@ -172,6 +172,13 @@ namespace Jh.Abp.MenuManagement.v1
         {
             using (dataFilter.Disable())
             {
+                if (!string.IsNullOrEmpty(input.OrCode))
+                {
+                    input.MethodInput = new MethodDto<Menu>()
+                    {
+                        QueryAction = entity => entity.Where(a => a.ParentCode == input.OrCode || a.Code == input.OrCode)
+                    };
+                }
                 return await menuAppService.GetListAsync(input);
             }
         }

@@ -35,20 +35,21 @@
                 <div class="layui-col-md8" style="margin-top:13px;">
                     <fieldset class="layui-elem-field">
                         <div class="layui-field-box">
-                            <form class="layui-form" lay-filter="form_menu">
+                            <form class="layui-form" lay-filter="form_menu" id="form_menu">
                                 <div class="layui-row">
+                                    <input type="hidden" class="layui-input" id="orCode" name="orCode">
                                     <div class="layui-inline">
                                         <label class="layui-form-label">菜单名称：</label>
                                         <div class="layui-input-inline">
                                             <input type="text" class="layui-input" id="name" name="name">
                                         </div>
                                     </div>
-                                    <div class="layui-inline">
+                                    <!-- <div class="layui-inline">
                                         <label class="layui-form-label">上级菜单：</label>
                                         <div class="layui-input-inline">
                                             <input type="text" class="layui-input" id="parentCode" name="parentCode">
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="layui-inline">
                                         <label class="layui-form-label">是否禁用：</label>
                                         <div class="layui-input-inline">
@@ -61,6 +62,7 @@
                                     <div class="layui-inline btngroup">
                                         <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_menu_from" id="btn_menu_from_query">查询</a>
                                         <a href="javascript:;" class="layui-btn" v-if="RenderPermission(permissionDefineds.Export)" lay-submit lay-filter="btn_menu_from_export">导出</a>
+                                        <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_menu_from_reset" >重置</a>
                                     </div>
                                 </div>
                             </form>
@@ -170,8 +172,7 @@
                                 onlyIconControl:true,
                                 data: response.items,
                                 click: function (node) {
-                                    console.log(node);
-                                    $('#parentCode').val(node.data.obj.code);
+                                    $('#orCode').val(node.data.obj.code);
                                     _the.renderTable();
                                 },
                             });
@@ -354,6 +355,12 @@
                 vm.currPage = 1;
                 menuObj.renderTable();
                 return false;
+            });
+
+            form.on('submit(btn_menu_from_reset)', function (data) {
+                $('#form_menu')[0].reset();
+                $('#orCode').val('');
+                menuObj.renderTable();
             });
 
             form.on('submit(btn_menu_from_export)', function (data) {
