@@ -167,6 +167,7 @@
                         type: 'Get',
                         data: {},
                         success: function (response) {
+                            $('#modulepoint_tree').html('');
                             tree.render({
                                 elem: '#modulepoint_tree',
                                 onlyIconControl:true,
