@@ -61,7 +61,7 @@ namespace Jh.Abp.MenuManagement
             }
         }
 
-        public virtual async Task<IEnumerable<NavTreeDto>> GetMenusNavTreesAsync()
+        public virtual async Task<IEnumerable<TreeDto>> GetMenusNavTreesAsync()
         {
             //查看CurrentUser.Roles 是的值是否为guid ,只能用一个角色的权限渲染菜单
             //var roles = CurrentUser.FindClaims(Common.Extensions.JhJwtClaimTypes.RoleId).Select(a => new Guid(a.Value)).ToList();
@@ -71,7 +71,7 @@ namespace Jh.Abp.MenuManagement
 
             //按照前端要求字段返回
             var auth_menus = await MenuRepository.Where(m => auth_menus_id.Contains(m.Id))
-                .Select(a => new NavTreeDto() { id = a.Code, icon = a.Icon, parent_id = a.ParentCode, sort = a.Sort, title = a.Name, url = a.Url}).ToListAsync();
+                .Select(a => new TreeDto() { id = a.Code, icon = a.Icon, parent_id = a.ParentCode, sort = a.Sort, title = a.Name, url = a.Url}).ToListAsync();
 
             //返回多个根节点
             return await UtilTree.GetMenusTreeAsync(auth_menus);
@@ -85,13 +85,13 @@ namespace Jh.Abp.MenuManagement
         }
 
         private MenuAndRoleMapTreeAllRetrieveInputDto menuAndRoleMapTreeAllRetrieveInputDto { get; set; }
-        public virtual async Task<IEnumerable<CheckTreeDto>> GetMenusTreesAsync(MenuAndRoleMapTreeAllRetrieveInputDto input)
+        public virtual async Task<IEnumerable<TreeDto>> GetMenusTreesAsync(MenuAndRoleMapTreeAllRetrieveInputDto input)
         {
             menuAndRoleMapTreeAllRetrieveInputDto = input;
             var auth_menus_id = crudRepository.Where(a => a.RoleId == input.RoleId).Select(a => a.MenuId).ToList();
 
             var resutlMenus = await MenuRepository.Select(a =>
-                new CheckTreeDto()
+                new TreeDto()
                 {
                     id = a.Code,
                     icon = a.Icon,
@@ -110,10 +110,10 @@ namespace Jh.Abp.MenuManagement
         }
 
 
-        public virtual async Task<IEnumerable<CheckTreeDto>> GetPermissionTreesAsync(string providerName, string providerKey)
+        public virtual async Task<IEnumerable<TreeDto>> GetPermissionTreesAsync(string providerName, string providerKey)
         {
             var datas = await GetPermissionGrantsAsync();
-            var results = new List<CheckTreeDto>();
+            var results = new List<TreeDto>();
             foreach (var permission in datas)
             {
                 var isGranted = await GetCurentUserByPermissionName(permission.Name + ".ManagePermissions", providerName);
@@ -124,7 +124,7 @@ namespace Jh.Abp.MenuManagement
                 }
                 var parentPermission = await PermissionManager.GetAsync(permission.Name, providerName, providerKey);//获取当前权限组的选中信息
                 var module = permission.DisplayName.Localize(StringLocalizerFactory);//本地化当前权限的名称
-                var modulePermission = new CheckTreeDto()
+                var modulePermission = new TreeDto()
                 {
                     id = permission.Name,
                     title = module.Value,
@@ -132,13 +132,13 @@ namespace Jh.Abp.MenuManagement
                     @checked = parentPermission.IsGranted,
                     disabled = false,
                 };
-                var childs = new List<CheckTreeDto>() { modulePermission };
+                var childs = new List<TreeDto>() { modulePermission };
                 {//childs
                     foreach (var item in permission.Children)//拿到当前权限组的子列表
                     {
                         var itemPermission = await PermissionManager.GetAsync(item.Name, providerName, providerKey);
                         var a = item.DisplayName.Localize(StringLocalizerFactory);
-                        childs.Add(new CheckTreeDto()
+                        childs.Add(new TreeDto()
                         {
                             id = item.Name,
                             parent_id = permission.Name,
@@ -149,14 +149,14 @@ namespace Jh.Abp.MenuManagement
                         });
                     }
                 }
-                results.Add(new CheckTreeDto()
+                results.Add(new TreeDto()
                 {
                     id = $"yezi{permission.Name}",
                     title = module.Value,
                     value = $"yezi{permission.Name}",
                     @checked = parentPermission.IsGranted,
                     disabled = false,
-                    data = childs
+                    children = childs
                 });
             }
             return results;

@@ -17,14 +17,8 @@ namespace Jh.Abp.Common
                 var childs = menus.Where(a => a.parent_id == parentNodeId);
                 foreach (var item in childs)
                 {
-                    if (_type == typeof(NavTreeDto))
-                    {
-                        (item as NavTreeDto).children = await GetChildNodesAsync(item.id) as IEnumerable<NavTreeDto>;
-                    }
-                    else
-                    {
-                        (item as CheckTreeDto).data = await GetChildNodesAsync(item.id) as IEnumerable<CheckTreeDto>;
-                    }
+                    var _data = await GetChildNodesAsync(item.id);
+                    item.children = (_data as IEnumerable<TreeDto>).OrderBy(a => a.sort);
                 }
                 return childs.OrderBy(a => a.sort).ToList();
             }
@@ -33,14 +27,8 @@ namespace Jh.Abp.Common
             var roots = menus.Where(a => a.parent_id == null || a.parent_id == "").OrderBy(a => a.sort).ToList();
             foreach (var item in roots)
             {
-                if (_type == typeof(NavTreeDto))
-                {
-                    (item as NavTreeDto).children = (await GetChildNodesAsync(item.id) as IEnumerable<NavTreeDto>).OrderBy(a => a.sort);
-                }
-                else
-                {
-                    (item as CheckTreeDto).data = (await GetChildNodesAsync(item.id) as IEnumerable<CheckTreeDto>).OrderBy(a => a.sort);
-                }
+                var _data = await GetChildNodesAsync(item.id);
+                item.children = (_data as IEnumerable<TreeDto>).OrderBy(a => a.sort);
             }
             return roots;
         }

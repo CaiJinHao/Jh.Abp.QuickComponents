@@ -13,41 +13,63 @@
 <body>
     <div id="page-vm" class="layui-fluid iframe-top">
         <div class="table_menu_mg">
-            <fieldset class="layui-elem-field">
-                <div class="layui-field-box">
-                    <form class="layui-form" lay-filter="form_menu">
-                        <div class="layui-row">
-                            <div class="layui-inline">
-                                <label class="layui-form-label">菜单名称：</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" id="name" name="name">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">上级菜单：</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" id="parentCode" name="parentCode">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">是否禁用：</label>
-                                <div class="layui-input-inline">
-                                    <select lay-search name="deleted" :value="2">
-                                        <option v-for="option in deletedlist" v-bind:value="option.value">{{ option.text }}</option>
-                                        <option value="0">全部</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="layui-inline btngroup">
-                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_menu_from" id="btn_menu_from_query">查询</a>
-                                <a href="javascript:;" class="layui-btn" v-if="RenderPermission(permissionDefineds.Export)" lay-submit lay-filter="btn_menu_from_export">导出</a>
+            <div class="layui-row">
+                <div class="layui-col-md4" id="tree_list" style="overflow:auto;min-height:500px;">
+                    <fieldset class="layui-elem-field" style="height: 509px;">
+                        <legend><i class="fa fa-tree"></i> 菜单树</legend>
+                        <div class="layui-field-box">
+                            <div class="menu-tree">
+                                <form class="layui-form menu_tree_form">
+                                    <div class="layui-fluid">
+                                        <div class="layui-row">
+                                            <div class="xtree_contianer">
+                                                <ul id="modulepoint_tree"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                    </form>
+                    </fieldset>
+                </div>  
+                <div class="layui-col-md8" style="margin-top:13px;">
+                    <fieldset class="layui-elem-field">
+                        <div class="layui-field-box">
+                            <form class="layui-form" lay-filter="form_menu">
+                                <div class="layui-row">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">菜单名称：</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" id="name" name="name">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">上级菜单：</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" id="parentCode" name="parentCode">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">是否禁用：</label>
+                                        <div class="layui-input-inline">
+                                            <select lay-search name="deleted" :value="2">
+                                                <option v-for="option in deletedlist" v-bind:value="option.value">{{ option.text }}</option>
+                                                <option value="0">全部</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline btngroup">
+                                        <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_menu_from" id="btn_menu_from_query">查询</a>
+                                        <a href="javascript:;" class="layui-btn" v-if="RenderPermission(permissionDefineds.Export)" lay-submit lay-filter="btn_menu_from_export">导出</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </fieldset>
+                    <table id="table_menu" class="layui-hide" lay-filter="table_menu_list"></table>
+                    <div id="table_menu_page" class="laypage"></div>
                 </div>
-            </fieldset>
-            <table id="table_menu" class="layui-hide" lay-filter="table_menu_list"></table>
-            <div id="table_menu_page" class="laypage"></div>
+            </div>
         </div>
     </div>
     <script type="text/html" id="toolbarDemo">
@@ -79,6 +101,7 @@
     <script src="../../plugins/vue/vue.min.js"></script>
     <!--公共函数库-->
     <script src="../../modules/extend/common.js"></script>
+    <script src="../../modules/plugins/xtree/layui-xtree.js"></script>
     <script>
         var vm = new Vue({
             el: '#page-vm',
@@ -121,11 +144,12 @@
                 }
             }
         });
-        layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod', 'datatable','excel'], function () {
+        layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod', 'datatable','excel','tree'], function () {
             var table = layui.table,
                 $ = layui.jquery,
                 layer = layui.layer,
                 form = layui.form,
+                tree = layui.tree,
                 laypage = layui.laypage,
                 ajaxmod = layui.ajaxmod,
                 excel=layui.excel,
@@ -133,7 +157,29 @@
             var _context = $('.table_menu_mg'),
                 _table_style = { align: 'center' };//公共样式
             var menuObj = {
+                loadModulePointList: function () {
+                    var _the = this;
+                    //必须参数 roleId
+                    ajaxmod.requestAuthorize({
+                        url: '/MenuAndRoleMap/Trees',
+                        type: 'Get',
+                        data: {},
+                        success: function (response) {
+                            console.log(response);
+                            tree.render({
+                                elem: '#modulepoint_tree',
+                                data: response.items,
+                                click: function (node) {
+                                    console.log(node);
+                                    //重新加载右侧列表
+                                },
+                            });
+                        }
+                    });
+                },
                 renderTable: function () {
+                    var _the = this;
+                    menuObj.loadModulePointList();
                     var optDefault = {
                         Page: vm.currPage,
                         PageSize: PageSize,//common中定义的全局
@@ -142,7 +188,6 @@
                     };
                     var formfield = form.val("form_menu");
                     $.extend(optDefault, formfield);
-                    var _the = this;
                     let _tableCols = [
                         { type: 'checkbox' },
                         $.extend({ field: 'code', title: '菜单ID' }, _table_style),
@@ -284,9 +329,10 @@
                             _fn();
                         }
                     });
-                }
+                },
+                
             };
-            menuObj.loadPermissions(function () { menuObj.loadList(menuObj.renderTable); });
+            menuObj.loadPermissions(function () { menuObj.loadList(function(){menuObj.renderTable();}); });
 
             //绑定编辑也保存事件
             top.tool.subscribe("edit_menu_form_refresh", function () {

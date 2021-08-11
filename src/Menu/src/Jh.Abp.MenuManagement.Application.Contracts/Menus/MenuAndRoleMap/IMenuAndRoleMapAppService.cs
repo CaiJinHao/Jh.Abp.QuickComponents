@@ -19,13 +19,13 @@ namespace Jh.Abp.MenuManagement
         /// 获取当前登录角色有权限的菜单树
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<NavTreeDto>> GetMenusNavTreesAsync();
+        Task<IEnumerable<TreeDto>> GetMenusNavTreesAsync();
 
         /// <summary>
         /// 获取所有菜单树，有权限的自动选中
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<CheckTreeDto>> GetMenusTreesAsync(MenuAndRoleMapTreeAllRetrieveInputDto input);
+        Task<IEnumerable<TreeDto>> GetMenusTreesAsync(MenuAndRoleMapTreeAllRetrieveInputDto input);
 
         Task UpdateAsync(string providerName, string providerKey, string[] PermissionNames);
 
@@ -35,6 +35,6 @@ namespace Jh.Abp.MenuManagement
 
         Task<IEnumerable<PermissionGrantedDto>> GetPermissionGrantedByNameAsync(PermissionGrantedRetrieveInputDto input);
 
-        Task<IEnumerable<CheckTreeDto>> GetPermissionTreesAsync(string providerName, string providerKey);
+        Task<IEnumerable<TreeDto>> GetPermissionTreesAsync(string providerName, string providerKey);
     }
 }
