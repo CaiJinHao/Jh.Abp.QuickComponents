@@ -223,6 +223,7 @@ namespace Jh.Abp.MenuManagement
                 app.UseMultiTenancy();
             }
 
+            //修改浏览器语言，删除英语即可，否则会优先展示英语
             app.UseAbpRequestLocalization();
             app.UseIdentityServer();
             app.UseAuthorization();
