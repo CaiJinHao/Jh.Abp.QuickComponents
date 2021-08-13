@@ -67,6 +67,13 @@
             if (!_b) {
                 return "请输入正确的手机号码";
             }
+        },
+        myemail:function(val,item){
+            var reg = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+            var _b = reg.test(val);
+            if (!_b) {
+                return "请输入正确的邮箱地址";
+            }
         }
     });
 

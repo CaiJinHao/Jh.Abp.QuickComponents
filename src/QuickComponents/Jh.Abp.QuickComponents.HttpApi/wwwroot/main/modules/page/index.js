@@ -51,7 +51,7 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
 
     //获取用户信息时会自动验证是否登录了
     ajaxmod.getUserInfo(function (response) {
-        vm.$set(vm, 'userinfo', response);
+        vm.$set(vm, 'userinfo', response.profile);
     });
 
     //验证是否锁屏
@@ -88,17 +88,13 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
         },
         // 退出
         loginout: function () {
-            cookie.clear();
-            window.location.href = "/login.html";
+            oidcManager.logout();
         },
         //获取菜单
         initMenuList: function (_options) {
             var _the = this;
             ajaxmod.requestAuthorize({
                 url: '/MenuAndRoleMap/Trees',
-                data: {
-                    Oprator: 10
-                },
                 type: 'Get',
                 success: function (response) {
                     vm.$set(vm, 'navList', response.items);
@@ -136,9 +132,9 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
                 }
             };
             
-            for (const item of vm.navList) {
+            vm.navList.forEach(function (item) {
                 getChild(item);
-            }
+            });
 
             $("#search-menu").html(str);
             form.render();
@@ -232,11 +228,11 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
 
     // 便捷查询菜单事件
     form.on('select(select-search)', function (data) {
-        for (const item of pageHome.searchMenuList) {
+        pageHome.searchMenuList.forEach(function (item) {
             if (item.id === data.value) {
                 pageHome.changePage(item);
             }
-        }
+        });
     });
 
     //皮肤

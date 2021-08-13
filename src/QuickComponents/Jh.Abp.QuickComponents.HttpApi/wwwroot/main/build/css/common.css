@@ -220,7 +220,11 @@ select.lay-ignore option {
 .row-long .layui-col-md12 .layui-inline .layui-input-inline {
     width: 70%;
 }
-.edit-form{
+.edit-form,form.layui-form{
 	padding-bottom: 25px;
 }
-
+.layui-input-inline *[lay-verify*="required"] {
+	background-image: url(/main/build/img/bitian.png);
+    background-repeat: no-repeat;
+    padding-left: 15px;
+}

@@ -52,7 +52,7 @@
         }
         page.loaddingAjax("登录提示","正在登录中...");
         $.ajax({
-            url: '/api/v1/AccessToken/Swagger',
+            url: '/api/v1/SwaggerAccessToken',
             type: 'POST',
             data: JSON.stringify(login_info),
             contentType: 'application/json;charset=utf-8',

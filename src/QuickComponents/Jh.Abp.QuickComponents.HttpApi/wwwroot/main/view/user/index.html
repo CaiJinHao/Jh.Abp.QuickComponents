@@ -15,7 +15,7 @@
         <div class="table_user_mg">
             <fieldset class="layui-elem-field">
                 <div class="layui-field-box">
-                    <div class="layui-form">
+                    <form class="layui-form" lay-filter="form_user">
                         <div class="layui-row">
                             <div class="layui-inline">
                                 <label class="layui-form-label">过滤值：</label>
@@ -25,13 +25,13 @@
                             </div>
                             <div class="layui-inline btngroup">
                                 <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_user_from"
-                                   id="btn_user_from_query">查询</a>
+                                    id="btn_user_from_query">查询</a>
                                 <!-- <a href="javascript:;" class="layui-btn" lay-submit
-                                   lay-filter="btn_user_from_export">导出</a> -->
+                                               lay-filter="btn_user_from_export">导出</a> -->
                             </div>
                         </div>
-                        </form>
-                    </div>
+                    </form>
+                </div>
             </fieldset>
             <table id="table_user" class="layui-hide" lay-filter="table_user_list"></table>
             <div id="table_user_page" class="laypage"></div>
@@ -44,7 +44,7 @@
         </div>
     </script>
     <script type="text/html" id="tpl_name">
-        {{d.surname + d.name}}
+        {{ d.name }}
     </script>
     <script type="text/html" id="tpl_lockoutEnabled">
         <input type="checkbox" name="lockoutEnabled" value="1" lay-skin="switch" data-code="{{d.id}}" lay-text="是|否" lay-filter="table_tpl_lockoutEnabled" {{d.lockoutEnabled?'checked':''}}>
@@ -97,12 +97,13 @@
                 _table_style = { align: 'center' };//公共样式
 
             var userObj = {
-                renderTable: function (_options) {
+                renderTable: function () {
                     var optDefault = {
                         Page: vm.currPage,
                         PageSize: PageSize,//common中定义的全局
                     };
-                    $.extend(optDefault, _options);
+                    var formfield = form.val("form_user");
+                    $.extend(optDefault, formfield);
                     var _the = this;
                     datatable.renderTable(optDefault, {
                         url: '/user',
@@ -116,7 +117,7 @@
                             $.extend({ field: 'email', title: '邮箱' }, _table_style),
                             // $.extend({ field: 'user_icon', title: '头像' }, _table_style),
                             // $.extend({ field: 'user_sex', title: '性别', templet: '#tpl_user_sex' }, _table_style),
-                            $.extend({ field: 'lockoutEnabled', title: '启用锁定', templet: '#tpl_lockoutEnabled' }, _table_style),
+                            $.extend({ field: 'lockoutEnabled', title: '启用密码错误锁定', templet: '#tpl_lockoutEnabled' }, _table_style),
                             $.extend({ field: 'isDeleted', title: '用户状态', templet: '#tpl_isDeleted' }, _table_style),
                             $.extend({ field: 'creationTime', title: '创建时间' }, _table_style),
                             $.extend({ field: 'lastModificationTime', title: '最后一次修改时间' }, _table_style),
@@ -145,6 +146,7 @@
                     datatable.del({
                         url: '/user/' + _data.id,
                         type: 'Delete',
+                        confimMsg: '确定禁用吗？',
                         success: function (response) {
                             _the.renderTable();
                         }
@@ -162,6 +164,7 @@
                         url: '/user/keys',
                         type: 'Delete',
                         data: delIdList,
+                        confimMsg: '确定禁用选中项吗？',
                         success: function (response) {
                             _the.renderTable();
                         }
@@ -240,7 +243,7 @@
 
             form.on('submit(btn_user_from)', function (data) {
                 vm.currPage = 1;
-                userObj.renderTable(data.field);
+                userObj.renderTable();
                 return false;
             });
 

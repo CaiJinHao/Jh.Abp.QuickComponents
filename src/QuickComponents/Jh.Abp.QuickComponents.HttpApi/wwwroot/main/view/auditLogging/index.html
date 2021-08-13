@@ -1,0 +1,290 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>系统菜单</title>
+    <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="../../build/css/common.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="page-vm" class="layui-fluid iframe-top">
+        <div class="table_auditLogging_mg">
+            <fieldset class="layui-elem-field">
+                <div class="layui-field-box">
+                    <form class="layui-form" lay-filter="form_auditLogging">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">应用名称：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" name="applicationName">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">请求类型：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" name="httpMethod">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">操作人：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" name="userName">
+                                </div>
+                            </div>
+                            <div class="layui-inline btngroup">
+                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_auditLogging_from" id="btn_auditLogging_from_query">查询</a>
+                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_auditLogging_from_export">导出</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+            <table id="table_auditLogging" class="layui-hide" lay-filter="table_auditLogging_list"></table>
+            <div id="table_auditLogging_page" class="laypage"></div>
+        </div>
+    </div>
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="delbatch">批量删除</button>
+        </div>
+    </script>
+    <script type="text/html" id="table_auditLogging_operator">
+        <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="id">删除</a>
+    </script>
+    <script type="text/html" id="table_auditLogging_action_data">
+        {{# if(d.actions){ }}
+        {{# d.actions.forEach(element => { }}
+        <div>服务名称：{{element.serviceName}} 方法名称：{{ element.methodName }} 传递参数：{{ element.parameters }} 方法执行时长：{{element.executionDuration}}（毫秒）</div>
+        {{# }); }}
+        {{# } }}
+    </script>
+    <script type="text/html" id="table_auditLogging_action_data">
+        {{# if(d.actions){ }}
+        {{# d.actions.forEach(element => { }}
+        <div>服务名称：{{element.serviceName}} 方法名称：{{ element.methodName }} 传递参数：{{ element.parameters }} 方法执行时长：{{element.executionDuration}}（毫秒）</div>
+        {{# }); }}
+        {{# } }}
+    </script>
+    <script type="text/html" id="table_auditLogging_entity_change_data">
+        {{# if(d.actions){ }}
+        {{# d.actions.forEach(element => { }}
+        <div>服务名称：{{element.serviceName}} 方法名称：{{ element.methodName }} 传递参数：{{ element.parameters }} 方法执行时长：{{element.executionDuration}}（毫秒）</div>
+        {{# }); }}
+        {{# } }}
+    </script>
+    
+    <script src="../../layui/layui.js"></script>
+    <script src="../../plugins/vue/vue.min.js"></script>
+    <!--公共函数库-->
+    <script src="../../modules/extend/common.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#page-vm',
+            data: {
+                currPage: 1,
+            },
+            methods: {
+                RenderDom: function (form, callback) {
+                    vm.$forceUpdate();//强制重新渲染 dom
+                    // DOM 还没有更新
+                    vm.$nextTick(function () {
+                        // DOM 现在更新了
+                        form.render();
+                        if (callback) {
+                            callback();
+                        }
+                    });
+                }
+            }
+        });
+        layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod', 'datatable', 'excel'], function () {
+            var table = layui.table,
+                $ = layui.jquery,
+                layer = layui.layer,
+                form = layui.form,
+                laypage = layui.laypage,
+                ajaxmod = layui.ajaxmod,
+                excel = layui.excel,
+                datatable = layui.datatable;
+            var _context = $('.table_auditLogging_mg'),
+                _table_style = { align: 'center' };//公共样式
+
+            var auditLoggingObj = {
+                renderTable: function () {
+                    var optDefault = {
+                        Page: vm.currPage,
+                        PageSize: PageSize,//common中定义的全局
+                        Sorting: 'id',
+                    };
+                    var formfield = form.val("form_auditLogging");
+                    $.extend(optDefault, formfield);
+                    var _the = this;
+                    datatable.renderTable(optDefault, {
+                        url: '/auditLogging',
+                        tableElem: 'table_auditLogging',//laypage 自动加_page
+                        tableCols: [[
+                            { type: 'checkbox' },
+                            $.extend({ field: 'applicationName', title: '应用名称' }, _table_style),
+                            $.extend({ field: 'userName', title: '操作人' }, _table_style),
+                            $.extend({ field: 'executionTime', title: '执行时间' }, _table_style),
+                            $.extend({ field: 'httpMethod', title: '请求类型' }, _table_style),
+                            $.extend({ field: 'url', title: '请求地址', width: 300 }, _table_style),
+                            $.extend({ title: '执行服务', templet:'#table_auditLogging_action_data', width: 400 }, _table_style),
+                            // $.extend({ title: '执行改变数据', templet:'#table_auditLogging_entity_change_data' }, _table_style),
+                            $.extend({ field: 'id', title: '操作', width: 100, templet: '#table_auditLogging_operator', fixed: 'right' }, _table_style)
+                        ]],
+                    });
+                },
+                edit: function (_data) {
+                    var _the = this;
+                    datatable.edit({
+                        title: '编辑系统_菜单',
+                        area: ['850px', '500px'],
+                        content: 'view/auditLogging/edit.html?id=' + _data.id,
+                    });
+                },
+                add: function () {
+                    var _the = this;
+                    datatable.add({
+                        title: '新增系统_菜单',
+                        area: ['850px', '500px'],
+                        content: 'view/auditLogging/edit.html',
+                    });
+                },
+                del: function (_data) {
+                    var _the = this;
+                    datatable.del({
+                        url: '/auditLogging/' + _data.id,
+                        type: 'Delete',
+                        success: function (response) {
+                            _the.renderTable();
+                        }
+                    });
+                },
+                delbatch: function (_data) {
+                    var _the = this;
+                    var checkStatus = table.checkStatus('table_auditLogging'),
+                        data = checkStatus.data;
+                    var delIdList = [];
+                    data.forEach(function (item) {
+                        delIdList.push(item.id);
+                    });
+                    datatable.delbatch({
+                        url: '/auditLogging/keys',
+                        type: 'Delete',
+                        data: delIdList,
+                        success: function (response) {
+                            _the.renderTable();
+                        }
+                    });
+                },
+                patchObj: function (data, url) {
+                    let _the = this;
+                    ajaxmod.requestAuthorize({
+                        url: url,
+                        type: 'Patch',
+                        data: data,
+                        success: function (response) {
+                            _the.renderTable();
+                        }
+                    });
+                },
+                exportExcel: function (data) {
+                    //跟表格显示的数据一样
+                    data = excel.filterExportData(data, [
+                        "id",
+                        "applicationName",
+                        "userId",
+                        "userName",
+                        "tenantId",
+                        "tenantName",
+                        "executionTime",
+                        "executionDuration",
+                        "clientIpAddress",
+                        "correlationId",
+                        "browserInfo",
+                        "httpMethod",
+                        "url",
+                        "httpStatusCode",
+                    ]);
+
+                    data.unshift({
+                        "id": "日志编号",
+                        "applicationName": "应用名称",
+                        "userId": "用户编号",
+                        "userName": "用户名称",
+                        "tenantId": "租户id",
+                        "tenantName": "租户名称",
+                        "executionTime": "创建时间",
+                        "executionDuration": "总执行时间(毫秒/单位)",
+                        "clientIpAddress": "用户IP地址",
+                        "correlationId": "相关数据ID",
+                        "browserInfo": "用户浏览器信息",
+                        "httpMethod": "请求方法",
+                        "url": "请求地址",
+                        "httpStatusCode": "http响应状态码",
+                    });
+
+                    excel.exportExcel({
+                        auditLogging: data
+                    }, 'auditLogging' + new Date().toLocaleString() + '.xlsx', 'xlsx');
+                },
+                loadtable: function () {
+                    $('#btn_auditLogging_from_query').click();
+                },
+                loadList: function () {
+                    var _the = this;
+                    ajaxmod.ajaxArray([
+                        {
+                            url: '/appenums/use',
+                            type: 'Get',
+                            success: function (response) {
+                            }
+                        }
+                    ], function () {
+                        vm.RenderDom(form);
+                    });
+                }
+            };
+            auditLoggingObj.renderTable();//加载第一页
+
+            //绑定编辑也保存事件
+            top.tool.subscribe("edit_auditLogging_form_refresh", function () {
+                auditLoggingObj.renderTable();
+            });
+
+            table.on('tool(table_auditLogging_list)', function (obj) {
+                var data = obj.data;
+                auditLoggingObj[obj.event] ? auditLoggingObj[obj.event].call(auditLoggingObj, data) : '';
+            });
+
+            table.on('toolbar(table_auditLogging_list)', function (obj) {
+                var data = obj.data;
+                auditLoggingObj[obj.event] ? auditLoggingObj[obj.event].call(auditLoggingObj, data) : '';
+            });
+
+            form.on('submit(btn_auditLogging_from)', function (data) {
+                vm.currPage = 1;
+                auditLoggingObj.renderTable();
+                return false;
+            });
+
+            form.on('submit(btn_auditLogging_from_export)', function (data) {
+                ajaxmod.requestAuthorize({
+                    url: '/auditLogging/all',
+                    type: 'Get',
+                    data: data.field,
+                    success: function (response) {
+                        auditLoggingObj.exportExcel(response.items);
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>

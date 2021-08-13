@@ -23,6 +23,7 @@
                 <div class="layui-inline btngroup">
                     <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysmenurolemiddle_query">查询</a>
                     <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysmenurolemiddle_from_add">新增</a>
+                    <a class="layui-btn layui-btn-normal" id="btn_sysmenurolemiddle_from" href="javascript:;">保存</a>
                 </div>
             </div>
             <br />
@@ -55,13 +56,7 @@
                                 <div class="layui-fluid">
                                     <input type="hidden" name="RamId" />
                                     <div class="layui-row">
-                                        <div id="modulepoint_tree" class="xtree_contianer"></div>
-                                    </div>
-                                    <div class="layui-row" style="text-align:center;">
-                                        <div class="layui-inline">
-                                            <a class="layui-btn layui-btn-normal" id="btn_sysmenurolemiddle_from"
-                                                href="javascript:;">保存</a>
-                                        </div>
+                                        <div id="modulepoint_tree" class="xtree_contianer" style="overflow:auto;"></div>
                                     </div>
                                 </div>
                             </form>
@@ -84,7 +79,7 @@
                 selectedRole: {}
             },
             methods: {
-                RenderDom: (form) => {
+                RenderDom: function(form) {
                     vm.$forceUpdate();//强制重新渲染 dom
                     // DOM 还没有更新
                     vm.$nextTick(function () {
@@ -102,7 +97,7 @@
                 laypage = layui.laypage,
                 ajaxmod = layui.ajaxmod,
                 datatable = layui.datatable;
-
+            $("#modulepoint_tree").height($(window).height() - 210);
             var sysmenurolemiddleObj = {
                 modulepointTree: {},
                 roleTree: {},
@@ -120,13 +115,13 @@
                     let _the=this;
                     vm.selectedRole=node;
                     //找到文本
-                    for (const elem of $('#role_tree .layui-tree-spread')) {
+                    $('#role_tree .layui-tree-spread').each(function (k,elem) {
                         let name= $('.layui-tree-txt',$(elem)).html();
                         if (name === vm.selectedRole.title) {
                             _the.seletedRoleBg(elem);
-                            break;
+                            return;
                         }
-                    }
+                    });
                 },
                 loadRoleList: function (form_data) {
                     var _the = this;
@@ -165,24 +160,33 @@
                                         let name= elem.find('.layui-tree-txt').html();
                                         let requestData = data.data;
                                         requestData.name = name;
-                                        ajaxmod.requestAuthorize({
-                                            url: '/Role/'+ data.id,
-                                            data: requestData,
-                                            type: 'Put',
-                                            success: function (response) {
-                                                vm.selectedRole = { id: response.id, spread: true, title: response.name, data: response };
-                                                sysmenurolemiddleObj.loadRoleList();
-                                            }
-                                        });
+                                        top.layer.confirm('是否继续更新操作，更新角色名称，需要该角色下所有用户重新登录', { icon: 3, title: '提示' }, function (index, layero) {
+                                            ajaxmod.requestAuthorize({
+                                                url: '/Role/' + data.id,
+                                                data: requestData,
+                                                type: 'Put',
+                                                success: function (response) {
+                                                    vm.selectedRole = { id: response.id, spread: true, title: response.name, data: response };
+                                                    sysmenurolemiddleObj.loadRoleList();
+                                                }
+                                            });
+                                            top.layer.close(index);
+                                        }, function () {
+                                            sysmenurolemiddleObj.loadRoleList();
+                                         });
                                     } else if (type === 'del') { //删除节点
-                                        datatable.del({
-                                            url: '/role/' + data.id,
-                                            type: 'Delete',
-                                            confirm:false,
-                                            success: function (response) {
-                                                _the.setSeletedRole({});
-                                                sysmenurolemiddleObj.loadRoleList();
-                                            }
+                                        top.layer.confirm('是否继续删除操作，删除角色，该角色下所有用户需要重新分配角色', { icon: 3, title: '提示' }, function (index, layero) {
+                                            datatable.del({
+                                                url: '/role/' + data.id,
+                                                type: 'Delete',
+                                                confirm: false,
+                                                success: function (response) {
+                                                    _the.setSeletedRole({});
+                                                    sysmenurolemiddleObj.loadRoleList();
+                                                }
+                                            });
+                                        }, function () { 
+                                            sysmenurolemiddleObj.loadRoleList();
                                         });
                                     };
                                 }
@@ -204,7 +208,7 @@
                     ajaxmod.requestAuthorize({
                         url: '/MenuAndRoleMap/TreesAll',
                         type: 'Get',
-                        data: { roleId: vm.selectedRole.id },
+                        data: { roleId: vm.selectedRole.id, providerKey: vm.selectedRole.title },
                         success: function (response) {
                             _the.modulepointTree = new layuiXtree({
                                 elem: 'modulepoint_tree'                  //必填三兄弟之老大
@@ -259,8 +263,16 @@
             $('#btn_sysmenurolemiddle_from').on('click', function () {
                 var cks = sysmenurolemiddleObj.modulepointTree.GetChecked();//不包含父级
                 var menuIds = [];
+                var permissionNames = [];
                 $.each(cks, function (k, v) {
-                    menuIds.push(v.value);
+                    if (v.value.length === 36 && v.value.indexOf('-') != -1) {
+                        menuIds.push(v.value);
+                    } else if (v.value.indexOf('yezi') != -1) {
+                        //不做任何处理
+                    }
+                    else {
+                        permissionNames.push(v.value);
+                    }
                 });
                 if (menuIds.length < 1) {
                     layer.msg("请选择菜单权限");
@@ -268,7 +280,9 @@
                 }
                 var _data = {
                     roleIds: [vm.selectedRole.id],
-                    menuIds: menuIds
+                    menuIds: menuIds,
+                    permissionNames:permissionNames,
+                    providerKey:vm.selectedRole.title
                 };
                 ajaxmod.requestAuthorize({
                     url: '/MenuAndRoleMap',
