@@ -94,9 +94,7 @@ namespace Jh.Abp.MenuManagement
         private const string DefaultCorsPolicyName = "Default";
         public override void PreConfigureServices(ServiceConfigurationContext context)
         {
-            PreConfigure<IIdentityServerBuilder>(builder => {
-                builder.Services.AddTransient<IObjectAccessor<IUserClaimsPrincipalFactory<IdentityUser>>, ObjectAccessor<JhUserClaimsPrincipalFactory>>();
-            });
+          
         }
 
         public override void ConfigureServices(ServiceConfigurationContext context)

@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
+using Volo.Abp;
 using Volo.Abp.Application;
 using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.Authorization;
@@ -41,6 +43,14 @@ namespace Jh.Abp.IdentityServer
             {
                 options.MapCodeNamespace("JhAbpIdentityServer", typeof(JhAbpIdentityServerResource));
             });
+
+            context.Services.AddTransient<JhAbpClaimsPrincipalContributor>();
+        }
+
+        public override void OnApplicationInitialization(Volo.Abp.ApplicationInitializationContext context)
+        {
+            var app = context.GetApplicationBuilder();
+            app.UseJhJwtTokenMiddleware();
         }
     }
 }

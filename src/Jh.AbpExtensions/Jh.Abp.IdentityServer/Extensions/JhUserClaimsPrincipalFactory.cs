@@ -21,6 +21,7 @@ namespace Jh.Abp.IdentityServer
                 builder.Services.AddTransient<IObjectAccessor<IUserClaimsPrincipalFactory<IdentityUser>>, ObjectAccessor<JhUserClaimsPrincipalFactory>>();
             });
      */
+    [Obsolete("Use JhAbpClaimsPrincipalContributor ")]
     public class JhUserClaimsPrincipalFactory : AbpUserClaimsPrincipalFactory
     {
         public IdentityUserManager MyUserManager { get; set; }
