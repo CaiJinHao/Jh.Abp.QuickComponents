@@ -196,7 +196,7 @@ namespace Jh.Abp.MenuManagement
             });
 
             context.Services.AddApiVersion();
-            context.Services.AddAuthorizeFilter(configuration);
+            //context.Services.AddAuthorizeFilter(configuration);
             //context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
 #if DEBUG
             context.Services.AddMiniProfilerComponent();
