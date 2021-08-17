@@ -20,6 +20,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Localization\JhAbpQuickComponents\zh-Hans.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\..\..\document\images\nugeticon.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
@@ -34,6 +38,7 @@
     <EmbeddedResource Include="Jh\Abp\Swagger\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Localization\JhAbpQuickComponents\zh-Hans.json" />
   </ItemGroup>
 
   <ItemGroup>

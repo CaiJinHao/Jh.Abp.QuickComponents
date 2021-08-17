@@ -1,4 +1,4 @@
-﻿using Jh.Abp.QuickComponents.Localization;
+﻿using Jh.Abp.QuickComponents.Application.Localization;
 using Localization.Resources.AbpUi;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AspNetCore.Mvc;

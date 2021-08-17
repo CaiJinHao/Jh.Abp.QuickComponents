@@ -1,4 +1,4 @@
-﻿using Jh.Abp.QuickComponents.Localization;
+﻿using Jh.Abp.QuickComponents.Application.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Auditing;

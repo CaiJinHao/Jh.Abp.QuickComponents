@@ -29,7 +29,6 @@ namespace Jh.Abp.Extensions
         where TPagedRetrieveOutputDto : IEntityDto<TKey>
         where TRetrieveInputDto: ILimitedResultRequest
     {
-        public IDataFilter DataFilter { get; set; }
 
         public ICrudRepository<TEntity, TKey> crudRepository;
 

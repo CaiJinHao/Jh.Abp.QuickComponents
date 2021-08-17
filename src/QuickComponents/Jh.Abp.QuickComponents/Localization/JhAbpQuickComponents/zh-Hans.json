@@ -1,7 +1,6 @@
 {
   "culture": "zh-Hans",
   "texts": {
-    "JhAbpQuickComponentsApplication:000001": "身份服务器错误",
     "AuthorizationFailure": "缺少权限：{0}"
   }
 }

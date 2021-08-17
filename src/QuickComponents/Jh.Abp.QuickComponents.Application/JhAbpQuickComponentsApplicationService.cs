@@ -1,4 +1,4 @@
-﻿using Jh.Abp.QuickComponents.Localization;
+﻿using Jh.Abp.QuickComponents.Application.Localization;
 using System;
 using System.Collections.Generic;
 using System.Text;

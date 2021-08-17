@@ -2,6 +2,7 @@
 using Jh.Abp.QuickComponents.Cors;
 using Jh.Abp.QuickComponents.Json;
 using Jh.Abp.QuickComponents.JwtAuthentication;
+using Jh.Abp.QuickComponents.Localization;
 using Jh.Abp.QuickComponents.MiniProfiler;
 using Jh.Abp.QuickComponents.Swagger;
 using Microsoft.AspNetCore.Builder;
@@ -10,8 +11,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp;
 using Volo.Abp.Json;
+using Volo.Abp.Localization;
+using Volo.Abp.Localization.ExceptionHandling;
 using Volo.Abp.Modularity;
 using Volo.Abp.Security.Claims;
+using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
 
 namespace Jh.Abp.QuickComponents
@@ -57,6 +61,20 @@ namespace Jh.Abp.QuickComponents
             {
                 // 配合UseHybridSerializer=false 使用
                 options.SerializerSettings.ContractResolver = new JhMvcJsonContractResolver(context.Services);
+            });
+
+            Configure<AbpLocalizationOptions>(options =>
+            {
+                options.Resources
+                    .Add<JhAbpQuickComponentsResource>("zh-Hans")
+                    .AddBaseTypes(typeof(AbpValidationResource))
+                     //模块资源按照项目名称+文件夹路径写
+                     .AddVirtualJson("/Jh/Abp/QuickComponents/Localization/JhAbpQuickComponents");
+            });
+
+            Configure<AbpExceptionLocalizationOptions>(options =>
+            {
+                options.MapCodeNamespace("JhAbpQuickComponents", typeof(JhAbpQuickComponentsResource));
             });
 
             // 在前面控制

@@ -1,5 +1,5 @@
 ﻿using Jh.Abp.QuickComponents.AccessToken;
-using Jh.Abp.QuickComponents.Localization;
+using Jh.Abp.QuickComponents.Application.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Application;
@@ -58,7 +58,7 @@ namespace Jh.Abp.QuickComponents
 
             Configure<AbpExceptionLocalizationOptions>(options =>
             {
-                options.MapCodeNamespace("JhAbpQuickComponents", typeof(JhAbpQuickComponentsResource));
+                options.MapCodeNamespace("JhAbpQuickComponentsApplication", typeof(JhAbpQuickComponentsResource));
             });
         }
     }
