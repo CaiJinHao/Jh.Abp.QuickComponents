@@ -1,21 +1,40 @@
 $publishApiKey="123456"
 $publishSource="https://api.nuget.org/v3/index.json"
 
-$MenuManagement="0.1.106"
-$QuickComponents="1.2.602" 
-$applicationVersion="2.0.152"
-$SourceGenerator="3.0.155"
-$EntityFrameworkCoredm="0.2.0"
+$AbpExtensions="4.4.0001"	#4.4.0001
+$QuickComponents="4.4.1001"	#4.4.1001
+$SourceGenerator="4.4.2001"	#4.4.2001
 
-dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.Application\bin\Release\Jh.Abp.Application.$applicationVersion.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
-dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.Application.Contracts\bin\Release\Jh.Abp.Application.Contracts.$applicationVersion.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
-dotnet nuget push src\Common\Jh.Abp.Common\bin\Release\Jh.Abp.Common.$applicationVersion.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
-dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.Domain\bin\Release\Jh.Abp.Domain.$applicationVersion.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
-dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.Domain.Shared\bin\Release\Jh.Abp.Domain.Shared.$applicationVersion.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
-dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.IdentityServer\bin\Release\Jh.Abp.IdentityServer.$applicationVersion.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
-dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.EntityFrameworkCore\bin\Release\Jh.Abp.EntityFrameworkCore.$applicationVersion.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+# 暂时用不到不再更新
+# $EntityFrameworkCoredm="0.2.0"	#4.4.3001
+# $MenuManagement="0.1.106"	#4.4.4001
+
+# AbpExtensions
+dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.Application\bin\Release\Jh.Abp.Application.$AbpExtensions.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.Application.Contracts\bin\Release\Jh.Abp.Application.Contracts.$AbpExtensions.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+dotnet nuget push src\Common\Jh.Abp.Common\bin\Release\Jh.Abp.Common.$AbpExtensions.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.Domain\bin\Release\Jh.Abp.Domain.$AbpExtensions.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.Domain.Shared\bin\Release\Jh.Abp.Domain.Shared.$AbpExtensions.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.IdentityServer\bin\Release\Jh.Abp.IdentityServer.$AbpExtensions.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.EntityFrameworkCore\bin\Release\Jh.Abp.EntityFrameworkCore.$AbpExtensions.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+
+
+# QuickComponents
+dotnet nuget push src\QuickComponents\Jh.Abp.QuickComponents\bin\Release\Jh.Abp.QuickComponents.$QuickComponents.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+dotnet nuget push src\QuickComponents\Jh.Abp.QuickComponents.Application\bin\Release\Jh.Abp.QuickComponents.Application.$QuickComponents.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+dotnet nuget push src\QuickComponents\Jh.Abp.QuickComponents.Application.Contracts\bin\Release\Jh.Abp.QuickComponents.Application.Contracts.$QuickComponents.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+dotnet nuget push src\QuickComponents\Jh.Abp.QuickComponents.HttpApi\bin\Release\Jh.Abp.QuickComponents.HttpApi.$QuickComponents.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+
+# SourceGenerator
+dotnet nuget push src\GeneratorCoding\Jh.GeneratorCoding\bin\Release\Jh.SourceGenerator.$SourceGenerator.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+dotnet nuget push src\GeneratorCoding\Jh.SourceGenerator.Common\bin\Release\Jh.SourceGenerator.Common.$SourceGenerator.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+
+# dm
 dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.EntityFrameworkCore.Dm\bin\Release\Jh.Abp.EntityFrameworkCore.Dm.$EntityFrameworkCoredm.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
 dotnet nuget push src\Jh.AbpExtensions\Jh.Abp.EntityFrameworkCore.DmExtensionsCore\bin\Release\Jh.Abp.EntityFrameworkCore.DmExtensionsCore.$EntityFrameworkCoredm.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+
+
+#menu
 dotnet nuget push src\Menu\src\Jh.Abp.MenuManagement.Application\bin\Release\Jh.Abp.MenuManagement.Application.$MenuManagement.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
 dotnet nuget push src\Menu\src\Jh.Abp.MenuManagement.Application.Contracts\bin\Release\Jh.Abp.MenuManagement.Application.Contracts.$MenuManagement.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
 dotnet nuget push src\Menu\src\Jh.Abp.MenuManagement.Blazor\bin\Release\Jh.Abp.MenuManagement.Blazor.$MenuManagement.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
@@ -26,10 +45,6 @@ dotnet nuget push src\Menu\src\Jh.Abp.MenuManagement.HttpApi\bin\Release\Jh.Abp.
 dotnet nuget push src\Menu\src\Jh.Abp.MenuManagement.HttpApi.Client\bin\Release\Jh.Abp.MenuManagement.HttpApi.Client.$MenuManagement.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
 dotnet nuget push src\Menu\src\Jh.Abp.MenuManagement.MongoDB\bin\Release\Jh.Abp.MenuManagement.MongoDB.$MenuManagement.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
 dotnet nuget push src\Menu\src\Jh.Abp.MenuManagement.Web\bin\Release\Jh.Abp.MenuManagement.Web.$MenuManagement.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
-dotnet nuget push src\QuickComponents\Jh.Abp.QuickComponents\bin\Release\Jh.Abp.QuickComponents.$QuickComponents.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
-dotnet nuget push src\QuickComponents\Jh.Abp.QuickComponents.Application\bin\Release\Jh.Abp.QuickComponents.Application.$QuickComponents.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
-dotnet nuget push src\QuickComponents\Jh.Abp.QuickComponents.Application.Contracts\bin\Release\Jh.Abp.QuickComponents.Application.Contracts.$QuickComponents.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
-dotnet nuget push src\QuickComponents\Jh.Abp.QuickComponents.HttpApi\bin\Release\Jh.Abp.QuickComponents.HttpApi.$QuickComponents.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
-dotnet nuget push src\GeneratorCoding\Jh.GeneratorCoding\bin\Release\Jh.SourceGenerator.$SourceGenerator.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
-dotnet nuget push src\GeneratorCoding\Jh.SourceGenerator.Common\bin\Release\Jh.SourceGenerator.Common.$SourceGenerator.nupkg --api-key $publishApiKey --source $publishSource --skip-duplicate
+
+
 echo "success ok"
