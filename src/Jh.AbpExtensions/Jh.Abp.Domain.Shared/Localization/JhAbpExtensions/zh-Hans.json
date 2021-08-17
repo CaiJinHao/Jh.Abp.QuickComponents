@@ -1,7 +1,15 @@
 {
   "culture": "zh-Hans",
   "texts": {
-    "ManageYourProfile": "管理个人资料",
-    "SamplePageMessage": "MenuManagement模块的示例页面"
+    "Permission:Export": "导出",
+    "Permission:Detail": "详细",
+    "Permission:Create": "创建",
+    "Permission:BatchCreate": "批量创建",
+    "Permission:Edit": "编辑",
+    "Permission:PortionEdit": "局部更新",
+    "Permission:Delete": "删除",
+    "Permission:BatchDelete": "批量删除",
+    "Permission:Recover": "恢复",
+    "Permission:ManagePermissions": "管理权限"
   }
 }

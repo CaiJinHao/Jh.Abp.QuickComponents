@@ -1,7 +1,15 @@
 {
   "culture": "en",
   "texts": {
-    "ManageYourProfile":  "Manage your profile",
-    "SamplePageMessage": "A sample page for the MenuManagement module"
+    "Permission:Export": "Export",
+    "Permission:Detail": "Detail",
+    "Permission:Create": "Create",
+    "Permission:BatchCreate": "Batch Create",
+    "Permission:Edit": "Edit",
+    "Permission:PortionEdit": "Portion Edit",
+    "Permission:Delete": "Delete",
+    "Permission:BatchDelete": "Batch Delete",
+    "Permission:Recover": "Recover",
+    "Permission:ManagePermissions": "Manage Permissions"
   }
 }

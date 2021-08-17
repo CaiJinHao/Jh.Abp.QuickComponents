@@ -2,6 +2,7 @@
 
 ## 注意
 
+DataBase→Edit Current DBMS  
 生成OOM的时候注意勾掉：convert names to codes  
 
 ## C# 2::Profile\Class\Templates\definition
@@ -18,11 +19,14 @@ using Jh.SourceGenerator.Common.GeneratorAttributes;
 using Volo.Abp;
 using JetBrains.Annotations;
 using System.Linq;
+using Volo.Abp.MultiTenancy;
 
 [%comment%\n]\
+\[GeneratorClass\]
 \[Description("%Name%")\]
-[%visibility% ][%flags% ][%isPartialType%?partial ]class %Code%[%genericTypeParameters%][ : %inheritanceList%][ %genericTypeConstraints%]
+[%visibility% ][%flags% ][%isPartialType%?partial ]class %Code%[%genericTypeParameters%][ : %inheritanceList%][ %genericTypeConstraints%]: FullAuditedEntity<Guid>, IMultiTenant
 {
+public virtual Guid? TenantId { get; set; }
 [\
    %members%\n
 ]\
@@ -35,7 +39,8 @@ using System.Linq;
 }
 ```
 
-## Attribute/Templates/definition
+
+## C# 2::Profile\Attribute\Templates\definition
 
 ```text
 .if (%isGenerated%) and (%isValidAttribute%)
@@ -43,66 +48,55 @@ using System.Linq;
     .if(%Mandatory%=="TRUE")
 \[Required\]\n
     .endif
+    .if(%dataType% == "string")
+\[MaxLength(200)\]\n
+    .elsif(%dataType% == "decimal")
+\[Column(TypeName = "decimal(18, 2)")\]\n
+    .else
+    .endif
 \[Description("%Name%")\]
 \[CreateOrUpdateInputDto\]\n
    .if (%Multiple% == false) and (%isIndexer% == false)
-[%visibility% ][%flags% ]%dataType%
+[%visibility% ][%flags% ]%dataType% 
         .if(%Mandatory%=="FALSE") and (%dataType% != "string")
 ?
         .endif
- %Code%[ = %InitialValue%] {get;set;}
+%Code%[ = %InitialValue%] {get;set;}
    .else
 [%visibility% ][%flags% ]%dataType%[%arraySize%]
         .if(%Mandatory%=="FALSE") and (%dataType% != "string")
 ?
         .endif
- %Code%[ = %InitialValue%]  {get;set;}
+%Code%[ = %InitialValue%]  {get;set;}
    .endif
 .endif
 ```
 
-## Attribute/Templates/effluntapi
+## MYSQL50::Script\Objects\Column\Add （使用得是PDM中得解决不能获取长度问题）
 
 ```text
-b.Property(p => p.[%Code%]).HasComment("%Name%");
-b.Property(p => p.[%Code%]).HasMaxLength(%Length%).HasComment("%Name%");
-```
-
-## Classfier/Templates/fields
-
-```text
-.foreach_item(Attributes,,,%isField%)
-   .if ((%@1?% == false) or (%@1% == all) or (%Visibility% == %@1%)) and (%Derived% == false)
-      .if (%isRoleAMigrated%)
-[%MigratedAssociation.roleAMigrateDefinition%\n]
-      .elsif (%isRoleBMigrated%)
-[%MigratedAssociation.roleBMigrateDefinition%\n]
-      .else
-[%definition%\n]
-      .endif
-   .endif
-.next
-
-.foreach_item(Attributes,,,%isField%)
-   .if ((%@1?% == false) or (%@1% == all) or (%Visibility% == %@1%)) and (%Derived% == false)
-      .if (%isRoleAMigrated%)
-[%MigratedAssociation.roleAMigrateDefinition%\n]
-      .elsif (%isRoleBMigrated%)
-[%MigratedAssociation.roleBMigrateDefinition%\n]
-      .else
-[%effluntapi%\n]
-      .endif
-   .endif
-.next
-```
-
-## PDM生成 MYSQL50::Script\Objects\Column\Add
-
-```text
-%20:COLUMN% [%National%?national ]%DATATYPE%[%Unsigned%? unsigned][%ZeroFill%? zerofill][ [.O:[character set][charset]] %CharSet%][.Z:[ %NOTNULL%][%R%?[%PRIMARY%]][%IDENTITY%? auto_increment:[ default %DEFAULT%]][ comment %.q:@OBJTLABL%]]
 b.Property(p => p.%COLUMN%)
-.if (%Length% != 0)
+.if (%ISPKEY%==Yes)
+[.ValueGeneratedOnAdd()]
+.elsif  (%Length% != 0)
 [.HasMaxLength(%Length%)]
 .endif
 [.HasComment("%Name%");]
+//
 ```
+
+## MYSQL50::Script\Objects\Table\Create
+
+```text
+builder.Entity<%TABLE%>(b=> {
+b.HasComment("%COMMENT%");
+b.ToTable(options.TablePrefix + "%TABLE%", options.Schema);
+b.ConfigureByConvention();
+b.Property(p => p.Id).ValueGeneratedOnAdd();
+
+%TABLDEFN%
+});
+```
+
+## MYSQL50::Script\Objects\PKey\Add  去除所有内容
+

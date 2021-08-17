@@ -1,6 +1,15 @@
 {
   "culture": "zh-Hant",
   "texts": {
-    "ManageYourProfile":  "管理個人資料" 
+    "Permission:Export": "導出",
+    "Permission:Detail": "詳細",
+    "Permission:Create": "創建",
+    "Permission:BatchCreate": "批量創建",
+    "Permission:Edit": "編輯",
+    "Permission:PortionEdit": "局部更新",
+    "Permission:Delete": "刪除",
+    "Permission:BatchDelete": "批量刪除",
+    "Permission:Recover": "恢復",
+    "Permission:ManagePermissions": "管理權限"
   }
 }
