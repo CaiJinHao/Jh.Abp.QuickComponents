@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\common.props" />
 
@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.MongoDB" Version="4.3.2" />
+    <PackageReference Include="Volo.Abp.MongoDB" Version="4.4.0" />
     <ProjectReference Include="..\Jh.Abp.MenuManagement.Domain\Jh.Abp.MenuManagement.Domain.csproj" />
   </ItemGroup>
 

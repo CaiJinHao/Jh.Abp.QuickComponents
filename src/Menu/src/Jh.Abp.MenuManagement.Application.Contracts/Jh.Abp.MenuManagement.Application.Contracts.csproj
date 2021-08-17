@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\common.props" />
 
@@ -39,9 +39,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="4.3.2" />
-    <PackageReference Include="Volo.Abp.Authorization" Version="4.3.2" />
-    <PackageReference Include="Volo.Abp.Identity.Application.Contracts" Version="4.3.2" />
+    <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="4.4.0" />
+    <PackageReference Include="Volo.Abp.Authorization" Version="4.4.0" />
+    <PackageReference Include="Volo.Abp.Identity.Application.Contracts" Version="4.4.0" />
     <ProjectReference Include="..\..\..\Jh.AbpExtensions\Jh.Abp.Application.Contracts\Jh.Abp.Application.Contracts.csproj" />
     <ProjectReference Include="..\Jh.Abp.MenuManagement.Domain.Shared\Jh.Abp.MenuManagement.Domain.Shared.csproj" />
     <ProjectReference Include="..\Jh.Abp.MenuManagement.Domain\Jh.Abp.MenuManagement.Domain.csproj" />

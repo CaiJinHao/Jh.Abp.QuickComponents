@@ -13,6 +13,7 @@ namespace Jh.Abp.MenuManagement
         public DateTime? endTime { get; set; }
         public string httpMethod { get; set; }
         public string url { get; set; }
+        public Guid? userId{ get; set; }
         public string userName { get; set; }
         public string applicationName { get; set; }
         public string correlationId { get; set; }

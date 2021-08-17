@@ -36,10 +36,10 @@ namespace Jh.Abp.MenuManagement
         public virtual async Task<PagedResultDto<AuditLog>> GetListAsync(AuditLoggingRetrieveInputDto retrieveInputDto, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             var datas = await auditLogsRepository.GetListAsync(retrieveInputDto.Sorting, retrieveInputDto.MaxResultCount, retrieveInputDto.SkipCount
-                , retrieveInputDto.startTime, retrieveInputDto.endTime, retrieveInputDto.httpMethod, retrieveInputDto.url, retrieveInputDto.userName
+                , retrieveInputDto.startTime, retrieveInputDto.endTime, retrieveInputDto.httpMethod, retrieveInputDto.url, retrieveInputDto.userId,retrieveInputDto.userName
                 , retrieveInputDto.applicationName, retrieveInputDto.correlationId, retrieveInputDto.maxExecutionDuration, retrieveInputDto.minExecutionDuration
                 , retrieveInputDto.hasException, retrieveInputDto.httpStatusCode, includeDetails, cancellationToken);
-            var totalCount = await auditLogsRepository.GetCountAsync(retrieveInputDto.startTime, retrieveInputDto.endTime, retrieveInputDto.httpMethod, retrieveInputDto.url, retrieveInputDto.userName
+            var totalCount = await auditLogsRepository.GetCountAsync(retrieveInputDto.startTime, retrieveInputDto.endTime, retrieveInputDto.httpMethod, retrieveInputDto.url, retrieveInputDto.userId, retrieveInputDto.userName
                 , retrieveInputDto.applicationName, retrieveInputDto.correlationId, retrieveInputDto.maxExecutionDuration, retrieveInputDto.minExecutionDuration
                 , retrieveInputDto.hasException, retrieveInputDto.httpStatusCode,  cancellationToken);
 
@@ -63,7 +63,7 @@ namespace Jh.Abp.MenuManagement
         public virtual async Task<ListResultDto<AuditLog>> GetEntitysAsync(AuditLoggingRetrieveInputDto retrieveInputDto, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             var datas = await auditLogsRepository.GetListAsync(retrieveInputDto.Sorting, retrieveInputDto.MaxResultCount, retrieveInputDto.SkipCount
-              , retrieveInputDto.startTime, retrieveInputDto.endTime, retrieveInputDto.httpMethod, retrieveInputDto.url, retrieveInputDto.userName
+              , retrieveInputDto.startTime, retrieveInputDto.endTime, retrieveInputDto.httpMethod, retrieveInputDto.url, retrieveInputDto.userId, retrieveInputDto.userName
               , retrieveInputDto.applicationName, retrieveInputDto.correlationId, retrieveInputDto.maxExecutionDuration, retrieveInputDto.minExecutionDuration
               , retrieveInputDto.hasException, retrieveInputDto.httpStatusCode,  includeDetails, cancellationToken);
             return new ListResultDto<AuditLog>() {

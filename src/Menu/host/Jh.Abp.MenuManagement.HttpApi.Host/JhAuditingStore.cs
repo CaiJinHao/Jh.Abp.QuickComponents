@@ -16,7 +16,7 @@ namespace Jh.Abp.MenuManagement
     [ExposeServices(typeof(IAuditingStore))]
     public class JhAuditingStore : AuditingStore, IAuditingStore, ITransientDependency
     {
-        public JhAuditingStore(IAuditLogRepository auditLogRepository, IGuidGenerator guidGenerator, IUnitOfWorkManager unitOfWorkManager, IOptions<AbpAuditingOptions> options) : base(auditLogRepository, guidGenerator, unitOfWorkManager, options)
+        public JhAuditingStore(IAuditLogRepository auditLogRepository, IUnitOfWorkManager unitOfWorkManager, IOptions<AbpAuditingOptions> options, IAuditLogInfoToAuditLogConverter converter) : base(auditLogRepository, unitOfWorkManager, options, converter)
         {
         }
 

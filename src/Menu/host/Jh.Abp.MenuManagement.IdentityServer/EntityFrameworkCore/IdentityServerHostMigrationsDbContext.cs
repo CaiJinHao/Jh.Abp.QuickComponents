@@ -32,8 +32,8 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
             modelBuilder.ConfigureTenantManagement();
 
             modelBuilder.Entity<AuditLog>(b => {
-                AuditLogConsts.MaxExceptionsLength = int.MaxValue;
-                b.Property(x => x.Exceptions).HasMaxLength(AuditLogConsts.MaxExceptionsLength).HasColumnType("text");
+                AuditLogConsts.MaxCommentsLength = int.MaxValue;
+                b.Property(x => x.Exceptions).HasMaxLength(AuditLogConsts.MaxCommentsLength).HasColumnType("text");
             });
 
             modelBuilder.Entity<AuditLogAction>(b => {

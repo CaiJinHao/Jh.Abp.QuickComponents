@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="4.3.2" />
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="4.4.0" />
     <ProjectReference Include="..\..\..\Jh.AbpExtensions\Jh.Abp.EntityFrameworkCore\Jh.Abp.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Jh.Abp.FormCustom.Application.Contracts\Jh.Abp.FormCustom.Application.Contracts.csproj" />
     <ProjectReference Include="..\Jh.Abp.FormCustom.Domain\Jh.Abp.FormCustom.Domain.csproj" />
