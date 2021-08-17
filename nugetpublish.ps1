@@ -1,4 +1,4 @@
-$publishApiKey="oy2i6wqus7j5ituk6clahzgduj3ek4furcdwvr6wqiqwzu"
+$publishApiKey="123"
 $publishSource="https://api.nuget.org/v3/index.json"
 
 $QuickComponents="4.4.1001"	#4.4.1001
