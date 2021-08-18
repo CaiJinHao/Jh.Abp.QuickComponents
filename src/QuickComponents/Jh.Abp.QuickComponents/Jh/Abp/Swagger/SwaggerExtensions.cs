@@ -162,7 +162,7 @@ namespace Jh.Abp.QuickComponents.Swagger
 
 
         public static IServiceCollection AddJhAbpSwagger(this IServiceCollection services, IConfiguration configuration
-            , Dictionary<string, string> scopes, params Assembly[] XmlCommentsAssemblys)
+            , Dictionary<string, string> scopes, params NamespaceAssemblyDto[] XmlCommentsNamespaceAssemblys)
         {
             services.AddAbpSwaggerGenWithOAuth(
                 configuration["AuthServer:Authority"],scopes,
@@ -212,11 +212,11 @@ namespace Jh.Abp.QuickComponents.Swagger
                     //var basePath = Directory.GetCurrentDirectory();
                     //var xmlPath = Path.Combine(basePath, "Swagger/YourWebApiName.ApiServices.xml");
 
-                    if (XmlCommentsAssemblys != null)
+                    if (XmlCommentsNamespaceAssemblys != null)
                     {
-                        foreach (var item in XmlCommentsAssemblys)
+                        foreach (var item in XmlCommentsNamespaceAssemblys)
                         {
-                            var embeddedFileProvider = new EmbeddedFileProvider(item);//文件必须是嵌入得资源
+                            var embeddedFileProvider = new EmbeddedFileProvider(item.AssemblyXmlComments, item.BaseNamespace);//文件必须是嵌入得资源
                             var files = embeddedFileProvider.GetDirectoryContents(string.Empty).Where(a => a.Name.EndsWith(".xml"));
                             foreach (var file in files)
                             {
