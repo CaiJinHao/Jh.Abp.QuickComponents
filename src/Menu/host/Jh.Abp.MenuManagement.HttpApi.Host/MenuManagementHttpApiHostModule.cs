@@ -96,7 +96,11 @@ namespace Jh.Abp.MenuManagement
                 new Dictionary<string, string>
                 {
                     {"MenuManagement", "MenuManagement API"}
-                });//, typeof(MenuManagementApplicationContractsModule).Assembly
+                }, new NamespaceAssemblyDto()
+                {
+                    BaseNamespace = "Jh.Abp.MenuManagement",
+                    AssemblyXmlComments = typeof(MenuManagementApplicationContractsModule).Assembly
+                });
             /*context.Services.AddAbpSwaggerGenWithOAuth(
                 configuration["AuthServer:Authority"],
                 new Dictionary<string, string>
