@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Volo.Abp.AspNetCore.Mvc;
@@ -159,7 +161,8 @@ namespace Jh.Abp.QuickComponents.Swagger
         }
 
 
-        public static IServiceCollection AddJhAbpSwagger(this IServiceCollection services, IConfiguration configuration, Dictionary<string, string> scopes)
+        public static IServiceCollection AddJhAbpSwagger(this IServiceCollection services, IConfiguration configuration
+            , Dictionary<string, string> scopes, params Assembly[] XmlCommentsAssemblys)
         {
             services.AddAbpSwaggerGenWithOAuth(
                 configuration["AuthServer:Authority"],scopes,
@@ -199,6 +202,23 @@ namespace Jh.Abp.QuickComponents.Swagger
                             new string[] { }
                         }
                     });
+
+                    if (XmlCommentsAssemblys != null)
+                    {
+                        foreach (var item in XmlCommentsAssemblys)
+                        {
+                            var embeddedFileProvider = new EmbeddedFileProvider(item);//文件必须是嵌入得资源
+                            var files = embeddedFileProvider.GetDirectoryContents(string.Empty).Where(a => a.Name.EndsWith(".xml"));
+                            foreach (var file in files)
+                            {
+                                var content = file.ReadAsString();
+                                options.IncludeXmlComments(() => {
+                                    return new System.Xml.XPath.XPathDocument(new StringReader(content));
+                                }, true);//为操作、参数和模式注入基于XML注释文件的友好描述
+                            }
+                        }
+                    }
+
                 });
             return services;
         }
