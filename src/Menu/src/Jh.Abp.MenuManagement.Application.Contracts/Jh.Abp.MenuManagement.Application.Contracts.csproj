@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\common.props" />
 
@@ -21,10 +21,18 @@
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\github\mygithub\business\Jh.Abp.QuickComponents\src\Menu\src\Jh.Abp.MenuManagement.Application.Contracts\Jh.Abp.MenuManagement.Application.Contracts.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Menus\MenuPermissionMap\**" />
     <EmbeddedResource Remove="Menus\MenuPermissionMap\**" />
     <None Remove="Menus\MenuPermissionMap\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Jh.Abp.MenuManagement.Application.Contracts.xml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +53,10 @@
     <ProjectReference Include="..\..\..\Jh.AbpExtensions\Jh.Abp.Application.Contracts\Jh.Abp.Application.Contracts.csproj" />
     <ProjectReference Include="..\Jh.Abp.MenuManagement.Domain.Shared\Jh.Abp.MenuManagement.Domain.Shared.csproj" />
     <ProjectReference Include="..\Jh.Abp.MenuManagement.Domain\Jh.Abp.MenuManagement.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Jh.Abp.MenuManagement.Application.Contracts.xml" />
   </ItemGroup>
 
 </Project>

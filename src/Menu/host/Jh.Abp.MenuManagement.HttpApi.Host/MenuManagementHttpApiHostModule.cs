@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using StackExchange.Redis;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.Mvc.AntiForgery;
@@ -95,7 +96,7 @@ namespace Jh.Abp.MenuManagement
                 new Dictionary<string, string>
                 {
                     {"MenuManagement", "MenuManagement API"}
-                });
+                });//, typeof(MenuManagementApplicationContractsModule).Assembly
             /*context.Services.AddAbpSwaggerGenWithOAuth(
                 configuration["AuthServer:Authority"],
                 new Dictionary<string, string>
