@@ -9,6 +9,7 @@ using RazorEngine;
 using RazorEngine.Templating; // For extension methods.
 using Jh.SourceGenerator.Common.GeneratorDtos;
 using Jh.Abp.MenuManagement;
+using Volo.Abp.Identity;
 
 namespace Jh.Abp.QuickComponents.Tests.JhSourceGeneratorCommon
 {
@@ -18,7 +19,7 @@ namespace Jh.Abp.QuickComponents.Tests.JhSourceGeneratorCommon
         public void TestGetTableClass()
         {
             //模板路径为空不生成
-            var basePathTemp = @"G:\Temp\";
+            var basePathTemp = @"E:\Temp\";
             //var basePath = @"G:\github\mygithub\jhabpmodule\modules\setting";
             var basePath = basePathTemp;
             var domainAssembly = typeof(MenuManagementDomainModule).Assembly;
@@ -39,8 +40,9 @@ namespace Jh.Abp.QuickComponents.Tests.JhSourceGeneratorCommon
                 //CreateHtmlPath = @$"{basePathTemp}\host\{itemName}.HttpApi.Host\wwwroot\main\view",
                 //CreateHtmlTemplatePath = @"G:\github\mygithub\Jh.Abp.QuickComponents\src\GeneratorCoding\Jh.SourceGenerator.Common\CodeBuilders\Html\Layui"
             };
-            var service = new GeneratorService(domainAssembly, options);
-            Assert.True(service.GeneratorCode());
+            var service = new GeneratorService(domainAssembly, options, GneratorType.AttributeField);
+            Assert.True(service.GeneratorCode(new List<Type>() { typeof(OrganizationUnit) }));
+            //Assert.True(service.GeneratorCode(service.GetTableClassByGeneratorClass()));
         }
 
         [Fact]

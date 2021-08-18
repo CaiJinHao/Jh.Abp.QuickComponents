@@ -15,12 +15,14 @@ namespace Jh.SourceGenerator.Common
 {
     public class GeneratorService
     {
-        public  GeneratorOptions generatorOptions { get; set; }
-        public  Assembly LoadAssembly { get; }
-        public  GeneratorService(Assembly assembly, GeneratorOptions options)
+        private GeneratorOptions generatorOptions { get; }
+        private  Assembly LoadAssembly { get; }
+        private GneratorType generatorType { get; }
+        public GeneratorService(Assembly assembly, GeneratorOptions options, GneratorType _gneratorType = GneratorType.AttributeField)
         {
             LoadAssembly = assembly;
             generatorOptions = options;
+            generatorType = _gneratorType;
             GeneratorConsts.DbContext = options.DbContext;
             GeneratorConsts.Namespace = options.Namespace;
             GeneratorConsts.ControllerBase = options.ControllerBase;
@@ -31,7 +33,11 @@ namespace Jh.SourceGenerator.Common
             return LoadAssembly.DefinedTypes.Select((TypeInfo t) => t.AsType());
         }
 
-        public virtual IEnumerable<Type> GetTableClass()
+        /// <summary>
+        /// 根据GeneratorClass特性来插座要生成得表
+        /// </summary>
+        /// <returns></returns>
+        public virtual IEnumerable<Type> GetTableClassByGeneratorClass()
         {
             var classCollection = GetLoadableTypes().Where(cla=>cla.IsClass);
             var tableClass = classCollection.Where(tab=>tab.CustomAttributes.Any(a=>a.AttributeType.Equals(typeof(GeneratorClassAttribute))));
@@ -103,19 +109,34 @@ namespace Jh.SourceGenerator.Common
 
         public virtual IEnumerable<PropertyInfo> GetMembers<TAttribute>(Type classType)
         {
-            foreach (var property in classType.GetProperties())
+            switch (generatorType)
             {
-                var attrName = typeof(TAttribute).Name;
-                if (property.CustomAttributes.Any(a => a.AttributeType.Equals(typeof(TAttribute))))
-                {
-                    yield return property;
-                }
+                case GneratorType.AllField:
+                    {
+
+                        return classType.GetProperties().Where(property =>
+                         property.DeclaringType == classType
+                         && !(property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition().Equals(typeof(ICollection<>)))
+                        );
+                    }
+                case GneratorType.AttributeField:
+                default:
+                    return classType.GetProperties().Where(property => property.CustomAttributes.Any(a => a.AttributeType.Equals(typeof(TAttribute))));
             }
+            //已改写为lamda
+            //foreach (var property in classType.GetProperties())
+            //{
+            //    var attrName = typeof(TAttribute).Name;
+            //    if (property.CustomAttributes.Any(a => a.AttributeType.Equals(typeof(TAttribute))))
+            //    {
+            //        yield return property;
+            //    }
+            //}
         }
 
         public virtual IEnumerable<FieldDto> GetFieldDto(IEnumerable<PropertyInfo> properties)
         {
-            foreach (var property in properties)
+            return properties.Select(property =>
             {
                 var descriptionAttr = GetAttrArgs<DescriptionAttribute>(property)?.FirstOrDefault();
                 var description = string.Empty;
@@ -125,25 +146,23 @@ namespace Jh.SourceGenerator.Common
                 }
                 var required = GetAttr<RequiredAttribute>(property);
                 var theType = property.PropertyType;
-                var valueType = theType.GetObjectType();
                 var fieldDto = new FieldDto()
                 {
                     Name = GetFiledName(property),
                     Description = description,
                     Type = theType.Name,
-                    FieldType = valueType,
+                    FieldType = theType.GetObjectType(),
                     IsRequired = required != null
                 };
-                if (theType.IsGenericType && theType.
-                      GetGenericTypeDefinition().Equals
-                      (typeof(Nullable<>)))
+                if (theType.IsGenericType && theType.GetGenericTypeDefinition().Equals(typeof(Nullable<>)))
                 {
                     fieldDto.IsNullable = true;
                     fieldDto.Type = theType.GetGenericArguments().FirstOrDefault().Name;
+                    fieldDto.IsRequired = false;
                 }
                 fieldDto.IsNullable = fieldDto.GetIsNullable();
-                yield return fieldDto;
-            }
+                return fieldDto;
+            });
         }
 
         /// <summary>
@@ -174,9 +193,8 @@ namespace Jh.SourceGenerator.Common
             return property.Name;
         }
 
-        public virtual bool GeneratorCode()
+        public virtual bool GeneratorCode(IEnumerable<Type> tableClass)
         {
-            var tableClass = GetTableClass();
             if (!tableClass.Any())
             {
                 throw new Exception("The identity GeneratorClass was not found");
