@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Jh.Abp.MenuManagement.Domain</name>
+    </assembly>
+    <members>
+        <member name="F:Jh.Abp.MenuManagement.MenuManagementDbProperties.ConnectionStringName">
+            <summary>
+            系统管理模块
+            </summary>
+        </member>
+    </members>
+</doc>

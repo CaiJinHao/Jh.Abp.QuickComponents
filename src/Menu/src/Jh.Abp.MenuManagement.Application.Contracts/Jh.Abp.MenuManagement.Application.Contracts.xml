@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Jh.Abp.MenuManagement.Application.Contracts</name>
+    </assembly>
+    <members>
+        <member name="M:Jh.Abp.MenuManagement.IMenuAndRoleMapAppService.GetMenusNavTreesAsync">
+            <summary>
+            获取当前登录角色有权限的菜单树
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Jh.Abp.MenuManagement.IMenuAndRoleMapAppService.GetMenusTreesAsync(Jh.Abp.MenuManagement.MenuAndRoleMapTreeAllRetrieveInputDto)">
+            <summary>
+            获取所有菜单树，有权限的自动选中
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuAndRoleMapCreateInputDto.MenuIds">
+            <summary>
+            菜单外键
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuAndRoleMapCreateInputDto.RoleIds">
+            <summary>
+            角色外键
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuAndRoleMapCreateInputDto.PermissionNames">
+            <summary>
+            权限名称列表
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuAndRoleMapDto.MenuId">
+            <summary>
+            菜单外键
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuAndRoleMapDto.RoleId">
+            <summary>
+            角色外键
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuAndRoleMapRetrieveInputDto.MenuId">
+            <summary>
+            菜单外键
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuAndRoleMapRetrieveInputDto.RoleId">
+            <summary>
+            角色外键
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuAndRoleMapUpdateInputDto.PermissionNames">
+            <summary>
+            权限名称列表
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.MenuManagement.MenuCreateInputDto">
+            <summary>
+            只存放需要传值的
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuCreateInputDto.Code">
+            <summary>
+            菜单编号
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuCreateInputDto.Name">
+            <summary>
+            菜单名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuCreateInputDto.Icon">
+            <summary>
+            菜单图标
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuCreateInputDto.Sort">
+            <summary>
+            同一级别内排序
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuCreateInputDto.ParentCode">
+            <summary>
+            上级菜单编号，顶级可为null
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuCreateInputDto.Url">
+            <summary>
+            导航路径
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuCreateInputDto.Description">
+            <summary>
+            菜单描述
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuCreateInputDto.RoleIds">
+            <summary>
+            角色ID列表
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuDto.Code">
+            <summary>
+            菜单编号
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuDto.Name">
+            <summary>
+            菜单名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuDto.Icon">
+            <summary>
+            菜单图标
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuDto.Sort">
+            <summary>
+            同一级别内排序
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuDto.ParentCode">
+            <summary>
+            上级菜单编号，顶级可为null
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuDto.Url">
+            <summary>
+            导航路径
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuDto.Description">
+            <summary>
+            菜单描述
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuDto.ConcurrencyStamp">
+            <summary>
+            并发标识
+            </summary>
+        </member>
+        <member name="T:Jh.Abp.MenuManagement.MenuRetrieveInputDto">
+            <summary>
+            只存放需要查询的字段
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuRetrieveInputDto.Code">
+            <summary>
+            菜单编号
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuRetrieveInputDto.Name">
+            <summary>
+            菜单名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuRetrieveInputDto.ParentCode">
+            <summary>
+            上级菜单编号，顶级可为null
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuUpdateInputDto.Code">
+            <summary>
+            菜单编号
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuUpdateInputDto.Name">
+            <summary>
+            菜单名称
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuUpdateInputDto.Icon">
+            <summary>
+            菜单图标
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuUpdateInputDto.Sort">
+            <summary>
+            同一级别内排序
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuUpdateInputDto.ParentCode">
+            <summary>
+            上级菜单编号，顶级可为null
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuUpdateInputDto.Url">
+            <summary>
+            导航路径
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuUpdateInputDto.Description">
+            <summary>
+            菜单描述
+            </summary>
+        </member>
+        <member name="P:Jh.Abp.MenuManagement.MenuUpdateInputDto.ConcurrencyStamp">
+            <summary>
+            并发检测字段 必须和数据中数据的值一样才会允许更新
+            </summary>
+        </member>
+    </members>
+</doc>

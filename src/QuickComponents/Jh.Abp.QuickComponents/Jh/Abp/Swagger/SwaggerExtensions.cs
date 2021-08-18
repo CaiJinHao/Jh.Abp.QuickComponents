@@ -169,12 +169,12 @@ namespace Jh.Abp.QuickComponents.Swagger
                 options =>
                 {
                     options.SwaggerDoc("v1",
-                        new OpenApiInfo
-                        {
-                            Title = configuration["SwaggerApi:OpenApiInfo:Title"],
-                            Version = configuration["SwaggerApi:OpenApiInfo:Version"],
-                            Description = configuration["SwaggerApi:OpenApiInfo:Description"],
-                        });
+                      new OpenApiInfo
+                      {
+                          Title = configuration["SwaggerApi:OpenApiInfo:Title"],
+                          Version = configuration["SwaggerApi:OpenApiInfo:Version"],
+                          Description = configuration["SwaggerApi:OpenApiInfo:Description"],
+                      });
                     options.DocInclusionPredicate((docName, description) => true);
                     options.CustomSchemaIds(type => type.FullName);
 
@@ -203,6 +203,15 @@ namespace Jh.Abp.QuickComponents.Swagger
                         }
                     });
 
+                    //options.SchemaFilter<SwaggerSchemaFilter>();//Schemax过滤器、修改器
+                    //options.ParameterFilter<SwaggerSchemaFilter>();//Parameter过滤器、修改器
+                    //options.RequestBodyFilter<>();//请求Body过滤器、修改器
+                    //options.OperationFilter<>();//操作过滤器、修改器
+                    //options.DocumentFilter<>();//文档过滤器、修改器
+                    //options.IncludeXmlComments();
+                    //var basePath = Directory.GetCurrentDirectory();
+                    //var xmlPath = Path.Combine(basePath, "Swagger/YourWebApiName.ApiServices.xml");
+
                     if (XmlCommentsAssemblys != null)
                     {
                         foreach (var item in XmlCommentsAssemblys)
@@ -219,6 +228,18 @@ namespace Jh.Abp.QuickComponents.Swagger
                         }
                     }
 
+                    options.IgnoreObsoleteActions();//忽略任何由ObsoleteAttribute修饰的操作
+                    options.DescribeAllParametersInCamelCase();//描述所有参数，不管它们在代码中是如何出现的，都使用驼峰形式
+                    //options.ResolveConflictingActions((apiDescriptionList) =>
+                    //{
+                    //    //合并具有冲突的HTTP方法和路径的操作(Swagger 2.0必须是唯一的)
+                    //    return apiDescriptionList.First();
+                    //});
+                    //属性
+                    options.IgnoreObsoleteProperties();//忽略任何用ObsoleteAttribute装饰的属性
+                    options.UseAllOfForInheritance();//启用复合模式生成,合并基类的属性
+                    options.UseAllOfToExtendReferenceSchemas();//扩展引用模式(使用allOf构造)，以便上下文元数据可以应用于所有参数和属性模式
+                    options.SupportNonNullableReferenceTypes();//启用对非空引用类型的检测，在模式属性上相应地设置空标志
                 });
             return services;
         }

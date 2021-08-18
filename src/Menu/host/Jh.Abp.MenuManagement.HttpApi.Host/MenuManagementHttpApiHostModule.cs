@@ -95,7 +95,7 @@ namespace Jh.Abp.MenuManagement
                 new Dictionary<string, string>
                 {
                     {"MenuManagement", "MenuManagement API"}
-                });
+                }, typeof(MenuManagementApplicationContractsModule).Assembly, typeof(MenuManagementDomainModule).Assembly);
             /*context.Services.AddAbpSwaggerGenWithOAuth(
                 configuration["AuthServer:Authority"],
                 new Dictionary<string, string>
