@@ -37,7 +37,7 @@ using Volo.Abp.Domain.Entities;");
                     {
                         builder.AppendLine($"\t\t/// <summary>");
                         builder.AppendLine($"\t\t/// {_field.Description}");
-                        builder.AppendLine($"\t\t/// <summary>");
+                        builder.AppendLine($"\t\t/// </summary>");
                         var nullable = _field.IsNullable ? "?" : "";//可空类型
                         builder.AppendLine($"\t\tpublic {_field.Type}{nullable} {_field.Name} " + "{ get; set; }");
                     }
@@ -46,7 +46,7 @@ using Volo.Abp.Domain.Entities;");
                     {
                         builder.AppendLine("\t\t/// <summary>");
                         builder.AppendLine("\t\t/// 并发标识");
-                        builder.AppendLine("\t\t/// <summary>");
+                        builder.AppendLine("\t\t/// </summary>");
                         builder.AppendLine("\t\tpublic string ConcurrencyStamp { get; set; }");
                     }
 
