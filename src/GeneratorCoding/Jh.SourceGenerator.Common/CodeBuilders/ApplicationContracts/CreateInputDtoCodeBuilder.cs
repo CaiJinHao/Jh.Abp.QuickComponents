@@ -24,6 +24,9 @@ using Volo.Abp.ObjectExtending;");
             builder.AppendLine($"namespace {table.Namespace}");
             builder.AppendLine("{");
             {
+                builder.AppendLine($"\t/// <summary>");
+                builder.AppendLine($"\t/// {table.Comment}");
+                builder.AppendLine($"\t/// </summary>");
                 builder.AppendLine($"\tpublic class {FileName}: ");
                 if (table.IsConcurrencyStamp)
                 {
@@ -38,7 +41,7 @@ using Volo.Abp.ObjectExtending;");
                         var nullable = _field.IsNullable ? "?" : "";//可空类型
                         builder.AppendLine($"\t\t/// <summary>");
                         builder.AppendLine($"\t\t/// {_field.Description}");
-                        builder.AppendLine($"\t\t/// <summary>");
+                        builder.AppendLine($"\t\t/// </summary>");
                         if (_field.IsRequired)
                         {
                             nullable = "";
@@ -48,7 +51,7 @@ using Volo.Abp.ObjectExtending;");
                     }
                     builder.AppendLine("\t\t/// <summary>");
                     builder.AppendLine("\t\t/// 方法参数回调");
-                    builder.AppendLine("\t\t/// <summary>");
+                    builder.AppendLine("\t\t/// </summary>");
                     builder.AppendLine($"\t\tpublic MethodDto<{table.Name}> MethodInput " + "{ get; set; }");
 
                     builder.AppendLine($"\t\t public virtual Guid? TenantId " + "{ get; set; }");

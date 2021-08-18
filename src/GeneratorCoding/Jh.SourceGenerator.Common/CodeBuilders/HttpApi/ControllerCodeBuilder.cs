@@ -26,6 +26,9 @@ using Volo.Abp.Data;");
             builder.AppendLine($"namespace {table.Namespace}.v1");
             builder.AppendLine("{");
             {
+                builder.AppendLine($"\t/// <summary>");
+                builder.AppendLine($"\t/// {table.Comment}");
+                builder.AppendLine($"\t/// </summary>");
                 builder.AppendLine("\t[RemoteService]");
                 builder.AppendLine("\t[Route(\"api/v{apiVersion:apiVersion}/[controller]\")]");
                 builder.AppendLine($"\tpublic class {FileName} : {table.ControllerBase}");
