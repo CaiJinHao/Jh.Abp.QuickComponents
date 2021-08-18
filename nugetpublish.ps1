@@ -2,7 +2,7 @@ $publishApiKey="oy2ise5osxdj53qfvqlqn2a6ywhouu6u5noh35aorknqqa"
 $publishSource="https://api.nuget.org/v3/index.json"
 
 $QuickComponents="4.4.1003"	#4.4.1001
-$SourceGenerator="4.4.2001"	#4.4.2001
+$SourceGenerator="4.4.2002"	#4.4.2001
 $AbpExtensions="4.4.3003"	#4.4.3001
 
 # 暂时用不到不再更新
