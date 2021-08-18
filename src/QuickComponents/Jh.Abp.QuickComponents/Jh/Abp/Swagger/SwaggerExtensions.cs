@@ -162,19 +162,20 @@ namespace Jh.Abp.QuickComponents.Swagger
         }
 
 
-        public static IServiceCollection AddJhAbpSwagger(this IServiceCollection services, IConfiguration configuration, Dictionary<string, string> scopes,params Assembly[] XmlCommentsAssemblys)
+        public static IServiceCollection AddJhAbpSwagger(this IServiceCollection services, IConfiguration configuration
+            , Dictionary<string, string> scopes, params NamespaceAssemblyDto[] XmlCommentsNamespaceAssemblys)
         {
             services.AddAbpSwaggerGenWithOAuth(
-                configuration["AuthServer:Authority"],scopes,
+                configuration["AuthServer:Authority"], scopes,
                 options =>
                 {
                     options.SwaggerDoc("v1",
-                        new OpenApiInfo
-                        {
-                            Title = configuration["SwaggerApi:OpenApiInfo:Title"],
-                            Version = configuration["SwaggerApi:OpenApiInfo:Version"],
-                            Description = configuration["SwaggerApi:OpenApiInfo:Description"],
-                        });
+                      new OpenApiInfo
+                      {
+                          Title = configuration["SwaggerApi:OpenApiInfo:Title"],
+                          Version = configuration["SwaggerApi:OpenApiInfo:Version"],
+                          Description = configuration["SwaggerApi:OpenApiInfo:Description"],
+                      });
                     options.DocInclusionPredicate((docName, description) => true);
                     options.CustomSchemaIds(type => type.FullName);
 
@@ -212,16 +213,16 @@ namespace Jh.Abp.QuickComponents.Swagger
                     //var basePath = Directory.GetCurrentDirectory();
                     //var xmlPath = Path.Combine(basePath, "Swagger/YourWebApiName.ApiServices.xml");
 
-                    if (XmlCommentsAssemblys != null)
+                    if (XmlCommentsNamespaceAssemblys != null)
                     {
-                        foreach (var item in XmlCommentsAssemblys)
+                        foreach (var item in XmlCommentsNamespaceAssemblys)
                         {
-                            var embeddedFileProvider = new EmbeddedFileProvider(item);//文件必须是嵌入得资源
+                            var embeddedFileProvider = new EmbeddedFileProvider(item.AssemblyXmlComments, item.BaseNamespace);//文件必须是嵌入得资源
                             var files = embeddedFileProvider.GetDirectoryContents(string.Empty).Where(a => a.Name.EndsWith(".xml"));
                             foreach (var file in files)
                             {
                                 var content = file.ReadAsString();
-                                options.IncludeXmlComments(()=> {
+                                options.IncludeXmlComments(() => {
                                     return new System.Xml.XPath.XPathDocument(new StringReader(content));
                                 }, true);//为操作、参数和模式注入基于XML注释文件的友好描述
                             }
@@ -240,7 +241,6 @@ namespace Jh.Abp.QuickComponents.Swagger
                     options.UseAllOfForInheritance();//启用复合模式生成,合并基类的属性
                     options.UseAllOfToExtendReferenceSchemas();//扩展引用模式(使用allOf构造)，以便上下文元数据可以应用于所有参数和属性模式
                     options.SupportNonNullableReferenceTypes();//启用对非空引用类型的检测，在模式属性上相应地设置空标志
-
                 });
             return services;
         }
