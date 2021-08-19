@@ -10,8 +10,7 @@ namespace Jh.Abp.QuickComponents.Cors
 {
     public static class CorsExtensions
     {
-        public const string DefaultCorsPolicyName = "Default";
-        public static IServiceCollection AddCorsPolicy(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddCorsPolicy(this IServiceCollection services, IConfiguration configuration,string DefaultCorsPolicyName= "Default")
         {
             services.AddCors(options =>
             {

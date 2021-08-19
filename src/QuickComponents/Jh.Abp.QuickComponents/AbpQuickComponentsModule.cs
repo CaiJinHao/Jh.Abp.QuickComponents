@@ -1,11 +1,5 @@
-﻿using IdentityModel;
-using Jh.Abp.QuickComponents.Cors;
-using Jh.Abp.QuickComponents.Json;
-using Jh.Abp.QuickComponents.JwtAuthentication;
+﻿using Jh.Abp.QuickComponents.Json;
 using Jh.Abp.QuickComponents.Localization;
-using Jh.Abp.QuickComponents.MiniProfiler;
-using Jh.Abp.QuickComponents.Swagger;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,27 +8,20 @@ using Volo.Abp.Json;
 using Volo.Abp.Localization;
 using Volo.Abp.Localization.ExceptionHandling;
 using Volo.Abp.Modularity;
-using Volo.Abp.Security.Claims;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
 
 namespace Jh.Abp.QuickComponents
 {
-    //必须在最下边依赖
+    /// <summary>
+    /// 依赖当前模块 必须添加到最后
+    /// </summary>
     public class AbpQuickComponentsModule: AbpModule
     {
         private IConfiguration configuration { get; set; }
 
         public override void PreConfigureServices(ServiceConfigurationContext context)
         {
-            //Id4 jwt
-            //AbpClaimTypes.UserId = JwtClaimTypes.Subject;
-            //AbpClaimTypes.UserName = JwtClaimTypes.Name;
-            //AbpClaimTypes.Role = JwtClaimTypes.Role;
-            //AbpClaimTypes.Email = JwtClaimTypes.Email;
-            //AbpClaimTypes.Name = JwtClaimTypes.GivenName;
-            //AbpClaimTypes.SurName = JwtClaimTypes.FamilyName;
-
             PreConfigure<AbpJsonOptions>(options =>
             {
                 //use coustomer ContractResolver
@@ -76,22 +63,6 @@ namespace Jh.Abp.QuickComponents
             {
                 options.MapCodeNamespace("JhAbpQuickComponents", typeof(JhAbpQuickComponentsResource));
             });
-
-            // 在前面控制
-            //context.Services.AddMiniProfilerComponent();
-            //context.Services.AddSwaggerComponent(configuration);
-            //context.Services.AddCorsPolicy(configuration);
-            //context.Services.AddLocalizationComponent();
-            //context.Services.AddJwtAuthenticationComponent(configuration);
         }
-
-        /*public override void OnApplicationInitialization(Volo.Abp.ApplicationInitializationContext context)
-        {
-            var app = context.GetApplicationBuilder();
-
-            // 在前面控制
-            app.UseMiniProfiler();
-            app.UseCors(CorsExtensions.DefaultCorsPolicyName);
-        }*/
     }
 }

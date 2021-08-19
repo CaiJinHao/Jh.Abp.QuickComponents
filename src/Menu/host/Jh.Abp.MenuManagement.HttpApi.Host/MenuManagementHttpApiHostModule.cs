@@ -3,17 +3,18 @@ using Jh.Abp.QuickComponents;
 using Jh.Abp.QuickComponents.Cors;
 using Jh.Abp.QuickComponents.HttpApi;
 using Jh.Abp.QuickComponents.JwtAuthentication;
-using Jh.Abp.QuickComponents.MiniProfiler;
 using Jh.Abp.QuickComponents.Swagger;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using StackExchange.Redis;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
+using System.Linq;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.Mvc.AntiForgery;
@@ -96,11 +97,11 @@ namespace Jh.Abp.MenuManagement
                 new Dictionary<string, string>
                 {
                     {"MenuManagement", "MenuManagement API"}
-                }, new NamespaceAssemblyDto()
+                }, new NamespaceAssemblyDto[] {  new NamespaceAssemblyDto()
                 {
                     BaseNamespace = "Jh.Abp.MenuManagement",
                     AssemblyXmlComments = typeof(MenuManagementApplicationContractsModule).Assembly
-                });
+                }});
             /*context.Services.AddAbpSwaggerGenWithOAuth(
                 configuration["AuthServer:Authority"],
                 new Dictionary<string, string>
@@ -156,8 +157,7 @@ namespace Jh.Abp.MenuManagement
                     .PersistKeysToStackExchangeRedis(redis, "MenuManagement-Protection-Keys");
             }
 
-            context.Services.AddCorsPolicy(configuration);
-            /*context.Services.AddCors(options =>
+            context.Services.AddCors(options =>
             {
                 options.AddPolicy(DefaultCorsPolicyName, builder =>
                 {
@@ -174,7 +174,7 @@ namespace Jh.Abp.MenuManagement
                         .AllowAnyMethod()
                         .AllowCredentials();
                 });
-            });*/
+            });
 
             //审计日志配置
             Configure<AbpAuditingOptions>(options =>
@@ -230,7 +230,7 @@ namespace Jh.Abp.MenuManagement
             app.UseCorrelationId();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseCors(CorsExtensions.DefaultCorsPolicyName);
+            app.UseCors(DefaultCorsPolicyName);
             //app.UseCors(DefaultCorsPolicyName);
             app.UseAuthentication();
             if (MultiTenancyConsts.IsEnabled)
