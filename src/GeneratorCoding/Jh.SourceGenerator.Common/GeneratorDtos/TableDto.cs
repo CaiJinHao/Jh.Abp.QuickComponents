@@ -31,6 +31,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
 
         public bool IsDelete { get; set; }
         public bool IsConcurrencyStamp { get; set; }
+        public bool IsExtensibleObject { get; set; }
 
         private string _inheritClass = "EntityDto";
         /// <summary>
@@ -46,6 +47,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                     case "AuditedAggregateRootWithUser":
                         {
                             _inheritClass = "ExtensibleAuditedEntityWithUserDto";
+                            IsExtensibleObject = true;
                         }
                         break;
                     case "AuditedEntityWithUser":
@@ -56,6 +58,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                     case "AuditedAggregateRoot":
                         {
                             _inheritClass = "ExtensibleAuditedEntityDto";
+                            IsExtensibleObject = true;
                         }
                         break;
                     case "AuditedEntity":
@@ -66,6 +69,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                     case "CreationAuditedAggregateRootWithUser":
                         {
                             _inheritClass = "ExtensibleCreationAuditedEntityWithUserDto";
+                            IsExtensibleObject = true;
                         }
                         break;
                     case "CreationAuditedEntityWithUser":
@@ -76,6 +80,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                     case "CreationAuditedAggregateRoot":
                         {
                             _inheritClass = "ExtensibleCreationAuditedEntityDto";
+                            IsExtensibleObject = true;
                         }
                         break;
                     case "CreationAuditedEntity":
@@ -86,6 +91,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                     case "FullAuditedAggregateRootWithUser":
                         {
                             _inheritClass = "ExtensibleFullAuditedEntityWithUserDto";
+                            IsExtensibleObject = true;
                         }
                         break;
                     case "FullAuditedEntityWithUser":
@@ -96,6 +102,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                     case "FullAuditedAggregateRoot":
                         {
                             _inheritClass = "ExtensibleFullAuditedEntityDto";
+                            IsExtensibleObject = true;
                         }
                         break;
                     case "FullAuditedEntity":
@@ -106,6 +113,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                     case "AggregateRoot":
                         {
                             _inheritClass = "ExtensibleEntityDto";
+                            IsExtensibleObject = true;
                         }
                         break;
                     case "BasicAggregateRoot":

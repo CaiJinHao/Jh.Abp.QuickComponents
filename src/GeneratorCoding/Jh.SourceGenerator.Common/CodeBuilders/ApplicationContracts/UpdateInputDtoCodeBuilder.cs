@@ -28,9 +28,13 @@ using Volo.Abp.ObjectExtending;");
                 builder.AppendLine($"\t/// {table.Comment}");
                 builder.AppendLine($"\t/// </summary>");
                 builder.AppendLine($"\tpublic class {FileName}: ");
+                if (table.IsExtensibleObject)
+                {
+                    builder.AppendLine($"ExtensibleObject,");
+                }
                 if (table.IsConcurrencyStamp)
                 { 
-                    builder.AppendLine($"ExtensibleObject, IHasConcurrencyStamp,");
+                    builder.AppendLine($"IHasConcurrencyStamp,");
                 }
                 builder.AppendLine($"IMethodDto<{table.Name}>");
                 builder.AppendLine($",IMultiTenant");
