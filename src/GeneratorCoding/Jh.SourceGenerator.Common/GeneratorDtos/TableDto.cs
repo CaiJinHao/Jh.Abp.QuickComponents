@@ -30,7 +30,7 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
         public string Comment { get; set; }
 
         public bool IsDelete { get; set; }
-        public bool IsConcurrencyStamp { get; set; }
+        public bool IsConcurrencyStamp { get { return IsExtensibleObject; } }
         public bool IsExtensibleObject { get; set; }
 
         private string _inheritClass = "EntityDto";
