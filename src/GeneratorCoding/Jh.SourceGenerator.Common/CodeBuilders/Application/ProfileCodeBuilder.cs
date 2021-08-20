@@ -27,7 +27,7 @@ using Volo.Abp.AutoMapper;");
                     builder.AppendLine("\t\t{");
                     {
                         builder.Append($"\t\tCreateMap<{table.Name},{table.Name}Dto>()");
-                        if (table.IsConcurrencyStamp)
+                        if (table.IsExtensibleObject)
                         {
                             builder.Append(".MapExtraProperties()");
                         }

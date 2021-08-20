@@ -139,8 +139,8 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                 case "AuditedAggregateRoot":
                     {
                         ignoreObjectPropertiesDefault = ".IgnoreAuditedObjectProperties()";
-                        ignoreObjectPropertiesCreateInputDto = ".IgnoreAuditedObjectProperties().Ignore(a=>a.ConcurrencyStamp)";
-                        IsConcurrencyStamp = true;
+                        ignoreObjectPropertiesCreateInputDto = ".IgnoreAuditedObjectProperties()";
+                        IsExtensibleObject = true;
                     }
                     break;
                 case "AuditedEntityWithUser":
@@ -154,8 +154,8 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                 case "CreationAuditedAggregateRoot":
                     {
                         ignoreObjectPropertiesDefault = ".IgnoreCreationAuditedObjectProperties()";
-                        ignoreObjectPropertiesCreateInputDto = ".IgnoreCreationAuditedObjectProperties().Ignore(a=>a.ConcurrencyStamp)";
-                        IsConcurrencyStamp = true;
+                        ignoreObjectPropertiesCreateInputDto = ".IgnoreCreationAuditedObjectProperties()";
+                        IsExtensibleObject = true;
                     }
                     break;
                 case "CreationAuditedEntityWithUser":
@@ -169,9 +169,9 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                 case "FullAuditedAggregateRoot":
                     {
                         ignoreObjectPropertiesDefault = ".IgnoreFullAuditedObjectProperties()";
-                        ignoreObjectPropertiesCreateInputDto = ".IgnoreFullAuditedObjectProperties().Ignore(a=>a.ConcurrencyStamp)";
+                        ignoreObjectPropertiesCreateInputDto = ".IgnoreFullAuditedObjectProperties()";
                         IsDelete = true;
-                        IsConcurrencyStamp = true;
+                        IsExtensibleObject = true;
                     }
                     break;
                 case "FullAuditedEntityWithUser":
@@ -183,9 +183,8 @@ namespace Jh.SourceGenerator.Common.GeneratorDtos
                     }
                     break;
                 case "AggregateRoot":
-                    { 
-                        ignoreObjectPropertiesCreateInputDto = ".Ignore(a=>a.ConcurrencyStamp)";
-                        IsConcurrencyStamp = true;
+                    {
+                        IsExtensibleObject = true;
                     }
                     break;
                 case "Entity":

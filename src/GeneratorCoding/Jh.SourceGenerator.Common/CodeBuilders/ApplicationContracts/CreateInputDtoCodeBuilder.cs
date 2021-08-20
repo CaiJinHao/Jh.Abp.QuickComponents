@@ -19,6 +19,7 @@ namespace Jh.SourceGenerator.Common.CodeBuilders
 using System.ComponentModel.DataAnnotations;
 using Jh.Abp.Application.Contracts.Dtos;
 using Jh.Abp.Application.Contracts.Extensions;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.ObjectExtending;");
             builder.AppendLine($"namespace {table.Namespace}");
@@ -53,6 +54,15 @@ using Volo.Abp.ObjectExtending;");
                         }
                         builder.AppendLine($"\t\tpublic {_field.Type}{nullable} {_field.Name} " + "{ get; set; }");
                     }
+
+                    if (table.IsConcurrencyStamp)
+                    {
+                        builder.AppendLine("\t\t/// <summary>");
+                        builder.AppendLine("\t\t/// 并发检测字段 必须和数据库中的值一样才会允许更新");
+                        builder.AppendLine("\t\t/// </summary>");
+                        builder.AppendLine("\t\tpublic string ConcurrencyStamp { get; set; }");
+                    }
+
                     builder.AppendLine("\t\t/// <summary>");
                     builder.AppendLine("\t\t/// 方法参数回调");
                     builder.AppendLine("\t\t/// </summary>");
