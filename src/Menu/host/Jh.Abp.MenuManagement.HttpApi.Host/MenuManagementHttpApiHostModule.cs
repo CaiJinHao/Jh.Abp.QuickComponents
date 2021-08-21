@@ -203,9 +203,7 @@ namespace Jh.Abp.MenuManagement
             context.Services.AddApiVersion();
             //context.Services.AddAuthorizeFilter(configuration);
             //context.Services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());//禁用授权系统
-#if DEBUG
-            context.Services.AddMiniProfilerComponent();
-#endif
+
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -223,9 +221,6 @@ namespace Jh.Abp.MenuManagement
                 //app.UseHsts();
             }
 
-#if DEBUG
-            app.UseMiniProfiler();
-#endif
             //app.UseHttpsRedirection();
             app.UseCorrelationId();
             app.UseStaticFiles();
@@ -240,7 +235,11 @@ namespace Jh.Abp.MenuManagement
             app.UseAbpRequestLocalization();
             app.UseAuthorization();
 #if DEBUG
-            app.UseJhAbpSwagger(configuration);
+            app.UseSwagger();
+            app.UseAbpSwaggerUI(options =>
+            {
+                options.UseJhSwaggerUiConfig(configuration);
+            });
 #endif
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
