@@ -96,7 +96,10 @@ namespace Jh.Abp.MenuManagement
                 {
                     {"MenuManagement", "MenuManagement API"}
                 }
-                , new NamespaceAssemblyDto()
+                ,(options=> {
+                    options.OperationFilter<HideOperationFilter>();
+                    options.DocumentFilter<HideDocumentFilter>();
+                }), new NamespaceAssemblyDto()
                 {
                     BaseNamespace = "Jh.Abp.MenuManagement",
                     AssemblyXmlComments = typeof(MenuManagementApplicationContractsModule).Assembly

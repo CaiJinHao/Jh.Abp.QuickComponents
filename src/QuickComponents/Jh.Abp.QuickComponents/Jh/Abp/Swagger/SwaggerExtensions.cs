@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Collections.Generic;
@@ -162,7 +163,7 @@ namespace Jh.Abp.QuickComponents.Swagger
 
 
         public static IServiceCollection AddJhAbpSwagger(this IServiceCollection services, IConfiguration configuration
-            , Dictionary<string, string> scopes, params NamespaceAssemblyDto[] XmlCommentsNamespaceAssemblys)
+            , Dictionary<string, string> scopes, Action<SwaggerGenOptions> steupAction = null, params NamespaceAssemblyDto[] XmlCommentsNamespaceAssemblys)
         {
             services.AddAbpSwaggerGenWithOAuth(
                 configuration["AuthServer:Authority"],scopes,
@@ -176,7 +177,7 @@ namespace Jh.Abp.QuickComponents.Swagger
                           Description = configuration["SwaggerApi:OpenApiInfo:Description"],
                       });
                     options.DocInclusionPredicate((docName, description) => true);
-                    options.CustomSchemaIds(type => type.FullName);
+                    //options.CustomSchemaIds(type => type.FullName);
 
                     //Swagger添加授权验证服务
                     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
@@ -240,6 +241,7 @@ namespace Jh.Abp.QuickComponents.Swagger
                     options.UseAllOfForInheritance();//启用复合模式生成,合并基类的属性
                     options.UseAllOfToExtendReferenceSchemas();//扩展引用模式(使用allOf构造)，以便上下文元数据可以应用于所有参数和属性模式
                     options.SupportNonNullableReferenceTypes();//启用对非空引用类型的检测，在模式属性上相应地设置空标志
+                    steupAction?.Invoke(options);
                 });
             return services;
         }
