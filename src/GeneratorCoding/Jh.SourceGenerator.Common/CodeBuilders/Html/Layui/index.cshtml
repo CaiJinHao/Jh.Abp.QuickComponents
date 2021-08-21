@@ -49,7 +49,7 @@
                             @if (table.IsDelete)
                             {
                                 <div class="layui-inline">
-                                    <label class="layui-form-label">已删除：</label>
+                                    <label class="layui-form-label">是否禁用：</label>
                                     <div class="layui-input-inline">
                                         <select lay-search name="deleted" :value="2">
                                             <option v-for="option in deletedlist" v-bind:value="option.value">{{ option.text }}</option>
@@ -274,7 +274,7 @@
                     var _the = this;
                     ajaxmod.ajaxArray([
                         {
-                            url: '/appenums/use',
+                            url: '/appenums/delete',
                             type: 'Get',
                             success: function (response) {
                                 vm.deletedlist = response;
