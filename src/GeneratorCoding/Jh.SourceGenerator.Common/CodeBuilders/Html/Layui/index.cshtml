@@ -75,12 +75,12 @@
             {{# if(vm.RenderPermission(vm.permissionDefineds.Create)){ }}
             <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
             {{# }if(vm.RenderPermission(vm.permissionDefineds.BatchDelete)){ }}
-            <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delbatch">批量删除</button>
+            <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delbatch">批量禁用</button>
             {{# } }}
         </div>
     </script>
     <script type="text/html" id="tpl_isDeleted">
-        <input type="checkbox" name="isDeleted" value="1" lay-skin="switch" data-code="{{d.id}}" lay-text="删除|恢复" lay-filter="table_tpl_isDeleted" {{d.isDeleted?'':'checked'}}>
+        <input type="checkbox" name="isDeleted" value="1" lay-skin="switch" data-code="{{d.id}}" lay-text="禁用|启用" lay-filter="table_tpl_isDeleted" {{d.isDeleted?'':'checked'}}>
     </script>
     <script type="text/html" id="table_@(table_name_lower)_operator">
         {{# if(d.isDeleted){ }}
@@ -90,7 +90,7 @@
         {{# } }}
 
         {{# if(vm.RenderPermission(vm.permissionDefineds.Recover)){ }}
-        <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="rollbackDel" data-code="@(primary_key_name)">恢复</a>
+        <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="rollbackDel" data-code="@(primary_key_name)">启用</a>
         {{# } }}
 
         {{# }else{ }}
@@ -100,7 +100,7 @@
         {{# } }}
 
         {{# if(vm.RenderPermission(vm.permissionDefineds.Delete)){ }}
-        <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="@(primary_key_name)">删除</a>
+        <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="@(primary_key_name)">禁用</a>
         {{# } }}
 
         {{# } }}
@@ -357,7 +357,7 @@
                 if (data.elem.checked) {
                     _value = false;//启用
                 } else {
-                    _value = true;//删除
+                    _value = true;//禁用
                 }
                 @(table_name_lower)Obj.patchObj(_value,'/@(table_name_lower)/'+_id+'/Deleted');
             });
