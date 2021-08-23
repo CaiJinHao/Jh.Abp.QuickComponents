@@ -12,11 +12,11 @@ namespace Jh.Abp.Common
         public string href { get { return this.url; } }
         public string icon { get; set; }
         public string parent_id { get; set; }
-        public int sort { get; set; }
         public bool spread { get; set; } = true;
         public bool @checked { get; set; }
         public bool disabled { get; set; }
         public object obj { get; set; }
+        public string sort { get; set; }
 
         private IEnumerable<TreeDto> _children = new TreeDto[] { };
         /// <summary>
