@@ -84,10 +84,8 @@ namespace Jh.Abp.MenuManagement
             return user.Roles.Select(a => a.RoleId);
         }
 
-        private MenuAndRoleMapTreeAllRetrieveInputDto menuAndRoleMapTreeAllRetrieveInputDto { get; set; }
         public virtual async Task<IEnumerable<TreeDto>> GetMenusTreesAsync(MenuAndRoleMapTreeAllRetrieveInputDto input)
         {
-            menuAndRoleMapTreeAllRetrieveInputDto = input;
             var auth_menus_id = crudRepository.Where(a => a.RoleId == input.RoleId).Select(a => a.MenuId).ToList();
 
             var resutlMenus = await MenuRepository.Select(a =>
