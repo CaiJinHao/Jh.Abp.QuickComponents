@@ -7,7 +7,7 @@ namespace Jh.Abp.MenuManagement
     {
         public MenuProfile()
         {
-            CreateMap<Menu, MenuDto>().MapExtraProperties();
+            CreateMap<Menu, MenuDto>();
             CreateMap<MenuCreateInputDto, Menu>().IgnoreFullAuditedObjectProperties().Ignore(a=>a.ConcurrencyStamp).Ignore(a => a.Id)
     .Ignore(a => a.MenuRoleMaps)
     ;
