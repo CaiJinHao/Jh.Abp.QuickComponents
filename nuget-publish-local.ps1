@@ -3,7 +3,27 @@ $SourceGenerator="4.4.2009"	#4.4.2001
 $AbpExtensions="4.4.3005"	#4.4.3001
 $Env="Debug" #Release
 
-copy .\src\Jh.AbpExtensions\Jh.Abp.Application\bin\$Env\Jh.Abp.Application.$AbpExtensions.nupkg .\document\localnuget
+cd G:\github\mygithub\Jh.Abp.QuickComponents
+
+# AbpExtensions
+rm .\document\localnuget\Jh.Abp.Application.*.nupkg
+rm .\document\localnuget\Jh.Abp.Application.Contracts.*.nupkg
+rm .\document\localnuget\Jh.Abp.Common.*.nupkg
+rm .\document\localnuget\Jh.Abp.Domain.*.nupkg
+rm .\document\localnuget\Jh.Abp.Domain.Shared.*.nupkg
+rm .\document\localnuget\Jh.Abp.IdentityServer.*.nupkg
+rm .\document\localnuget\Jh.Abp.EntityFrameworkCore.*.nupkg
+
+# QuickComponents
+rm .\document\localnuget\Jh.Abp.QuickComponents.*.nupkg
+rm .\document\localnuget\Jh.Abp.QuickComponents.Application.*.nupkg
+rm .\document\localnuget\Jh.Abp.QuickComponents.Application.Contracts.*.nupkg
+rm .\document\localnuget\Jh.Abp.QuickComponents.HttpApi.*.nupkg
+
+# SourceGenerator
+rm .\document\localnuget\Jh.SourceGenerator.*.nupkg
+rm .\document\localnuget\Jh.SourceGenerator.Common.*.nupkg
+
 
 # AbpExtensions
 copy .\src\Jh.AbpExtensions\Jh.Abp.Application\bin\$Env\Jh.Abp.Application.$AbpExtensions.nupkg .\document\localnuget
