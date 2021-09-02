@@ -86,6 +86,8 @@ using Volo.Abp.Data;");
                         builder.AppendLine("\t\t}");
                     }
 
+                    /*
+                    不需要暴漏的外部，需要时手动添加
                     builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.BatchCreate)]");
                     builder.AppendLine("\t\t[Route(\"items\")]");
                     builder.AppendLine("\t\t[HttpPost]");
@@ -94,7 +96,7 @@ using Volo.Abp.Data;");
                         builder.AppendLine("\t\t{");
                         builder.AppendLine($"\t\t\t await {table.Name}AppService.CreateAsync(input);");
                         builder.AppendLine("\t\t}");
-                    }
+                    }*/
 
                     builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Update)]");
                     builder.AppendLine("\t\t[HttpPut(\"{id}\")]");
@@ -107,6 +109,7 @@ using Volo.Abp.Data;");
 
                     builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.PortionUpdate)]");
                     builder.AppendLine("\t\t[HttpPatch(\"{id}\")]");
+                    builder.AppendLine("\t\t[HttpPatch(\"Patch/{id}\")]");
                     builder.AppendLine($"\t\tpublic virtual async Task UpdatePortionAsync({table.KeyType} id, {table.Name}UpdateInputDto inputDto)");
                     {
                         builder.AppendLine("\t\t{");
@@ -123,14 +126,16 @@ using Volo.Abp.Data;");
                         builder.AppendLine("\t\t}");
                     }
 
-                    builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.BatchDelete)]");
-                    builder.AppendLine("\t\t[HttpDelete]");
-                    builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync({table.Name}DeleteInputDto deleteInputDto)");
-                    {
-                        builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(deleteInputDto);");
-                        builder.AppendLine("\t\t}");
-                    }
+                    /*      
+                         不需要暴漏的外部，需要时手动添加
+                         builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.BatchDelete)]");
+                          builder.AppendLine("\t\t[HttpDelete]");
+                          builder.AppendLine($"\t\tpublic virtual async Task DeleteAsync({table.Name}DeleteInputDto deleteInputDto)");
+                          {
+                              builder.AppendLine("\t\t{");
+                              builder.AppendLine($"\t\t\t await {table.Name}AppService.DeleteAsync(deleteInputDto);");
+                              builder.AppendLine("\t\t}");
+                          }*/
 
                     builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.BatchDelete)]");
                     builder.AppendLine("\t\t[Route(\"keys\")]");
@@ -146,6 +151,7 @@ using Volo.Abp.Data;");
                     {
                         builder.AppendLine($"\t\t[Authorize({groupName}.{moduleName}.Recover)]");
                         builder.AppendLine("\t\t[HttpPatch]");
+                        builder.AppendLine("\t\t[HttpPut]");
                         builder.AppendLine("\t\t[Route(\"{id}/Deleted\")]");
                         builder.AppendLine($"\t\tpublic virtual async Task UpdateDeletedAsync({table.KeyType} id, [FromBody] bool isDeleted)");
                         {

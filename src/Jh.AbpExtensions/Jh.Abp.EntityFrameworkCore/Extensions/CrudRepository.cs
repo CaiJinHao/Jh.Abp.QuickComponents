@@ -67,6 +67,11 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
             return includeDetails ? await WithDetailsAsync(): await GetDbSetAsync();
         }
 
+        public virtual async Task<IQueryable<T>> GetQueryableAsync<T>() where T : class, IEntity<TKey>
+        {
+            return (await GetDbContextAsync().ConfigureAwait(continueOnCapturedContext: false)).Set<T>();
+        }
+
         public virtual async Task<TEntity[]> DeleteAsync(bool autoSave = false, bool isHard = false, CancellationToken cancellationToken = default(CancellationToken), params TEntity[] entitys)
         {
             var _dbSet = await GetDbSetAsync();

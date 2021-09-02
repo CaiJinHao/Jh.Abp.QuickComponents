@@ -55,6 +55,13 @@ namespace Jh.Abp.Domain.Extensions
         Task<IQueryable<TEntity>> GetQueryableAsync(bool includeDetails = false);
 
         /// <summary>
+        /// 获取指定DbSet集合
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        Task<IQueryable<T>> GetQueryableAsync<T>() where T : class, IEntity<TKey>;
+
+        /// <summary>
         /// 删除(支持硬删除)
         /// </summary>
         /// <param name="autoSave"></param>
