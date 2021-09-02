@@ -67,7 +67,7 @@ namespace Jh.Abp.EntityFrameworkCore.Extensions
             return includeDetails ? await WithDetailsAsync(): await GetDbSetAsync();
         }
 
-        public virtual async Task<IQueryable<T>> GetQueryableAsync<T>() where T : class, IEntity<TKey>
+        public virtual async Task<IQueryable<T>> GetQueryableAsync<T>() where T:class
         {
             return (await GetDbContextAsync().ConfigureAwait(continueOnCapturedContext: false)).Set<T>();
         }

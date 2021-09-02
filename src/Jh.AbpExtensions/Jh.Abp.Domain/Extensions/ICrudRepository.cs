@@ -59,7 +59,7 @@ namespace Jh.Abp.Domain.Extensions
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        Task<IQueryable<T>> GetQueryableAsync<T>() where T : class, IEntity<TKey>;
+        Task<IQueryable<T>> GetQueryableAsync<T>() where T : class;
 
         /// <summary>
         /// 删除(支持硬删除)

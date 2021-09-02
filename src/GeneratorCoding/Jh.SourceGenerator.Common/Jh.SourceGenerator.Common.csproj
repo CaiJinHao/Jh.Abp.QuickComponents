@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>4.4.2009</Version>
+    <Version>4.4.2010</Version>
     <LangVersion>8.0</LangVersion>
     
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

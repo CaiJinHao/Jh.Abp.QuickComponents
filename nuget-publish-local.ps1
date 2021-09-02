@@ -1,5 +1,5 @@
 ﻿$QuickComponents="4.4.1004"	#4.4.1001
-$SourceGenerator="4.4.2009"	#4.4.2001
+$SourceGenerator="4.4.2010"	#4.4.2001
 $AbpExtensions="4.4.3005"	#4.4.3001
 $Env="Debug" #Release
 
