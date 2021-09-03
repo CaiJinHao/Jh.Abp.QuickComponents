@@ -1,6 +1,6 @@
 ﻿$QuickComponents="4.4.1004"	#4.4.1001
 $SourceGenerator="4.4.2010"	#4.4.2001
-$AbpExtensions="4.4.3005"	#4.4.3001
+$AbpExtensions="4.4.3006"	#4.4.3001
 $Env="Debug" #Release
 
 cd G:\github\mygithub\Jh.Abp.QuickComponents
