@@ -31,7 +31,7 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
             builder.ConfigureMenuManagement();
         }
 
-#if DAMENG
+/*#if DAMENG
         protected override Expression<Func<TEntity, bool>> CreateFilterExpression<TEntity>()
         {
             Expression<Func<TEntity, bool>> expression = null;
@@ -51,7 +51,7 @@ namespace Jh.Abp.MenuManagement.EntityFrameworkCore
 
             return expression;
         }
-#endif
+#endif*/
 
     }
 }

@@ -73,12 +73,7 @@ namespace Jh.Abp.MenuManagement
                 hasException,
                 httpStatusCode
             );
-#if DAMENG
-            var totalCount = await query.CountAsync(GetCancellationToken(cancellationToken));
-#else
             var totalCount = await query.LongCountAsync(GetCancellationToken(cancellationToken));
-#endif
-
             return totalCount;
         }
     }

@@ -89,6 +89,20 @@ namespace Jh.Abp.Extensions
             query = ApplySorting(query, inputDto);
             query = ApplyPaging(query, inputDto);
             var entities = await query.ToListAsync(cancellationToken);
+            var methodDto = inputDto as IMethodDto<TEntity>;
+            if (methodDto != null)
+            {
+                if (methodDto.MethodInput != null)
+                {
+                    if (methodDto.MethodInput.CreateOrUpdateEntityAction != null)
+                    {
+                        foreach (var item in entities)
+                        {
+                            methodDto.MethodInput.CreateOrUpdateEntityAction(item);
+                        }
+                    }
+                }
+            }
             return new ListResultDto<TEntityDto>(
                  ObjectMapper.Map<List<TEntity>, List<TEntityDto>>(entities)
             );
@@ -109,11 +123,7 @@ namespace Jh.Abp.Extensions
 
             var query = CreateFilteredQuery(await crudRepository.GetQueryableAsync(includeDetails), input, methodStringType);
 
-#if DAMENG
-            var totalCount = await query.CountAsync(cancellationToken);
-#else
             var totalCount = await query.LongCountAsync(cancellationToken);
-#endif
 
             query = ApplySorting(query, input);
             query = ApplyPaging(query, input);
