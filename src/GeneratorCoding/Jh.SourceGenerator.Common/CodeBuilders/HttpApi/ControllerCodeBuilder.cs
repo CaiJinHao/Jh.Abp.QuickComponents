@@ -64,7 +64,10 @@ using Volo.Abp.Data;");
                     builder.AppendLine($"\t\tpublic virtual async Task<ListResultDto<{table.Name}Dto>> GetEntitysAsync([FromQuery] {table.Name}RetrieveInputDto inputDto)");
                     {
                         builder.AppendLine("\t\t{");
-                        builder.AppendLine($"\t\t\treturn await {table.Name}AppService.GetEntitysAsync(inputDto);");
+                        builder.AppendLine("\t\t\tusing (dataFilter.Disable())");
+                        builder.AppendLine("\t\t\t{");
+                        builder.AppendLine($"\t\t\t\treturn await {table.Name}AppService.GetEntitysAsync(inputDto);");
+                        builder.AppendLine("\t\t\t}");
                         builder.AppendLine("\t\t}");
                     }
 
