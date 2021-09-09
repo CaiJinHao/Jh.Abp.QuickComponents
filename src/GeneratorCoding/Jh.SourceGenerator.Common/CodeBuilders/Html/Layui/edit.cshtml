@@ -73,7 +73,7 @@
                @(table_name_lower):{
                     @foreach (var col in columns)
                     {
-                        switch (col.FieldType.ToString())
+                        switch (col.Type.ToString())
                         {
                             case "Guid":
                             case "DateTime":

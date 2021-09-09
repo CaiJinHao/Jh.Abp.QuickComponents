@@ -3,6 +3,7 @@
     var table_name = Model.Name;
     var columnsRetrieve = Model.FieldsRetrieve;//列集合
     var columns = Model.FieldsAll;//列集合
+    var permissionNamespace = table.Namespace.Replace(".","");
 
     var table_name_lower = Model.Name.ToLower();
     var primary_key_name = "id";
@@ -116,15 +117,15 @@
                     currPage: 1,
                     deletedlist: [],
                     permissionDefineds: {
-                        Export: '@(table.Namespace).@(table_name)s.Export',
-                        Detail: '@(table.Namespace).@(table_name)s.Detail',
-                        Create: '@(table.Namespace).@(table_name)s.Create',
-                        BatchCreate: '@(table.Namespace).@(table_name)s.BatchCreate',
-                        Update: '@(table.Namespace).@(table_name)s.Update',
-                        PortionUpdate: '@(table.Namespace).@(table_name)s.PortionUpdate',
-                        Delete: '@(table.Namespace).@(table_name)s.Delete',
-                        BatchDelete: '@(table.Namespace).@(table_name)s.BatchDelete',
-                        Recover: '@(table.Namespace).@(table_name)s.Recover',
+                        Export: '@(permissionNamespace).@(table_name)s.Export',
+                        Detail: '@(permissionNamespace).@(table_name)s.Detail',
+                        Create: '@(permissionNamespace).@(table_name)s.Create',
+                        BatchCreate: '@(permissionNamespace).@(table_name)s.BatchCreate',
+                        Update: '@(permissionNamespace).@(table_name)s.Update',
+                        PortionUpdate: '@(permissionNamespace).@(table_name)s.PortionUpdate',
+                        Delete: '@(permissionNamespace).@(table_name)s.Delete',
+                        BatchDelete: '@(permissionNamespace).@(table_name)s.BatchDelete',
+                        Recover: '@(permissionNamespace).@(table_name)s.Recover',
                     },
                     permissions: []
                 },
