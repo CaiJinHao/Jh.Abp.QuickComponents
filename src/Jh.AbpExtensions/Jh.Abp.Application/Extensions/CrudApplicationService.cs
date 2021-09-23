@@ -153,7 +153,7 @@ namespace Jh.Abp.Extensions
                     }
                 }
             }
-            return await crudRepository.UpdateAsync(entity, autoSave, cancellationToken).ConfigureAwait(false);
+            return entity;
         }
 
         public override async Task<TEntityDto> UpdateAsync(TKey id, TUpdateInputDto updateInput)
@@ -172,7 +172,6 @@ namespace Jh.Abp.Extensions
                     }
                 }
             }
-            await Repository.UpdateAsync(entity, autoSave: true);
             return await MapToGetOutputDtoAsync(entity);
         }
 
