@@ -142,6 +142,7 @@
                         ajaxmod.requestAuthorize({
                             url: '/@(table_name_lower)/' + vm.paramObj.@(primary_key_name),
                             type: 'Get',
+                            apiOption:2,
                             success: function (response) {
 							    vm.$set(vm, '@(table_name_lower)', response);
 							    vm.RenderDom(form);
@@ -169,6 +170,7 @@
                     url: url,
                     data: data,
                     type: type,
+                    apiOption: 2,
                     success: function (response) {
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);

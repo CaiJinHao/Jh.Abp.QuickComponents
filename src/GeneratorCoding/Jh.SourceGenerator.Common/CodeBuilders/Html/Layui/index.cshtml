@@ -190,6 +190,7 @@
                         }
                         datatable.renderTable(optDefault, {
                             url: '/@(table_name_lower)',
+                            apiOption: 2,
                             tableElem: 'table_@(table_name_lower)',
                             tableCols: [_tableCols],
                         });
@@ -215,6 +216,7 @@
                         datatable.del({
                             url: '/@(table_name_lower)/' + _data.@(primary_key_name),
                             type: 'Delete',
+                            apiOption: 2,
                             success: function (response) {
                                 _the.renderTable();
                             }
@@ -232,6 +234,7 @@
                             url: '/@(table_name_lower)/keys',
                             type: 'Delete',
                             data: delIdList,
+                            apiOption: 2,
                             success: function (response) {
                                 _the.renderTable();
                             }
@@ -247,6 +250,7 @@
                             url:url,
                             type: 'Patch',
                             data: data,
+                            apiOption: 2,
                             success: function (response) {
                                 _the.renderTable();
                             }
@@ -351,6 +355,7 @@
                         url: '/@(table_name_lower)/all',
                         type: 'Get',
                         data: requestData,
+                        apiOption: 2,
                         success: function (response) {
                             @(table_name_lower)Obj.exportExcel(response.items);
                         }

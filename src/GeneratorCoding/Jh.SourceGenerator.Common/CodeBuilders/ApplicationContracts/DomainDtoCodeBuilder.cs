@@ -53,6 +53,14 @@ using Volo.Abp.Domain.Entities;");
                         builder.AppendLine("\t\tpublic string ConcurrencyStamp { get; set; }");
                     }
 
+                    if (table.IsExtensibleObject)
+                    {
+                        builder.AppendLine("\t\t/// <summary>");
+                        builder.AppendLine("\t\t/// 扩展自动映射");
+                        builder.AppendLine("\t\t/// </summary>");
+                        builder.AppendLine("\t\tpublic new ExtraPropertyDictionary ExtraProperties { get; set; }");
+                    }
+
                     builder.AppendLine($"\t\t public virtual Guid? TenantId " + "{ get; set; }");
                 }
                 builder.AppendLine("\t}");
