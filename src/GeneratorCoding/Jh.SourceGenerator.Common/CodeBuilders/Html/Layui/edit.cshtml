@@ -55,7 +55,7 @@
                 <br />
                 <div class="layui-row" style="text-align:center;">
                     <div class="layui-inline">
-                        <a class="layui-btn layui-btn-normal" lay-submit lay-filter="btn_submit_@(table_name_lower)_form" href="javascript:;">保存</a>
+                        <a v-if="paramObj.detail!=1"  class="layui-btn layui-btn-normal" lay-submit lay-filter="btn_submit_@(table_name_lower)_form" href="javascript:;">保存</a>
                         <a class="layui-btn layui-btn-primary" id="cancel" href="javascript:;">关闭</a>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
         var vm = new Vue({
             el: '#page-vm',
             data: {
-                paramObj: {},
+                paramObj: { detail:0 },
                @(table_name_lower):{
                     @foreach (var col in columns)
                     {
