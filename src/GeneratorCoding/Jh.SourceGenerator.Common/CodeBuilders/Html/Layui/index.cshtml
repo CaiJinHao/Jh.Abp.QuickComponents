@@ -195,6 +195,14 @@
                             tableCols: [_tableCols],
                         });
                     },
+                    detail: function (_data) {
+                        var _the = this;
+                        datatable.edit({
+                            title: '@(Model.Comment)详情',
+                            area: ['850px', '500px'],
+                            content: 'view/@(table_name_lower)/edit.html?detail=1&@(primary_key_name)=' + _data.@(primary_key_name),
+                        });
+                    },
                     edit: function (_data) {
                         var _the = this;
                         datatable.edit({
