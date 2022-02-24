@@ -87,7 +87,7 @@
                         .GetRequiredService<IDataSeeder>();
                     var context = new DataSeedContext();
                     context["AdminEmail"] = "531003539@qq.com";
-                    context["AdminPassword"] = "CaiJinHao@940421";
+                    context["AdminPassword"] = "CaiJinHao@123456";
                     await data.SeedAsync(context);
                 }
             });
